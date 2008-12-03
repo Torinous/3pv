@@ -29,6 +29,9 @@ namespace PPPv.Editor{
          if(netElement == null){
             contextMenuStrip.Items[0].Enabled = false;
             contextMenuStrip.Items[1].Enabled = false;
+         }else{
+            contextMenuStrip.Items[0].Enabled = true;
+            contextMenuStrip.Items[1].Enabled = true;
          }
          contextMenuTarget = netElement;
          this.netRef = netRef;
