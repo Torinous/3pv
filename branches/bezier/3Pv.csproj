@@ -72,6 +72,7 @@
       DefineConstants="$(DefineConstants)"
       Optimize="$(Optimize)"
       NoLogo="true"/>
+      <Exec Command = "ctags.exe -R -f CTAGS" />
   </Target>
 
   <Target Name="AfterBuild">
