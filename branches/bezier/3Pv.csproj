@@ -1,0 +1,83 @@
+﻿<Project  xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="CoreBuild">
+
+<PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SrcDir>.\Src\</SrcDir>
+    <ResourcesDir>.\Resources\</ResourcesDir>
+    <GenerateFullPaths>True</GenerateFullPaths>
+    <WarningLevel Condition=" '$(WarningLevel)' == '' ">4</WarningLevel>
+</PropertyGroup>
+
+<PropertyGroup
+     Condition=" '$(Configuration)' == 'Debug' ">
+  <DebugSymbols>true</DebugSymbols>
+  <DebugType>full</DebugType>
+  <Optimize>false</Optimize>
+  <OutputPath>.\bin\Debug\</OutputPath>
+  <DefineConstants>DEBUG;TRACE</DefineConstants>
+  <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  <EmitDebugInformation>true</EmitDebugInformation>
+</PropertyGroup>
+
+<PropertyGroup
+     Condition=" '$(Configuration)' == 'Release' ">
+  <DebugSymbols>false</DebugSymbols>
+  <Optimize>true</Optimize>
+  <OutputPath>.\bin\Release\</OutputPath>
+  <DefineConstants>TRACE</DefineConstants>
+  <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+  <EmitDebugInformation>false</EmitDebugInformation>
+</PropertyGroup>
+
+  <ItemGroup>
+    <CSFiles Include="$(SrcDir)**\*.cs"  />
+  </ItemGroup>
+
+  <ItemGroup>
+      <EmbeddedResource Include="$(ResourcesDir)pointer.png" />
+      <EmbeddedResource Include="$(ResourcesDir)place.png" />
+      <EmbeddedResource Include="$(ResourcesDir)transition.png" />
+      <EmbeddedResource Include="$(ResourcesDir)arc.png" />
+      <EmbeddedResource Include="$(ResourcesDir)todo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AssemblyInfo Include="$(SrcDir)**\AssemblyInfo.cs"  />
+  </ItemGroup>
+
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+
+  <Target Name="CreateDirectories">
+    <MakeDir
+         Directories="$(OutputPath)"/>
+  </Target>
+
+  <Target Name="BeforeBuild" DependsOnTargets="CreateDirectories">
+    <!--
+    <Message Importance="High" Text="Переменная: @(AssemblyInfo)"  />
+    <Message Importance="High" Text="Исходные файлы: @(CSFiles)"  />
+    <Message Importance="High" Text="Результат: $(OutputPath)"  />
+    -->
+    <!-- Включим информацию о ревизии в исходный код -->
+    <Exec Command = "SubWCRev.exe ./ AssemblyInfo.in AssemblyInfo.cs" WorkingDirectory = "$(SrcDir)"/>
+  </Target>
+
+  <Target Name="CoreBuild"  Inputs="@(CSFiles);@(EmbeddedResource)" Outputs="$(OutputPath)3Pv.exe" DependsOnTargets="BeforeBuild" >
+    <Csc
+      OutputAssembly="$(OutputPath)3Pv.exe"
+      WarningLevel = "$(WarningLevel)"
+      Sources="@(CSFiles)"
+      TargetType="exe"
+      Resources = "@(EmbeddedResource)"
+      EmitDebugInformation="$(EmitDebugInformation)"
+      DefineConstants="$(DefineConstants)"
+      Optimize="$(Optimize)"
+      NoLogo="true"/>
+  </Target>
+
+  <Target Name="AfterBuild">
+  <Exec Command = "IncBuildNo.exe @(AssemblyInfo) $(Configuration)"/>
+  </Target>
+
+  <Target Name="ListFiles"> <Message Text="List of files: @(CSFiles)" />
+  </Target>
+</Project>
