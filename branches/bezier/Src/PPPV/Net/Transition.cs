@@ -26,12 +26,31 @@ namespace PPPv.Net {
          UpdateHitRegion();
          guardFunction = "x=y";
       }
+
       public override Point Center{
          get{
             return new Point(X + 10, Y + 25);
          }
       }
+
       public void Draw(Graphics dc) {
+         Pen blackPen = new Pen(Color.Black, 1);
+         /*Кисти*/
+         SolidBrush grayBrush = new SolidBrush(Color.Gray);
+         SolidBrush blackBrush = new SolidBrush(Color.Black);
+         /*Шрифт*/
+         FontFamily fF_Arial = new FontFamily("Arial");
+         Font font1 = new Font(fF_Arial,16,FontStyle.Regular,GraphicsUnit.Pixel);
+
+         SolidBrush myBrush = new SolidBrush(Color.Gray);
+         Region fillRegion = new Region(new Rectangle( X, Y, 20, 50));
+         dc.FillRegion(myBrush, fillRegion);
+         dc.DrawRectangle(blackPen, X, Y, 20, 50);
+         dc.DrawString(Name+"\n"+guardFunction,font1,blackBrush,X+20,Y-17);
+      }
+
+      public void Draw(object sender, PaintEventArgs e) {
+         Graphics dc = e.Graphics;
          Pen blackPen = new Pen(Color.Black, 1);
          /*Кисти*/
          SolidBrush grayBrush = new SolidBrush(Color.Gray);

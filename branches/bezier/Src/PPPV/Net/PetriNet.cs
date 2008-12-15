@@ -73,6 +73,22 @@ namespace PPPv.Net {
          }
       }
 
+      public BaseNetElement ElementPortal{
+         set{
+            if(value is Place){
+               Places.Add(value);
+            }
+            if(value is Transition){
+               Transitions.Add(value);
+            }
+            if(value is Arc){
+               Arcs.Add(value);
+            }
+            value.ParentNet = this;
+            this.Paint += (value as IDrawable).Draw;
+         }
+      }
+
       private void OnMouseClick(MouseEventArgs e){
          if(MouseClick != null){
             MouseClick(this,e);
@@ -99,7 +115,9 @@ namespace PPPv.Net {
 
       private void OnPaint(PaintEventArgs e){
          if(Paint != null){
-            Paint(this,e);
+            using(PreciseTimer pr = new PreciseTimer("PetriNet.Draw")){
+               Paint(this,e);
+            }
          }
       }
 
@@ -129,23 +147,17 @@ namespace PPPv.Net {
 
       public BaseNetElement AddPlace(int x, int y) {
          Place tmpPlace = new Place(x,y);
-         Places.Add(tmpPlace);
-         tmpPlace.ParentNet = this;
-         return tmpPlace;
+         return ElementPortal = tmpPlace;
       }
 
       public BaseNetElement AddTransition(int x, int y) {
          Transition tmpTransition = new Transition(x,y);
-         Transitions.Add(tmpTransition);
-         tmpTransition.ParentNet = this;
-         return tmpTransition;
+         return ElementPortal = tmpTransition;
       }
 
       public BaseNetElement AddArc(BaseNetElement startElement, NetCanvas netCanvas) {
          Arc tmpArc = new Arc(startElement,netCanvas);
-         Arcs.Add(tmpArc);
-         tmpArc.ParentNet = this;
-         return tmpArc;
+         return ElementPortal = tmpArc;
       }
 
       /*Конструктор*/

@@ -8,7 +8,9 @@ namespace PPPv.Net {
    public class Place : BaseNetElement, IDrawable {
       private int _radius;
       private static int _ID = 0;
+
       /*Конструктор*/
+
       public Place(int x, int y) {
          _ID++;
          Name = "P"+_ID;
@@ -16,12 +18,32 @@ namespace PPPv.Net {
          X = x - (int)_radius/2;
          Y = y - (int)_radius/2;
       }
+
       public override Point Center{
          get{
             return new Point(X + (int)_radius/2, Y + (int)_radius/2);
          }
       }
+
       public void Draw(Graphics dc){
+         Pen blackPen = new Pen(Color.Black, 1);
+         /*Кисти*/
+         SolidBrush grayBrush = new SolidBrush(Color.Gray);
+         SolidBrush blackBrush = new SolidBrush(Color.Black);
+         /*Шрифт*/
+         FontFamily fF_Arial = new FontFamily("Arial");
+         Font font1 = new Font(fF_Arial,16,FontStyle.Regular,GraphicsUnit.Pixel);
+
+         GraphicsPath tmpPath = new GraphicsPath();
+         tmpPath.AddEllipse(X, Y, _radius, _radius);
+         Region fillRegion = new Region(tmpPath);
+         dc.FillRegion(grayBrush, fillRegion);
+         dc.DrawEllipse(blackPen, X, Y, _radius, _radius);
+         dc.DrawString(Name,font1,blackBrush,X+_radius,Y-10);
+      }
+
+      public void Draw(object sender, PaintEventArgs e){
+         Graphics dc = e.Graphics;
          Pen blackPen = new Pen(Color.Black, 1);
          /*Кисти*/
          SolidBrush grayBrush = new SolidBrush(Color.Gray);

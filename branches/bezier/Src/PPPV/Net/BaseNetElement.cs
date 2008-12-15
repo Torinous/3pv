@@ -23,9 +23,9 @@ namespace PPPv.Net {
             return location;
          }
          set{
-            Point old = new Point(location.X,location.Y);
+            BaseNetElementMoveEventArgs args = new BaseNetElementMoveEventArgs(location,value);
             location = value;
-            OnMove(old);
+            OnMove(args);
          }
       }
 
@@ -36,7 +36,8 @@ namespace PPPv.Net {
          set{
             Point old = new Point(location.X,location.Y);
             location.X = value;
-            OnMove(old);
+            BaseNetElementMoveEventArgs args = new BaseNetElementMoveEventArgs(old,location);
+            OnMove(args);
          }
       }
 
@@ -47,7 +48,8 @@ namespace PPPv.Net {
          set{
             Point old = new Point(location.X,location.Y);
             location.Y = value;
-            OnMove(old);
+            BaseNetElementMoveEventArgs args = new BaseNetElementMoveEventArgs(old,location);
+            OnMove(args);
          }
       }
 
@@ -90,7 +92,8 @@ namespace PPPv.Net {
          /*Входной параметр это радиусвектор перемещения*/
          Point old = new Point(location.X,location.Y);
          Location = new Point(X + p.X,Y + p.Y);
-         OnMove(old);
+         BaseNetElementMoveEventArgs args = new BaseNetElementMoveEventArgs(old,location);
+         OnMove(args);
       }
       /*Абстрактые методы класса*/
 
@@ -99,10 +102,9 @@ namespace PPPv.Net {
       public abstract bool IsIntersectWith(Region _region);
       public abstract Point GetPilon(Point from);
       protected abstract void UpdateHitRegion();
-      protected void OnMove(Point from){
+      protected void OnMove(BaseNetElementMoveEventArgs args){
          UpdateHitRegion();
          if(Move != null){
-            BaseNetElementMoveEventArgs args = new BaseNetElementMoveEventArgs(from,location);
             Move(this,args);
          }
       }

@@ -51,6 +51,18 @@ namespace PPPv.Net {
          dc.DrawString(cortege,font1,blackBrush,Center.X,Center.Y+5);
       }
 
+      public void Draw(object sender, PaintEventArgs e){
+         Graphics dc = e.Graphics;
+         /*Кисти*/
+         SolidBrush grayBrush = new SolidBrush(Color.Gray);
+         SolidBrush blackBrush = new SolidBrush(Color.Black);
+         /*Шрифт*/
+         FontFamily fF_Arial = new FontFamily("Arial");
+         Font font1 = new Font(fF_Arial,16,FontStyle.Regular,GraphicsUnit.Pixel);
+         dc.DrawLine(ArrowedBlackPen,fromPilon,toPilon);
+         dc.DrawString(cortege,font1,blackBrush,Center.X,Center.Y+5);
+      }
+
       private void _arcMouseMoveHandler(object sender, CanvasMouseEventArgs arg){
          toPilon.X = arg.X;
          toPilon.Y = arg.Y;

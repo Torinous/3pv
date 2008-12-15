@@ -57,6 +57,11 @@ namespace PPPv.Editor{
          }
       }
 
+      protected override void OnPaint(PaintEventArgs e){
+         e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+         base.OnPaint(e);
+      }
+
       /*Конструктор*/
       public NetCanvas(NetToolStrip ToolController_, PetriNet _net) {
          ToolController = ToolController_;
@@ -79,7 +84,7 @@ namespace PPPv.Editor{
          contextMenuController = new ContextMenuController(this);
 
          /*Пристыкуем события*/
-         this.Paint += Net.Draw;
+         //this.Paint += Net.Draw;
          this.Paint += selectionController.Draw;
          this.CanvasMouseClick += CanvasMouseClickHandler;
          this.CanvasMouseMove += CanvasMouseMoveHandler;
