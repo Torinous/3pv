@@ -14,12 +14,35 @@ namespace PPPv.Net {
       private ArrayList arcs;
       private NetCanvas canvas;
 
+      /*События*/
+      public event MouseEventHandler MouseClick;
+      public event MouseEventHandler MouseMove;
+      public event MouseEventHandler MouseDown;
+      public event MouseEventHandler MouseUp;
+      public event PaintEventHandler Paint;
+
       public NetCanvas Canvas{
          get{
             return canvas;
          }
          set{
+            if(canvas != null){
+               canvas.CanvasMouseClick -= CanvasMouseClickRetranslator;
+               canvas.CanvasMouseMove  -= CanvasMouseMoveRetranslator;
+               canvas.CanvasMouseDown  -= CanvasMouseDownRetranslator;
+               canvas.CanvasMouseUp    -= CanvasMouseUpRetranslator;
+               canvas.Paint            -= CanvasPaintRetranslator;
+            }
+
             canvas = value;
+
+            if(canvas != null){
+               canvas.CanvasMouseClick += CanvasMouseClickRetranslator;
+               canvas.CanvasMouseMove  += CanvasMouseMoveRetranslator;
+               canvas.CanvasMouseDown  += CanvasMouseDownRetranslator;
+               canvas.CanvasMouseUp    += CanvasMouseUpRetranslator;
+               canvas.Paint            += CanvasPaintRetranslator;
+            }
          }
       }
 
@@ -48,6 +71,60 @@ namespace PPPv.Net {
          private set{
             arcs = value;
          }
+      }
+
+      private void OnMouseClick(MouseEventArgs e){
+         if(MouseClick != null){
+            MouseClick(this,e);
+         }
+      }
+
+      private void OnMouseMove(MouseEventArgs e){
+         if(MouseMove != null){
+            MouseMove(this,e);
+         }
+      }
+
+      private void OnMouseDown(MouseEventArgs e){
+         if(MouseDown != null){
+            MouseDown(this,e);
+         }
+      }
+
+      private void OnMouseUp(MouseEventArgs e){
+         if(MouseUp != null){
+            MouseUp(this,e);
+         }
+      }
+
+      private void OnPaint(PaintEventArgs e){
+         if(Paint != null){
+            Paint(this,e);
+         }
+      }
+
+      private void CanvasMouseClickRetranslator(object sender, CanvasMouseEventArgs args){
+         MouseEventArgs newArgs = new MouseEventArgs(args);
+         OnMouseClick(newArgs);
+      }
+
+      private void CanvasMouseMoveRetranslator(object sender, CanvasMouseEventArgs args){
+         MouseEventArgs newArgs = new MouseEventArgs(args);
+         OnMouseMove(newArgs);
+      }
+
+      private void CanvasMouseDownRetranslator(object sender, CanvasMouseEventArgs args){
+         MouseEventArgs newArgs = new MouseEventArgs(args);
+         OnMouseDown(newArgs);
+      }
+
+      private void CanvasMouseUpRetranslator(object sender, CanvasMouseEventArgs args){
+         MouseEventArgs newArgs = new MouseEventArgs(args);
+         OnMouseUp(newArgs);
+      }
+
+      private void CanvasPaintRetranslator(object sender, PaintEventArgs args){
+         OnPaint(args);
       }
 
       public BaseNetElement AddPlace(int x, int y) {

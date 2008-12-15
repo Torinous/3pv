@@ -103,27 +103,27 @@ namespace PPPv.Editor{
       private void InitializeComponent() {
       }
 
-      protected override void OnMouseClick(MouseEventArgs e){
-         OnNetMouseEventClick(e);
+      protected override void OnMouseClick(System.Windows.Forms.MouseEventArgs e){
+         OnCanvasMouseClick(e);
          base.OnMouseClick(e);
       }
 
-      protected override void OnMouseMove(MouseEventArgs e){
-         OnNetMouseEventMove(e);
+      protected override void OnMouseMove(System.Windows.Forms.MouseEventArgs e){
+         OnCanvasMouseMove(e);
          base.OnMouseMove(e);
       }
 
-      protected override void OnMouseDown(MouseEventArgs e){
-         OnNetMouseEventDown(e);
+      protected override void OnMouseDown(System.Windows.Forms.MouseEventArgs e){
+         OnCanvasMouseDown(e);
          base.OnMouseDown(e);
       }
 
-      protected override void OnMouseUp(MouseEventArgs e){
-          OnNetMouseEventUp(e);
+      protected override void OnMouseUp(System.Windows.Forms.MouseEventArgs e){
+          OnCanvasMouseUp(e);
           base.OnMouseUp(e);
       }
 
-      public void OnNetMouseEventClick(MouseEventArgs _arg){
+      public void OnCanvasMouseClick(System.Windows.Forms.MouseEventArgs _arg){
          if(CanvasMouseClick != null){
             CanvasMouseEventArgs arg = new CanvasMouseEventArgs(_arg);
             arg.currentTool = ToolController.CurrentTool();
@@ -131,7 +131,7 @@ namespace PPPv.Editor{
          }
       }
 
-      public void OnNetMouseEventMove(MouseEventArgs _arg){
+      public void OnCanvasMouseMove(System.Windows.Forms.MouseEventArgs _arg){
          if(CanvasMouseMove != null){
             CanvasMouseEventArgs arg = new CanvasMouseEventArgs(_arg);
             arg.currentTool = ToolController.CurrentTool();
@@ -139,7 +139,7 @@ namespace PPPv.Editor{
          }
       }
 
-      public void OnNetMouseEventDown(MouseEventArgs _arg){
+      public void OnCanvasMouseDown(System.Windows.Forms.MouseEventArgs _arg){
          if(CanvasMouseDown != null){
             CanvasMouseEventArgs arg = new CanvasMouseEventArgs(_arg);
             arg.currentTool = ToolController.CurrentTool();
@@ -147,7 +147,7 @@ namespace PPPv.Editor{
          }
       }
 
-      public void OnNetMouseEventUp(MouseEventArgs _arg){
+      public void OnCanvasMouseUp(System.Windows.Forms.MouseEventArgs _arg){
          if(CanvasMouseUp != null){
              CanvasMouseEventArgs arg = new CanvasMouseEventArgs(_arg);
              arg.currentTool = ToolController.CurrentTool();

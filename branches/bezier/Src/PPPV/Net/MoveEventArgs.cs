@@ -2,8 +2,6 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-using PPPv.Net;
-
 namespace PPPv.Net {
 
   public class BaseNetElementMoveEventArgs{
