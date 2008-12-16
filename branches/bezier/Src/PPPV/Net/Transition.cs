@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using PPPv.Utils;
 
 namespace PPPv.Net {
-   public class Transition : BaseNetElement, IDrawable {
+   public class Transition : BaseNetElement {
       private static int _ID = 0;
       private string guardFunction;
 
@@ -33,23 +33,7 @@ namespace PPPv.Net {
          }
       }
 
-      public void Draw(Graphics dc) {
-         Pen blackPen = new Pen(Color.Black, 1);
-         /*Кисти*/
-         SolidBrush grayBrush = new SolidBrush(Color.Gray);
-         SolidBrush blackBrush = new SolidBrush(Color.Black);
-         /*Шрифт*/
-         FontFamily fF_Arial = new FontFamily("Arial");
-         Font font1 = new Font(fF_Arial,16,FontStyle.Regular,GraphicsUnit.Pixel);
-
-         SolidBrush myBrush = new SolidBrush(Color.Gray);
-         Region fillRegion = new Region(new Rectangle( X, Y, 20, 50));
-         dc.FillRegion(myBrush, fillRegion);
-         dc.DrawRectangle(blackPen, X, Y, 20, 50);
-         dc.DrawString(Name+"\n"+guardFunction,font1,blackBrush,X+20,Y-17);
-      }
-
-      public void Draw(object sender, PaintEventArgs e) {
+      public override void Draw(object sender, PaintEventArgs e) {
          Graphics dc = e.Graphics;
          Pen blackPen = new Pen(Color.Black, 1);
          /*Кисти*/
@@ -86,6 +70,18 @@ namespace PPPv.Net {
             HitRegion.MakeEmpty();
             HitRegion.Union(new Rectangle( X, Y, 20, 50));
          }
+      }
+
+      protected override void MouseClickHandler(object sender, MouseEventArgs args){
+      }
+
+      protected override void MouseMoveHandler(object sender, MouseEventArgs args){
+      }
+
+      protected override void MouseDownHandler(object sender, MouseEventArgs args){
+      }
+
+      protected override void MouseUpHandler(object sender, MouseEventArgs args){
       }
 
       public override Point GetPilon(Point from){

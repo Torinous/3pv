@@ -12,6 +12,7 @@ namespace PPPv.Net {
       private ArrayList places;
       private ArrayList transitions;
       private ArrayList arcs;
+      private ArrayList currentSelectedObjects;
       private NetCanvas canvas;
 
       /*События*/
@@ -21,6 +22,15 @@ namespace PPPv.Net {
       public event MouseEventHandler MouseUp;
       public event PaintEventHandler Paint;
 
+      public ArrayList CurrentSelected{
+         get{
+            return currentSelectedObjects;
+         }
+         private set{
+            currentSelectedObjects = value;
+         }
+      }
+
       public NetCanvas Canvas{
          get{
             return canvas;
@@ -28,20 +38,30 @@ namespace PPPv.Net {
          set{
             if(canvas != null){
                canvas.CanvasMouseClick -= CanvasMouseClickRetranslator;
+               canvas.CanvasMouseClick -= CanvasMouseClickHandler;
                canvas.CanvasMouseMove  -= CanvasMouseMoveRetranslator;
+               canvas.CanvasMouseMove  -= CanvasMouseMoveHandler;
                canvas.CanvasMouseDown  -= CanvasMouseDownRetranslator;
+               canvas.CanvasMouseDown  -= CanvasMouseDownHandler;
                canvas.CanvasMouseUp    -= CanvasMouseUpRetranslator;
+               canvas.CanvasMouseUp    -= CanvasMouseUpHandler;
                canvas.Paint            -= CanvasPaintRetranslator;
+               canvas.Paint            -= CanvasPaintHandler;
             }
 
             canvas = value;
 
             if(canvas != null){
                canvas.CanvasMouseClick += CanvasMouseClickRetranslator;
+               canvas.CanvasMouseClick += CanvasMouseClickHandler;
                canvas.CanvasMouseMove  += CanvasMouseMoveRetranslator;
+               canvas.CanvasMouseMove  += CanvasMouseMoveHandler;
                canvas.CanvasMouseDown  += CanvasMouseDownRetranslator;
+               canvas.CanvasMouseDown  += CanvasMouseDownHandler;
                canvas.CanvasMouseUp    += CanvasMouseUpRetranslator;
+               canvas.CanvasMouseUp    += CanvasMouseUpHandler;
                canvas.Paint            += CanvasPaintRetranslator;
+               canvas.Paint            += CanvasPaintHandler;
             }
          }
       }
@@ -85,7 +105,6 @@ namespace PPPv.Net {
                Arcs.Add(value);
             }
             value.ParentNet = this;
-            this.Paint += (value as IDrawable).Draw;
          }
       }
 
@@ -145,6 +164,39 @@ namespace PPPv.Net {
          OnPaint(args);
       }
 
+      private void CanvasMouseClickHandler(object sender, CanvasMouseEventArgs args){
+      }
+
+      private void CanvasMouseMoveHandler(object sender, CanvasMouseEventArgs args){
+      }
+
+      private void CanvasMouseDownHandler(object sender, CanvasMouseEventArgs args){
+         if(args.Button == MouseButtons.Left){
+            switch(args.currentTool){
+               case ToolEnum.Pointer:
+                  break;
+               case ToolEnum.Place:
+                  AddPlace(args.X,args.Y);
+                  (sender as NetCanvas).Invalidate();
+                  break;
+               case ToolEnum.Transition:
+                  AddTransition(args.X,args.Y);
+                  (sender as NetCanvas).Invalidate();
+                  break;
+               case ToolEnum.Arc:
+                  break;
+               default:
+                  break;
+            }
+         }
+      }
+
+      private void CanvasMouseUpHandler(object sender, CanvasMouseEventArgs args){
+      }
+
+      private void CanvasPaintHandler(object sender, PaintEventArgs args){
+      }
+
       public BaseNetElement AddPlace(int x, int y) {
          Place tmpPlace = new Place(x,y);
          return ElementPortal = tmpPlace;
@@ -165,24 +217,7 @@ namespace PPPv.Net {
          Places = new ArrayList(30);
          Transitions = new ArrayList(30);
          Arcs = new ArrayList(60);
-      }
-
-      public void Draw(object sender, PaintEventArgs e) {
-         using(PreciseTimer pr = new PreciseTimer("PetriNet.Draw")){
-            Pen RedPen = new Pen(Color.Red, 1);
-            Graphics dc = e.Graphics;
-            dc.SmoothingMode = SmoothingMode.HighQuality;
-            int i;
-            for(i=Arcs.Count-1;i>=0;--i) {
-               ((IDrawable)Arcs[i]).Draw(dc);
-            }
-            for(i=Places.Count-1;i>=0;--i) {
-               ((IDrawable)Places[i]).Draw(dc);
-            }
-            for(i=Transitions.Count-1;i>=0;--i) {
-               ((IDrawable)Transitions[i]).Draw(dc);
-            }
-         }
+         currentSelectedObjects = new ArrayList(50);
       }
 
       public void Delete(Arc a){
@@ -195,6 +230,14 @@ namespace PPPv.Net {
 
       public void Delete(Place p){
          Places.Remove(p);
+      }
+
+      public void Select(BaseNetElement ob){
+         currentSelectedObjects.Add(ob);
+      }
+
+      public void Unselect(BaseNetElement ob){
+         currentSelectedObjects.Remove(ob);
       }
 
       public BaseNetElement NetElementUnder(Point _p){

@@ -7,7 +7,7 @@ using PPPv.Editor;
 using PPPv.Net;
 
 namespace PPPv.Net {
-   public class Arc : BaseNetElement, IDrawable {
+   public class Arc : BaseNetElement {
       private static int _ID = 0;
       protected static Pen ArrowedBlackPen = ArrowedBlackPenFactory();
       private BaseNetElement from,to;
@@ -40,18 +40,7 @@ namespace PPPv.Net {
          }
       }
 
-      public void Draw(Graphics dc){
-         /*Кисти*/
-         SolidBrush grayBrush = new SolidBrush(Color.Gray);
-         SolidBrush blackBrush = new SolidBrush(Color.Black);
-         /*Шрифт*/
-         FontFamily fF_Arial = new FontFamily("Arial");
-         Font font1 = new Font(fF_Arial,16,FontStyle.Regular,GraphicsUnit.Pixel);
-         dc.DrawLine(ArrowedBlackPen,fromPilon,toPilon);
-         dc.DrawString(cortege,font1,blackBrush,Center.X,Center.Y+5);
-      }
-
-      public void Draw(object sender, PaintEventArgs e){
+      public override void Draw(object sender, PaintEventArgs e){
          Graphics dc = e.Graphics;
          /*Кисти*/
          SolidBrush grayBrush = new SolidBrush(Color.Gray);
@@ -66,6 +55,7 @@ namespace PPPv.Net {
       private void _arcMouseMoveHandler(object sender, CanvasMouseEventArgs arg){
          toPilon.X = arg.X;
          toPilon.Y = arg.Y;
+         fromPilon = from.GetPilon(toPilon);
          ((NetCanvas)sender).Invalidate();
       }
 
@@ -88,6 +78,18 @@ namespace PPPv.Net {
          UpdateHitRegion();
          fromPilon = from.GetPilon(to.Center);
          toPilon = to.GetPilon(from.Center);
+      }
+
+      protected override void MouseClickHandler(object sender, MouseEventArgs args){
+      }
+
+      protected override void MouseMoveHandler(object sender, MouseEventArgs args){
+      }
+
+      protected override void MouseDownHandler(object sender, MouseEventArgs args){
+      }
+
+      protected override void MouseUpHandler(object sender, MouseEventArgs args){
       }
 
       protected override void UpdateHitRegion(){

@@ -1,20 +1,50 @@
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace PPPv.Net {
-   public abstract class BaseNetElement {
+   public abstract class BaseNetElement: IDrawable {
+
       protected PetriNet parent;
       protected Point location;
       protected Region _hitRegion; //регион где проверяется клик в объект
       protected string _name;
+      protected bool selected;
 
       /*Аксессоры доступа*/
+      protected bool Selected{
+         get{
+            return selected;
+         }
+         set{
+            if(selected && !value)
+               ParentNet.Unselect(this);
 
+            if(!selected && value)
+               ParentNet.Select(this);
+
+            selected = value;
+         }
+      }
       public PetriNet ParentNet{
          get{
             return parent;
          }
          set{
+            if(parent != null){
+               parent.Paint      -= this.Draw;
+               parent.MouseMove  -= this.MouseMoveHandler;
+               parent.MouseClick -= this.MouseClickHandler;
+               parent.MouseUp    -= this.MouseUpHandler;
+               parent.MouseDown  -= this.MouseDownHandler;
+            }
             parent = value;
+            if(parent != null){
+               parent.Paint      += this.Draw;
+               parent.MouseMove  += this.MouseMoveHandler;
+               parent.MouseClick += this.MouseClickHandler;
+               parent.MouseUp    += this.MouseUpHandler;
+               parent.MouseDown  += this.MouseDownHandler;
+            }
          }
       }
 
@@ -87,6 +117,7 @@ namespace PPPv.Net {
       }
 
       /*Методы*/
+
       /*Перемещение на*/
       public void MoveBy(Point p){
          /*Входной параметр это радиусвектор перемещения*/
@@ -95,12 +126,20 @@ namespace PPPv.Net {
          BaseNetElementMoveEventArgs args = new BaseNetElementMoveEventArgs(old,location);
          OnMove(args);
       }
+
       /*Абстрактые методы класса*/
 
+      public abstract void Draw(object sender, PaintEventArgs e);
       public abstract bool IsIntersectWith(Point _point);
       public abstract bool IsIntersectWith(Rectangle _rectangle);
       public abstract bool IsIntersectWith(Region _region);
       public abstract Point GetPilon(Point from);
+
+      protected abstract void MouseClickHandler(object sender, MouseEventArgs args);
+      protected abstract void MouseMoveHandler(object sender, MouseEventArgs args);
+      protected abstract void MouseDownHandler(object sender, MouseEventArgs args);
+      protected abstract void MouseUpHandler(object sender, MouseEventArgs args);
+
       protected abstract void UpdateHitRegion();
       protected void OnMove(BaseNetElementMoveEventArgs args){
          UpdateHitRegion();

@@ -84,7 +84,6 @@ namespace PPPv.Editor{
          contextMenuController = new ContextMenuController(this);
 
          /*Пристыкуем события*/
-         //this.Paint += Net.Draw;
          this.Paint += selectionController.Draw;
          this.CanvasMouseClick += CanvasMouseClickHandler;
          this.CanvasMouseMove += CanvasMouseMoveHandler;
@@ -190,12 +189,8 @@ namespace PPPv.Editor{
                case ToolEnum.Pointer:
                   break;
                case ToolEnum.Place:
-                  Net.AddPlace(arg.X,arg.Y);
-                  ((NetCanvas)sender).Invalidate();
                   break;
                case ToolEnum.Transition:
-                  Net.AddTransition(arg.X,arg.Y);
-                  ((NetCanvas)sender).Invalidate();
                   break;
                case ToolEnum.Arc:
                   BaseNetElement clicked = Net.NetElementUnder(new Point(arg.X,arg.Y));
