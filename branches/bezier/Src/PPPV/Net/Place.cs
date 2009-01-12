@@ -27,13 +27,17 @@ namespace PPPv.Net {
       }
 
       public override void Draw(object sender, PaintEventArgs e){
+
+         base.Draw(sender,e);
+
          Graphics dc = e.Graphics;
          dc.SmoothingMode = SmoothingMode.HighQuality;
-         Pen blackPen = new Pen(Color.Black, 1);
-         Pen RedPen = new Pen(Color.Red, 1);
+         Pen blackPen = new Pen(Color.FromArgb(255,0,0,0));
+         Pen RedPen = new Pen(Color.FromArgb(255,255,0,0));
+
          /*Кисти*/
-         SolidBrush grayBrush = new SolidBrush(Color.Gray);
-         SolidBrush blackBrush = new SolidBrush(Color.Black);
+         SolidBrush grayBrush = new SolidBrush(Color.FromArgb(200,100,100,100));
+         SolidBrush blackBrush = new SolidBrush(Color.FromArgb(200,0,0,0));
          /*Шрифт*/
          FontFamily fF_Arial = new FontFamily("Arial");
          Font font1 = new Font(fF_Arial,16,FontStyle.Regular,GraphicsUnit.Pixel);
@@ -46,8 +50,7 @@ namespace PPPv.Net {
          dc.DrawString(Name,font1,blackBrush,X+_radius,Y-10);
 
          if(Selected){
-            RectangleF tmp = HitRegion.GetBounds(dc);
-            dc.DrawRectangle(RedPen, new Rectangle((int)tmp.X, (int)tmp.Y, (int)tmp.Width, (int)tmp.Height) );
+            dc.DrawRectangle(RedPen, Rectangle.Inflate( Rectangle.Ceiling(HitRegion.GetBounds(dc)),2,2));
          }
       }
 
@@ -79,13 +82,10 @@ namespace PPPv.Net {
       }
 
       protected override void MouseMoveHandler(object sender, MouseEventArgs args){
+         base.MouseMoveHandler(sender,args);
          if(args.Button == MouseButtons.Left){
             switch(args.currentTool){
                case Editor.ToolEnum.Pointer:
-                  if(Selected){
-                     this.MoveBy(new Point(args.Location.X - Location.X - dragPoint.X, args.Location.Y - Location.Y - dragPoint.Y));
-                     (sender as PetriNet).Canvas.Invalidate();
-                  }
                   break;
                 case Editor.ToolEnum.Place:
                   break;
@@ -100,15 +100,10 @@ namespace PPPv.Net {
       }
 
       protected override void MouseDownHandler(object sender, MouseEventArgs args){
+         base.MouseDownHandler(sender,args);
          if(args.Button == MouseButtons.Left){
             switch(args.currentTool){
                case Editor.ToolEnum.Pointer:
-                  if(Selected = this.IsIntersectWith(new Point(args.X,args.Y)))
-                  {
-                     dragPoint.X = args.X - Location.X;
-                     dragPoint.Y = args.Y - Location.Y;
-                  }
-                  (sender as PetriNet).Canvas.Invalidate();
                   break;
                case Editor.ToolEnum.Place:
                   break;

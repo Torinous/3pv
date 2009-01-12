@@ -34,26 +34,28 @@ namespace PPPv.Net {
       }
 
       public override void Draw(object sender, PaintEventArgs e) {
+
+         base.Draw(sender,e);
+
          Graphics dc = e.Graphics;
          dc.SmoothingMode = SmoothingMode.HighQuality;
-         Pen blackPen = new Pen(Color.Black, 1);
-         Pen RedPen = new Pen(Color.Red, 1);
+         Pen blackPen = new Pen(Color.FromArgb(255,0,0,0));
+         Pen RedPen = new Pen(Color.FromArgb(255,255,0,0));
          /*Кисти*/
-         SolidBrush grayBrush = new SolidBrush(Color.Gray);
-         SolidBrush blackBrush = new SolidBrush(Color.Black);
+         SolidBrush grayBrush = new SolidBrush(Color.FromArgb(200,100,100,100));
+         SolidBrush blackBrush = new SolidBrush(Color.FromArgb(200,0,0,0));
          /*Шрифт*/
          FontFamily fF_Arial = new FontFamily("Arial");
          Font font1 = new Font(fF_Arial,16,FontStyle.Regular,GraphicsUnit.Pixel);
 
-         SolidBrush myBrush = new SolidBrush(Color.Gray);
          Region fillRegion = new Region(new Rectangle( X, Y, 20, 50));
-         dc.FillRegion(myBrush, fillRegion);
+         dc.FillRegion(grayBrush, fillRegion);
          dc.DrawRectangle(blackPen, X, Y, 20, 50);
          dc.DrawString(Name+"\n"+guardFunction,font1,blackBrush,X+20,Y-17);
 
          if(Selected){
             RectangleF tmp = HitRegion.GetBounds(dc);
-            dc.DrawRectangle(RedPen, new Rectangle((int)tmp.X-1, (int)tmp.Y-1, (int)tmp.Width+2, (int)tmp.Height+2) );
+            dc.DrawRectangle(RedPen, Rectangle.Inflate(Rectangle.Ceiling(HitRegion.GetBounds(dc)),2,2));
          }
       }
 
@@ -83,9 +85,25 @@ namespace PPPv.Net {
       }
 
       protected override void MouseMoveHandler(object sender, MouseEventArgs args){
+         base.MouseMoveHandler(sender,args);
       }
 
       protected override void MouseDownHandler(object sender, MouseEventArgs args){
+         base.MouseDownHandler(sender,args);
+         if(args.Button == MouseButtons.Left){
+            switch(args.currentTool){
+               case Editor.ToolEnum.Pointer:
+                  break;
+               case Editor.ToolEnum.Place:
+                  break;
+               case Editor.ToolEnum.Transition:
+                  break;
+               case Editor.ToolEnum.Arc:
+                  break;
+               default:
+                  break;
+            }
+         }
       }
 
       protected override void MouseUpHandler(object sender, MouseEventArgs args){

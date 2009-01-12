@@ -246,6 +246,7 @@ namespace PPPv.Net {
                   break;
                case Editor.ToolEnum.Arc:
                   BaseNetElement clicked = NetElementUnder(new Point(args.X,args.Y));
+                  clicked = (clicked is Arc) ? null : clicked;
                   if(clicked != null && !HaveUnfinishedArcs())
                      AddArc(clicked);
                   (sender as Editor.NetCanvas).Invalidate();

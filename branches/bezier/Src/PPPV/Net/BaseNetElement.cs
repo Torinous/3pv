@@ -64,7 +64,7 @@ namespace PPPv.Net {
             return location;
          }
          set{
-            BaseNetElementMoveEventArgs args = new BaseNetElementMoveEventArgs(location,value);
+            MoveEventArgs args = new MoveEventArgs(location,value);
             location = value;
             OnMove(args);
          }
@@ -77,7 +77,7 @@ namespace PPPv.Net {
          set{
             Point old = new Point(location.X,location.Y);
             location.X = value;
-            BaseNetElementMoveEventArgs args = new BaseNetElementMoveEventArgs(old,location);
+            MoveEventArgs args = new MoveEventArgs(old,location);
             OnMove(args);
          }
       }
@@ -89,7 +89,7 @@ namespace PPPv.Net {
          set{
             Point old = new Point(location.X,location.Y);
             location.Y = value;
-            BaseNetElementMoveEventArgs args = new BaseNetElementMoveEventArgs(old,location);
+            MoveEventArgs args = new MoveEventArgs(old,location);
             OnMove(args);
          }
       }
@@ -118,7 +118,7 @@ namespace PPPv.Net {
       }
 
       /*События*/
-      public virtual event BaseNetElementMoveEventHandler Move;
+      public virtual event MoveEventHandler Move;
 
       /*Конструкторы*/
 
@@ -126,29 +126,74 @@ namespace PPPv.Net {
          location = new Point(0,0);
          dragPoint = new Point(0,0);
          HitRegion = new Region();
+         //UpdateHitRegion();
       }
 
       /*Методы*/
 
       /*Перемещение на*/
       public void MoveBy(Point p){
-         /*Входной параметр это радиусвектор перемещения*/
+         /* Входной параметр это радиус-вектор перемещения */
          Point old = new Point(location.X,location.Y);
          Location = new Point(X + p.X,Y + p.Y);
-         BaseNetElementMoveEventArgs args = new BaseNetElementMoveEventArgs(old,location);
+         MoveEventArgs args = new MoveEventArgs(old,location);
          OnMove(args);
       }
 
-      /*Абстрактые методы класса*/
+      /* Абстрактые методы класса */
 
-      public abstract void Draw(object sender, PaintEventArgs e);
       public abstract bool IsIntersectWith(Point _point);
       public abstract bool IsIntersectWith(Rectangle _rectangle);
       public abstract bool IsIntersectWith(Region _region);
 
       protected abstract void MouseClickHandler(object sender, MouseEventArgs args);
-      protected abstract void MouseMoveHandler(object sender, MouseEventArgs args);
-      protected abstract void MouseDownHandler(object sender, MouseEventArgs args);
+
+      protected virtual void MouseMoveHandler(object sender, MouseEventArgs args){
+         if(args.Button == MouseButtons.Left){
+            switch(args.currentTool){
+               case Editor.ToolEnum.Pointer:
+                  if(Selected && !args.alreadyPerform){
+                     this.MoveBy(new Point(args.Location.X - Location.X - dragPoint.X, args.Location.Y - Location.Y - dragPoint.Y));
+
+                     (sender as PetriNet).Canvas.Invalidate();
+                  }
+                  break;
+                case Editor.ToolEnum.Place:
+                  break;
+                case Editor.ToolEnum.Transition:
+                  break;
+                case Editor.ToolEnum.Arc:
+                  break;
+                default:
+                  break;
+            }
+         }
+      }
+
+      protected virtual void MouseDownHandler(object sender, MouseEventArgs args){
+         if(args.Button == MouseButtons.Left){
+            switch(args.currentTool){
+               case Editor.ToolEnum.Pointer:
+                  if(Selected = this.IsIntersectWith(new Point(args.X,args.Y)) && !args.alreadyPerform)
+                  {
+                     dragPoint.X = args.X - Location.X;
+                     dragPoint.Y = args.Y - Location.Y;
+                     args.alreadyPerform = true;
+                     (sender as PetriNet).Canvas.Invalidate();
+                  }
+                  break;
+               case Editor.ToolEnum.Place:
+                  break;
+               case Editor.ToolEnum.Transition:
+                  break;
+               case Editor.ToolEnum.Arc:
+                  break;
+               default:
+                  break;
+            }
+         }
+      }
+
       protected abstract void MouseUpHandler(object sender, MouseEventArgs args);
 
       protected abstract void RegionSelectionStartHandler(object sender, RegionSelectionEventArgs args);
@@ -158,6 +203,16 @@ namespace PPPv.Net {
       protected abstract void KeyDownHandler(object sender, KeyEventArgs arg);
 
       protected abstract void UpdateHitRegion();
+
+      public virtual void Draw(object sender, PaintEventArgs e){
+
+         Graphics dc = e.Graphics;
+         dc.SmoothingMode = SmoothingMode.HighQuality;
+
+         /*Кисти*/
+         SolidBrush blueBrush = new SolidBrush(Color.Blue);
+         dc.FillRegion(blueBrush,HitRegion);
+      }
 
       public virtual Point GetPilon(Point from){
          Graphics g = this.ParentNet.Canvas.CreateGraphics();
@@ -200,7 +255,7 @@ namespace PPPv.Net {
          return pilon;
       }
 
-      protected void OnMove(BaseNetElementMoveEventArgs args){
+      protected void OnMove(MoveEventArgs args){
          UpdateHitRegion();
          if(Move != null){
             Move(this,args);

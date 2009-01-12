@@ -4,10 +4,10 @@ using System.Windows.Forms;
 
 namespace PPPv.Net {
 
-  public class BaseNetElementMoveEventArgs{
+  public class MoveEventArgs{
     public Point from, to;
 
-    public BaseNetElementMoveEventArgs(Point start, Point stop){
+    public MoveEventArgs(Point start, Point stop){
       from = new Point(0,0);
       to = new Point(0,0);
       from.X = start.X;

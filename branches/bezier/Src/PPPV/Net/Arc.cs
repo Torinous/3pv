@@ -22,6 +22,25 @@ namespace PPPv.Net {
          }
       }
 
+      private Point FromPilon{
+         get{
+            return fromPilon;
+         }
+         set{
+            fromPilon = value;
+            UpdateHitRegion();
+         }
+      }
+
+      private Point ToPilon{
+         get{
+            return toPilon;
+         }
+         set{
+            toPilon = value;
+            UpdateHitRegion();
+         }
+      }
 
       public BaseNetElement To{
          get{
@@ -32,7 +51,7 @@ namespace PPPv.Net {
                to.Move -= MoveHandler;
             to = value;
             if(to != null){
-               toPilon = to.GetPilon(From.Center);
+               ToPilon = to.GetPilon(From.Center);
                to.Move += MoveHandler;
             }
          }
@@ -47,7 +66,7 @@ namespace PPPv.Net {
                from.Move -= MoveHandler;
             from = value;
             if(from != null){
-               fromPilon = from.Center;
+               FromPilon = from.Center;
                from.Move += MoveHandler;
             }
          }
@@ -64,40 +83,44 @@ namespace PPPv.Net {
          _ID++;
          Name = "A"+_ID;
          From = startElement;
-         toPilon = From.Center;
+         ToPilon = From.Center;
          cortege = "2X";
       }
 
       public override Point Center{
          get{
-            return new Point((fromPilon.X+toPilon.X)/2,(fromPilon.Y+toPilon.Y)/2);
+            return new Point((FromPilon.X+ToPilon.X)/2,(FromPilon.Y+ToPilon.Y)/2);
          }
       }
 
       public override void Draw(object sender, PaintEventArgs e){
+
+         base.Draw(sender,e);
+
          Graphics dc = e.Graphics;
          dc.SmoothingMode = SmoothingMode.HighQuality;
 
-         Pen RedPen = new Pen(Color.Red, 1);
+         Pen blackPen = new Pen(Color.FromArgb(255,0,0,0));
+         Pen RedPen = new Pen(Color.FromArgb(255,255,0,0));
+
          /*Кисти*/
-         SolidBrush grayBrush = new SolidBrush(Color.Gray);
-         SolidBrush blackBrush = new SolidBrush(Color.Black);
+         SolidBrush grayBrush = new SolidBrush(Color.FromArgb(200,100,100,100));
+         SolidBrush blackBrush = new SolidBrush(Color.FromArgb(200,0,0,0));
          /*Шрифт*/
          FontFamily fF_Arial = new FontFamily("Arial");
          Font font1 = new Font(fF_Arial,16,FontStyle.Regular,GraphicsUnit.Pixel);
-         dc.DrawLine(ArrowedBlackPen,fromPilon,toPilon);
+         dc.DrawLine(ArrowedBlackPen,FromPilon,ToPilon);
          dc.DrawString(cortege,font1,blackBrush,Center.X,Center.Y+5);
 
          if(Selected){
-            RectangleF tmp = HitRegion.GetBounds(dc);
-            dc.DrawRectangle(RedPen, new Rectangle((int)tmp.X, (int)tmp.Y, (int)tmp.Width, (int)tmp.Height) );
+            dc.DrawRectangle(RedPen, Rectangle.Ceiling(HitRegion.GetBounds(dc)));
          }
       }
 
       /*private void _arcMouseMoveHandler(object sender, CanvasMouseEventArgs arg){
-         toPilon.X = arg.X;
-         toPilon.Y = arg.Y;
-         fromPilon = from.GetPilon(toPilon);
+         ToPilon.X = arg.X;
+         ToPilon.Y = arg.Y;
+         FromPilon = from.GetPilon(ToPilon);
          ((NetCanvas)sender).Invalidate();
       }*/
 
@@ -116,10 +139,10 @@ namespace PPPv.Net {
          return false;
       }
 
-      private void MoveHandler(object sender, BaseNetElementMoveEventArgs args){
+      private void MoveHandler(object sender, MoveEventArgs args){
          UpdateHitRegion();
-         fromPilon = from.GetPilon(to.Center);
-         toPilon = to.GetPilon(from.Center);
+         FromPilon = from.GetPilon(to.Center);
+         ToPilon = to.GetPilon(from.Center);
       }
 
       protected override void MouseClickHandler(object sender, MouseEventArgs args){
@@ -135,9 +158,8 @@ namespace PPPv.Net {
                break;
             case Editor.ToolEnum.Arc:
                if(Unfinished){
-                  toPilon.X = args.X;
-                  toPilon.Y = args.Y;
-                  fromPilon = from.GetPilon(toPilon);
+                  ToPilon = new Point(args.X,args.Y);
+                  FromPilon = from.GetPilon(ToPilon);
                   (sender as PetriNet).Canvas.Invalidate();
                }
                break;
@@ -147,6 +169,7 @@ namespace PPPv.Net {
       }
 
       protected override void MouseDownHandler(object sender, MouseEventArgs args){
+         base.MouseDownHandler(sender,args);
          if(args.Button == MouseButtons.Left){
             switch(args.currentTool){
                case Editor.ToolEnum.Pointer:
@@ -158,7 +181,7 @@ namespace PPPv.Net {
                case Editor.ToolEnum.Arc:
                   if(Unfinished){
                      BaseNetElement clicked = parent.NetElementUnder(new Point(args.X,args.Y));
-                     clicked = clicked == this ? null : clicked;
+                     clicked = (clicked is Arc) ? null : clicked;
                      if(clicked != null){
                         if(From.GetType() != clicked.GetType()){
                            To = clicked;
@@ -200,20 +223,20 @@ namespace PPPv.Net {
             HitRegion.MakeEmpty();
             GraphicsPath tmpPath = new GraphicsPath();
 
-            Point point1 = new Point(from.Center.X,from.Center.Y-1);
-            Point point2 = new Point(to.Center.X,to.Center.Y-1);
+            Point point1 = new Point(FromPilon.X,FromPilon.Y-1);
+            Point point2 = new Point(ToPilon.X,ToPilon.Y-1);
             tmpPath.AddLine(point1,point2);
 
-            point1 = new Point(to.Center.X,to.Center.Y-1);
-            point2 = new Point(to.Center.X,to.Center.Y+1);
+            point1 = new Point(ToPilon.X,ToPilon.Y-1);
+            point2 = new Point(toPilon.X,ToPilon.Y+1);
             tmpPath.AddLine(point1,point2);
 
-            point1 = new Point(to.Center.X,to.Center.Y+1);
-            point2 = new Point(from.Center.X,from.Center.Y+1);
+            point1 = new Point(ToPilon.X,ToPilon.Y+1);
+            point2 = new Point(FromPilon.X,FromPilon.Y+1);
             tmpPath.AddLine(point1,point2);
 
-            point1 = new Point(from.Center.X,from.Center.Y+1);
-            point2 = new Point(from.Center.X,from.Center.Y-1);
+            point1 = new Point(FromPilon.X,FromPilon.Y+1);
+            point2 = new Point(FromPilon.X,FromPilon.Y-1);
             tmpPath.AddLine(point1,point2);
 
             HitRegion.Union(tmpPath);

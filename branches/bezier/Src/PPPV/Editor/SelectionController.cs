@@ -59,7 +59,7 @@ namespace PPPv.Editor {
             switch(arg.currentTool){
                case ToolEnum.Pointer:
                   if(IsActive){
-                     Point startPoint = new Point(selectFrom.X, selectFrom.Y);
+                     /*Point startPoint = new Point(selectFrom.X, selectFrom.Y);
                      if(arg.X < selectFrom.X)
                         startPoint.X = arg.X;
                      if(arg.Y < selectFrom.Y)
@@ -67,18 +67,18 @@ namespace PPPv.Editor {
                      selectedRectangle.Location = startPoint;
                      selectedRectangle.Size = new Size(Math.Abs(arg.X-selectFrom.X),Math.Abs(arg.Y-selectFrom.Y));
                      ((NetCanvas)sender).Invalidate();
-                     selectedObjects = ((NetCanvas)sender).Net.NetElementUnder(SelectedRectangle);
+                     selectedObjects = ((NetCanvas)sender).Net.NetElementUnder(SelectedRectangle);*/
                   }else{
                      /* Сместим всех выбранных*/
                      BaseNetElement tmpEl;
-                     Point delta = new Point(arg.X - lastMouseDownPoint.X,arg.Y - lastMouseDownPoint.Y);
+                     /*Point delta = new Point(arg.X - lastMouseDownPoint.X,arg.Y - lastMouseDownPoint.Y);
 
                      for(int i=0;i<selectedObjects.Count;++i) {
                         ((BaseNetElement)selectedObjects[i]).MoveBy(delta);
                      }
                      ((NetCanvas)sender).Invalidate();
                      lastMouseDownPoint.X = arg.X;
-                     lastMouseDownPoint.Y = arg.Y;
+                     lastMouseDownPoint.Y = arg.Y;*/
                   }
                   break;
                 case ToolEnum.Place:
@@ -98,7 +98,7 @@ namespace PPPv.Editor {
          if(arg.Button == MouseButtons.Left){
             switch(arg.currentTool){
                case ToolEnum.Pointer:
-                  BaseNetElement tmp = ((NetCanvas)sender).Net.NetElementUnder(new Point(arg.X,arg.Y));
+                  /*BaseNetElement tmp = ((NetCanvas)sender).Net.NetElementUnder(new Point(arg.X,arg.Y));
                   if(tmp!=null){
                      if(!selectedObjects.Contains(tmp)){
                         selectedObjects.Clear();
@@ -109,7 +109,7 @@ namespace PPPv.Editor {
                      IsActive = true;
                      selectFrom = new Point(arg.X,arg.Y);
                   }
-                  ((NetCanvas)sender).Invalidate();
+                  ((NetCanvas)sender).Invalidate();*/
                   break;
                case ToolEnum.Place:
                   break;
@@ -127,10 +127,10 @@ namespace PPPv.Editor {
          if(arg.Button == MouseButtons.Left){
             switch(arg.currentTool){
                case ToolEnum.Pointer:
-                  selectedRectangle.Location = new Point(0,0);
+                  /*selectedRectangle.Location = new Point(0,0);
                   selectedRectangle.Size = new Size(0,0);
                   ((NetCanvas)sender).Invalidate();
-                  IsActive = false;
+                  IsActive = false;*/
                   break;
                case ToolEnum.Place:
                   break;
