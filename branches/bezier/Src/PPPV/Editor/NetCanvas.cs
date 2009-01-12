@@ -15,11 +15,14 @@ namespace PPPv.Editor{
       /*Поля*/
       NetToolStrip ToolController;
       private PetriNet net;
-      private Arc _justCreatedArc;
       private int _gridStep;
       private SelectionController selectionController;
       private ContextMenuStrip _contextMenuStrip;
       private ContextMenuController contextMenuController;
+      /*Для контроля выбора рамкой*/
+      private Rectangle selectedRectangle;
+      private Point selectFrom;
+      private bool isSelectionActive = false;
 
       /*Акцессоры доступа*/
       public PetriNet Net{
@@ -31,11 +34,24 @@ namespace PPPv.Editor{
          }
       }
 
+      public Rectangle SelectedRectangle{
+         get{
+            return selectedRectangle;
+         }
+         private set{
+            selectedRectangle = value;
+         }
+      }
+
       /*События*/
       public event CanvasMouseEventHandler CanvasMouseClick;
       public event CanvasMouseEventHandler CanvasMouseMove;
       public event CanvasMouseEventHandler CanvasMouseDown;
       public event CanvasMouseEventHandler CanvasMouseUp;
+
+      public event RegionSelectionEventHandler RegionSelectionStart;
+      public event RegionSelectionEventHandler RegionSelectionEnd;
+      public event RegionSelectionEventHandler RegionSelectionUpdate;
 
       protected override void OnPaintBackground(PaintEventArgs e)
       {
@@ -55,11 +71,6 @@ namespace PPPv.Editor{
                dc.DrawLine(GrayPen,x,e.ClipRectangle.Top,x,e.ClipRectangle.Bottom);
             }
          }
-      }
-
-      protected override void OnPaint(PaintEventArgs e){
-         e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
-         base.OnPaint(e);
       }
 
       /*Конструктор*/
@@ -84,7 +95,7 @@ namespace PPPv.Editor{
          contextMenuController = new ContextMenuController(this);
 
          /*Пристыкуем события*/
-         this.Paint += selectionController.Draw;
+         this.Paint += Draw;
          this.CanvasMouseClick += CanvasMouseClickHandler;
          this.CanvasMouseMove += CanvasMouseMoveHandler;
          this.CanvasMouseMove += selectionController.CanvasMouseMoveHandler;
@@ -102,6 +113,14 @@ namespace PPPv.Editor{
          if(f != null){
             f.KeyDown += CanvasKeyDownHandler;
          }
+      }
+
+      public void Draw(object sender, PaintEventArgs e){
+         Graphics dc = e.Graphics;
+         dc.SmoothingMode = SmoothingMode.HighQuality;
+         Pen RedPen = new Pen(Color.Red, 1);
+
+         dc.DrawRectangle(RedPen, SelectedRectangle);
       }
 
       private void InitializeComponent() {
@@ -159,6 +178,31 @@ namespace PPPv.Editor{
          }
       }
 
+
+      private void OnCanvasRegionSelectionStart(){
+         if(RegionSelectionStart != null){
+            RegionSelectionEventArgs args = new RegionSelectionEventArgs();
+            args.selectionRectangle = SelectedRectangle;
+            RegionSelectionStart(this,args);
+         }
+      }
+
+      private void OnCanvasRegionSelectionEnd(){
+         if(RegionSelectionEnd != null){
+            RegionSelectionEventArgs args = new RegionSelectionEventArgs();
+            args.selectionRectangle = SelectedRectangle;
+            RegionSelectionEnd(this,args);
+         }
+      }
+
+      private void OnCanvasRegionSelectionUpdate(){
+         if(RegionSelectionUpdate != null){
+            RegionSelectionEventArgs args = new RegionSelectionEventArgs();
+            args.selectionRectangle = SelectedRectangle;
+            RegionSelectionUpdate(this,args);
+         }
+      }
+
       private void CanvasMouseClickHandler(object sender, CanvasMouseEventArgs arg){
          if(arg.Button == MouseButtons.Right){
             BaseNetElement contextMenuTarget = Net.NetElementUnder(new Point(arg.X,arg.Y));
@@ -187,24 +231,17 @@ namespace PPPv.Editor{
          if(arg.Button == MouseButtons.Left){
             switch(arg.currentTool){
                case ToolEnum.Pointer:
+                  BaseNetElement tmp = ((NetCanvas)sender).Net.NetElementUnder(new Point(arg.X,arg.Y));
+                  if(tmp == null){
+                     OnCanvasRegionSelectionStart();
+                  }
+                  ((NetCanvas)sender).Invalidate();
                   break;
                case ToolEnum.Place:
                   break;
                case ToolEnum.Transition:
                   break;
                case ToolEnum.Arc:
-                  BaseNetElement clicked = Net.NetElementUnder(new Point(arg.X,arg.Y));
-                  if(clicked!=null){
-                     if(_justCreatedArc != null){
-                        if(_justCreatedArc.From.GetType() != clicked.GetType()){
-                           _justCreatedArc.To = clicked;
-                           _justCreatedArc = null;
-                        }
-                     }else{
-                        _justCreatedArc = (Arc) Net.AddArc(clicked,(NetCanvas)sender);
-                     }
-                  }
-                  ((NetCanvas)sender).Invalidate();
                   break;
                default:
                   break;
@@ -230,14 +267,7 @@ namespace PPPv.Editor{
       }
 
       private void CanvasKeyDownHandler(object sender, KeyEventArgs arg){
-         if(arg.KeyCode == Keys.Escape){
-            if(_justCreatedArc != null){
-               _justCreatedArc.Unlink();
-               Net.Delete(_justCreatedArc);
-               _justCreatedArc = null;
-               this.Invalidate();//TODO: полный Invalidate это не хорошо!!!
-            }
-         }
+         OnKeyDown(arg);
       }
    }
 }

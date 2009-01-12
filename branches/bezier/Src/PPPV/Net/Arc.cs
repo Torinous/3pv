@@ -3,8 +3,7 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 using PPPv.Utils;
-using PPPv.Editor;
-using PPPv.Net;
+//using PPPv.Editor;
 
 namespace PPPv.Net {
    public class Arc : BaseNetElement {
@@ -12,7 +11,6 @@ namespace PPPv.Net {
       protected static Pen ArrowedBlackPen = ArrowedBlackPenFactory();
       private BaseNetElement from,to;
       private Point fromPilon,toPilon;
-      private NetCanvas _canvas;
       private string cortege;
 
       public string Cortege{
@@ -23,14 +21,50 @@ namespace PPPv.Net {
             cortege = value;
          }
       }
+
+
+      public BaseNetElement To{
+         get{
+            return to;
+         }
+         set{
+            if(to != null)
+               to.Move -= MoveHandler;
+            to = value;
+            if(to != null){
+               toPilon = to.GetPilon(From.Center);
+               to.Move += MoveHandler;
+            }
+         }
+      }
+
+      public BaseNetElement From{
+         get{
+            return from;
+         }
+         set{
+            if(from != null)
+               from.Move -= MoveHandler;
+            from = value;
+            if(from != null){
+               fromPilon = from.Center;
+               from.Move += MoveHandler;
+            }
+         }
+      }
+
+      public bool Unfinished{
+         get{
+            return To == null;
+         }
+      }
+
       /*Конструктор*/
-      public Arc(BaseNetElement startElement,NetCanvas netCanvas) {
+      public Arc(BaseNetElement startElement) {
          _ID++;
          Name = "A"+_ID;
          From = startElement;
          toPilon = From.Center;
-         _canvas = netCanvas;
-         _canvas.CanvasMouseMove += _arcMouseMoveHandler;
          cortege = "2X";
       }
 
@@ -42,6 +76,9 @@ namespace PPPv.Net {
 
       public override void Draw(object sender, PaintEventArgs e){
          Graphics dc = e.Graphics;
+         dc.SmoothingMode = SmoothingMode.HighQuality;
+
+         Pen RedPen = new Pen(Color.Red, 1);
          /*Кисти*/
          SolidBrush grayBrush = new SolidBrush(Color.Gray);
          SolidBrush blackBrush = new SolidBrush(Color.Black);
@@ -50,14 +87,19 @@ namespace PPPv.Net {
          Font font1 = new Font(fF_Arial,16,FontStyle.Regular,GraphicsUnit.Pixel);
          dc.DrawLine(ArrowedBlackPen,fromPilon,toPilon);
          dc.DrawString(cortege,font1,blackBrush,Center.X,Center.Y+5);
+
+         if(Selected){
+            RectangleF tmp = HitRegion.GetBounds(dc);
+            dc.DrawRectangle(RedPen, new Rectangle((int)tmp.X, (int)tmp.Y, (int)tmp.Width, (int)tmp.Height) );
+         }
       }
 
-      private void _arcMouseMoveHandler(object sender, CanvasMouseEventArgs arg){
+      /*private void _arcMouseMoveHandler(object sender, CanvasMouseEventArgs arg){
          toPilon.X = arg.X;
          toPilon.Y = arg.Y;
          fromPilon = from.GetPilon(toPilon);
          ((NetCanvas)sender).Invalidate();
-      }
+      }*/
 
       public override bool IsIntersectWith(Point _point){
          return HitRegion.IsVisible(_point);
@@ -84,12 +126,73 @@ namespace PPPv.Net {
       }
 
       protected override void MouseMoveHandler(object sender, MouseEventArgs args){
+         switch(args.currentTool){
+            case Editor.ToolEnum.Pointer:
+               break;
+            case Editor.ToolEnum.Place:
+               break;
+            case Editor.ToolEnum.Transition:
+               break;
+            case Editor.ToolEnum.Arc:
+               if(Unfinished){
+                  toPilon.X = args.X;
+                  toPilon.Y = args.Y;
+                  fromPilon = from.GetPilon(toPilon);
+                  (sender as PetriNet).Canvas.Invalidate();
+               }
+               break;
+            default:
+               break;
+         }
       }
 
       protected override void MouseDownHandler(object sender, MouseEventArgs args){
+         if(args.Button == MouseButtons.Left){
+            switch(args.currentTool){
+               case Editor.ToolEnum.Pointer:
+                  break;
+               case Editor.ToolEnum.Place:
+                  break;
+               case Editor.ToolEnum.Transition:
+                  break;
+               case Editor.ToolEnum.Arc:
+                  if(Unfinished){
+                     BaseNetElement clicked = parent.NetElementUnder(new Point(args.X,args.Y));
+                     clicked = clicked == this ? null : clicked;
+                     if(clicked != null){
+                        if(From.GetType() != clicked.GetType()){
+                           To = clicked;
+                        }
+                     }else{
+                     }
+                     (sender as PetriNet).Canvas.Invalidate();
+                  }
+                  break;
+               default:
+                  break;
+            }
+         }
       }
 
       protected override void MouseUpHandler(object sender, MouseEventArgs args){
+      }
+
+      protected override void RegionSelectionStartHandler(object sender, RegionSelectionEventArgs args){
+      }
+
+      protected override void RegionSelectionUpdateHandler(object sender, RegionSelectionEventArgs args){
+      }
+
+      protected override void RegionSelectionEndHandler(object sender, RegionSelectionEventArgs args){
+      }
+
+      protected override void KeyDownHandler(object sender, KeyEventArgs arg){
+         if(arg.KeyCode == Keys.Escape){
+            if(to == null){
+               parent.Delete(this);
+               (sender as PetriNet).Canvas.Invalidate();//TODO: полный Invalidate это нехорошо!!!
+            }
+         }
       }
 
       protected override void UpdateHitRegion(){
@@ -117,46 +220,16 @@ namespace PPPv.Net {
          }
       }
 
-      public BaseNetElement To{
-         get{
-            return to;
-         }
-         set{
-            to = value;
-            Unlink();
-            to.Move += MoveHandler;
-            toPilon = to.GetPilon(From.Center);
-         }
-      }
-
-      public BaseNetElement From{
-         get{
-            return from;
-         }
-         set{
-            from = value;
-            from.Move += MoveHandler;
-            fromPilon = from.Center;
-         }
-      }
-
-      public void Unlink(){
-          _canvas.CanvasMouseMove -= _arcMouseMoveHandler;
-      }
-
-      private static Pen ArrowedBlackPenFactory(){
-         Pen p = new Pen(Color.Black,1);
-         GraphicsPath hPath = new GraphicsPath();
-         hPath.AddLine(new Point(4, -7), new Point(0, 0));
-         hPath.AddLine(new Point(-4, -7), new Point(0, 0));
-         CustomLineCap ArrowCap = new CustomLineCap(null, hPath);
-         ArrowCap.SetStrokeCaps(LineCap.Triangle, LineCap.Triangle);
-         p.CustomEndCap = ArrowCap;
-         return p;
-      }
-
+      /*Чисто фиктивно, просто чтобы реализовать абстрактный член*/
       public override Point GetPilon(Point from){
          return Center;
       }
+
+      public override void PrepareToDeletion(){
+         From = null;
+         To = null;
+         base.PrepareToDeletion();
+      }
+
    }
 }

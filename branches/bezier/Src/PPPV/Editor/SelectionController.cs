@@ -45,11 +45,12 @@ namespace PPPv.Editor {
             dc.SmoothingMode = SmoothingMode.HighQuality;
             dc.DrawRectangle(RedPen, SelectedRectangle);
          }else{
-            int i;
+            /*int i;
             for(i=0;i<selectedObjects.Count;++i) {
                RectangleF tmp = ((BaseNetElement)selectedObjects[i]).HitRegion.GetBounds(dc);
                dc.DrawRectangle(RedPen, new Rectangle((int)tmp.X, (int)tmp.Y, (int)tmp.Width, (int)tmp.Height) );
             }
+            */
          }
       }
 

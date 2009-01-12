@@ -8,14 +8,14 @@ using PPPv.Editor;
 using PPPv.Utils;
 
 namespace PPPv {
-   public class PPPVApplication {
+   public class Application {
       private ArrayList _netList;
       private Editor.MainForm _mainFormInst;
       /**/
       private NetToolStrip _netToolStrip;
       private MainMenuStrip _mainMenuStrip;
 
-      public PPPVApplication() {
+      public Application() {
 
         InitializeComponent();
         /*получим ссылки на важные элементы*/
@@ -57,7 +57,7 @@ namespace PPPv {
       }
       public void PrepareLog(){
         //Log preparing
-        FileStream LogFile = new FileStream(Application.StartupPath + "\\log", FileMode.Create);
+        FileStream LogFile = new FileStream(System.Windows.Forms.Application.StartupPath + "\\log", FileMode.Create);
         TextWriterTraceListener MyListener = new TextWriterTraceListener(LogFile);
         Trace.Listeners.Add(MyListener);
         Trace.AutoFlush = true;
@@ -65,6 +65,7 @@ namespace PPPv {
 
       public void Run() {
         PrepareLog();
+        /*Тут бы надо завернуть в Try и написать хорошую форму для показа Exceptions*/
         System.Windows.Forms.Application.Run(_mainFormInst);
         PreciseTimer.ShowTimeTable();
       }

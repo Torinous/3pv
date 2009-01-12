@@ -2,7 +2,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-using PPPv.Editor;
+//using PPPv.Editor;
 using PPPv.Utils;
 
 namespace PPPv.Net {
@@ -28,7 +28,9 @@ namespace PPPv.Net {
 
       public override void Draw(object sender, PaintEventArgs e){
          Graphics dc = e.Graphics;
+         dc.SmoothingMode = SmoothingMode.HighQuality;
          Pen blackPen = new Pen(Color.Black, 1);
+         Pen RedPen = new Pen(Color.Red, 1);
          /*Кисти*/
          SolidBrush grayBrush = new SolidBrush(Color.Gray);
          SolidBrush blackBrush = new SolidBrush(Color.Black);
@@ -42,6 +44,11 @@ namespace PPPv.Net {
          dc.FillRegion(grayBrush, fillRegion);
          dc.DrawEllipse(blackPen, X, Y, _radius, _radius);
          dc.DrawString(Name,font1,blackBrush,X+_radius,Y-10);
+
+         if(Selected){
+            RectangleF tmp = HitRegion.GetBounds(dc);
+            dc.DrawRectangle(RedPen, new Rectangle((int)tmp.X, (int)tmp.Y, (int)tmp.Width, (int)tmp.Height) );
+         }
       }
 
       public override bool IsIntersectWith(Point _point){
@@ -74,17 +81,17 @@ namespace PPPv.Net {
       protected override void MouseMoveHandler(object sender, MouseEventArgs args){
          if(args.Button == MouseButtons.Left){
             switch(args.currentTool){
-               case ToolEnum.Pointer:
+               case Editor.ToolEnum.Pointer:
                   if(Selected){
-                     this.MoveBy(new Point(args.Location.X - Location.X, args.Location.Y - Location.Y));
+                     this.MoveBy(new Point(args.Location.X - Location.X - dragPoint.X, args.Location.Y - Location.Y - dragPoint.Y));
                      (sender as PetriNet).Canvas.Invalidate();
                   }
                   break;
-                case ToolEnum.Place:
+                case Editor.ToolEnum.Place:
                   break;
-                case ToolEnum.Transition:
+                case Editor.ToolEnum.Transition:
                   break;
-                case ToolEnum.Arc:
+                case Editor.ToolEnum.Arc:
                   break;
                 default:
                   break;
@@ -95,15 +102,19 @@ namespace PPPv.Net {
       protected override void MouseDownHandler(object sender, MouseEventArgs args){
          if(args.Button == MouseButtons.Left){
             switch(args.currentTool){
-               case ToolEnum.Pointer:
-                  Selected = this.IsIntersectWith(new Point(args.X,args.Y));
+               case Editor.ToolEnum.Pointer:
+                  if(Selected = this.IsIntersectWith(new Point(args.X,args.Y)))
+                  {
+                     dragPoint.X = args.X - Location.X;
+                     dragPoint.Y = args.Y - Location.Y;
+                  }
                   (sender as PetriNet).Canvas.Invalidate();
                   break;
-               case ToolEnum.Place:
+               case Editor.ToolEnum.Place:
                   break;
-               case ToolEnum.Transition:
+               case Editor.ToolEnum.Transition:
                   break;
-               case ToolEnum.Arc:
+               case Editor.ToolEnum.Arc:
                   break;
                default:
                   break;
@@ -114,40 +125,16 @@ namespace PPPv.Net {
       protected override void MouseUpHandler(object sender, MouseEventArgs args){
       }
 
-      public override Point GetPilon(Point from){
-         Region reg = new Region();
-         reg = HitRegion.Clone();
-         Pen greenPen = new Pen(Color.Black, 1);
-         GraphicsPath gp = new GraphicsPath();
-         gp.AddLine(from,Center);
-         gp.Widen(greenPen);
-         reg.Intersect(gp);
-         Graphics g = this.ParentNet.Canvas.CreateGraphics();
-         if(reg.IsEmpty(g))
-            MessageBox.Show("ff");
-         RectangleF bounds = reg.GetBounds(g);
-         Rectangle rect = new Rectangle();
-         rect = Rectangle.Ceiling(bounds);
-         Point pilon = new Point();
-         if(from.X <= Center.X){
-            if(from.Y <= Center.Y){
-               pilon.X = rect.Left;
-               pilon.Y = rect.Top;
-            }else{
-               pilon.X = rect.Left;
-               pilon.Y = rect.Bottom;
-            }
-         }else{
-            if(from.Y <= Center.Y){
-               pilon.X = rect.Right;
-               pilon.Y = rect.Top;
-            }else{
-               pilon.X = rect.Right;
-               pilon.Y = rect.Bottom;
-            }
-         }
-         g.Dispose();
-         return pilon;
+      protected override void RegionSelectionStartHandler(object sender, RegionSelectionEventArgs args){
+      }
+
+      protected override void RegionSelectionUpdateHandler(object sender, RegionSelectionEventArgs args){
+      }
+
+      protected override void RegionSelectionEndHandler(object sender, RegionSelectionEventArgs args){
+      }
+
+      protected override void KeyDownHandler(object sender, KeyEventArgs arg){
       }
    }
 }

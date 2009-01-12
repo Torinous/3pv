@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using System.Collections;
 using System.Drawing.Drawing2D;
 
-using PPPv.Editor;
+//using PPPv.Editor;
 using PPPv.Utils;
 
 
@@ -13,7 +13,7 @@ namespace PPPv.Net {
       private ArrayList transitions;
       private ArrayList arcs;
       private ArrayList currentSelectedObjects;
-      private NetCanvas canvas;
+      private Editor.NetCanvas canvas;
 
       /*События*/
       public event MouseEventHandler MouseClick;
@@ -21,6 +21,12 @@ namespace PPPv.Net {
       public event MouseEventHandler MouseDown;
       public event MouseEventHandler MouseUp;
       public event PaintEventHandler Paint;
+
+      public event RegionSelectionEventHandler RegionSelectionStart;
+      public event RegionSelectionEventHandler RegionSelectionUpdate;
+      public event RegionSelectionEventHandler RegionSelectionEnd;
+
+      public event KeyEventHandler KeyDown;
 
       public ArrayList CurrentSelected{
          get{
@@ -31,37 +37,53 @@ namespace PPPv.Net {
          }
       }
 
-      public NetCanvas Canvas{
+      public Editor.NetCanvas Canvas{
          get{
             return canvas;
          }
          set{
             if(canvas != null){
-               canvas.CanvasMouseClick -= CanvasMouseClickRetranslator;
-               canvas.CanvasMouseClick -= CanvasMouseClickHandler;
-               canvas.CanvasMouseMove  -= CanvasMouseMoveRetranslator;
-               canvas.CanvasMouseMove  -= CanvasMouseMoveHandler;
-               canvas.CanvasMouseDown  -= CanvasMouseDownRetranslator;
-               canvas.CanvasMouseDown  -= CanvasMouseDownHandler;
-               canvas.CanvasMouseUp    -= CanvasMouseUpRetranslator;
-               canvas.CanvasMouseUp    -= CanvasMouseUpHandler;
-               canvas.Paint            -= CanvasPaintRetranslator;
-               canvas.Paint            -= CanvasPaintHandler;
+               canvas.CanvasMouseClick      -= CanvasMouseClickHandler;
+               canvas.CanvasMouseClick      -= CanvasMouseClickRetranslator;
+               canvas.CanvasMouseMove       -= CanvasMouseMoveHandler;
+               canvas.CanvasMouseMove       -= CanvasMouseMoveRetranslator;
+               canvas.CanvasMouseDown       -= CanvasMouseDownHandler;
+               canvas.CanvasMouseDown       -= CanvasMouseDownRetranslator;
+               canvas.CanvasMouseUp         -= CanvasMouseUpHandler;
+               canvas.CanvasMouseUp         -= CanvasMouseUpRetranslator;
+               canvas.Paint                 -= CanvasPaintHandler;
+               canvas.Paint                 -= CanvasPaintRetranslator;
+               canvas.RegionSelectionStart  -= RegionSelectionStartHandler;
+               canvas.RegionSelectionStart  -= RegionSelectionStartRetranslator;
+               canvas.RegionSelectionUpdate -= RegionSelectionUpdateHandler;
+               canvas.RegionSelectionUpdate -= RegionSelectionUpdateRetranslator;
+               canvas.RegionSelectionEnd    -= RegionSelectionEndHandler;
+               canvas.RegionSelectionEnd    -= RegionSelectionEndRetranslator;
+               canvas.KeyDown               -= CanvasKeyDownRetranslator;
+               canvas.KeyDown               -= CanvasKeyDownHandler;
             }
 
             canvas = value;
 
             if(canvas != null){
-               canvas.CanvasMouseClick += CanvasMouseClickRetranslator;
-               canvas.CanvasMouseClick += CanvasMouseClickHandler;
-               canvas.CanvasMouseMove  += CanvasMouseMoveRetranslator;
-               canvas.CanvasMouseMove  += CanvasMouseMoveHandler;
-               canvas.CanvasMouseDown  += CanvasMouseDownRetranslator;
-               canvas.CanvasMouseDown  += CanvasMouseDownHandler;
-               canvas.CanvasMouseUp    += CanvasMouseUpRetranslator;
-               canvas.CanvasMouseUp    += CanvasMouseUpHandler;
-               canvas.Paint            += CanvasPaintRetranslator;
-               canvas.Paint            += CanvasPaintHandler;
+               canvas.CanvasMouseClick      += CanvasMouseClickHandler;
+               canvas.CanvasMouseClick      += CanvasMouseClickRetranslator;
+               canvas.CanvasMouseMove       += CanvasMouseMoveHandler;
+               canvas.CanvasMouseMove       += CanvasMouseMoveRetranslator;
+               canvas.CanvasMouseDown       += CanvasMouseDownHandler;
+               canvas.CanvasMouseDown       += CanvasMouseDownRetranslator;
+               canvas.CanvasMouseUp         += CanvasMouseUpHandler;
+               canvas.CanvasMouseUp         += CanvasMouseUpRetranslator;
+               canvas.Paint                 += CanvasPaintHandler;
+               canvas.Paint                 += CanvasPaintRetranslator;
+               canvas.RegionSelectionStart  += RegionSelectionStartHandler;
+               canvas.RegionSelectionStart  += RegionSelectionStartRetranslator;
+               canvas.RegionSelectionUpdate += RegionSelectionUpdateHandler;
+               canvas.RegionSelectionUpdate += RegionSelectionUpdateRetranslator;
+               canvas.RegionSelectionEnd    += RegionSelectionEndHandler;
+               canvas.RegionSelectionEnd    += RegionSelectionEndRetranslator;
+               canvas.KeyDown               += CanvasKeyDownHandler;
+               canvas.KeyDown               += CanvasKeyDownRetranslator;
             }
          }
       }
@@ -140,22 +162,46 @@ namespace PPPv.Net {
          }
       }
 
-      private void CanvasMouseClickRetranslator(object sender, CanvasMouseEventArgs args){
+      private void OnRegionSelectionStart(Editor.RegionSelectionEventArgs e){
+         if(RegionSelectionStart != null){
+            RegionSelectionStart(this,new RegionSelectionEventArgs(e));
+         }
+      }
+
+      private void OnRegionSelectionUpdate(Editor.RegionSelectionEventArgs e){
+         if(RegionSelectionUpdate != null){
+            RegionSelectionUpdate(this,new RegionSelectionEventArgs(e));
+         }
+      }
+
+      private void OnRegionSelectionEnd(Editor.RegionSelectionEventArgs e){
+         if(RegionSelectionEnd != null){
+            RegionSelectionEnd(this,new RegionSelectionEventArgs(e));
+         }
+      }
+
+      private void OnKeyDown(KeyEventArgs e){
+         if(KeyDown != null){
+            KeyDown(this,e);
+         }
+      }
+
+      private void CanvasMouseClickRetranslator(object sender, Editor.CanvasMouseEventArgs args){
          MouseEventArgs newArgs = new MouseEventArgs(args);
          OnMouseClick(newArgs);
       }
 
-      private void CanvasMouseMoveRetranslator(object sender, CanvasMouseEventArgs args){
+      private void CanvasMouseMoveRetranslator(object sender, Editor.CanvasMouseEventArgs args){
          MouseEventArgs newArgs = new MouseEventArgs(args);
          OnMouseMove(newArgs);
       }
 
-      private void CanvasMouseDownRetranslator(object sender, CanvasMouseEventArgs args){
+      private void CanvasMouseDownRetranslator(object sender, Editor.CanvasMouseEventArgs args){
          MouseEventArgs newArgs = new MouseEventArgs(args);
          OnMouseDown(newArgs);
       }
 
-      private void CanvasMouseUpRetranslator(object sender, CanvasMouseEventArgs args){
+      private void CanvasMouseUpRetranslator(object sender, Editor.CanvasMouseEventArgs args){
          MouseEventArgs newArgs = new MouseEventArgs(args);
          OnMouseUp(newArgs);
       }
@@ -164,26 +210,45 @@ namespace PPPv.Net {
          OnPaint(args);
       }
 
-      private void CanvasMouseClickHandler(object sender, CanvasMouseEventArgs args){
+      private void RegionSelectionStartRetranslator(object sender, Editor.RegionSelectionEventArgs args){
+         OnRegionSelectionStart(args);
       }
 
-      private void CanvasMouseMoveHandler(object sender, CanvasMouseEventArgs args){
+      private void RegionSelectionUpdateRetranslator(object sender, Editor.RegionSelectionEventArgs args){
+         OnRegionSelectionUpdate(args);
+      }
+      private void RegionSelectionEndRetranslator(object sender, Editor.RegionSelectionEventArgs args){
+         OnRegionSelectionEnd(args);
       }
 
-      private void CanvasMouseDownHandler(object sender, CanvasMouseEventArgs args){
+      private void CanvasKeyDownRetranslator(object sender, KeyEventArgs arg){
+         OnKeyDown(arg);
+      }
+
+      private void CanvasMouseClickHandler(object sender, Editor.CanvasMouseEventArgs args){
+      }
+
+      private void CanvasMouseMoveHandler(object sender, Editor.CanvasMouseEventArgs args){
+      }
+
+      private void CanvasMouseDownHandler(object sender, Editor.CanvasMouseEventArgs args){
          if(args.Button == MouseButtons.Left){
             switch(args.currentTool){
-               case ToolEnum.Pointer:
+               case Editor.ToolEnum.Pointer:
                   break;
-               case ToolEnum.Place:
+               case Editor.ToolEnum.Place:
                   AddPlace(args.X,args.Y);
-                  (sender as NetCanvas).Invalidate();
+                  (sender as Editor.NetCanvas).Invalidate();
                   break;
-               case ToolEnum.Transition:
+               case Editor.ToolEnum.Transition:
                   AddTransition(args.X,args.Y);
-                  (sender as NetCanvas).Invalidate();
+                  (sender as Editor.NetCanvas).Invalidate();
                   break;
-               case ToolEnum.Arc:
+               case Editor.ToolEnum.Arc:
+                  BaseNetElement clicked = NetElementUnder(new Point(args.X,args.Y));
+                  if(clicked != null && !HaveUnfinishedArcs())
+                     AddArc(clicked);
+                  (sender as Editor.NetCanvas).Invalidate();
                   break;
                default:
                   break;
@@ -191,10 +256,22 @@ namespace PPPv.Net {
          }
       }
 
-      private void CanvasMouseUpHandler(object sender, CanvasMouseEventArgs args){
+      private void CanvasMouseUpHandler(object sender, Editor.CanvasMouseEventArgs args){
       }
 
       private void CanvasPaintHandler(object sender, PaintEventArgs args){
+      }
+
+      protected void RegionSelectionStartHandler(object sender, Editor.RegionSelectionEventArgs args){
+      }
+
+      protected void RegionSelectionUpdateHandler(object sender, Editor.RegionSelectionEventArgs args){
+      }
+
+      protected void RegionSelectionEndHandler(object sender, Editor.RegionSelectionEventArgs args){
+      }
+
+      private void CanvasKeyDownHandler(object sender, KeyEventArgs arg){
       }
 
       public BaseNetElement AddPlace(int x, int y) {
@@ -207,8 +284,8 @@ namespace PPPv.Net {
          return ElementPortal = tmpTransition;
       }
 
-      public BaseNetElement AddArc(BaseNetElement startElement, NetCanvas netCanvas) {
-         Arc tmpArc = new Arc(startElement,netCanvas);
+      public BaseNetElement AddArc(BaseNetElement startElement) {
+         Arc tmpArc = new Arc(startElement);
          return ElementPortal = tmpArc;
       }
 
@@ -221,14 +298,17 @@ namespace PPPv.Net {
       }
 
       public void Delete(Arc a){
+         a.PrepareToDeletion();
          Arcs.Remove(a);
       }
 
       public void Delete(Transition t){
+         t.PrepareToDeletion();
          Transitions.Remove(t);
       }
 
       public void Delete(Place p){
+         p.PrepareToDeletion();
          Places.Remove(p);
       }
 
@@ -279,6 +359,15 @@ namespace PPPv.Net {
             }
          }
          return selectedObjects;
+      }
+
+      private bool HaveUnfinishedArcs(){
+         for(int i=0;i<Arcs.Count;++i) {
+            if(((Arc)Arcs[i]).Unfinished){
+               return true;
+            }
+         }
+         return false;
       }
    }
 }
