@@ -239,6 +239,9 @@ namespace PPPv.Net {
             point2 = new Point(FromPilon.X,FromPilon.Y-1);
             tmpPath.AddLine(point1,point2);
 
+            tmpPath.Widen(new Pen(Color.Red,3));
+            tmpPath.Widen(new Pen(Color.Red,3));
+
             HitRegion.Union(tmpPath);
          }
       }
