@@ -8,6 +8,7 @@ namespace PPPv.Net {
    public class Transition : NetElement {
       private static int _ID = 0;
       private string guardFunction;
+      private Pilon sizeController;
 
       public string GuardFunction{
          get{
@@ -23,6 +24,7 @@ namespace PPPv.Net {
          Name = "T"+_ID;
          X = x-10;
          Y = y-25;
+         sizeController = new Pilon(this,new Point(x+10,y+25));
          UpdateHitRegion();
          guardFunction = "x=y";
       }
@@ -52,21 +54,6 @@ namespace PPPv.Net {
          dc.FillRegion(grayBrush, fillRegion);
          dc.DrawRectangle(blackPen, X, Y, 20, 50);
          dc.DrawString(Name+"\n"+guardFunction,font1,blackBrush,X+20,Y-17);
-      }
-
-      public override bool IsIntersectWith(Point _point){
-         return HitRegion.IsVisible(_point);
-      }
-
-      public override bool IsIntersectWith(Rectangle _rectangle){
-         return HitRegion.IsVisible(_rectangle);
-      }
-
-      public override bool IsIntersectWith(Region _region){
-         /*Region tmp = new Region(HitRegion);
-         tmp.Intersect(_region);
-         return tmp.IsEmpty;*/
-         return false;
       }
 
       protected override void UpdateHitRegion(){

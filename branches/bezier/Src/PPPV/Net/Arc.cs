@@ -51,7 +51,7 @@ namespace PPPv.Net {
                to.Move -= MoveHandler;
             to = value;
             if(to != null){
-               ToPilon = to.GetPilon(From.Center);
+               ToPilon = to.GetPilon(From.Center,this.ParentNet.Canvas.CreateGraphics());
                to.Move += MoveHandler;
             }
          }
@@ -117,32 +117,11 @@ namespace PPPv.Net {
 
       }*/
 
-      /*private void _arcMouseMoveHandler(object sender, CanvasMouseEventArgs arg){
-         ToPilon.X = arg.X;
-         ToPilon.Y = arg.Y;
-         FromPilon = from.GetPilon(ToPilon);
-         ((NetCanvas)sender).Invalidate();
-      }*/
-
-      public override bool IsIntersectWith(Point _point){
-         return HitRegion.IsVisible(_point);
-      }
-
-      public override bool IsIntersectWith(Rectangle _rectangle){
-         return HitRegion.IsVisible(_rectangle);
-      }
-
-      public override bool IsIntersectWith(Region _region){
-         /*Region tmp = new Region(HitRegion.GetRegionData());
-         tmp.Intersect(_region);
-         return tmp.IsEmpty();*/
-         return false;
-      }
 
       private void MoveHandler(object sender, MoveEventArgs args){
          UpdateHitRegion();
-         FromPilon = from.GetPilon(to.Center);
-         ToPilon = to.GetPilon(from.Center);
+         FromPilon = from.GetPilon(to.Center,this.ParentNet.Canvas.CreateGraphics());
+         ToPilon = to.GetPilon(from.Center,this.ParentNet.Canvas.CreateGraphics());
       }
 
       protected override void MouseClickHandler(object sender, MouseEventArgs args){
@@ -159,7 +138,7 @@ namespace PPPv.Net {
             case Editor.ToolEnum.Arc:
                if(Unfinished){
                   ToPilon = new Point(args.X,args.Y);
-                  FromPilon = from.GetPilon(ToPilon);
+                  FromPilon = from.GetPilon(ToPilon,this.ParentNet.Canvas.CreateGraphics());
                   (sender as PetriNet).Canvas.Invalidate();
                }
                break;
@@ -246,7 +225,7 @@ namespace PPPv.Net {
       }
 
       /*Чисто фиктивно, просто чтобы реализовать абстрактный член*/
-      public override Point GetPilon(Point from){
+      public override Point GetPilon(Point from,Graphics on){
          return Center;
       }
 

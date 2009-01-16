@@ -84,6 +84,10 @@ namespace PPPv.Net {
       public virtual event MoveEventHandler            Move;
       public virtual event SelectionChangeEventHandler SelectionChange;
 
+      public virtual event MouseEventHandler MouseMove;
+      public virtual event MouseEventHandler MouseDown;
+      public virtual event PaintEventHandler Paint;
+
       /*Конструкторы*/
 
       public GraphicalElement() {
@@ -100,17 +104,47 @@ namespace PPPv.Net {
          /* Входной параметр это радиус-вектор перемещения */
          Point old = new Point(location.X,location.Y);
          Location = new Point(X + p.X,Y + p.Y);
-         MoveEventArgs args = new MoveEventArgs(old,location);
-         OnMove(args);
+         //MoveEventArgs args = new MoveEventArgs(old,location);
+         //OnMove(args);
       }
 
       /* Абстрактые методы класса */
 
-      public abstract bool IsIntersectWith(Point _point);
-      public abstract bool IsIntersectWith(Rectangle _rectangle);
-      public abstract bool IsIntersectWith(Region _region);
+      protected virtual void OnMouseMove(MouseEventArgs e){
+         if(MouseMove != null){
+            MouseMove(this,e);
+         }
+      }
 
-      protected abstract void MouseClickHandler(object sender, MouseEventArgs args);
+      protected virtual void OnMouseDown(MouseEventArgs e){
+         if(MouseDown != null){
+            MouseDown(this,e);
+         }
+      }
+
+      private void OnPaint(PaintEventArgs e){
+         if(Paint != null){
+            Paint(this,e);
+         }
+      }
+
+      public virtual bool IsIntersectWith(Point _point){
+         return HitRegion.IsVisible(_point);
+      }
+
+      public virtual bool IsIntersectWith(Rectangle _rectangle){
+         return HitRegion.IsVisible(_rectangle);
+      }
+
+      public virtual bool IsIntersectWith(Region _region){
+         /*Region tmp = new Region(HitRegion);
+         tmp.Intersect(_region);
+         return tmp.IsEmpty;*/
+         return false;
+      }
+
+      protected virtual void MouseClickHandler(object sender, MouseEventArgs args){
+      }
 
       protected virtual void MouseMoveHandler(object sender, MouseEventArgs args){
          if(args.Button == MouseButtons.Left){
@@ -118,8 +152,7 @@ namespace PPPv.Net {
                case Editor.ToolEnum.Pointer:
                   if(Selected && !args.alreadyPerform){
                      this.MoveBy(new Point(args.Location.X - Location.X - dragPoint.X, args.Location.Y - Location.Y - dragPoint.Y));
-
-                     (sender as PetriNet).Canvas.Invalidate();
+                     //(sender as PetriNet).Canvas.Invalidate();
                   }
                   break;
                 case Editor.ToolEnum.Place:
@@ -143,7 +176,7 @@ namespace PPPv.Net {
                      dragPoint.X = args.X - Location.X;
                      dragPoint.Y = args.Y - Location.Y;
                      args.alreadyPerform = true;
-                     (sender as PetriNet).Canvas.Invalidate();
+                     //(sender as PetriNet).Canvas.Invalidate();
                   }
                   break;
                case Editor.ToolEnum.Place:
@@ -158,13 +191,20 @@ namespace PPPv.Net {
          }
       }
 
-      protected abstract void MouseUpHandler(object sender, MouseEventArgs args);
+      protected virtual void MouseUpHandler(object sender, MouseEventArgs args){
+      }
 
-      protected abstract void RegionSelectionStartHandler(object sender, RegionSelectionEventArgs args);
-      protected abstract void RegionSelectionUpdateHandler(object sender, RegionSelectionEventArgs args);
-      protected abstract void RegionSelectionEndHandler(object sender, RegionSelectionEventArgs args);
+      protected virtual void RegionSelectionStartHandler(object sender, RegionSelectionEventArgs args){
+      }
 
-      protected abstract void KeyDownHandler(object sender, KeyEventArgs arg);
+      protected virtual void RegionSelectionUpdateHandler(object sender, RegionSelectionEventArgs args){
+      }
+
+      protected virtual void RegionSelectionEndHandler(object sender, RegionSelectionEventArgs args){
+      }
+
+      protected virtual void KeyDownHandler(object sender, KeyEventArgs arg){
+      }
 
       protected abstract void UpdateHitRegion();
 
@@ -188,8 +228,8 @@ namespace PPPv.Net {
             ShowSelectionMarker(e.Graphics);
       }
 
-      public virtual Point GetPilon(Point from){
-         Graphics g = this.ParentNet.Canvas.CreateGraphics();
+      public virtual Point GetPilon(Point from,Graphics on){
+         //Graphics g = this.ParentNet.Canvas.CreateGraphics();
          Region reg = new Region();
          reg = HitRegion.Clone();
          Pen greenPen = new Pen(Color.Black, 1);
@@ -197,7 +237,7 @@ namespace PPPv.Net {
          Rectangle rect = new Rectangle();
          Point pilon = new Point();
 
-         /*Если не посчитается просто вернём центр*/
+         /*Если не посчитается, просто вернём центр*/
          pilon.X = Center.X;
          pilon.Y = Center.Y;
 
@@ -205,7 +245,7 @@ namespace PPPv.Net {
             gp.AddLine(from,Center);
             gp.Widen(greenPen);
             reg.Intersect(gp);
-            RectangleF bounds = reg.GetBounds(g);
+            RectangleF bounds = reg.GetBounds(on);
             rect = Rectangle.Ceiling(bounds);
             if(from.X <= Center.X){
                if(from.Y <= Center.Y){
@@ -224,9 +264,21 @@ namespace PPPv.Net {
                   pilon.Y = rect.Bottom;
                }
             }
-            g.Dispose();
+            on.Dispose();
          }
          return pilon;
+      }
+
+      protected void PaintRetranslator(object sender, PaintEventArgs args){
+         OnPaint(args);
+      }
+
+      protected void MouseMoveRetranslator(object sender, MouseEventArgs args){
+         OnMouseMove(args);
+      }
+
+      protected void MouseDownRetranslator(object sender, MouseEventArgs args){
+         OnMouseDown(args);
       }
 
       protected void OnMove(MoveEventArgs args){
@@ -245,7 +297,6 @@ namespace PPPv.Net {
       /*Вся внутренняя подготовка перед удалением элемента сети*/
       public virtual void PrepareToDeletion(){
          /*Отпишемся от всех событый*/
-         ParentNet = null;
       }
 
       protected static Pen ArrowedBlackPenFactory(){

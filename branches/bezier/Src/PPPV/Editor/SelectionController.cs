@@ -47,7 +47,7 @@ namespace PPPv.Editor {
          }else{
             /*int i;
             for(i=0;i<selectedObjects.Count;++i) {
-               RectangleF tmp = ((BaseNetElement)selectedObjects[i]).HitRegion.GetBounds(dc);
+               RectangleF tmp = ((NetElement)selectedObjects[i]).HitRegion.GetBounds(dc);
                dc.DrawRectangle(RedPen, new Rectangle((int)tmp.X, (int)tmp.Y, (int)tmp.Width, (int)tmp.Height) );
             }
             */
@@ -70,11 +70,11 @@ namespace PPPv.Editor {
                      selectedObjects = ((NetCanvas)sender).Net.NetElementUnder(SelectedRectangle);*/
                   }else{
                      /* Сместим всех выбранных*/
-                     BaseNetElement tmpEl;
+                     NetElement tmpEl;
                      /*Point delta = new Point(arg.X - lastMouseDownPoint.X,arg.Y - lastMouseDownPoint.Y);
 
                      for(int i=0;i<selectedObjects.Count;++i) {
-                        ((BaseNetElement)selectedObjects[i]).MoveBy(delta);
+                        ((NetElement)selectedObjects[i]).MoveBy(delta);
                      }
                      ((NetCanvas)sender).Invalidate();
                      lastMouseDownPoint.X = arg.X;
@@ -98,7 +98,7 @@ namespace PPPv.Editor {
          if(arg.Button == MouseButtons.Left){
             switch(arg.currentTool){
                case ToolEnum.Pointer:
-                  /*BaseNetElement tmp = ((NetCanvas)sender).Net.NetElementUnder(new Point(arg.X,arg.Y));
+                  /*NetElement tmp = ((NetCanvas)sender).Net.NetElementUnder(new Point(arg.X,arg.Y));
                   if(tmp!=null){
                      if(!selectedObjects.Contains(tmp)){
                         selectedObjects.Clear();

@@ -16,27 +16,31 @@ namespace PPPv.Net {
             if(parent != null){
                parent.Paint                 -= this.Draw;
                parent.MouseMove             -= this.MouseMoveHandler;
-               parent.MouseClick            -= this.MouseClickHandler;
-               parent.MouseUp               -= this.MouseUpHandler;
                parent.MouseDown             -= this.MouseDownHandler;
-               parent.RegionSelectionStart  -= this.RegionSelectionStartHandler;
-               parent.RegionSelectionUpdate -= this.RegionSelectionUpdateHandler;
-               parent.RegionSelectionEnd    -= this.RegionSelectionEndHandler;
-               parent.KeyDown               -= this.KeyDownHandler;
+               parent.Move                  -= this.MoveHandler;
             }
             parent = value;
             if(parent != null){
                parent.Paint                 += this.Draw;
                parent.MouseMove             += this.MouseMoveHandler;
-               parent.MouseClick            += this.MouseClickHandler;
-               parent.MouseUp               += this.MouseUpHandler;
                parent.MouseDown             += this.MouseDownHandler;
-               parent.RegionSelectionStart  += this.RegionSelectionStartHandler;
-               parent.RegionSelectionUpdate += this.RegionSelectionUpdateHandler;
-               parent.RegionSelectionEnd    += this.RegionSelectionEndHandler;
-               parent.KeyDown               += this.KeyDownHandler;
+               parent.Move                  += this.MoveHandler;
             }
          }
+      }
+
+      /*Вся внутренняя подготовка перед удалением элемента сети*/
+      public override void PrepareToDeletion(){
+         /*Отпишемся от всех событый*/
+         ParentNetElement = null;
+      }
+
+      protected override void ShowSelectionMarker(Graphics dc){
+
+      }
+
+      protected virtual void MoveHandler(object sender, MoveEventArgs args){
+
       }
    }
 }

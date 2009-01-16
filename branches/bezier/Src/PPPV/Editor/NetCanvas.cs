@@ -205,7 +205,7 @@ namespace PPPv.Editor{
 
       private void CanvasMouseClickHandler(object sender, CanvasMouseEventArgs arg){
          if(arg.Button == MouseButtons.Right){
-            BaseNetElement contextMenuTarget = Net.NetElementUnder(new Point(arg.X,arg.Y));
+            NetElement contextMenuTarget = Net.NetElementUnder(new Point(arg.X,arg.Y));
             contextMenuController.Show( this.PointToScreen(arg.Location), contextMenuTarget, Net);
          }
       }
@@ -231,7 +231,7 @@ namespace PPPv.Editor{
          if(arg.Button == MouseButtons.Left){
             switch(arg.currentTool){
                case ToolEnum.Pointer:
-                  BaseNetElement tmp = ((NetCanvas)sender).Net.NetElementUnder(new Point(arg.X,arg.Y));
+                  NetElement tmp = ((NetCanvas)sender).Net.NetElementUnder(new Point(arg.X,arg.Y));
                   if(tmp == null){
                      OnCanvasRegionSelectionStart();
                   }

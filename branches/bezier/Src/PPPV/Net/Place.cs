@@ -51,21 +51,6 @@ namespace PPPv.Net {
 
       }
 
-      public override bool IsIntersectWith(Point _point){
-         return HitRegion.IsVisible(_point);
-      }
-
-      public override bool IsIntersectWith(Rectangle _rectangle){
-         return HitRegion.IsVisible(_rectangle);
-      }
-
-      public override bool IsIntersectWith(Region _region){
-         /*Region tmp = new Region(HitRegion);
-         tmp.Intersect(_region);
-         return tmp.IsEmpty();*/
-         return false;
-      }
-
       protected override void UpdateHitRegion(){
          using(PreciseTimer pr = new PreciseTimer("Place.UpdateRegion")){
            HitRegion.MakeEmpty();
