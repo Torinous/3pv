@@ -19,19 +19,31 @@ namespace PPPv.Net {
          }
       }
 
+      public int Height{
+         get{
+            return sizeController.Y - this.Y;
+         }
+      }
+
+      public int Width{
+         get{
+            return sizeController.X - this.X;
+         }
+      }
+
       public Transition(int x, int y) {
          _ID++;
          Name = "T"+_ID;
+         sizeController = new Pilon(this,new Point(X+20,Y+50));
          X = x-10;
          Y = y-25;
-         sizeController = new Pilon(this,new Point(x+10,y+25));
          UpdateHitRegion();
          guardFunction = "x=y";
       }
 
       public override Point Center{
          get{
-            return new Point(X + 10, Y + 25);
+            return new Point(X + (int)(Width/2), Y + (int)(Height/2));
          }
       }
 
@@ -50,16 +62,16 @@ namespace PPPv.Net {
          FontFamily fF_Arial = new FontFamily("Arial");
          Font font1 = new Font(fF_Arial,16,FontStyle.Regular,GraphicsUnit.Pixel);
 
-         Region fillRegion = new Region(new Rectangle( X, Y, 20, 50));
+         Region fillRegion = new Region(new Rectangle( X, Y, Width, Height));
          dc.FillRegion(grayBrush, fillRegion);
-         dc.DrawRectangle(blackPen, X, Y, 20, 50);
+         dc.DrawRectangle(blackPen, X, Y, Width, Height);
          dc.DrawString(Name+"\n"+guardFunction,font1,blackBrush,X+20,Y-17);
       }
 
       protected override void UpdateHitRegion(){
          using(PreciseTimer pr = new PreciseTimer("Transition.UpdateRegion")){
             HitRegion.MakeEmpty();
-            HitRegion.Union(new Rectangle( X, Y, 20, 50));
+            HitRegion.Union(new Rectangle( X, Y, Width, Height));
          }
       }
 
