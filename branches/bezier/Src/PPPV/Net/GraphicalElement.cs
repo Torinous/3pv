@@ -3,9 +3,8 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 
 namespace PPPv.Net {
-   public abstract class BaseNetElement: IDrawable {
+   public abstract class GraphicalElement: IDrawable {
 
-      protected PetriNet parent;
       protected Point location;
       protected Region _hitRegion; //регион где проверяется клик в объект
       protected string _name;
@@ -18,44 +17,8 @@ namespace PPPv.Net {
             return selected;
          }
          set{
-            if(selected && !value)
-               ParentNet.Unselect(this);
-
-            if(!selected && value)
-               ParentNet.Select(this);
-
             selected = value;
-         }
-      }
-
-      public PetriNet ParentNet{
-         get{
-            return parent;
-         }
-         set{
-            if(parent != null){
-               parent.Paint                 -= this.Draw;
-               parent.MouseMove             -= this.MouseMoveHandler;
-               parent.MouseClick            -= this.MouseClickHandler;
-               parent.MouseUp               -= this.MouseUpHandler;
-               parent.MouseDown             -= this.MouseDownHandler;
-               parent.RegionSelectionStart  -= this.RegionSelectionStartHandler;
-               parent.RegionSelectionUpdate -= this.RegionSelectionUpdateHandler;
-               parent.RegionSelectionEnd    -= this.RegionSelectionEndHandler;
-               parent.KeyDown               -= this.KeyDownHandler;
-            }
-            parent = value;
-            if(parent != null){
-               parent.Paint                 += this.Draw;
-               parent.MouseMove             += this.MouseMoveHandler;
-               parent.MouseClick            += this.MouseClickHandler;
-               parent.MouseUp               += this.MouseUpHandler;
-               parent.MouseDown             += this.MouseDownHandler;
-               parent.RegionSelectionStart  += this.RegionSelectionStartHandler;
-               parent.RegionSelectionUpdate += this.RegionSelectionUpdateHandler;
-               parent.RegionSelectionEnd    += this.RegionSelectionEndHandler;
-               parent.KeyDown               += this.KeyDownHandler;
-            }
+            OnSelectionChange(new SelectionChangeEventArgs(selected));
          }
       }
 
@@ -118,11 +81,12 @@ namespace PPPv.Net {
       }
 
       /*События*/
-      public virtual event MoveEventHandler Move;
+      public virtual event MoveEventHandler            Move;
+      public virtual event SelectionChangeEventHandler SelectionChange;
 
       /*Конструкторы*/
 
-      public BaseNetElement() {
+      public GraphicalElement() {
          location = new Point(0,0);
          dragPoint = new Point(0,0);
          HitRegion = new Region();
@@ -204,6 +168,13 @@ namespace PPPv.Net {
 
       protected abstract void UpdateHitRegion();
 
+      protected virtual void ShowSelectionMarker(Graphics dc){
+         dc.SmoothingMode = SmoothingMode.HighQuality;
+         Pen RedPen = new Pen(Color.FromArgb(255,255,0,0));
+         RectangleF tmp = HitRegion.GetBounds(dc);
+         dc.DrawRectangle(RedPen, Rectangle.Inflate(Rectangle.Ceiling(HitRegion.GetBounds(dc)),2,2));
+      }
+
       public virtual void Draw(object sender, PaintEventArgs e){
 
          Graphics dc = e.Graphics;
@@ -212,6 +183,9 @@ namespace PPPv.Net {
          /*Кисти*/
          SolidBrush blueBrush = new SolidBrush(Color.Blue);
          dc.FillRegion(blueBrush,HitRegion);
+
+         if(Selected)
+            ShowSelectionMarker(e.Graphics);
       }
 
       public virtual Point GetPilon(Point from){
@@ -261,6 +235,13 @@ namespace PPPv.Net {
             Move(this,args);
          }
       }
+
+      protected void OnSelectionChange(SelectionChangeEventArgs args){
+         if(SelectionChange != null){
+            SelectionChange(this,args);
+         }
+      }
+
       /*Вся внутренняя подготовка перед удалением элемента сети*/
       public virtual void PrepareToDeletion(){
          /*Отпишемся от всех событый*/

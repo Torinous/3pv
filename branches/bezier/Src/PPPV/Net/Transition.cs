@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using PPPv.Utils;
 
 namespace PPPv.Net {
-   public class Transition : BaseNetElement {
+   public class Transition : NetElement {
       private static int _ID = 0;
       private string guardFunction;
 
@@ -52,11 +52,6 @@ namespace PPPv.Net {
          dc.FillRegion(grayBrush, fillRegion);
          dc.DrawRectangle(blackPen, X, Y, 20, 50);
          dc.DrawString(Name+"\n"+guardFunction,font1,blackBrush,X+20,Y-17);
-
-         if(Selected){
-            RectangleF tmp = HitRegion.GetBounds(dc);
-            dc.DrawRectangle(RedPen, Rectangle.Inflate(Rectangle.Ceiling(HitRegion.GetBounds(dc)),2,2));
-         }
       }
 
       public override bool IsIntersectWith(Point _point){

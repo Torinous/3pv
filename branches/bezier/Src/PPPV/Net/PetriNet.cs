@@ -115,7 +115,7 @@ namespace PPPv.Net {
          }
       }
 
-      public BaseNetElement ElementPortal{
+      public NetElement ElementPortal{
          set{
             if(value is Place){
                Places.Add(value);
@@ -245,7 +245,7 @@ namespace PPPv.Net {
                   (sender as Editor.NetCanvas).Invalidate();
                   break;
                case Editor.ToolEnum.Arc:
-                  BaseNetElement clicked = NetElementUnder(new Point(args.X,args.Y));
+                  NetElement clicked = NetElementUnder(new Point(args.X,args.Y));
                   clicked = (clicked is Arc) ? null : clicked;
                   if(clicked != null && !HaveUnfinishedArcs())
                      AddArc(clicked);
@@ -275,17 +275,17 @@ namespace PPPv.Net {
       private void CanvasKeyDownHandler(object sender, KeyEventArgs arg){
       }
 
-      public BaseNetElement AddPlace(int x, int y) {
+      public NetElement AddPlace(int x, int y) {
          Place tmpPlace = new Place(x,y);
          return ElementPortal = tmpPlace;
       }
 
-      public BaseNetElement AddTransition(int x, int y) {
+      public NetElement AddTransition(int x, int y) {
          Transition tmpTransition = new Transition(x,y);
          return ElementPortal = tmpTransition;
       }
 
-      public BaseNetElement AddArc(BaseNetElement startElement) {
+      public NetElement AddArc(NetElement startElement) {
          Arc tmpArc = new Arc(startElement);
          return ElementPortal = tmpArc;
       }
@@ -313,29 +313,29 @@ namespace PPPv.Net {
          Places.Remove(p);
       }
 
-      public void Select(BaseNetElement ob){
+      public void Select(NetElement ob){
          currentSelectedObjects.Add(ob);
       }
 
-      public void Unselect(BaseNetElement ob){
+      public void Unselect(NetElement ob){
          currentSelectedObjects.Remove(ob);
       }
 
-      public BaseNetElement NetElementUnder(Point _p){
+      public NetElement NetElementUnder(Point _p){
          int i = 0;
          for(i=0;i<Transitions.Count;++i) {
-            if(((BaseNetElement)Transitions[i]).IsIntersectWith(_p)){
-               return (BaseNetElement)Transitions[i];
+            if(((NetElement)Transitions[i]).IsIntersectWith(_p)){
+               return (NetElement)Transitions[i];
             }
          }
          for(i=0;i<Places.Count;++i) {
-            if(((BaseNetElement)Places[i]).IsIntersectWith(_p)){
-               return (BaseNetElement)Places[i];
+            if(((NetElement)Places[i]).IsIntersectWith(_p)){
+               return (NetElement)Places[i];
             }
          }
          for(i=0;i<Arcs.Count;++i) {
-            if(((BaseNetElement)Arcs[i]).IsIntersectWith(_p)){
-               return (BaseNetElement)Arcs[i];
+            if(((NetElement)Arcs[i]).IsIntersectWith(_p)){
+               return (NetElement)Arcs[i];
             }
          }
          return null;
@@ -345,18 +345,18 @@ namespace PPPv.Net {
          ArrayList selectedObjects = new ArrayList();
          int i = 0;
          for(i=0;i<Transitions.Count;++i) {
-            if(((BaseNetElement)Transitions[i]).IsIntersectWith(selectedRectangle)){
-               selectedObjects.Add((BaseNetElement)Transitions[i]);
+            if(((NetElement)Transitions[i]).IsIntersectWith(selectedRectangle)){
+               selectedObjects.Add((NetElement)Transitions[i]);
             }
          }
          for(i=0;i<Places.Count;++i) {
-            if(((BaseNetElement)Places[i]).IsIntersectWith(selectedRectangle)){
-               selectedObjects.Add((BaseNetElement)Places[i]);
+            if(((NetElement)Places[i]).IsIntersectWith(selectedRectangle)){
+               selectedObjects.Add((NetElement)Places[i]);
             }
          }
          for(i=0;i<Arcs.Count;++i) {
-            if(((BaseNetElement)Arcs[i]).IsIntersectWith(selectedRectangle)){
-               selectedObjects.Add((BaseNetElement)Arcs[i]);
+            if(((NetElement)Arcs[i]).IsIntersectWith(selectedRectangle)){
+               selectedObjects.Add((NetElement)Arcs[i]);
             }
          }
          return selectedObjects;

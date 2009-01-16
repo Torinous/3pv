@@ -11,7 +11,7 @@ namespace PPPv.Editor{
       private ContextMenuStrip contextMenuStrip;
       private NetCanvas canvas;
       private PetriNet netRef;
-      private BaseNetElement contextMenuTarget;
+      private NetElement contextMenuTarget;
 
       /*Конструктор*/
       public ContextMenuController(NetCanvas canvas){
@@ -25,7 +25,7 @@ namespace PPPv.Editor{
 
       }
 
-      public void Show(Point point, BaseNetElement netElement, PetriNet netRef){
+      public void Show(Point point, NetElement netElement, PetriNet netRef){
          if(netElement == null){
             contextMenuStrip.Items[0].Enabled = false;
             contextMenuStrip.Items[1].Enabled = false;

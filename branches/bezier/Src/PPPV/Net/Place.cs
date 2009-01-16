@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using PPPv.Utils;
 
 namespace PPPv.Net {
-   public class Place : BaseNetElement {
+   public class Place : NetElement {
       private int _radius;
       private static int _ID = 0;
 
@@ -49,9 +49,6 @@ namespace PPPv.Net {
          dc.DrawEllipse(blackPen, X, Y, _radius, _radius);
          dc.DrawString(Name,font1,blackBrush,X+_radius,Y-10);
 
-         if(Selected){
-            dc.DrawRectangle(RedPen, Rectangle.Inflate( Rectangle.Ceiling(HitRegion.GetBounds(dc)),2,2));
-         }
       }
 
       public override bool IsIntersectWith(Point _point){

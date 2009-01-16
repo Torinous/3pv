@@ -6,10 +6,10 @@ using PPPv.Utils;
 //using PPPv.Editor;
 
 namespace PPPv.Net {
-   public class Arc : BaseNetElement {
+   public class Arc : NetElement {
       private static int _ID = 0;
       protected static Pen ArrowedBlackPen = ArrowedBlackPenFactory();
-      private BaseNetElement from,to;
+      private NetElement from,to;
       private Point fromPilon,toPilon;
       private string cortege;
 
@@ -42,7 +42,7 @@ namespace PPPv.Net {
          }
       }
 
-      public BaseNetElement To{
+      public NetElement To{
          get{
             return to;
          }
@@ -57,7 +57,7 @@ namespace PPPv.Net {
          }
       }
 
-      public BaseNetElement From{
+      public NetElement From{
          get{
             return from;
          }
@@ -79,7 +79,7 @@ namespace PPPv.Net {
       }
 
       /*Конструктор*/
-      public Arc(BaseNetElement startElement) {
+      public Arc(NetElement startElement) {
          _ID++;
          Name = "A"+_ID;
          From = startElement;
@@ -111,11 +111,11 @@ namespace PPPv.Net {
          Font font1 = new Font(fF_Arial,16,FontStyle.Regular,GraphicsUnit.Pixel);
          dc.DrawLine(ArrowedBlackPen,FromPilon,ToPilon);
          dc.DrawString(cortege,font1,blackBrush,Center.X,Center.Y+5);
-
-         if(Selected){
-            dc.DrawRectangle(RedPen, Rectangle.Ceiling(HitRegion.GetBounds(dc)));
-         }
       }
+
+      /*private override void ShowSelectionMarker(Graphics dc){
+
+      }*/
 
       /*private void _arcMouseMoveHandler(object sender, CanvasMouseEventArgs arg){
          ToPilon.X = arg.X;
@@ -180,7 +180,7 @@ namespace PPPv.Net {
                   break;
                case Editor.ToolEnum.Arc:
                   if(Unfinished){
-                     BaseNetElement clicked = parent.NetElementUnder(new Point(args.X,args.Y));
+                     NetElement clicked = parent.NetElementUnder(new Point(args.X,args.Y));
                      clicked = (clicked is Arc) ? null : clicked;
                      if(clicked != null){
                         if(From.GetType() != clicked.GetType()){
@@ -239,7 +239,6 @@ namespace PPPv.Net {
             point2 = new Point(FromPilon.X,FromPilon.Y-1);
             tmpPath.AddLine(point1,point2);
 
-            tmpPath.Widen(new Pen(Color.Red,3));
             tmpPath.Widen(new Pen(Color.Red,3));
 
             HitRegion.Union(tmpPath);
