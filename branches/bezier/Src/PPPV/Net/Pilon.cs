@@ -6,10 +6,8 @@ using System.Drawing.Drawing2D;
 namespace PPPv.Net {
    public class Pilon: NetElementElement {
 
-      public Pilon(NetElement parent_, Point place){
+      public Pilon(int x_, int y_, GraphicalElement parent_):base(x_, y_, 0, 0, false){
          ParentNetElement = parent_;
-         X = place.X;
-         Y = place.Y;
       }
 
       public override void Draw(object sender, PaintEventArgs e){
@@ -30,7 +28,7 @@ namespace PPPv.Net {
 
       public override Point Center{
          get{
-            return new Point(X, Y);
+            return new Point(X+3, Y+3);
          }
       }
 

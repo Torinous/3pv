@@ -8,7 +8,6 @@ namespace PPPv.Net {
    public class Transition : NetElement {
       private static int _ID = 0;
       private string guardFunction;
-      private Pilon sizeController;
 
       public string GuardFunction{
          get{
@@ -19,26 +18,10 @@ namespace PPPv.Net {
          }
       }
 
-      public int Height{
-         get{
-            return sizeController.Y - this.Y;
-         }
-      }
-
-      public int Width{
-         get{
-            return sizeController.X - this.X;
-         }
-      }
-
-      public Transition(int x, int y) {
+      public Transition(int x_, int y_):base(x_,y_,20,50,true) {
          _ID++;
          Name = "T"+_ID;
-         sizeController = new Pilon(this,new Point(X+20,Y+50));
-         sizeController.Move += MoveSizeControllerHandler;
-         X = x-10;
-         Y = y-25;
-         UpdateHitRegion();
+         //UpdateHitRegion();
          guardFunction = "x=y";
       }
 
@@ -114,11 +97,6 @@ namespace PPPv.Net {
       }
 
       protected override void KeyDownHandler(object sender, KeyEventArgs arg){
-      }
-
-      protected void MoveSizeControllerHandler(object sender, MoveEventArgs arg){
-         UpdateHitRegion();
-         //MoveBy();
       }
    }
 }

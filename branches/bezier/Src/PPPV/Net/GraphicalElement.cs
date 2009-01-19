@@ -10,6 +10,8 @@ namespace PPPv.Net {
       protected string _name;
       protected bool selected;
       protected Point dragPoint;
+      protected Pilon sizeController;
+      protected bool sizeable;
 
       /*Аксессоры доступа*/
       protected bool Selected{
@@ -80,21 +82,40 @@ namespace PPPv.Net {
         get;
       }
 
+      public virtual int Height{
+         get{
+            return sizeController.Y - this.Y;
+         }
+      }
+
+      public virtual int Width{
+         get{
+            return sizeController.X - this.X;
+         }
+      }
+
       /*События*/
       public virtual event MoveEventHandler            Move;
       public virtual event SelectionChangeEventHandler SelectionChange;
 
-      public virtual event MouseEventHandler MouseMove;
-      public virtual event MouseEventHandler MouseDown;
-      public virtual event PaintEventHandler Paint;
+      public virtual event MouseEventHandler           MouseMove;
+      public virtual event MouseEventHandler           MouseDown;
+      public virtual event PaintEventHandler           Paint;
+      public virtual event ResizeEventHandler          Resize;
 
       /*Конструкторы*/
 
-      public GraphicalElement() {
+      public GraphicalElement(int x_, int y_, int width_, int height_, bool sizeable_) {
          location = new Point(0,0);
          dragPoint = new Point(0,0);
          HitRegion = new Region();
-         //UpdateHitRegion();
+
+         if(sizeable = sizeable_){
+            sizeController = new Pilon( X + width_, Y + height_, this);
+            sizeController.Move += MoveSizeControllerHandler;
+         }
+
+         Location = new Point(x_-(int)(width_/2), (y_-(int)(height_/2)));
       }
 
       /*Методы*/
@@ -293,10 +314,22 @@ namespace PPPv.Net {
          }
       }
 
+      protected void OnResize(ResizeEventArgs args){
+         UpdateHitRegion();
+         if(Resize != null){
+            Resize(this,args);
+         }
+      }
+
       protected void OnSelectionChange(SelectionChangeEventArgs args){
          if(SelectionChange != null){
             SelectionChange(this,args);
          }
+      }
+
+      protected virtual void MoveSizeControllerHandler(object sender, MoveEventArgs arg){
+         ResizeEventArgs arg2 = new ResizeEventArgs(new Point( arg.from.X, arg.from.Y ), new Point(arg.to.X,arg.to.Y));
+         OnResize(arg2);
       }
 
       /*Вся внутренняя подготовка перед удалением элемента сети*/

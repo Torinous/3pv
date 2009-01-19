@@ -45,7 +45,7 @@ namespace PPPv.Net {
          }
       }
 
-      public NetElement(){
+      public NetElement(int x_, int y_, int width_, int height_, bool sizeable_):base(x_, y_, width_, height_, sizeable_){
          this.SelectionChange += this.SelectionChangeHandler;
       }
 

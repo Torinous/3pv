@@ -1,6 +1,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using System.Collections;
 
 using PPPv.Utils;
 //using PPPv.Editor;
@@ -12,6 +13,16 @@ namespace PPPv.Net {
       private NetElement from,to;
       private Point fromPilon,toPilon;
       private string cortege;
+      private ArrayList points;
+
+      public ArrayList Points{
+         get{
+            return points;
+         }
+         set{
+            points = value;
+         }
+      }
 
       public string Cortege{
          get{
@@ -47,12 +58,15 @@ namespace PPPv.Net {
             return to;
          }
          set{
-            if(to != null)
+            if(to != null){
                to.Move -= MoveHandler;
+               to.Resize -= ResizeLinkedElementsHandler;
+            }
             to = value;
             if(to != null){
-               ToPilon = to.GetPilon(From.Center,this.ParentNet.Canvas.CreateGraphics());
+               UpdatePosition();
                to.Move += MoveHandler;
+               to.Resize += ResizeLinkedElementsHandler;
             }
          }
       }
@@ -62,12 +76,15 @@ namespace PPPv.Net {
             return from;
          }
          set{
-            if(from != null)
+            if(from != null){
                from.Move -= MoveHandler;
+               from.Resize -= ResizeLinkedElementsHandler;
+            }
             from = value;
             if(from != null){
                FromPilon = from.Center;
                from.Move += MoveHandler;
+               from.Resize += ResizeLinkedElementsHandler;
             }
          }
       }
@@ -79,12 +96,13 @@ namespace PPPv.Net {
       }
 
       /*Конструктор*/
-      public Arc(NetElement startElement) {
+      public Arc(NetElement startElement):base(0, 0, 0, 0, false) {
          _ID++;
          Name = "A"+_ID;
          From = startElement;
          ToPilon = From.Center;
          cortege = "2X";
+         Points = new ArrayList(20);
       }
 
       public override Point Center{
@@ -109,8 +127,18 @@ namespace PPPv.Net {
          /*Шрифт*/
          FontFamily fF_Arial = new FontFamily("Arial");
          Font font1 = new Font(fF_Arial,16,FontStyle.Regular,GraphicsUnit.Pixel);
-         dc.DrawLine(ArrowedBlackPen,FromPilon,ToPilon);
-         dc.DrawString(cortege,font1,blackBrush,Center.X,Center.Y+5);
+
+         if( Points.Count == 0 ){
+            dc.DrawLine(ArrowedBlackPen,FromPilon,ToPilon);
+            dc.DrawString(cortege,font1,blackBrush,Center.X,Center.Y+5);
+         }else{
+            dc.DrawLine(blackPen, FromPilon,(Points[0] as Pilon).Location);
+            for(int i = 1;i < Points.Count; ++i){
+               dc.DrawLine(blackPen, (Points[i-1] as Pilon).Location, (Points[i] as Pilon).Location);
+            }
+            dc.DrawLine(ArrowedBlackPen, (Points[Points.Count-1] as Pilon).Location,ToPilon);
+            dc.DrawString(cortege, font1, blackBrush, Center.X, Center.Y+5);
+         }
       }
 
       /*private override void ShowSelectionMarker(Graphics dc){
@@ -119,9 +147,28 @@ namespace PPPv.Net {
 
 
       private void MoveHandler(object sender, MoveEventArgs args){
+         UpdatePosition();
+      }
+
+      private void OneOfPointMoveHandler(object sender, MoveEventArgs args){
+         UpdatePosition();
+      }
+
+      private void ResizeLinkedElementsHandler(object sender, ResizeEventArgs args){
+         UpdatePosition();
+      }
+
+      private void UpdatePosition(){
          UpdateHitRegion();
-         FromPilon = from.GetPilon(to.Center,this.ParentNet.Canvas.CreateGraphics());
-         ToPilon = to.GetPilon(from.Center,this.ParentNet.Canvas.CreateGraphics());
+         if(Points.Count == 0)
+            FromPilon = from.GetPilon(to.Center,this.ParentNet.Canvas.CreateGraphics());
+         else
+            FromPilon = from.GetPilon((Points[0] as Pilon).Center,this.ParentNet.Canvas.CreateGraphics());
+
+         if(Points.Count == 0)
+            ToPilon = to.GetPilon(from.Center,this.ParentNet.Canvas.CreateGraphics());
+         else
+            ToPilon = to.GetPilon((Points[Points.Count-1] as Pilon).Center,this.ParentNet.Canvas.CreateGraphics());
       }
 
       protected override void MouseClickHandler(object sender, MouseEventArgs args){
@@ -138,7 +185,10 @@ namespace PPPv.Net {
             case Editor.ToolEnum.Arc:
                if(Unfinished){
                   ToPilon = new Point(args.X,args.Y);
-                  FromPilon = from.GetPilon(ToPilon,this.ParentNet.Canvas.CreateGraphics());
+                  if(Points.Count == 0)
+                     FromPilon = from.GetPilon(ToPilon,this.ParentNet.Canvas.CreateGraphics());
+                  else
+                     FromPilon = from.GetPilon((Points[0] as Pilon).Center,this.ParentNet.Canvas.CreateGraphics());
                   (sender as PetriNet).Canvas.Invalidate();
                }
                break;
@@ -166,6 +216,7 @@ namespace PPPv.Net {
                            To = clicked;
                         }
                      }else{
+                        AddPoint( new Pilon(args.X,args.Y,(this as GraphicalElement)));
                      }
                      (sender as PetriNet).Canvas.Invalidate();
                   }
@@ -174,6 +225,16 @@ namespace PPPv.Net {
                   break;
             }
          }
+      }
+
+      private void AddPoint(Pilon p){
+         Points.Add(p);
+         p.Move += OneOfPointMoveHandler;
+      }
+
+      private void DeletePoint(Pilon p){
+         Points.Remove(p);
+         p.Move -= OneOfPointMoveHandler;
       }
 
       protected override void MouseUpHandler(object sender, MouseEventArgs args){

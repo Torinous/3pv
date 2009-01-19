@@ -7,22 +7,18 @@ using PPPv.Utils;
 
 namespace PPPv.Net {
    public class Place : NetElement {
-      private int _radius;
       private static int _ID = 0;
 
       /*Конструктор*/
 
-      public Place(int x, int y) {
+      public Place(int x_, int y_):base(x_, y_, 50, 50, true) {
          _ID++;
          Name = "P"+_ID;
-         _radius = 50;
-         X = x - (int)_radius/2;
-         Y = y - (int)_radius/2;
       }
 
       public override Point Center{
          get{
-            return new Point(X + (int)_radius/2, Y + (int)_radius/2);
+            return new Point(X + (int)Width/2, Y + (int)Height/2);
          }
       }
 
@@ -40,14 +36,14 @@ namespace PPPv.Net {
          SolidBrush blackBrush = new SolidBrush(Color.FromArgb(200,0,0,0));
          /*Шрифт*/
          FontFamily fF_Arial = new FontFamily("Arial");
-         Font font1 = new Font(fF_Arial,16,FontStyle.Regular,GraphicsUnit.Pixel);
+         Font font1 = new Font(fF_Arial, 16, FontStyle.Regular, GraphicsUnit.Pixel);
 
          GraphicsPath tmpPath = new GraphicsPath();
-         tmpPath.AddEllipse(X, Y, _radius, _radius);
+         tmpPath.AddEllipse(X, Y, Width, Height);
          Region fillRegion = new Region(tmpPath);
          dc.FillRegion(grayBrush, fillRegion);
-         dc.DrawEllipse(blackPen, X, Y, _radius, _radius);
-         dc.DrawString(Name,font1,blackBrush,X+_radius,Y-10);
+         dc.DrawEllipse(blackPen, X, Y, Width, Height);
+         dc.DrawString(Name, font1, blackBrush, X + (int)Width/2,Y-10);
 
       }
 
@@ -55,7 +51,7 @@ namespace PPPv.Net {
          using(PreciseTimer pr = new PreciseTimer("Place.UpdateRegion")){
            HitRegion.MakeEmpty();
            GraphicsPath tmpPath = new GraphicsPath();
-           tmpPath.AddEllipse(X, Y, _radius, _radius);
+           tmpPath.AddEllipse(X, Y, Width, Height);
            HitRegion.Union(tmpPath);
          }
       }
