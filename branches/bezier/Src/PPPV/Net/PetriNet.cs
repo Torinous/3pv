@@ -370,5 +370,14 @@ namespace PPPv.Net {
          }
          return false;
       }
+
+      public bool HaveArcBetween(NetElement from_, NetElement to_){
+         for(int i=0;i<Arcs.Count;++i) {
+            if((Arcs[i] as Arc).From == from_ && (Arcs[i] as Arc).To == to_){
+               return true;
+            }
+         }
+         return false;
+      }
    }
 }

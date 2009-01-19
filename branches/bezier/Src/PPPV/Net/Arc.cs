@@ -213,7 +213,9 @@ namespace PPPv.Net {
                      clicked = (clicked is Arc) ? null : clicked;
                      if(clicked != null){
                         if(From.GetType() != clicked.GetType()){
-                           To = clicked;
+                           if(!ParentNet.HaveArcBetween(From,clicked)){
+                              To = clicked;
+                           }
                         }
                      }else{
                         AddPoint( new Pilon(args.X,args.Y,(this as GraphicalElement)));
