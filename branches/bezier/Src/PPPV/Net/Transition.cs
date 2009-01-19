@@ -35,6 +35,7 @@ namespace PPPv.Net {
          _ID++;
          Name = "T"+_ID;
          sizeController = new Pilon(this,new Point(X+20,Y+50));
+         sizeController.Move += MoveSizeControllerHandler;
          X = x-10;
          Y = y-25;
          UpdateHitRegion();
@@ -113,6 +114,11 @@ namespace PPPv.Net {
       }
 
       protected override void KeyDownHandler(object sender, KeyEventArgs arg){
+      }
+
+      protected void MoveSizeControllerHandler(object sender, MoveEventArgs arg){
+         UpdateHitRegion();
+         //MoveBy();
       }
    }
 }

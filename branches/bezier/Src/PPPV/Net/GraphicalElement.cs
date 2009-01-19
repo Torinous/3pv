@@ -104,8 +104,12 @@ namespace PPPv.Net {
          /* Входной параметр это радиус-вектор перемещения */
          Point old = new Point(location.X,location.Y);
          Location = new Point(X + p.X,Y + p.Y);
-         //MoveEventArgs args = new MoveEventArgs(old,location);
-         //OnMove(args);
+      }
+
+      public void MoveBy(){
+         /* Входной параметр это радиус-вектор перемещения */
+         Point old = new Point(location.X,location.Y);
+         Location = new Point(X,Y);
       }
 
       /* Абстрактые методы класса */
@@ -222,7 +226,8 @@ namespace PPPv.Net {
 
          /*Кисти*/
          SolidBrush blueBrush = new SolidBrush(Color.Blue);
-         dc.FillRegion(blueBrush,HitRegion);
+
+         //dc.FillRegion(blueBrush,HitRegion);
 
          if(Selected)
             ShowSelectionMarker(e.Graphics);

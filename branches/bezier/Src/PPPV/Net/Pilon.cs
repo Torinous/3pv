@@ -12,7 +12,7 @@ namespace PPPv.Net {
          Y = place.Y;
       }
 
-      public virtual void Draw(object sender, PaintEventArgs e){
+      public override void Draw(object sender, PaintEventArgs e){
 
          Graphics dc = e.Graphics;
          dc.SmoothingMode = SmoothingMode.HighQuality;
