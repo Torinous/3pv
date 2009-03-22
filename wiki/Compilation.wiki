@@ -5,7 +5,7 @@
 
 == Предварительные требования ==
 Программное обеспечение:
-   #MSBuild
-   #NET 2.0 или NET 3.5
-   #Doxygen
-   #Graphviz
+   # MSBuild
+   # NET 2.0 или NET 3.5
+   # Doxygen
+   # Graphviz
