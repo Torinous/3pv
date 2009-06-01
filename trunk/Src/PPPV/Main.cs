@@ -14,7 +14,7 @@ namespace PPPv
          Application.SetCompatibleTextRenderingDefault(false);*/
       try
       {
-        (new PPPVApplication()).Run();
+        (new Application()).Run();
       }
       catch (Exception ex)
       {

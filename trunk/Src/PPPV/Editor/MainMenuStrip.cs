@@ -8,6 +8,8 @@ namespace PPPv.Editor{
     public ToolStripMenuItem toolStripMenuFile;
     public ToolStripMenuItem toolStripMenuNew;
     public ToolStripMenuItem toolStripMenuExit;
+    public ToolStripMenuItem toolStripMenuHelp;
+    public ToolStripMenuItem toolStripMenuAbout;
 
     public MainMenuStrip() {
       this.Location = new Point(0, 0);
@@ -18,9 +20,11 @@ namespace PPPv.Editor{
     }
 
     private void InitializeComponent() {
-      toolStripMenuFile = new ToolStripMenuItem();
-      toolStripMenuNew  = new ToolStripMenuItem();
-      toolStripMenuExit = new ToolStripMenuItem();
+      toolStripMenuFile  = new ToolStripMenuItem();
+      toolStripMenuNew   = new ToolStripMenuItem();
+      toolStripMenuExit  = new ToolStripMenuItem();
+      toolStripMenuHelp  = new ToolStripMenuItem();
+      toolStripMenuAbout = new ToolStripMenuItem();
 
       /* toolStripMenuFile*/
       this.Items.AddRange(new ToolStripItem[] {this.toolStripMenuFile});
@@ -39,6 +43,18 @@ namespace PPPv.Editor{
       this.toolStripMenuExit.Name = "toolStripMenuNew";
       this.toolStripMenuExit.Size = new System.Drawing.Size(25, 20);
       this.toolStripMenuExit.Text = "Выход";
+
+      /* toolStripMenuHelp*/
+      this.Items.AddRange(new ToolStripItem[] {this.toolStripMenuHelp});
+      this.toolStripMenuHelp.Name = "menuStripHelp";
+      this.toolStripMenuHelp.Size = new System.Drawing.Size(25,20);
+      this.toolStripMenuHelp.Text = "Помощь";
+
+      /* toolStripMenuAbout */
+      this.toolStripMenuHelp.DropDownItems.AddRange(new ToolStripItem[] {this.toolStripMenuAbout});
+      this.toolStripMenuAbout.Name = "toolStripMenuNew";
+      this.toolStripMenuAbout.Size = new System.Drawing.Size(25, 20);
+      this.toolStripMenuAbout.Text = "О программе";
     }
   }
 }

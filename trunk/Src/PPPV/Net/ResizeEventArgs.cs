@@ -4,10 +4,10 @@ using System.Windows.Forms;
 
 namespace PPPv.Net {
 
-  public class MoveEventArgs{
+  public class ResizeEventArgs{
     public Point from, to;
 
-    public MoveEventArgs(Point start, Point stop){
+    public ResizeEventArgs(Point start, Point stop){
       from = new Point(0,0);
       to = new Point(0,0);
       from.X = start.X;

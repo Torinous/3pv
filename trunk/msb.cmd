@@ -1,1 +1,0 @@
-msbuild.exe /nologo %* /p:WarningLevel=0
