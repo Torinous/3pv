@@ -1,4 +1,4 @@
-
+﻿
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -50,6 +50,9 @@ namespace PPPv.Editor{
             f.Dispose();
          }
          if(contextMenuTarget is Place){
+      		Form f = new PlaceEditForm((Place)contextMenuTarget);
+            f.ShowDialog(canvas.FindForm());
+            f.Dispose();
          }
          canvas.Invalidate();
 

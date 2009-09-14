@@ -6,18 +6,18 @@ using System.ComponentModel;
 using PPPv.Net;
 
 namespace PPPv.Editor{
-   class GuardEditForm : Form{
+   class TokensEditForm : Form{
 
       private Transition tr;
       private TextBox tb;
       private Button bOK,bCancel;
 
-      public GuardEditForm(Transition tr){
+      public TokensEditForm(Transition tr){
          this.tr = tr;
          this.Size = new Size(300,110);
          this.StartPosition = FormStartPosition.CenterScreen;
          this.FormBorderStyle = FormBorderStyle.FixedDialog;
-         this.Text = "Функция охраны перехода:";
+         this.Text = "Редактирование меток позиции:";
          InitializeComponent();
       }
       private void InitializeComponent(){
