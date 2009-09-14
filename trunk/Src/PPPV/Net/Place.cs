@@ -1,4 +1,5 @@
-using System.Drawing;
+﻿using System.Drawing;
+using System.Collections;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
@@ -8,12 +9,22 @@ using PPPv.Utils;
 namespace PPPv.Net {
    public class Place : NetElement {
       private static int _ID = 0;
+      private ArrayList tokens;
 
       /*Конструктор*/
 
       public Place(int x_, int y_):base(x_, y_, 50, 50, true) {
          _ID++;
          Name = "P"+_ID;
+      }
+      
+      public ArrayList Tokens{
+         get{
+            return tokens;
+         }
+         private set{
+            tokens = value;
+         }
       }
 
       public override Point Center{
