@@ -1,4 +1,4 @@
-using System.Drawing;
+п»їusing System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 
@@ -6,14 +6,14 @@ namespace PPPv.Net {
    public abstract class GraphicalElement: IDrawable {
 
       protected Point location;
-      protected Region _hitRegion; //регион где проверяется клик в объект
+      protected Region _hitRegion; //СЂРµРіРёРѕРЅ РіРґРµ РїСЂРѕРІРµСЂСЏРµС‚СЃСЏ РєР»РёРє РІ РѕР±СЉРµРєС‚
       protected string _name;
       protected bool selected;
       protected Point dragPoint;
       protected Pilon sizeController;
       protected bool sizeable;
 
-      /*Аксессоры доступа*/
+      /*РђРєСЃРµСЃСЃРѕСЂС‹ РґРѕСЃС‚СѓРїР°*/
       protected bool Selected{
          get{
             return selected;
@@ -77,7 +77,7 @@ namespace PPPv.Net {
          }
       }
 
-      /*Центр объекта*/
+      /*Р¦РµРЅС‚СЂ РѕР±СЉРµРєС‚Р°*/
       public abstract Point Center{
         get;
       }
@@ -94,7 +94,7 @@ namespace PPPv.Net {
          }
       }
 
-      /*События*/
+      /*РЎРѕР±С‹С‚РёСЏ*/
       public virtual event MoveEventHandler            Move;
       public virtual event SelectionChangeEventHandler SelectionChange;
 
@@ -103,7 +103,7 @@ namespace PPPv.Net {
       public virtual event PaintEventHandler           Paint;
       public virtual event ResizeEventHandler          Resize;
 
-      /*Конструкторы*/
+      /*РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹*/
 
       public GraphicalElement(int x_, int y_, int width_, int height_, bool sizeable_) {
          location = new Point(0,0);
@@ -118,22 +118,22 @@ namespace PPPv.Net {
          Location = new Point(x_-(int)(width_/2), (y_-(int)(height_/2)));
       }
 
-      /*Методы*/
+      /*РњРµС‚РѕРґС‹*/
 
-      /*Перемещение на*/
+      /*РџРµСЂРµРјРµС‰РµРЅРёРµ РЅР°*/
       public void MoveBy(Point p){
-         /* Входной параметр это радиус-вектор перемещения */
+         /* Р’С…РѕРґРЅРѕР№ РїР°СЂР°РјРµС‚СЂ СЌС‚Рѕ СЂР°РґРёСѓСЃ-РІРµРєС‚РѕСЂ РїРµСЂРµРјРµС‰РµРЅРёСЏ */
          Point old = new Point(location.X,location.Y);
          Location = new Point(X + p.X,Y + p.Y);
       }
 
       public void MoveBy(){
-         /* Входной параметр это радиус-вектор перемещения */
+         /* Р’С…РѕРґРЅРѕР№ РїР°СЂР°РјРµС‚СЂ СЌС‚Рѕ СЂР°РґРёСѓСЃ-РІРµРєС‚РѕСЂ РїРµСЂРµРјРµС‰РµРЅРёСЏ */
          Point old = new Point(location.X,location.Y);
          Location = new Point(X,Y);
       }
 
-      /* Абстрактые методы класса */
+      /* РђР±СЃС‚СЂР°РєС‚С‹Рµ РјРµС‚РѕРґС‹ РєР»Р°СЃСЃР° */
 
       protected virtual void OnMouseMove(MouseEventArgs e){
          if(MouseMove != null){
@@ -245,7 +245,7 @@ namespace PPPv.Net {
          Graphics dc = e.Graphics;
          dc.SmoothingMode = SmoothingMode.HighQuality;
 
-         /*Кисти*/
+         /*РљРёСЃС‚Рё*/
          SolidBrush blueBrush = new SolidBrush(Color.Blue);
 
          //dc.FillRegion(blueBrush,HitRegion);
@@ -263,7 +263,7 @@ namespace PPPv.Net {
          Rectangle rect = new Rectangle();
          Point pilon = new Point();
 
-         /*Если не посчитается, просто вернём центр*/
+         /*Р•СЃР»Рё РЅРµ РїРѕСЃС‡РёС‚Р°РµС‚СЃСЏ, РїСЂРѕСЃС‚Рѕ РІРµСЂРЅС‘Рј С†РµРЅС‚СЂ*/
          pilon.X = Center.X;
          pilon.Y = Center.Y;
 
@@ -332,9 +332,9 @@ namespace PPPv.Net {
          OnResize(arg2);
       }
 
-      /*Вся внутренняя подготовка перед удалением элемента сети*/
+      /*Р’СЃСЏ РІРЅСѓС‚СЂРµРЅРЅСЏСЏ РїРѕРґРіРѕС‚РѕРІРєР° РїРµСЂРµРґ СѓРґР°Р»РµРЅРёРµРј СЌР»РµРјРµРЅС‚Р° СЃРµС‚Рё*/
       public virtual void PrepareToDeletion(){
-         /*Отпишемся от всех событый*/
+         /*РћС‚РїРёС€РµРјСЃСЏ РѕС‚ РІСЃРµС… СЃРѕР±С‹С‚С‹Р№*/
       }
 
       protected static Pen ArrowedBlackPenFactory(){

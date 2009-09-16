@@ -1,4 +1,4 @@
-using System.Windows.Forms;
+п»їusing System.Windows.Forms;
 using System.Drawing;
 
 namespace PPPv.Editor{
@@ -30,31 +30,31 @@ namespace PPPv.Editor{
       this.Items.AddRange(new ToolStripItem[] {this.toolStripMenuFile});
       this.toolStripMenuFile.Name = "menuStripFile";
       this.toolStripMenuFile.Size = new System.Drawing.Size(25,20);
-      this.toolStripMenuFile.Text = "Файл";
+      this.toolStripMenuFile.Text = "Р¤Р°Р№Р»";
 
       /* toolStripMenuNew*/
       this.toolStripMenuFile.DropDownItems.AddRange(new ToolStripItem[] {this.toolStripMenuNew});
       this.toolStripMenuNew.Name = "toolStripMenuNew";
       this.toolStripMenuNew.Size = new System.Drawing.Size(25, 20);
-      this.toolStripMenuNew.Text = "Создать";
+      this.toolStripMenuNew.Text = "РЎРѕР·РґР°С‚СЊ";
 
       /* toolStripMenuExit */
       this.toolStripMenuFile.DropDownItems.AddRange(new ToolStripItem[] {this.toolStripMenuExit});
       this.toolStripMenuExit.Name = "toolStripMenuNew";
       this.toolStripMenuExit.Size = new System.Drawing.Size(25, 20);
-      this.toolStripMenuExit.Text = "Выход";
+      this.toolStripMenuExit.Text = "Р’С‹С…РѕРґ";
 
       /* toolStripMenuHelp*/
       this.Items.AddRange(new ToolStripItem[] {this.toolStripMenuHelp});
       this.toolStripMenuHelp.Name = "menuStripHelp";
       this.toolStripMenuHelp.Size = new System.Drawing.Size(25,20);
-      this.toolStripMenuHelp.Text = "Помощь";
+      this.toolStripMenuHelp.Text = "РџРѕРјРѕС‰СЊ";
 
       /* toolStripMenuAbout */
       this.toolStripMenuHelp.DropDownItems.AddRange(new ToolStripItem[] {this.toolStripMenuAbout});
       this.toolStripMenuAbout.Name = "toolStripMenuNew";
       this.toolStripMenuAbout.Size = new System.Drawing.Size(25, 20);
-      this.toolStripMenuAbout.Text = "О программе";
+      this.toolStripMenuAbout.Text = "Рћ РїСЂРѕРіСЂР°РјРјРµ";
     }
   }
 }

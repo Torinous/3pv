@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.ComponentModel;
@@ -19,36 +19,36 @@ namespace PPPv.Editor{
          this.Size = new Size(400,300);
          this.StartPosition = FormStartPosition.CenterScreen;
          //this.FormBorderStyle = FormBorderStyle.FixedDialog;
-         this.Text = "Редактирование места: " + pl.Name;
+         this.Text = "Р РµРґР°РєС‚РёСЂРѕРІР°РЅРёРµ РјРµСЃС‚Р°: " + pl.Name;
          InitializeComponent();
       }
       private void InitializeComponent(){
-      	 groupBox = new GroupBox();
-      	 groupBox.Location = new System.Drawing.Point(20, 20);
-		 groupBox.Name = "groupBox";
-		 groupBox.Size = new System.Drawing.Size( this.Width-40, this.Height-40 );
-		 groupBox.TabIndex = 0;
-		 groupBox.TabStop = false;
-		 groupBox.Text = "Параметры места";
-      	 groupBox.Anchor = ((AnchorStyles)((((AnchorStyles.Top | AnchorStyles.Bottom)	| AnchorStyles.Left) | AnchorStyles.Right)));
-		 
-      	 lableName = new Label();
-      	 lableName.Location = new Point(40, 40);
-      	 lableName.Text = "Имя:";
-      	 
+         groupBox = new GroupBox();
+         groupBox.Location = new System.Drawing.Point(20, 20);
+         groupBox.Name = "groupBox";
+         groupBox.Size = new System.Drawing.Size( this.Width-40, this.Height-40 );
+         groupBox.TabIndex = 0;
+         groupBox.TabStop = false;
+         groupBox.Text = "РџР°СЂР°РјРµС‚СЂС‹ РјРµСЃС‚Р°";
+         groupBox.Anchor = ((AnchorStyles)((((AnchorStyles.Top | AnchorStyles.Bottom)	| AnchorStyles.Left) | AnchorStyles.Right)));
+ 
+         lableName = new Label();
+         lableName.Location = new Point(40, 40);
+         lableName.Text = "РРјСЏ:";
+
          tbName = new TextBox();
          tbName.Size = new Size(280,25);
          tbName.Location = new Point(150,40);
          
          bOK = new Button();
-         bOK.Name = bOK.Text = "Принять";
+         bOK.Name = bOK.Text = "РџСЂРёРЅСЏС‚СЊ";
          bOK.Location = new Point(this.Width-40,this.Height-40);
          bOK.DialogResult = DialogResult.OK;
          bOK.Click += OKButtonHandler;
          bOK.Anchor = AnchorStyles.Bottom;
          
          bCancel = new Button();
-         bCancel.Name = bCancel.Text = "Отмена";
+         bCancel.Name = bCancel.Text = "РћС‚РјРµРЅР°";
          bCancel.Location = new Point(bOK.Right+10, bOK.Top);
          bCancel.DialogResult = DialogResult.Cancel;
          bCancel.Anchor = AnchorStyles.Bottom;

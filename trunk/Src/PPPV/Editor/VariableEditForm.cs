@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.ComponentModel;
@@ -17,7 +17,7 @@ namespace PPPv.Editor{
          this.Size = new Size(300,110);
          this.StartPosition = FormStartPosition.CenterScreen;
          this.FormBorderStyle = FormBorderStyle.FixedDialog;
-         this.Text = "Означивание переменных:";
+         this.Text = "РћР·РЅР°С‡РёРІР°РЅРёРµ РїРµСЂРµРјРµРЅРЅС‹С…:";
          InitializeComponent();
       }
       private void InitializeComponent(){
