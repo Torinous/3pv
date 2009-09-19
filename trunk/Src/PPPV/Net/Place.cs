@@ -16,6 +16,7 @@ namespace PPPv.Net {
       public Place(int x_, int y_):base(x_, y_, 50, 50, true) {
          _ID++;
          Name = "P"+_ID;
+          tokens = new ArrayList();
       }
       
       public ArrayList Tokens{
@@ -54,8 +55,8 @@ namespace PPPv.Net {
          Region fillRegion = new Region(tmpPath);
          dc.FillRegion(grayBrush, fillRegion);
          dc.DrawEllipse(blackPen, X, Y, Width, Height);
-         dc.DrawString(Name, font1, blackBrush, X + (int)Width/2,Y-10);
-
+         dc.DrawString(Name, font1, blackBrush, X + (int)Width/2+5,Y-5);
+         dc.DrawString(Tokens.Count.ToString(), font1, blackBrush, X + (int)Width/2-10, Y + (int)Height/2-10);
       }
 
       protected override void UpdateHitRegion(){

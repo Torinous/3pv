@@ -6,7 +6,6 @@ using System.Drawing.Drawing2D;
 //using PPPv.Editor;
 using PPPv.Utils;
 
-
 namespace PPPv.Net {
    public class PetriNet {
       private ArrayList places;
