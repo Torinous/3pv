@@ -12,7 +12,8 @@ namespace PPPv.Editor{
       private NetToolStrip toolController;
       private PetriNet net;
 
-      public NetCanvas netCanvas {
+      /*Акцессоры доступа*/
+      public NetCanvas NetCanvas {
          get{
             return canvasRef;
          }
@@ -20,25 +21,33 @@ namespace PPPv.Editor{
             canvasRef = value;
          }
       }
+      public NetToolStrip ToolController{
+         get {
+            return toolController;
+         }
+         private set {
+            toolController = value;
+         }
+      }
 
-      public TabPageForNet(NetToolStrip toolController, PetriNet net):base("SomeName") {
+      public TabPageForNet(PetriNet net):base("SomeName") {
          this.Location = new Point(45, 45);
          this.Padding  = new Padding(3);
          this.Size     = new Size(599, 228);
          this.TabIndex = 0;
          this.UseVisualStyleBackColor = true;
-         this.toolController = toolController;
          this.net = net;
-         this.ParentChanged += ParentChangedHandler;
       }
 
-      private void ParentChangedHandler(object sender, EventArgs arg){
-         InitializeComponent();
+      protected override void OnParentChanged(EventArgs e){
+         this.toolController = (Parent as TabControlForNets).ToolController;
+         InitializeComponent(); 
+         base.OnParentChanged(e);
       }
 
       private void InitializeComponent() {
          this.SuspendLayout();
-         this.Controls.Add(netCanvas = new NetCanvas(toolController, net));
+         this.Controls.Add(NetCanvas = new NetCanvas(net));
          this.ResumeLayout(false);
          this.PerformLayout();
       }

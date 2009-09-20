@@ -1,13 +1,23 @@
-
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using System.Xml.Serialization;
 
 namespace PPPv.Net {
+   [Serializable()]
    public abstract class NetElement : GraphicalElement {
-
+      /*Поля*/
+      [XmlIgnore]
       protected PetriNet parent;
 
+      /*Конструкторы*/
+      public NetElement(int x_, int y_, int width_, int height_, bool sizeable_):base(x_, y_, width_, height_, sizeable_){
+         this.SelectionChange += this.SelectionChangeHandler;
+      }
+      
+      /*Свойства*/
+      [XmlIgnore]
       public PetriNet ParentNet{
          get{
             return parent;
@@ -43,10 +53,6 @@ namespace PPPv.Net {
                parent.KeyDown               += this.KeyDownHandler;
             }
          }
-      }
-
-      public NetElement(int x_, int y_, int width_, int height_, bool sizeable_):base(x_, y_, width_, height_, sizeable_){
-         this.SelectionChange += this.SelectionChangeHandler;
       }
 
       protected void SelectionChangeHandler(object sender, SelectionChangeEventArgs args){

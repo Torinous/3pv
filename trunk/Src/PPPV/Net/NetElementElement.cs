@@ -1,12 +1,22 @@
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using System.Xml.Serialization;
 
 namespace PPPv.Net {
-   public abstract class NetElementElement: GraphicalElement {
 
+   [Serializable()]
+   public abstract class NetElementElement: GraphicalElement {
+      /*Поля*/
+      [XmlIgnore]
       protected GraphicalElement parent;
 
+      /*Конструкторы*/
+      public NetElementElement(int x_, int y_, int width_, int height_, bool sizeable_):base(x_, y_, width_, height_, sizeable_){
+      }
+
+      /*Свойства*/
       public GraphicalElement ParentNetElement{
          get{
             return parent;
@@ -26,9 +36,6 @@ namespace PPPv.Net {
                parent.Move                  += this.MoveHandler;
             }
          }
-      }
-
-      public NetElementElement(int x_, int y_, int width_, int height_, bool sizeable_):base(x_, y_, width_, height_, sizeable_){
       }
 
       /*Вся внутренняя подготовка перед удалением элемента сети*/

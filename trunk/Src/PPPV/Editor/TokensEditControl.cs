@@ -150,7 +150,6 @@ namespace PPPv.Editor {
          {
             tbCurrentToken.Text = lbTokens.SelectedItem.ToString();
          }
-
       }
 
       private void SetCountText(int count)

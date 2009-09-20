@@ -1,24 +1,35 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Collections;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 //using PPPv.Editor;
 using PPPv.Utils;
 
 namespace PPPv.Net {
+
+   [Serializable()]
+   [XmlRoot("Place")]
    public class Place : NetElement {
       private static int _ID = 0;
+      [XmlIgnore]
       private ArrayList tokens;
 
-      /*Конструктор*/
+      /*Конструкторы*/
+      public Place():base(0, 0, 50, 50, true) {
+         Name = "";
+         tokens = new ArrayList();
+      }
 
       public Place(int x_, int y_):base(x_, y_, 50, 50, true) {
          _ID++;
          Name = "P"+_ID;
-          tokens = new ArrayList();
+         tokens = new ArrayList();
       }
-      
+
+      [XmlIgnore]
       public ArrayList Tokens{
          get{
             return tokens;

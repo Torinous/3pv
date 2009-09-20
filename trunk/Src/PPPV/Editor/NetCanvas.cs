@@ -13,7 +13,7 @@ namespace PPPv.Editor{
 
    public class NetCanvas : Panel{
       /*Поля*/
-      NetToolStrip ToolController;
+      private NetToolStrip toolController;
       private PetriNet net;
       private int _gridStep;
       private SelectionController selectionController;
@@ -25,6 +25,15 @@ namespace PPPv.Editor{
       private bool isSelectionActive = false;
 
       /*Акцессоры доступа*/
+      public NetToolStrip ToolController{
+         get{
+            return toolController;
+         }
+         private set {
+            toolController = value;
+         }
+      }
+      
       public PetriNet Net{
          get{
             return net;
@@ -74,8 +83,7 @@ namespace PPPv.Editor{
       }
 
       /*Конструктор*/
-      public NetCanvas(NetToolStrip ToolController_, PetriNet _net) {
-         ToolController = ToolController_;
+      public NetCanvas() {
          this.Anchor = ((AnchorStyles)((((AnchorStyles.Top | AnchorStyles.Bottom)| AnchorStyles.Left)| AnchorStyles.Right)));
          this.Location = new Point(1, 1);
          this.Name = "NetCanvas";
@@ -84,7 +92,7 @@ namespace PPPv.Editor{
          _gridStep = 30;
          this.BackColor = Color.FromArgb(0,50,50,50);
          this.BorderStyle = BorderStyle.FixedSingle;
-         Net = _net;
+         
          InitializeComponent();
 
          /*Включим двойную буферизацию*/
@@ -104,7 +112,10 @@ namespace PPPv.Editor{
          this.CanvasMouseUp += CanvasMouseUpHandler;
          this.CanvasMouseUp += selectionController.CanvasMouseUpHandler;
          this.ParentChanged += ParentChangedHandler;
+      }
 
+      public NetCanvas(PetriNet _net):this(){
+         Net = _net;
          _net.Canvas = this;
       }
 
@@ -268,6 +279,12 @@ namespace PPPv.Editor{
 
       private void CanvasKeyDownHandler(object sender, KeyEventArgs arg){
          OnKeyDown(arg);
+      }
+
+      protected override void OnParentChanged(EventArgs e)
+      {
+         this.toolController = (Parent as TabPageForNet).ToolController;
+         base.OnParentChanged(e);
       }
    }
 }

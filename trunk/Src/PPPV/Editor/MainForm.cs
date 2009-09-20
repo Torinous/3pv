@@ -19,9 +19,25 @@ namespace PPPv.Editor {
       private StatusStrip _statusStrip;
 
       private TabControlForNets _tabControl;
+      
       public TabControlForNets TabControl {
          get{
             return _tabControl;
+         }
+      }
+
+      public NetToolStrip ToolController {
+         get{
+            return toolStrip;
+         }
+      }
+      
+      public MainMenuStrip MainMenuStrip{
+         get{
+            return menuStrip;
+         }
+         private set{
+            menuStrip = value;
          }
       }
 
@@ -38,10 +54,10 @@ namespace PPPv.Editor {
 
          /*Панель инструментов*/
          this.toolStrip          = new NetToolStrip();
+         /*Статус строка*/
+         this._statusStrip       = new StatusStrip();
 
-         this._statusStrip        = new StatusStrip();
-
-         this._tabControl         = new TabControlForNets(this.toolStrip);
+         this._tabControl        = new TabControlForNets();
          this.toolStripContainer = new ToolStripContainer();
          /*System.ComponentModel.ComponentResourceManager resources = new ComponentResourceManager(typeof(MainForm));*/
 
@@ -74,9 +90,8 @@ namespace PPPv.Editor {
          //
          // toolStripContainer.ContentPanel
          //
-         this.toolStripContainer.ContentPanel.Controls.Add(this._tabControl);
+         
          this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(599, 228);
-         this.toolStripContainer.TopToolStripPanel.Controls.Add(this.toolStrip);
          this.toolStripContainer.TopToolStripPanel.AutoSize = true;
          //
          // Form1
@@ -84,9 +99,6 @@ namespace PPPv.Editor {
          //this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          //this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(599, 299);
-         this.Controls.Add(this.toolStripContainer);
-         this.Controls.Add(this._statusStrip);
-         this.Controls.Add(this.menuStrip);
          this.MainMenuStrip = this.menuStrip;
          this.Name = "MainForm";
          this.Text = "3Pv";
@@ -96,6 +108,13 @@ namespace PPPv.Editor {
          this.toolStripContainer.TopToolStripPanel.ResumeLayout(false);
          this.toolStripContainer.TopToolStripPanel.PerformLayout();
          this.toolStripContainer.ResumeLayout(false);
+
+         this.Controls.Add(this.toolStripContainer);
+         this.Controls.Add(this._statusStrip);
+         this.Controls.Add(this.menuStrip);
+         this.toolStripContainer.TopToolStripPanel.Controls.Add(this.toolStrip);
+         this.toolStripContainer.ContentPanel.Controls.Add(this._tabControl);
+
          this.toolStripContainer.PerformLayout();
          this._tabControl.ResumeLayout(false);
          this._tabControl.PerformLayout();

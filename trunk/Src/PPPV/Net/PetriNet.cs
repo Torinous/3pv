@@ -1,32 +1,38 @@
-﻿using System.Drawing;
+﻿using System;
+using System.IO;
+using System.Drawing;
 using System.Windows.Forms;
 using System.Collections;
 using System.Drawing.Drawing2D;
+using System.Xml.Serialization;
 
-//using PPPv.Editor;
+using PPPv.Editor;
 using PPPv.Utils;
 
 namespace PPPv.Net {
+   [Serializable()]
+   [XmlRoot("PNML")]
    public class PetriNet {
       private ArrayList places;
       private ArrayList transitions;
       private ArrayList arcs;
+
+      [XmlIgnore]
       private ArrayList currentSelectedObjects;
+
+      [XmlIgnore]
       private Editor.NetCanvas canvas;
 
-      /*События*/
-      public event MouseEventHandler MouseClick;
-      public event MouseEventHandler MouseMove;
-      public event MouseEventHandler MouseDown;
-      public event MouseEventHandler MouseUp;
-      public event PaintEventHandler Paint;
+      /*Конструктор*/
+      public PetriNet() {
+         Places = new ArrayList(30);
+         Transitions = new ArrayList(30);
+         Arcs = new ArrayList(60);
+         currentSelectedObjects = new ArrayList(50);
+      }
 
-      public event RegionSelectionEventHandler RegionSelectionStart;
-      public event RegionSelectionEventHandler RegionSelectionUpdate;
-      public event RegionSelectionEventHandler RegionSelectionEnd;
-
-      public event KeyEventHandler KeyDown;
-
+      /*Свойства*/
+      [XmlIgnore]
       public ArrayList CurrentSelected{
          get{
             return currentSelectedObjects;
@@ -35,7 +41,8 @@ namespace PPPv.Net {
             currentSelectedObjects = value;
          }
       }
-
+      
+      [XmlIgnore]
       public Editor.NetCanvas Canvas{
          get{
             return canvas;
@@ -60,6 +67,7 @@ namespace PPPv.Net {
                canvas.RegionSelectionEnd    -= RegionSelectionEndRetranslator;
                canvas.KeyDown               -= CanvasKeyDownRetranslator;
                canvas.KeyDown               -= CanvasKeyDownHandler;
+               canvas.VisibleChanged        -= NetCanvasVisibleChangedHandler;
             }
 
             canvas = value;
@@ -83,10 +91,12 @@ namespace PPPv.Net {
                canvas.RegionSelectionEnd    += RegionSelectionEndRetranslator;
                canvas.KeyDown               += CanvasKeyDownHandler;
                canvas.KeyDown               += CanvasKeyDownRetranslator;
+               canvas.VisibleChanged        += NetCanvasVisibleChangedHandler;
             }
          }
       }
 
+      [XmlIgnore]
       public ArrayList Places{
          get{
             return places;
@@ -96,6 +106,7 @@ namespace PPPv.Net {
          }
       }
 
+      [XmlIgnore]
       public ArrayList Transitions{
          get{
             return transitions;
@@ -105,6 +116,7 @@ namespace PPPv.Net {
          }
       }
 
+      [XmlIgnore]
       public ArrayList Arcs{
          get{
             return arcs;
@@ -114,6 +126,7 @@ namespace PPPv.Net {
          }
       }
 
+      [XmlIgnore]
       public NetElement ElementPortal{
          set{
             if(value is Place){
@@ -128,6 +141,19 @@ namespace PPPv.Net {
             value.ParentNet = this;
          }
       }
+
+      /*События*/
+      public event MouseEventHandler MouseClick;
+      public event MouseEventHandler MouseMove;
+      public event MouseEventHandler MouseDown;
+      public event MouseEventHandler MouseUp;
+      public event PaintEventHandler Paint;
+
+      public event RegionSelectionEventHandler RegionSelectionStart;
+      public event RegionSelectionEventHandler RegionSelectionUpdate;
+      public event RegionSelectionEventHandler RegionSelectionEnd;
+
+      public event KeyEventHandler KeyDown;
 
       private void OnMouseClick(MouseEventArgs e){
          if(MouseClick != null){
@@ -289,14 +315,6 @@ namespace PPPv.Net {
          return ElementPortal = tmpArc;
       }
 
-      /*Конструктор*/
-      public PetriNet() {
-         Places = new ArrayList(30);
-         Transitions = new ArrayList(30);
-         Arcs = new ArrayList(60);
-         currentSelectedObjects = new ArrayList(50);
-      }
-
       public void Delete(Arc a){
          a.PrepareToDeletion();
          Arcs.Remove(a);
@@ -377,6 +395,38 @@ namespace PPPv.Net {
             }
          }
          return false;
+      }
+      
+      private void SaveHandler(object sender, System.EventArgs e){
+         
+      }
+      
+      private void SaveAsHandler(object sender, System.EventArgs e){
+         Stream myStream;
+         SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+
+         saveFileDialog1.Filter = "txt files (*.pnml)|*.pnml|All files (*.*)|*.*";
+         saveFileDialog1.FilterIndex = 1 ;
+         saveFileDialog1.RestoreDirectory = true ;
+
+         if(saveFileDialog1.ShowDialog() == DialogResult.OK){
+            if((myStream = saveFileDialog1.OpenFile()) != null){
+               XmlSerializer serealizer = new XmlSerializer(this.GetType());
+               serealizer.Serialize(myStream, this);
+               myStream.Close();
+            }
+         }
+      }
+      private void NetCanvasVisibleChangedHandler(object sender, System.EventArgs e){
+         /*Подключаем и отключаем те события, кототые обрабатываются только если сеть на экране*/
+
+         if(Canvas.Visible){
+            ((this.Canvas.FindForm() as MainForm).MainMenuStrip as MainMenuStrip).toolStripMenuSave.Click   += SaveHandler;
+            ((this.Canvas.FindForm() as MainForm).MainMenuStrip as MainMenuStrip).toolStripMenuSaveAs.Click += SaveAsHandler;
+         }else{
+            ((this.Canvas.FindForm() as MainForm).MainMenuStrip as MainMenuStrip).toolStripMenuSave.Click   -= SaveHandler;
+            ((this.Canvas.FindForm() as MainForm).MainMenuStrip as MainMenuStrip).toolStripMenuSaveAs.Click -= SaveAsHandler;
+         }
       }
    }
 }

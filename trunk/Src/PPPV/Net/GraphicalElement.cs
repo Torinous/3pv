@@ -1,19 +1,42 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using System.Xml.Serialization;
 
 namespace PPPv.Net {
+   [Serializable()]
    public abstract class GraphicalElement: IDrawable {
-
+      /*Поля*/
       protected Point location;
+      [XmlIgnore]
       protected Region _hitRegion; //регион где проверяется клик в объект
       protected string _name;
+      [XmlIgnore]
       protected bool selected;
+      [XmlIgnore]
       protected Point dragPoint;
+      [XmlIgnore]
       protected Pilon sizeController;
+      [XmlIgnore]
       protected bool sizeable;
 
+      /*Конструкторы*/
+      public GraphicalElement(int x_, int y_, int width_, int height_, bool sizeable_) {
+         location = new Point(0,0);
+         dragPoint = new Point(0,0);
+         HitRegion = new Region();
+
+         if(sizeable = sizeable_){
+            sizeController = new Pilon( X + width_, Y + height_, this);
+            sizeController.Move += MoveSizeControllerHandler;
+         }
+
+         Location = new Point(x_-(int)(width_/2), (y_-(int)(height_/2)));
+      }
+
       /*Аксессоры доступа*/
+      [XmlIgnore]
       protected bool Selected{
          get{
             return selected;
@@ -24,6 +47,7 @@ namespace PPPv.Net {
          }
       }
 
+      [XmlIgnore]
       public Point Location{
          get{
             return location;
@@ -35,6 +59,7 @@ namespace PPPv.Net {
          }
       }
 
+      [XmlIgnore]
       public int X{
          get{
             return location.X;
@@ -47,6 +72,7 @@ namespace PPPv.Net {
          }
       }
 
+      [XmlIgnore]
       public int Y{
          get{
             return location.Y;
@@ -68,6 +94,7 @@ namespace PPPv.Net {
          }
       }
 
+      [XmlIgnore]
       public Region HitRegion{
          get{
             return _hitRegion;
@@ -95,31 +122,21 @@ namespace PPPv.Net {
       }
 
       /*События*/
+      [field:NonSerializedAttribute()] 
       public virtual event MoveEventHandler            Move;
+      [field:NonSerializedAttribute()] 
       public virtual event SelectionChangeEventHandler SelectionChange;
-
+      
+      [field:NonSerializedAttribute()] 
       public virtual event MouseEventHandler           MouseMove;
+      [field:NonSerializedAttribute()] 
       public virtual event MouseEventHandler           MouseDown;
+      [field:NonSerializedAttribute()] 
       public virtual event PaintEventHandler           Paint;
+      [field:NonSerializedAttribute()] 
       public virtual event ResizeEventHandler          Resize;
 
-      /*Конструкторы*/
-
-      public GraphicalElement(int x_, int y_, int width_, int height_, bool sizeable_) {
-         location = new Point(0,0);
-         dragPoint = new Point(0,0);
-         HitRegion = new Region();
-
-         if(sizeable = sizeable_){
-            sizeController = new Pilon( X + width_, Y + height_, this);
-            sizeController.Move += MoveSizeControllerHandler;
-         }
-
-         Location = new Point(x_-(int)(width_/2), (y_-(int)(height_/2)));
-      }
-
       /*Методы*/
-
       /*Перемещение на*/
       public void MoveBy(Point p){
          /* Входной параметр это радиус-вектор перемещения */

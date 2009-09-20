@@ -7,11 +7,19 @@ using PPPv.Net;
 namespace PPPv.Editor{
 
    public class TabControlForNets : TabControl{
-   private NetToolStrip ToolController;
+      private NetToolStrip toolController;
+      private Control oldParent;
+      
+      public NetToolStrip ToolController {
+         get{
+            return toolController;
+         }
+         set{
+            toolController = value;
+         }
+      }
 
-
-      public TabControlForNets(NetToolStrip ToolController_) {
-         this.ToolController = ToolController_;
+      public TabControlForNets() {
          this.Anchor = ((AnchorStyles)((((AnchorStyles.Top | AnchorStyles.Bottom)| AnchorStyles.Left)| AnchorStyles.Right)));
          this.Location = new Point(0, 0);
          this.Name = "_tabControl";
@@ -25,13 +33,21 @@ namespace PPPv.Editor{
       }
 
       public NetCanvas AddNewTab(PetriNet _net) {
-         TabPageForNet tmpTabPage  = new TabPageForNet(ToolController,_net);
+         TabPageForNet tmpTabPage  = new TabPageForNet(_net);
          this.SuspendLayout();
          this.TabPages.Add(tmpTabPage);
          //this.Controls.Add(tmpTabPage);
-         return tmpTabPage.netCanvas;
+         return tmpTabPage.NetCanvas;
          this.ResumeLayout(false);
          this.PerformLayout();
+      }
+
+      /*Если у нас поменялся Parent подпишемся сами на все нужные собития*/
+      protected override void OnParentChanged(EventArgs e) {
+         toolController = (this.FindForm() as MainForm).ToolController;
+         //Parent.GetMain
+         oldParent = Parent;
+         base.OnParentChanged(e);
       }
    }
 }
