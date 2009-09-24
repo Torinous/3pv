@@ -4,6 +4,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Collections;
 using System.Drawing.Drawing2D;
+using System.Xml;
+using System.Xml.Schema;
 using System.Xml.Serialization;
 
 using PPPv.Editor;
@@ -11,20 +13,25 @@ using PPPv.Utils;
 
 namespace PPPv.Net {
    [Serializable()]
-   [XmlRoot("PNML")]
-   public class PetriNet {
+   [XmlRoot("pnml")]
+   public class PetriNet:IXmlSerializable {
+      private string name;
+      private string type;
       private ArrayList places;
       private ArrayList transitions;
       private ArrayList arcs;
 
-      [XmlIgnore]
+      private bool saved;
+
       private ArrayList currentSelectedObjects;
 
-      [XmlIgnore]
       private Editor.NetCanvas canvas;
 
       /*Конструктор*/
       public PetriNet() {
+         saved = false;
+         Name = "";
+         Type = "PPr/T net";
          Places = new ArrayList(30);
          Transitions = new ArrayList(30);
          Arcs = new ArrayList(60);
@@ -32,7 +39,23 @@ namespace PPPv.Net {
       }
 
       /*Свойства*/
-      [XmlIgnore]
+      public string Name{
+         get {
+            return name;
+         }
+         private set{
+            name = value;
+         }
+      }
+
+      public string Type{
+         get {
+            return type;
+         }
+         private set{
+            type = value;
+         }
+      }
       public ArrayList CurrentSelected{
          get{
             return currentSelectedObjects;
@@ -41,8 +64,7 @@ namespace PPPv.Net {
             currentSelectedObjects = value;
          }
       }
-      
-      [XmlIgnore]
+
       public Editor.NetCanvas Canvas{
          get{
             return canvas;
@@ -67,7 +89,7 @@ namespace PPPv.Net {
                canvas.RegionSelectionEnd    -= RegionSelectionEndRetranslator;
                canvas.KeyDown               -= CanvasKeyDownRetranslator;
                canvas.KeyDown               -= CanvasKeyDownHandler;
-               canvas.VisibleChanged        -= NetCanvasVisibleChangedHandler;
+               canvas.Parent.VisibleChanged        -= NetCanvasVisibleChangedHandler;
             }
 
             canvas = value;
@@ -91,12 +113,11 @@ namespace PPPv.Net {
                canvas.RegionSelectionEnd    += RegionSelectionEndRetranslator;
                canvas.KeyDown               += CanvasKeyDownHandler;
                canvas.KeyDown               += CanvasKeyDownRetranslator;
-               canvas.VisibleChanged        += NetCanvasVisibleChangedHandler;
+               canvas.Parent.VisibleChanged        += NetCanvasVisibleChangedHandler;
             }
          }
       }
 
-      [XmlIgnore]
       public ArrayList Places{
          get{
             return places;
@@ -106,7 +127,6 @@ namespace PPPv.Net {
          }
       }
 
-      [XmlIgnore]
       public ArrayList Transitions{
          get{
             return transitions;
@@ -116,7 +136,6 @@ namespace PPPv.Net {
          }
       }
 
-      [XmlIgnore]
       public ArrayList Arcs{
          get{
             return arcs;
@@ -126,7 +145,6 @@ namespace PPPv.Net {
          }
       }
 
-      [XmlIgnore]
       public NetElement ElementPortal{
          set{
             if(value is Place){
@@ -390,7 +408,7 @@ namespace PPPv.Net {
 
       public bool HaveArcBetween(NetElement from_, NetElement to_){
          for(int i=0;i<Arcs.Count;++i) {
-            if((Arcs[i] as Arc).From == from_ && (Arcs[i] as Arc).To == to_){
+            if((Arcs[i] as Arc).Source == from_ && (Arcs[i] as Arc).Target == to_){
                return true;
             }
          }
@@ -402,7 +420,7 @@ namespace PPPv.Net {
       }
       
       private void SaveAsHandler(object sender, System.EventArgs e){
-         Stream myStream;
+         Stream stream;
          SaveFileDialog saveFileDialog1 = new SaveFileDialog();
 
          saveFileDialog1.Filter = "txt files (*.pnml)|*.pnml|All files (*.*)|*.*";
@@ -410,16 +428,16 @@ namespace PPPv.Net {
          saveFileDialog1.RestoreDirectory = true ;
 
          if(saveFileDialog1.ShowDialog() == DialogResult.OK){
-            if((myStream = saveFileDialog1.OpenFile()) != null){
+            if((stream = saveFileDialog1.OpenFile()) != null){
+               Name = (stream as FileStream).Name;
                XmlSerializer serealizer = new XmlSerializer(this.GetType());
-               serealizer.Serialize(myStream, this);
-               myStream.Close();
+               serealizer.Serialize(stream, this);
+               stream.Close();
             }
          }
       }
       private void NetCanvasVisibleChangedHandler(object sender, System.EventArgs e){
          /*Подключаем и отключаем те события, кототые обрабатываются только если сеть на экране*/
-
          if(Canvas.Visible){
             ((this.Canvas.FindForm() as MainForm).MainMenuStrip as MainMenuStrip).toolStripMenuSave.Click   += SaveHandler;
             ((this.Canvas.FindForm() as MainForm).MainMenuStrip as MainMenuStrip).toolStripMenuSaveAs.Click += SaveAsHandler;
@@ -428,5 +446,94 @@ namespace PPPv.Net {
             ((this.Canvas.FindForm() as MainForm).MainMenuStrip as MainMenuStrip).toolStripMenuSaveAs.Click -= SaveAsHandler;
          }
       }
-   }
-}
+
+      public void WriteXml (XmlWriter writer)
+      {
+         //writer.WriteStartElement("pnml");
+         writer.WriteStartElement("net");
+         writer.WriteAttributeString("id", Name);
+         writer.WriteAttributeString("type", Type);
+         foreach(Place place in Places){
+            writer.WriteStartElement("place");
+            place.WriteXml(writer);
+            writer.WriteEndElement(); // place
+         }
+         foreach(Transition transition in Transitions){
+            writer.WriteStartElement("transition");
+            transition.WriteXml(writer);
+            writer.WriteEndElement(); // transition
+         }
+         foreach(Arc arc in Arcs){
+            writer.WriteStartElement("arc");
+            arc.WriteXml(writer);
+            writer.WriteEndElement(); // arc
+         }
+         writer.WriteEndElement(); // net
+         //writer.WriteEndElement(); // pnml
+     }
+
+      public void ReadXml (XmlReader reader)
+      {
+         XmlReader subTreeReader;
+         reader.ReadStartElement("pnml");
+         reader.MoveToAttribute("id");
+         this.Name = reader.Value;
+         reader.MoveToAttribute("type");
+         this.Type = reader.Value;
+         
+         reader.ReadStartElement("net");
+         
+         while(reader.NodeType != XmlNodeType.EndElement)
+         {
+            switch(reader.Name){
+               case "place":
+                  subTreeReader = reader.ReadSubtree();
+                  ElementPortal = new Place(subTreeReader);
+                  subTreeReader.Close();
+                  reader.Skip();
+               break;
+               case "transition":
+                  subTreeReader = reader.ReadSubtree();
+                  ElementPortal = new Transition(subTreeReader);
+                  subTreeReader.Close();
+                  reader.Skip();
+               break;
+               case "arc":
+                  subTreeReader = reader.ReadSubtree();
+                  ElementPortal = new Arc(subTreeReader, this);
+                  subTreeReader.Close();
+                  reader.Skip();
+               break;
+               default:
+                  reader.Read();
+               break;
+            }
+         }
+         reader.ReadEndElement();
+         reader.ReadEndElement();
+      }
+
+      public XmlSchema GetSchema()
+      {
+         return(null);
+      }
+      
+      public NetElement GetElementByID(string ID_){
+         if(ID_ == "")
+            return null;
+         foreach(Place place in Places){
+            if(place.ID == ID_)
+               return place;
+         }
+         foreach(Transition transition in Transitions){
+            if(transition.ID == ID_)
+               return transition;
+         }
+         foreach(Arc arc in Arcs){
+            if(arc.ID == ID_)
+               return arc;
+         }
+         return null;
+      }
+   } // PetriNet
+} // namespace

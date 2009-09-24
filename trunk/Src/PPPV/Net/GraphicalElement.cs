@@ -4,21 +4,18 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Xml.Serialization;
 
+using PPPv.Editor;
+
 namespace PPPv.Net {
    [Serializable()]
    public abstract class GraphicalElement: IDrawable {
       /*Поля*/
       protected Point location;
-      [XmlIgnore]
       protected Region _hitRegion; //регион где проверяется клик в объект
       protected string _name;
-      [XmlIgnore]
       protected bool selected;
-      [XmlIgnore]
       protected Point dragPoint;
-      [XmlIgnore]
       protected Pilon sizeController;
-      [XmlIgnore]
       protected bool sizeable;
 
       /*Конструкторы*/
@@ -36,7 +33,6 @@ namespace PPPv.Net {
       }
 
       /*Аксессоры доступа*/
-      [XmlIgnore]
       protected bool Selected{
          get{
             return selected;
@@ -47,7 +43,6 @@ namespace PPPv.Net {
          }
       }
 
-      [XmlIgnore]
       public Point Location{
          get{
             return location;
@@ -59,7 +54,6 @@ namespace PPPv.Net {
          }
       }
 
-      [XmlIgnore]
       public int X{
          get{
             return location.X;
@@ -72,7 +66,6 @@ namespace PPPv.Net {
          }
       }
 
-      [XmlIgnore]
       public int Y{
          get{
             return location.Y;
@@ -94,7 +87,6 @@ namespace PPPv.Net {
          }
       }
 
-      [XmlIgnore]
       public Region HitRegion{
          get{
             return _hitRegion;
@@ -122,18 +114,12 @@ namespace PPPv.Net {
       }
 
       /*События*/
-      [field:NonSerializedAttribute()] 
       public virtual event MoveEventHandler            Move;
-      [field:NonSerializedAttribute()] 
       public virtual event SelectionChangeEventHandler SelectionChange;
       
-      [field:NonSerializedAttribute()] 
       public virtual event MouseEventHandler           MouseMove;
-      [field:NonSerializedAttribute()] 
       public virtual event MouseEventHandler           MouseDown;
-      [field:NonSerializedAttribute()] 
       public virtual event PaintEventHandler           Paint;
-      [field:NonSerializedAttribute()] 
       public virtual event ResizeEventHandler          Resize;
 
       /*Методы*/
@@ -271,43 +257,49 @@ namespace PPPv.Net {
             ShowSelectionMarker(e.Graphics);
       }
 
-      public virtual Point GetPilon(Point from,Graphics on){
-         //Graphics g = this.ParentNet.Canvas.CreateGraphics();
-         Region reg = new Region();
-         reg = HitRegion.Clone();
-         Pen greenPen = new Pen(Color.Black, 1);
-         GraphicsPath gp = new GraphicsPath();
-         Rectangle rect = new Rectangle();
+      public virtual Point GetPilon(Point from, NetCanvas on){
+         Graphics g;
          Point pilon = new Point();
+         if (on != null){
+            g = on.CreateGraphics();
+            Region reg = new Region();
+            reg = HitRegion.Clone();
+            Pen greenPen = new Pen(Color.Black, 1);
+            GraphicsPath gp = new GraphicsPath();
+            Rectangle rect = new Rectangle();
 
-         /*Если не посчитается, просто вернём центр*/
-         pilon.X = Center.X;
-         pilon.Y = Center.Y;
+            /*Если не посчитается, просто вернём центр*/
+            pilon.X = Center.X;
+            pilon.Y = Center.Y;
 
-         if(from != Center){
-            gp.AddLine(from,Center);
-            gp.Widen(greenPen);
-            reg.Intersect(gp);
-            RectangleF bounds = reg.GetBounds(on);
-            rect = Rectangle.Ceiling(bounds);
-            if(from.X <= Center.X){
-               if(from.Y <= Center.Y){
-                  pilon.X = rect.Left;
-                  pilon.Y = rect.Top;
+            if(from != Center){
+               gp.AddLine(from,Center);
+               gp.Widen(greenPen);
+               reg.Intersect(gp);
+               RectangleF bounds = reg.GetBounds(g);
+               rect = Rectangle.Ceiling(bounds);
+               if(from.X <= Center.X){
+                  if(from.Y <= Center.Y){
+                     pilon.X = rect.Left;
+                     pilon.Y = rect.Top;
+                  }else{
+                     pilon.X = rect.Left;
+                     pilon.Y = rect.Bottom;
+                  }
                }else{
-                  pilon.X = rect.Left;
-                  pilon.Y = rect.Bottom;
+                  if(from.Y <= Center.Y){
+                     pilon.X = rect.Right;
+                     pilon.Y = rect.Top;
+                  }else{
+                     pilon.X = rect.Right;
+                     pilon.Y = rect.Bottom;
+                  }
                }
-            }else{
-               if(from.Y <= Center.Y){
-                  pilon.X = rect.Right;
-                  pilon.Y = rect.Top;
-               }else{
-                  pilon.X = rect.Right;
-                  pilon.Y = rect.Bottom;
-               }
+               g.Dispose();
             }
-            on.Dispose();
+         }else{
+            pilon.X = Center.X;
+            pilon.Y = Center.Y;
          }
          return pilon;
       }

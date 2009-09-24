@@ -8,7 +8,7 @@ namespace PPPv.Net {
    [Serializable()]
    public abstract class NetElement : GraphicalElement {
       /*Поля*/
-      [XmlIgnore]
+      private string id;
       protected PetriNet parent;
 
       /*Конструкторы*/
@@ -17,7 +17,15 @@ namespace PPPv.Net {
       }
       
       /*Свойства*/
-      [XmlIgnore]
+      public string ID{
+         get {
+            return id;
+         }
+         protected set {
+            id = value;
+         }
+      }
+      
       public PetriNet ParentNet{
          get{
             return parent;

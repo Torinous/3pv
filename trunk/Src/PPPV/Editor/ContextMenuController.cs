@@ -40,7 +40,7 @@ namespace PPPv.Editor{
 
       private void ContextMenuEditHandler(object sender, EventArgs e){
          if(contextMenuTarget is Arc){
-            Form f = new VariableEditForm((Arc)contextMenuTarget);
+            Form f = new ArcEditForm((Arc)contextMenuTarget);
             f.ShowDialog(canvas.FindForm());
             f.Dispose();
          }
@@ -50,7 +50,7 @@ namespace PPPv.Editor{
             f.Dispose();
          }
          if(contextMenuTarget is Place){
-      		Form f = new PlaceEditForm((Place)contextMenuTarget);
+            Form f = new PlaceEditForm((Place)contextMenuTarget);
             f.ShowDialog(canvas.FindForm());
             f.Dispose();
          }

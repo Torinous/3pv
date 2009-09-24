@@ -1,20 +1,48 @@
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using System.Collections;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 
 using PPPv.Utils;
-//using PPPv.Editor;
+using PPPv.Editor;
 
 namespace PPPv.Net {
-   public class Arc : NetElement {
-      private static int _ID = 0;
+   public class Arc : NetElement, IXmlSerializable {
       protected static Pen ArrowedBlackPen = ArrowedBlackPenFactory();
-      private NetElement from,to;
-      private Point fromPilon,toPilon;
-      private string cortege;
+      private NetElement source, target;
+      private Point sourcePilon,targetPilon;
+      private CortegeList cortege;
       private ArrayList points;
 
+      /*Конструктор*/
+      public Arc(NetElement startElement):base(0, 0, 0, 0, false) {
+         Source = startElement;
+         if(Source != null)
+            targetPilon = Source.Center;
+         Points = new ArrayList(20);
+         Cortege = new CortegeList(10);
+      }
+
+      public Arc(XmlReader reader, PetriNet net):this((NetElement)null){
+         ParentNet = net;
+         this.ReadXml(reader);
+      }
+
+      public string ID{
+         get {
+            string source_="", target_="";
+            if(Source != null)
+               source_ = Source.ID;
+            if(Target != null)
+               target_ = Target.ID;
+            return source_+" to "+target_;
+         }
+      }
+      
       public ArrayList Points{
          get{
             return points;
@@ -24,7 +52,7 @@ namespace PPPv.Net {
          }
       }
 
-      public string Cortege{
+      public CortegeList Cortege{
          get{
             return cortege;
          }
@@ -33,81 +61,71 @@ namespace PPPv.Net {
          }
       }
 
-      private Point FromPilon{
+      private Point SourcePilon{
          get{
-            return fromPilon;
+            return sourcePilon;
          }
          set{
-            fromPilon = value;
+            sourcePilon = value;
             UpdateHitRegion();
          }
       }
 
-      private Point ToPilon{
+      private Point TargetPilon{
          get{
-            return toPilon;
+            return targetPilon;
          }
          set{
-            toPilon = value;
+            targetPilon = value;
             UpdateHitRegion();
          }
       }
 
-      public NetElement To{
+      public NetElement Target{
          get{
-            return to;
+            return target;
          }
          set{
-            if(to != null){
-               to.Move -= MoveHandler;
-               to.Resize -= ResizeLinkedElementsHandler;
+            if(target != null){
+               target.Move -= MoveHandler;
+               target.Resize -= ResizeLinkedElementsHandler;
             }
-            to = value;
-            if(to != null){
+            target = value;
+            if(target != null){
                UpdatePosition();
-               to.Move += MoveHandler;
-               to.Resize += ResizeLinkedElementsHandler;
+               target.Move += MoveHandler;
+               target.Resize += ResizeLinkedElementsHandler;
             }
          }
       }
 
-      public NetElement From{
+      public NetElement Source{
          get{
-            return from;
+            return source;
          }
          set{
-            if(from != null){
-               from.Move -= MoveHandler;
-               from.Resize -= ResizeLinkedElementsHandler;
+            if(source != null){
+               source.Move -= MoveHandler;
+               source.Resize -= ResizeLinkedElementsHandler;
             }
-            from = value;
-            if(from != null){
-               FromPilon = from.Center;
-               from.Move += MoveHandler;
-               from.Resize += ResizeLinkedElementsHandler;
+            source = value;
+            if(source != null){
+               sourcePilon = source.Center;
+               source.Move += MoveHandler;
+               source.Resize += ResizeLinkedElementsHandler;
             }
          }
       }
 
       public bool Unfinished{
          get{
-            return To == null;
+            return target == null;
          }
-      }
-
-      /*Конструктор*/
-      public Arc(NetElement startElement):base(0, 0, 0, 0, false) {
-         _ID++;
-         Name = "A"+_ID;
-         From = startElement;
-         ToPilon = From.Center;
-         cortege = "2X";
-         Points = new ArrayList(20);
       }
 
       public override Point Center{
          get{
-            return new Point((FromPilon.X+ToPilon.X)/2,(FromPilon.Y+ToPilon.Y)/2);
+            return new Point((sourcePilon.X+targetPilon.X)/2,(sourcePilon.Y+targetPilon.Y)/2);
          }
       }
 
@@ -129,15 +147,15 @@ namespace PPPv.Net {
          Font font1 = new Font(fF_Arial,16,FontStyle.Regular,GraphicsUnit.Pixel);
 
          if( Points.Count == 0 ){
-            dc.DrawLine(ArrowedBlackPen,FromPilon,ToPilon);
-            dc.DrawString(cortege,font1,blackBrush,Center.X,Center.Y+5);
+            dc.DrawLine(ArrowedBlackPen, sourcePilon, targetPilon);
+            dc.DrawString(Cortege.Text, font1, blackBrush, Center.X, Center.Y+5);
          }else{
-            dc.DrawLine(blackPen, FromPilon,(Points[0] as Pilon).Location);
+            dc.DrawLine(blackPen, sourcePilon,(Points[0] as Pilon).Location);
             for(int i = 1;i < Points.Count; ++i){
                dc.DrawLine(blackPen, (Points[i-1] as Pilon).Location, (Points[i] as Pilon).Location);
             }
-            dc.DrawLine(ArrowedBlackPen, (Points[Points.Count-1] as Pilon).Location,ToPilon);
-            dc.DrawString(cortege, font1, blackBrush, Center.X, Center.Y+5);
+            dc.DrawLine(ArrowedBlackPen, (Points[Points.Count-1] as Pilon).Location,targetPilon);
+            dc.DrawString(Cortege.Text, font1, blackBrush, Center.X, Center.Y+5);
          }
       }
 
@@ -161,14 +179,14 @@ namespace PPPv.Net {
       private void UpdatePosition(){
          UpdateHitRegion();
          if(Points.Count == 0)
-            FromPilon = from.GetPilon(to.Center,this.ParentNet.Canvas.CreateGraphics());
+            sourcePilon = source.GetPilon(target.Center,this.ParentNet.Canvas);
          else
-            FromPilon = from.GetPilon((Points[0] as Pilon).Center,this.ParentNet.Canvas.CreateGraphics());
+            sourcePilon = source.GetPilon((Points[0] as Pilon).Center,this.ParentNet.Canvas);
 
          if(Points.Count == 0)
-            ToPilon = to.GetPilon(from.Center,this.ParentNet.Canvas.CreateGraphics());
+            targetPilon = target.GetPilon(source.Center,this.ParentNet.Canvas);
          else
-            ToPilon = to.GetPilon((Points[Points.Count-1] as Pilon).Center,this.ParentNet.Canvas.CreateGraphics());
+            targetPilon = target.GetPilon((Points[Points.Count-1] as Pilon).Center,this.ParentNet.Canvas);
       }
 
       protected override void MouseClickHandler(object sender, MouseEventArgs args){
@@ -184,11 +202,11 @@ namespace PPPv.Net {
                break;
             case Editor.ToolEnum.Arc:
                if(Unfinished){
-                  ToPilon = new Point(args.X,args.Y);
+                  targetPilon = new Point(args.X,args.Y);
                   if(Points.Count == 0)
-                     FromPilon = from.GetPilon(ToPilon,this.ParentNet.Canvas.CreateGraphics());
+                     sourcePilon = Source.GetPilon(targetPilon,this.ParentNet.Canvas);
                   else
-                     FromPilon = from.GetPilon((Points[0] as Pilon).Center,this.ParentNet.Canvas.CreateGraphics());
+                     sourcePilon = Source.GetPilon((Points[0] as Pilon).Center,this.ParentNet.Canvas);
                   (sender as PetriNet).Canvas.Invalidate();
                }
                break;
@@ -212,9 +230,9 @@ namespace PPPv.Net {
                      NetElement clicked = parent.NetElementUnder(new Point(args.X,args.Y));
                      clicked = (clicked is Arc) ? null : clicked;
                      if(clicked != null){
-                        if(From.GetType() != clicked.GetType()){
-                           if(!ParentNet.HaveArcBetween(From,clicked)){
-                              To = clicked;
+                        if(Source.GetType() != clicked.GetType()){
+                           if(!ParentNet.HaveArcBetween(Source,clicked)){
+                              Target = clicked;
                            }
                         }
                      }else{
@@ -253,7 +271,7 @@ namespace PPPv.Net {
 
       protected override void KeyDownHandler(object sender, KeyEventArgs arg){
          if(arg.KeyCode == Keys.Escape){
-            if(to == null){
+            if(Target == null){
                parent.Delete(this);
                (sender as PetriNet).Canvas.Invalidate();//TODO: полный Invalidate это нехорошо!!!
             }
@@ -265,20 +283,20 @@ namespace PPPv.Net {
             HitRegion.MakeEmpty();
             GraphicsPath tmpPath = new GraphicsPath();
 
-            Point point1 = new Point(FromPilon.X,FromPilon.Y-1);
-            Point point2 = new Point(ToPilon.X,ToPilon.Y-1);
+            Point point1 = new Point(sourcePilon.X,sourcePilon.Y-1);
+            Point point2 = new Point(targetPilon.X,targetPilon.Y-1);
             tmpPath.AddLine(point1,point2);
 
-            point1 = new Point(ToPilon.X,ToPilon.Y-1);
-            point2 = new Point(toPilon.X,ToPilon.Y+1);
+            point1 = new Point(targetPilon.X,targetPilon.Y-1);
+            point2 = new Point(targetPilon.X,targetPilon.Y+1);
             tmpPath.AddLine(point1,point2);
 
-            point1 = new Point(ToPilon.X,ToPilon.Y+1);
-            point2 = new Point(FromPilon.X,FromPilon.Y+1);
+            point1 = new Point(targetPilon.X,targetPilon.Y+1);
+            point2 = new Point(sourcePilon.X,sourcePilon.Y+1);
             tmpPath.AddLine(point1,point2);
 
-            point1 = new Point(FromPilon.X,FromPilon.Y+1);
-            point2 = new Point(FromPilon.X,FromPilon.Y-1);
+            point1 = new Point(sourcePilon.X,sourcePilon.Y+1);
+            point2 = new Point(sourcePilon.X,sourcePilon.Y-1);
             tmpPath.AddLine(point1,point2);
 
             tmpPath.Widen(new Pen(Color.Red,3));
@@ -288,15 +306,72 @@ namespace PPPv.Net {
       }
 
       /*Чисто фиктивно, просто чтобы реализовать абстрактный член*/
-      public override Point GetPilon(Point from,Graphics on){
+      public override Point GetPilon(Point source, NetCanvas on){
          return Center;
       }
 
       public override void PrepareToDeletion(){
-         From = null;
-         To = null;
+         Source = null;
+         Target = null;
          base.PrepareToDeletion();
       }
 
-   }
-}
+      public void WriteXml (XmlWriter writer)
+      {
+         int i = 0;
+         writer.WriteAttributeString("id",this.ID);
+         writer.WriteAttributeString("source", this.Source.Name);
+         writer.WriteAttributeString("target", this.Target.Name);
+         foreach(Pilon p in Points){
+            writer.WriteStartElement("arcpath");
+            writer.WriteAttributeString("id",  String.Format("{0:000}",i));
+            writer.WriteAttributeString("x", p.X.ToString());
+            writer.WriteAttributeString("y", p.Y.ToString());
+            writer.WriteAttributeString("curvePoint", "false");
+            writer.WriteEndElement(); // arcpath
+            i++;
+         }
+         writer.WriteStartElement("cortege");
+         this.cortege.WriteXml(writer);
+         writer.WriteEndElement(); // cortege
+      }
+
+      public void ReadXml (XmlReader reader)
+      {
+         XmlReader subTreeReader;
+         reader.Read();
+         reader.MoveToAttribute("id");
+         reader.MoveToAttribute("source");
+         this.Source = parent.GetElementByID(reader.Value);
+         reader.MoveToAttribute("target");
+         this.Target = parent.GetElementByID(reader.Value);
+         reader.ReadStartElement("arc");
+         while(reader.NodeType != XmlNodeType.EndElement)
+         {
+            switch(reader.Name){
+               case "cortege":
+                  subTreeReader = reader.ReadSubtree();
+                  Cortege.ReadXml(subTreeReader);
+                  subTreeReader.Close();
+                  reader.Skip();
+               break;
+               case "arcpath":
+                  Points.Add(new Pilon(int.Parse(reader.GetAttribute("x")),int.Parse(reader.GetAttribute("y")),(GraphicalElement)this));
+                  reader.MoveToAttribute("curvePoint");
+                  reader.MoveToElement();
+                  reader.Skip();
+                  
+               break;
+               default:
+                  reader.Read();
+               break;
+            }
+         }
+      }
+
+      public XmlSchema GetSchema()
+      {
+         return(null);
+      }
+   } // Arc
+} // namespace

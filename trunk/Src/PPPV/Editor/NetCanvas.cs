@@ -116,7 +116,6 @@ namespace PPPv.Editor{
 
       public NetCanvas(PetriNet _net):this(){
          Net = _net;
-         _net.Canvas = this;
       }
 
       private void ParentChangedHandler(object sender, EventArgs arg){
@@ -284,6 +283,7 @@ namespace PPPv.Editor{
       protected override void OnParentChanged(EventArgs e)
       {
          this.toolController = (Parent as TabPageForNet).ToolController;
+         Net.Canvas = this;
          base.OnParentChanged(e);
       }
    }

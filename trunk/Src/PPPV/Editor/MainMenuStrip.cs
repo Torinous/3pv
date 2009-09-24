@@ -7,6 +7,7 @@ namespace PPPv.Editor{
 
       public ToolStripMenuItem toolStripMenuFile;
       public ToolStripMenuItem toolStripMenuNew;
+      public ToolStripMenuItem toolStripMenuOpen;
       public ToolStripMenuItem toolStripMenuSave;
       public ToolStripMenuItem toolStripMenuSaveAs;
       public ToolStripMenuItem toolStripMenuExit;
@@ -24,6 +25,7 @@ namespace PPPv.Editor{
       private void InitializeComponent() {
          toolStripMenuFile    = new ToolStripMenuItem();
          toolStripMenuNew     = new ToolStripMenuItem();
+         toolStripMenuOpen    = new ToolStripMenuItem();
          toolStripMenuSave    = new ToolStripMenuItem();
          toolStripMenuSaveAs  = new ToolStripMenuItem();
          toolStripMenuExit    = new ToolStripMenuItem();
@@ -41,6 +43,12 @@ namespace PPPv.Editor{
          this.toolStripMenuNew.Name = "toolStripMenuNew";
          this.toolStripMenuNew.Size = new System.Drawing.Size(25, 20);
          this.toolStripMenuNew.Text = "Создать";
+
+         /* toolStripMenuOpen*/
+         this.toolStripMenuFile.DropDownItems.AddRange(new ToolStripItem[] {this.toolStripMenuOpen});
+         this.toolStripMenuOpen.Name = "toolStripMenuNew";
+         this.toolStripMenuOpen.Size = new System.Drawing.Size(25, 20);
+         this.toolStripMenuOpen.Text = "Открыть";
 
          /* toolStripMenuSaveAs*/
          this.toolStripMenuFile.DropDownItems.AddRange(new ToolStripItem[] {this.toolStripMenuSaveAs});

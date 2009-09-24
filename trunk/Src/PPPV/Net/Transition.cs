@@ -1,11 +1,17 @@
+using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 
 using PPPv.Utils;
 
 namespace PPPv.Net {
-   public class Transition : NetElement {
+   [Serializable()]
+   [XmlRoot("transition")]
+   public class Transition : NetElement, IXmlSerializable {
       private static int _ID = 0;
       private string guardFunction;
 
@@ -20,9 +26,13 @@ namespace PPPv.Net {
 
       public Transition(int x_, int y_):base(x_,y_,20,50,true) {
          _ID++;
-         Name = "T"+_ID;
+         Name = ID = "T"+_ID;
          //UpdateHitRegion();
-         guardFunction = "x=y";
+         guardFunction = "";
+      }
+
+      public Transition(XmlReader reader):this(0,0){
+         this.ReadXml(reader);
       }
 
       public override Point Center{
@@ -98,5 +108,80 @@ namespace PPPv.Net {
 
       protected override void KeyDownHandler(object sender, KeyEventArgs arg){
       }
-   }
-}
+
+      public void WriteXml (XmlWriter writer)
+      {
+         writer.WriteAttributeString("id", this.Name);
+
+         writer.WriteStartElement("graphics");
+         writer.WriteStartElement("position");
+         writer.WriteAttributeString("x", this.X.ToString()+".0");
+         writer.WriteAttributeString("y", this.Y.ToString()+".0");
+         writer.WriteEndElement(); // position
+         writer.WriteEndElement(); // graphics
+
+         writer.WriteStartElement("name");
+         writer.WriteStartElement("value");
+         writer.WriteString(this.Name);
+         writer.WriteEndElement(); // value
+         writer.WriteEndElement(); // name
+
+         writer.WriteStartElement("guard");
+         writer.WriteStartElement("value");
+         writer.WriteString(this.guardFunction);
+         writer.WriteEndElement(); // value
+         writer.WriteEndElement(); // guard
+      }
+
+      public void ReadXml (XmlReader reader)
+      {
+         reader.Read();
+         reader.MoveToAttribute("id");
+         this.ID = reader.Value;
+         reader.ReadStartElement("transition");
+         while(reader.NodeType != XmlNodeType.EndElement)
+         {
+            switch(reader.Name){
+               case "graphics":
+                  reader.ReadStartElement("graphics");
+                  /* Обработаем position*/{
+                  reader.ReadToDescendant("position");
+                  reader.MoveToAttribute("x");
+                  this.X = (int)reader.ReadContentAsDouble();
+                  reader.MoveToAttribute("y");
+                  this.Y = (int)reader.ReadContentAsDouble();
+                  reader.MoveToElement();
+                  reader.Skip();
+                  }
+                  reader.ReadEndElement(); // graphics
+               break;
+               case "name":
+                  reader.ReadToDescendant("value");
+                  this.Name = reader.ReadString();
+                  reader.ReadEndElement(); // value
+                  reader.ReadEndElement(); // name
+               break;
+               case "guard":
+                  reader.ReadToDescendant("value");
+                  if(!reader.IsEmptyElement){
+                     this.GuardFunction = reader.ReadString();
+                     reader.ReadEndElement(); // value
+                     reader.ReadEndElement(); // guard
+                  }else{
+                     reader.Skip();
+                     reader.ReadEndElement(); // guard
+                  }
+               break;
+               default:
+                  reader.Read();
+               break;
+            }
+         }
+      }
+
+      public XmlSchema GetSchema()
+      {
+         return(null);
+      }
+   } // Transition
+} // namespace

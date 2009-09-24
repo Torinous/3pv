@@ -3,6 +3,8 @@ using System.Drawing;
 using System.Collections;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Schema;
 using System.Xml.Serialization;
 
 //using PPPv.Editor;
@@ -11,25 +13,22 @@ using PPPv.Utils;
 namespace PPPv.Net {
 
    [Serializable()]
-   [XmlRoot("Place")]
-   public class Place : NetElement {
+   [XmlRoot("place")]
+   public class Place : NetElement, IXmlSerializable {
       private static int _ID = 0;
-      [XmlIgnore]
       private ArrayList tokens;
 
       /*Конструкторы*/
-      public Place():base(0, 0, 50, 50, true) {
-         Name = "";
-         tokens = new ArrayList();
-      }
-
       public Place(int x_, int y_):base(x_, y_, 50, 50, true) {
          _ID++;
-         Name = "P"+_ID;
+         Name = ID = "P"+_ID;
          tokens = new ArrayList();
       }
 
-      [XmlIgnore]
+      public Place(XmlReader reader):this(0,0){
+         ReadXml(reader);
+      }
+
       public ArrayList Tokens{
          get{
             return tokens;
@@ -132,5 +131,84 @@ namespace PPPv.Net {
 
       protected override void KeyDownHandler(object sender, KeyEventArgs arg){
       }
-   }
-}
+
+      public void WriteXml (XmlWriter writer)
+      {
+         writer.WriteAttributeString("id", this.Name);
+         writer.WriteStartElement("graphics");
+         writer.WriteStartElement("position");
+         writer.WriteAttributeString("x", this.X.ToString()+".0");
+         writer.WriteAttributeString("y", this.Y.ToString()+".0");
+         writer.WriteEndElement(); // position
+         writer.WriteEndElement(); // graphics
+         writer.WriteStartElement("name");
+         writer.WriteStartElement("value");
+         writer.WriteString(this.Name);
+         writer.WriteEndElement(); // value
+         writer.WriteEndElement(); // name
+         writer.WriteStartElement("initialMarking");
+         foreach(Token token in Tokens){
+            token.WriteXml(writer);
+         }
+         writer.WriteEndElement(); // initialMarking
+      }
+
+      public void ReadXml (XmlReader reader)
+      {
+         XmlReader subTreeReader;
+         reader.Read();
+         reader.MoveToAttribute("id");
+         this.ID = reader.Value;
+         reader.ReadStartElement("place");
+         while(reader.NodeType != XmlNodeType.EndElement)
+         {
+            switch(reader.Name){
+               case "graphics":
+                  reader.ReadStartElement("graphics");
+                  /* Обработаем position*/{
+                  reader.ReadToDescendant("position");
+                  reader.MoveToAttribute("x");
+                  this.X = (int)reader.ReadContentAsDouble();
+                  reader.MoveToAttribute("y");
+                  this.Y = (int)reader.ReadContentAsDouble();
+                  reader.MoveToElement();
+                  reader.Skip();
+                  }
+                  reader.ReadEndElement(); // graphics
+               break;
+               case "name":
+                  reader.ReadToDescendant("value");
+                  this.Name = reader.ReadString();
+                  reader.ReadEndElement(); // value
+                  reader.ReadEndElement(); // name
+               break;
+               case "initialMarking":
+                  if(!reader.IsEmptyElement){
+                     reader.ReadToDescendant("token");
+                     subTreeReader = reader.ReadSubtree();
+                     Tokens.Add( new Token(subTreeReader));
+                     subTreeReader.Close();
+                     reader.Skip();
+                     while(reader.Name == "token" && reader.NodeType == XmlNodeType.Element){
+                        subTreeReader = reader.ReadSubtree();
+                        Tokens.Add( new Token(subTreeReader));
+                        subTreeReader.Close();
+                        reader.Skip();
+                     }
+                     reader.ReadEndElement(); // initialMarking
+                  }else{
+                     reader.Skip();   // initialMarking
+                  }
+               break;
+               default:
+               break;
+            }
+         }
+      }
+
+      public XmlSchema GetSchema()
+      {
+         return(null);
+      }
+   }  // Place
+}  //namespace
