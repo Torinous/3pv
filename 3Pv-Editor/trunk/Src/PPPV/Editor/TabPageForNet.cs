@@ -8,44 +8,68 @@ namespace PPPv.Editor{
 
    public class TabPageForNet : TabPage {
 
-      private NetCanvas canvasRef;
-      private NetToolStrip toolController;
-      private PetriNet net;
+      private NetCanvas canvas;
+      private string netName;
+      private bool underlyingNetSaved;
 
       /*Акцессоры доступа*/
       public NetCanvas NetCanvas {
          get{
-            return canvasRef;
+            return canvas;
          }
          private set{
-            canvasRef = value;
-         }
-      }
-      public NetToolStrip ToolController{
-         get {
-            return toolController;
-         }
-         private set {
-            toolController = value;
+            if(canvas != null){
+               canvas.LinkedNetSave -= LinkedNetSaveHandler;
+            }
+            canvas = value;
+            if(canvas != null){
+               canvas.LinkedNetSave += LinkedNetSaveHandler;
+            }
          }
       }
 
-      public TabPageForNet(PetriNet net):base("SomeName") {
+      public string SavedMark{
+         get{
+            if(underlyingNetSaved)
+               return "";
+            else
+               return "*";
+         }
+      }
+
+      public TabPageForNet(PetriNet net):base() {
          this.Location = new Point(45, 45);
          this.Padding  = new Padding(3);
          this.Size     = new Size(599, 228);
          this.TabIndex = 0;
          this.UseVisualStyleBackColor = true;
-         this.net = net;
+         this.netName = net.ID;
+         this.underlyingNetSaved = net.Saved;
+         CompileShowedName();
+         InitializeComponent(net);
       }
 
-      protected override void OnParentChanged(EventArgs e){
-         this.toolController = (Parent as TabControlForNets).ToolController;
-         InitializeComponent(); 
-         base.OnParentChanged(e);
+      protected override void OnParentChanged(EventArgs args){
+         base.OnParentChanged(args);
       }
 
-      private void InitializeComponent() {
+      private void LinkedNetSaveHandler(object sender, SaveEventArgs args){
+         netName = args.netID;
+         this.ToolTipText = args.fileName;
+         underlyingNetSaved = true;
+         CompileShowedName();
+      }
+
+      private void LinkedNetChangeHandler(object sender, SaveEventArgs args){
+         underlyingNetSaved = false;
+         CompileShowedName();
+      }
+
+      private string CompileShowedName(){
+         return this.Text = (netName==""?"~~~":netName) + this.SavedMark;
+      }
+
+      private void InitializeComponent(PetriNet net) {
          this.SuspendLayout();
          this.Controls.Add(NetCanvas = new NetCanvas(net));
          this.ResumeLayout(false);

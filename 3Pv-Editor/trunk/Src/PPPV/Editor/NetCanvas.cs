@@ -13,7 +13,6 @@ namespace PPPv.Editor{
 
    public class NetCanvas : Panel{
       /*Поля*/
-      private NetToolStrip toolController;
       private PetriNet net;
       private int _gridStep;
       private SelectionController selectionController;
@@ -25,21 +24,18 @@ namespace PPPv.Editor{
       private bool isSelectionActive = false;
 
       /*Акцессоры доступа*/
-      public NetToolStrip ToolController{
-         get{
-            return toolController;
-         }
-         private set {
-            toolController = value;
-         }
-      }
-      
       public PetriNet Net{
          get{
             return net;
          }
          private set{
+            if(net != null){
+               net.Save -= LinkedNetSaveHandler;
+            }
             net = value;
+            if(net != null){
+               net.Save += LinkedNetSaveHandler;
+            }
          }
       }
 
@@ -61,6 +57,8 @@ namespace PPPv.Editor{
       public event RegionSelectionEventHandler RegionSelectionStart;
       public event RegionSelectionEventHandler RegionSelectionEnd;
       public event RegionSelectionEventHandler RegionSelectionUpdate;
+      
+      public event SaveEventHandler LinkedNetSave;
 
       protected override void OnPaintBackground(PaintEventArgs e)
       {
@@ -92,8 +90,6 @@ namespace PPPv.Editor{
          _gridStep = 30;
          this.BackColor = Color.FromArgb(0,50,50,50);
          this.BorderStyle = BorderStyle.FixedSingle;
-         
-         InitializeComponent();
 
          /*Включим двойную буферизацию*/
          this.SetStyle( ControlStyles.AllPaintingInWmPaint |  ControlStyles.UserPaint |  ControlStyles.DoubleBuffer, true);
@@ -116,6 +112,7 @@ namespace PPPv.Editor{
 
       public NetCanvas(PetriNet _net):this(){
          Net = _net;
+         Net.Canvas = this;
       }
 
       private void ParentChangedHandler(object sender, EventArgs arg){
@@ -131,9 +128,6 @@ namespace PPPv.Editor{
          Pen RedPen = new Pen(Color.Red, 1);
 
          dc.DrawRectangle(RedPen, SelectedRectangle);
-      }
-
-      private void InitializeComponent() {
       }
 
       protected override void OnMouseClick(System.Windows.Forms.MouseEventArgs e){
@@ -159,7 +153,7 @@ namespace PPPv.Editor{
       public void OnCanvasMouseClick(System.Windows.Forms.MouseEventArgs _arg){
          if(CanvasMouseClick != null){
             CanvasMouseEventArgs arg = new CanvasMouseEventArgs(_arg);
-            arg.currentTool = ToolController.CurrentTool();
+            arg.currentTool = (this.FindForm() as MainForm).ToolController.CurrentTool();
             CanvasMouseClick(this,arg);
          }
       }
@@ -167,7 +161,7 @@ namespace PPPv.Editor{
       public void OnCanvasMouseMove(System.Windows.Forms.MouseEventArgs _arg){
          if(CanvasMouseMove != null){
             CanvasMouseEventArgs arg = new CanvasMouseEventArgs(_arg);
-            arg.currentTool = ToolController.CurrentTool();
+            arg.currentTool = (this.FindForm() as MainForm).ToolController.CurrentTool();
             CanvasMouseMove(this,arg);
          }
       }
@@ -175,7 +169,7 @@ namespace PPPv.Editor{
       public void OnCanvasMouseDown(System.Windows.Forms.MouseEventArgs _arg){
          if(CanvasMouseDown != null){
             CanvasMouseEventArgs arg = new CanvasMouseEventArgs(_arg);
-            arg.currentTool = ToolController.CurrentTool();
+            arg.currentTool = (this.FindForm() as MainForm).ToolController.CurrentTool();
             CanvasMouseDown(this,arg);
          }
       }
@@ -183,7 +177,7 @@ namespace PPPv.Editor{
       public void OnCanvasMouseUp(System.Windows.Forms.MouseEventArgs _arg){
          if(CanvasMouseUp != null){
              CanvasMouseEventArgs arg = new CanvasMouseEventArgs(_arg);
-             arg.currentTool = ToolController.CurrentTool();
+             arg.currentTool = (this.FindForm() as MainForm).ToolController.CurrentTool();
              CanvasMouseUp(this,arg);
          }
       }
@@ -210,6 +204,12 @@ namespace PPPv.Editor{
             RegionSelectionEventArgs args = new RegionSelectionEventArgs();
             args.selectionRectangle = SelectedRectangle;
             RegionSelectionUpdate(this,args);
+         }
+      }
+
+      private void OnLinkedNetSave(SaveEventArgs args){
+         if(LinkedNetSave != null){
+            LinkedNetSave(this, args);
          }
       }
 
@@ -280,10 +280,12 @@ namespace PPPv.Editor{
          OnKeyDown(arg);
       }
 
+      private void LinkedNetSaveHandler(object sender,Net.SaveEventArgs args){
+         OnLinkedNetSave(args);
+      }
+
       protected override void OnParentChanged(EventArgs e)
       {
-         this.toolController = (Parent as TabPageForNet).ToolController;
-         Net.Canvas = this;
          base.OnParentChanged(e);
       }
    }

@@ -15,12 +15,14 @@ namespace PPPv.Net {
    [Serializable()]
    [XmlRoot("pnml")]
    public class PetriNet:IXmlSerializable {
-      private string name;
+      private string id;
       private string type;
+      /*Путь к файлу в который сохранена сеть*/
+      private string linkedFile;
       private ArrayList places;
       private ArrayList transitions;
       private ArrayList arcs;
-
+      /*Флаг, было ли сохранено текущее состояние сети*/
       private bool saved;
 
       private ArrayList currentSelectedObjects;
@@ -29,22 +31,42 @@ namespace PPPv.Net {
 
       /*Конструктор*/
       public PetriNet() {
-         saved = false;
-         Name = "";
+         Saved = false;
+         LinkedFile = "";
+         ID = "";
          Type = "PPr/T net";
          Places = new ArrayList(30);
          Transitions = new ArrayList(30);
          Arcs = new ArrayList(60);
          currentSelectedObjects = new ArrayList(50);
+         Save += SaveHandler;
       }
 
       /*Свойства*/
-      public string Name{
+      public string ID{
          get {
-            return name;
+            return id;
          }
          private set{
-            name = value;
+            id = value;
+         }
+      }
+      
+      public bool Saved{
+         get {
+            return saved;
+         }
+         private set{
+            saved = value;
+         }
+      }
+
+      public string LinkedFile{
+         get {
+            return linkedFile;
+         }
+         set{
+            linkedFile = value;
          }
       }
 
@@ -113,7 +135,7 @@ namespace PPPv.Net {
                canvas.RegionSelectionEnd    += RegionSelectionEndRetranslator;
                canvas.KeyDown               += CanvasKeyDownHandler;
                canvas.KeyDown               += CanvasKeyDownRetranslator;
-               canvas.Parent.VisibleChanged        += NetCanvasVisibleChangedHandler;
+               canvas.VisibleChanged += NetCanvasVisibleChangedHandler;
             }
          }
       }
@@ -172,6 +194,8 @@ namespace PPPv.Net {
       public event RegionSelectionEventHandler RegionSelectionEnd;
 
       public event KeyEventHandler KeyDown;
+      /*Событие генерируется при сохранении сети в файл*/
+      public event SaveEventHandler Save;
 
       private void OnMouseClick(MouseEventArgs e){
          if(MouseClick != null){
@@ -226,6 +250,12 @@ namespace PPPv.Net {
       private void OnKeyDown(KeyEventArgs e){
          if(KeyDown != null){
             KeyDown(this,e);
+         }
+      }
+
+      private void OnSave(SaveEventArgs e){
+         if (Save != null){
+            Save(this,e);
          }
       }
 
@@ -315,7 +345,12 @@ namespace PPPv.Net {
       protected void RegionSelectionEndHandler(object sender, Editor.RegionSelectionEventArgs args){
       }
 
-      private void CanvasKeyDownHandler(object sender, KeyEventArgs arg){
+      private void CanvasKeyDownHandler(object sender, KeyEventArgs args){
+      }
+
+      private void SaveHandler(object sender, SaveEventArgs args){
+         LinkedFile = args.fileName;
+         Saved = true;
       }
 
       public NetElement AddPlace(int x, int y) {
@@ -416,26 +451,44 @@ namespace PPPv.Net {
       }
       
       private void SaveHandler(object sender, System.EventArgs e){
-         
+         if(LinkedFile != ""){
+            if (File.Exists(LinkedFile)){
+               File.Delete(LinkedFile);
+            }
+            using (FileStream fs = File.Create(LinkedFile)){
+               XmlSerializer serealizer = new XmlSerializer(this.GetType());
+               serealizer.Serialize(fs, this);
+               fs.Close();
+               SaveEventArgs args = new SaveEventArgs(LinkedFile, this.ID);
+               OnSave(args);
+            }
+         }else{
+            SaveAsHandler(sender, e);
+         }
       }
       
       private void SaveAsHandler(object sender, System.EventArgs e){
          Stream stream;
+         string fileName = "";
          SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-
          saveFileDialog1.Filter = "txt files (*.pnml)|*.pnml|All files (*.*)|*.*";
          saveFileDialog1.FilterIndex = 1 ;
          saveFileDialog1.RestoreDirectory = true ;
 
          if(saveFileDialog1.ShowDialog() == DialogResult.OK){
             if((stream = saveFileDialog1.OpenFile()) != null){
-               Name = (stream as FileStream).Name;
+               fileName = (stream as FileStream).Name;
+               if(this.ID=="")
+                  this.ID = fileName.Substring(fileName.LastIndexOf("\\")+1);
                XmlSerializer serealizer = new XmlSerializer(this.GetType());
                serealizer.Serialize(stream, this);
                stream.Close();
+               SaveEventArgs args = new SaveEventArgs(fileName, this.ID);
+               OnSave(args);
             }
          }
       }
+
       private void NetCanvasVisibleChangedHandler(object sender, System.EventArgs e){
          /*Подключаем и отключаем те события, кототые обрабатываются только если сеть на экране*/
          if(Canvas.Visible){
@@ -451,7 +504,7 @@ namespace PPPv.Net {
       {
          //writer.WriteStartElement("pnml");
          writer.WriteStartElement("net");
-         writer.WriteAttributeString("id", Name);
+         writer.WriteAttributeString("id", ID);
          writer.WriteAttributeString("type", Type);
          foreach(Place place in Places){
             writer.WriteStartElement("place");
@@ -476,41 +529,45 @@ namespace PPPv.Net {
       {
          XmlReader subTreeReader;
          reader.ReadStartElement("pnml");
-         reader.MoveToAttribute("id");
-         this.Name = reader.Value;
-         reader.MoveToAttribute("type");
-         this.Type = reader.Value;
-         
-         reader.ReadStartElement("net");
-         
-         while(reader.NodeType != XmlNodeType.EndElement)
-         {
-            switch(reader.Name){
-               case "place":
-                  subTreeReader = reader.ReadSubtree();
-                  ElementPortal = new Place(subTreeReader);
-                  subTreeReader.Close();
-                  reader.Skip();
-               break;
-               case "transition":
-                  subTreeReader = reader.ReadSubtree();
-                  ElementPortal = new Transition(subTreeReader);
-                  subTreeReader.Close();
-                  reader.Skip();
-               break;
-               case "arc":
-                  subTreeReader = reader.ReadSubtree();
-                  ElementPortal = new Arc(subTreeReader, this);
-                  subTreeReader.Close();
-                  reader.Skip();
-               break;
-               default:
-                  reader.Read();
-               break;
+         this.ID = reader.GetAttribute("id");
+         this.Type = reader.GetAttribute("type");;
+
+         if(!reader.IsEmptyElement){
+            reader.ReadStartElement("net");
+            while(reader.NodeType != XmlNodeType.EndElement)
+            {
+               switch(reader.Name){
+                  case "place":
+                     subTreeReader = reader.ReadSubtree();
+                     ElementPortal = new Place(subTreeReader);
+                     subTreeReader.Close();
+                     reader.Skip();
+                  break;
+                  case "transition":
+                     subTreeReader = reader.ReadSubtree();
+                     ElementPortal = new Transition(subTreeReader);
+                     subTreeReader.Close();
+                     reader.Skip();
+                  break;
+                  case "arc":
+                     subTreeReader = reader.ReadSubtree();
+                     ElementPortal = new Arc(subTreeReader, this);
+                     subTreeReader.Close();
+                     reader.Skip();
+                  break;
+                  default:
+                     reader.Read();
+                  break;
+               }
             }
+            reader.ReadEndElement();
+            reader.ReadEndElement();
+         }else{
+            reader.Skip();
+            reader.ReadEndElement();
          }
-         reader.ReadEndElement();
-         reader.ReadEndElement();
+         
+         Saved = true;
       }
 
       public XmlSchema GetSchema()

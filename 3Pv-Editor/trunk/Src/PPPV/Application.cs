@@ -61,6 +61,7 @@ namespace PPPv {
                XmlSerializer serealizer = new XmlSerializer(_net.GetType());
                _net = (Net.PetriNet)serealizer.Deserialize(stream);
                NetList.Add(_net);
+               _net.LinkedFile = (stream as FileStream).Name;
                _mainFormInst.TabControl.AddNewTab(_net);
                stream.Close();
             }
