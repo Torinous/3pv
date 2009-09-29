@@ -23,7 +23,8 @@ namespace PPPv.Net {
       public Token(XmlReader reader){
          this.ReadXml(reader);
       }
-      
+
+      /*Акцессоры доступа*/
       public string Text{
          get{
             return text;

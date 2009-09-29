@@ -14,7 +14,7 @@ namespace PPPv.Net {
    public class Arc : NetElement, IXmlSerializable {
       protected static Pen ArrowedBlackPen = ArrowedBlackPenFactory();
       private NetElement source, target;
-      private Point sourcePilon,targetPilon;
+      private Point sourcePilon, targetPilon;
       private CortegeList cortege;
       private ArrayList points;
 
@@ -49,6 +49,7 @@ namespace PPPv.Net {
          }
          set{
             points = value;
+            OnChange(new EventArgs());
          }
       }
 
@@ -57,7 +58,14 @@ namespace PPPv.Net {
             return cortege;
          }
          set{
+            if(cortege != null){
+               cortege.Change -= CortegeChangeHandler;
+            }
             cortege = value;
+            if(cortege != null){
+               cortege.Change += CortegeChangeHandler;
+            }
+            OnChange(new EventArgs());
          }
       }
 
@@ -68,6 +76,7 @@ namespace PPPv.Net {
          set{
             sourcePilon = value;
             UpdateHitRegion();
+            OnChange(new EventArgs());
          }
       }
 
@@ -78,6 +87,7 @@ namespace PPPv.Net {
          set{
             targetPilon = value;
             UpdateHitRegion();
+            OnChange(new EventArgs());
          }
       }
 
@@ -96,6 +106,7 @@ namespace PPPv.Net {
                target.Move += MoveHandler;
                target.Resize += ResizeLinkedElementsHandler;
             }
+            OnChange(new EventArgs());
          }
       }
 
@@ -114,6 +125,7 @@ namespace PPPv.Net {
                source.Move += MoveHandler;
                source.Resize += ResizeLinkedElementsHandler;
             }
+            OnChange(new EventArgs());
          }
       }
 
@@ -166,14 +178,17 @@ namespace PPPv.Net {
 
       private void MoveHandler(object sender, MoveEventArgs args){
          UpdatePosition();
+         OnChange(new EventArgs());
       }
 
       private void OneOfPointMoveHandler(object sender, MoveEventArgs args){
          UpdatePosition();
+         OnChange(new EventArgs());
       }
 
       private void ResizeLinkedElementsHandler(object sender, ResizeEventArgs args){
          UpdatePosition();
+         OnChange(new EventArgs());
       }
 
       private void UpdatePosition(){
@@ -250,11 +265,13 @@ namespace PPPv.Net {
       private void AddPoint(Pilon p){
          Points.Add(p);
          p.Move += OneOfPointMoveHandler;
+         OnChange(new EventArgs());
       }
 
       private void DeletePoint(Pilon p){
          Points.Remove(p);
          p.Move -= OneOfPointMoveHandler;
+         OnChange(new EventArgs());
       }
 
       protected override void MouseUpHandler(object sender, MouseEventArgs args){
@@ -272,7 +289,7 @@ namespace PPPv.Net {
       protected override void KeyDownHandler(object sender, KeyEventArgs arg){
          if(arg.KeyCode == Keys.Escape){
             if(Target == null){
-               parent.Delete(this);
+               parent.ElementNullPortal = this;
                (sender as PetriNet).Canvas.Invalidate();//TODO: полный Invalidate это нехорошо!!!
             }
          }
@@ -314,6 +331,10 @@ namespace PPPv.Net {
          Source = null;
          Target = null;
          base.PrepareToDeletion();
+      }
+
+      private void CortegeChangeHandler(object sender, EventArgs args){
+         OnChange(args);
       }
 
       public void WriteXml (XmlWriter writer)

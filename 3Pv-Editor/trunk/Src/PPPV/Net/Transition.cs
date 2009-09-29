@@ -15,15 +15,7 @@ namespace PPPv.Net {
       private static int _ID = 0;
       private string guardFunction;
 
-      public string GuardFunction{
-         get{
-            return guardFunction;
-         }
-         set{
-            guardFunction = value;
-         }
-      }
-
+      /*Конструкторы*/
       public Transition(int x_, int y_):base(x_,y_,20,50,true) {
          _ID++;
          Name = ID = "T"+_ID;
@@ -33,6 +25,17 @@ namespace PPPv.Net {
 
       public Transition(XmlReader reader):this(0,0){
          this.ReadXml(reader);
+      }
+
+      /*Акцессоры доступа*/
+      public string GuardFunction{
+         get{
+            return guardFunction;
+         }
+         set{
+            guardFunction = value;
+            OnChange(new EventArgs());
+         }
       }
 
       public override Point Center{

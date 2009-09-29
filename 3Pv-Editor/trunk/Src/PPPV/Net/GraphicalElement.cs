@@ -84,6 +84,7 @@ namespace PPPv.Net {
          }
          set{
             _name = value;
+            OnChange(new EventArgs());
          }
       }
 
@@ -121,6 +122,14 @@ namespace PPPv.Net {
       public virtual event MouseEventHandler           MouseDown;
       public virtual event PaintEventHandler           Paint;
       public virtual event ResizeEventHandler          Resize;
+      
+      public virtual event EventHandler                Change;
+      
+      protected virtual void OnChange(EventArgs args){
+         if(Change != null){
+            Change(this, args);
+         }
+      }
 
       /*Методы*/
       /*Перемещение на*/
@@ -321,6 +330,7 @@ namespace PPPv.Net {
          if(Move != null){
             Move(this,args);
          }
+         OnChange(new EventArgs());
       }
 
       protected void OnResize(ResizeEventArgs args){
@@ -328,6 +338,7 @@ namespace PPPv.Net {
          if(Resize != null){
             Resize(this,args);
          }
+         OnChange(new EventArgs());
       }
 
       protected void OnSelectionChange(SelectionChangeEventArgs args){

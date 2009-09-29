@@ -3,6 +3,7 @@ using System.Collections;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
+using System.Windows.Forms;
 
 namespace PPPv.Net {
 
@@ -14,6 +15,7 @@ namespace PPPv.Net {
       public CortegeList(int a):base(a){
       }
 
+      /*Акцессоры доступа*/
       public string Text{
          get{
             string t = "";
@@ -24,6 +26,22 @@ namespace PPPv.Net {
             }
             return t;
          }
+      }
+
+      public event EventHandler Change;
+
+      /*Методы*/
+
+      protected void OnChange(EventArgs args){
+         if(Change != null){
+            Change(this, args);
+         }
+      }
+
+      public override int Add(object obj){
+         int val = base.Add(obj);
+         OnChange(new EventArgs());
+         return val;
       }
 
       public void WriteXml (XmlWriter writer)

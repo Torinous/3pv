@@ -11,7 +11,7 @@ using PPPv.Utils;
 
 namespace PPPv.Editor{
 
-   public class NetCanvas : Panel{
+   public class NetCanvas : UserControl{
       /*Поля*/
       private PetriNet net;
       private int _gridStep;
@@ -23,6 +23,41 @@ namespace PPPv.Editor{
       private Point selectFrom;
       private bool isSelectionActive = false;
 
+      /*Конструктор*/
+      public NetCanvas() {
+         this.Anchor = ((AnchorStyles)((((AnchorStyles.Top | AnchorStyles.Bottom)| AnchorStyles.Left)| AnchorStyles.Right)));
+         this.Location = new Point(1, 1);
+         this.Name = "NetCanvas";
+         this.Size = new Size(597, 226);
+         //this.Size = new Size(Parent.ClientRectangle.Size.Height, Parent.ClientRectangle.Size.Width); Parent=null!!!
+         _gridStep = 30;
+         this.BackColor = Color.FromArgb(0,50,50,50);
+         this.BorderStyle = BorderStyle.FixedSingle;
+
+         /*Включим двойную буферизацию*/
+         this.SetStyle( ControlStyles.AllPaintingInWmPaint |  ControlStyles.UserPaint |  ControlStyles.DoubleBuffer, true);
+
+         selectionController = new SelectionController();
+
+         contextMenuController = new ContextMenuController(this);
+
+         /*Пристыкуем события*/
+         this.Paint += Draw;
+         this.CanvasMouseClick += CanvasMouseClickHandler;
+         this.CanvasMouseMove  += CanvasMouseMoveHandler;
+         this.CanvasMouseMove  += selectionController.CanvasMouseMoveHandler;
+         this.CanvasMouseDown  += CanvasMouseDownHandler;
+         this.CanvasMouseDown  += selectionController.CanvasMouseDownHandler;
+         this.CanvasMouseUp    += CanvasMouseUpHandler;
+         this.CanvasMouseUp    += selectionController.CanvasMouseUpHandler;
+         this.ParentChanged    += ParentChangedHandler;
+      }
+
+      public NetCanvas(PetriNet _net):this(){
+         Net = _net;
+         Net.Canvas = this;
+      }
+
       /*Акцессоры доступа*/
       public PetriNet Net{
          get{
@@ -31,10 +66,12 @@ namespace PPPv.Editor{
          private set{
             if(net != null){
                net.Save -= LinkedNetSaveHandler;
+               net.Change -= LinkedNetChangeHandler;
             }
             net = value;
             if(net != null){
                net.Save += LinkedNetSaveHandler;
+               net.Change += LinkedNetChangeHandler;
             }
          }
       }
@@ -59,9 +96,9 @@ namespace PPPv.Editor{
       public event RegionSelectionEventHandler RegionSelectionUpdate;
       
       public event SaveEventHandler LinkedNetSave;
+      public event EventHandler     LinkedNetChange;
 
-      protected override void OnPaintBackground(PaintEventArgs e)
-      {
+      protected override void OnPaintBackground(PaintEventArgs e){
         //Don't allow the background to paint
          using(PreciseTimer pr = new PreciseTimer("NetCanvas.OnPaintBackground")){
             Graphics dc = e.Graphics;
@@ -78,41 +115,6 @@ namespace PPPv.Editor{
                dc.DrawLine(GrayPen,x,e.ClipRectangle.Top,x,e.ClipRectangle.Bottom);
             }
          }
-      }
-
-      /*Конструктор*/
-      public NetCanvas() {
-         this.Anchor = ((AnchorStyles)((((AnchorStyles.Top | AnchorStyles.Bottom)| AnchorStyles.Left)| AnchorStyles.Right)));
-         this.Location = new Point(1, 1);
-         this.Name = "NetCanvas";
-         this.Size = new Size(597, 226);
-         //this.Size = new Size(Parent.ClientRectangle.Size.Height, Parent.ClientRectangle.Size.Width); Parent=null!!!
-         _gridStep = 30;
-         this.BackColor = Color.FromArgb(0,50,50,50);
-         this.BorderStyle = BorderStyle.FixedSingle;
-
-         /*Включим двойную буферизацию*/
-         this.SetStyle( ControlStyles.AllPaintingInWmPaint |  ControlStyles.UserPaint |  ControlStyles.DoubleBuffer, true);
-
-         selectionController = new SelectionController();
-
-         contextMenuController = new ContextMenuController(this);
-
-         /*Пристыкуем события*/
-         this.Paint += Draw;
-         this.CanvasMouseClick += CanvasMouseClickHandler;
-         this.CanvasMouseMove += CanvasMouseMoveHandler;
-         this.CanvasMouseMove += selectionController.CanvasMouseMoveHandler;
-         this.CanvasMouseDown += CanvasMouseDownHandler;
-         this.CanvasMouseDown += selectionController.CanvasMouseDownHandler;
-         this.CanvasMouseUp += CanvasMouseUpHandler;
-         this.CanvasMouseUp += selectionController.CanvasMouseUpHandler;
-         this.ParentChanged += ParentChangedHandler;
-      }
-
-      public NetCanvas(PetriNet _net):this(){
-         Net = _net;
-         Net.Canvas = this;
       }
 
       private void ParentChangedHandler(object sender, EventArgs arg){
@@ -213,6 +215,12 @@ namespace PPPv.Editor{
          }
       }
 
+      private void OnLinkedNetChange(EventArgs args){
+         if(LinkedNetChange != null){
+            LinkedNetChange(this, args);
+         }
+      }
+
       private void CanvasMouseClickHandler(object sender, CanvasMouseEventArgs arg){
          if(arg.Button == MouseButtons.Right){
             NetElement contextMenuTarget = Net.NetElementUnder(new Point(arg.X,arg.Y));
@@ -284,8 +292,14 @@ namespace PPPv.Editor{
          OnLinkedNetSave(args);
       }
 
+      private void LinkedNetChangeHandler(object sender, EventArgs args){
+         OnLinkedNetChange(args);
+      }
+
       protected override void OnParentChanged(EventArgs e)
       {
+         if(Parent != null){
+         }
          base.OnParentChanged(e);
       }
    }

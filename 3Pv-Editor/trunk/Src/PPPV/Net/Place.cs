@@ -16,25 +16,32 @@ namespace PPPv.Net {
    [XmlRoot("place")]
    public class Place : NetElement, IXmlSerializable {
       private static int _ID = 0;
-      private ArrayList tokens;
+      private TokensList tokens;
 
       /*Конструкторы*/
       public Place(int x_, int y_):base(x_, y_, 50, 50, true) {
          _ID++;
          Name = ID = "P"+_ID;
-         tokens = new ArrayList();
+         tokens = new TokensList(10);
       }
 
       public Place(XmlReader reader):this(0,0){
          ReadXml(reader);
       }
 
-      public ArrayList Tokens{
+      public TokensList Tokens{
          get{
             return tokens;
          }
          private set{
+            if(tokens != null){
+               tokens.Change -= TokensListChangeHandler;
+            }
             tokens = value;
+            if(tokens != null){
+               tokens.Change += TokensListChangeHandler;
+            }
+            OnChange(new EventArgs());
          }
       }
 
@@ -132,6 +139,14 @@ namespace PPPv.Net {
       protected override void KeyDownHandler(object sender, KeyEventArgs arg){
       }
 
+      /*public override Point GetPilon(Point from, NetCanvas on){
+         
+      }*/
+
+      private void TokensListChangeHandler(object sender, EventArgs args){
+         OnChange(args);
+      }
+
       public void WriteXml (XmlWriter writer)
       {
          writer.WriteAttributeString("id", this.Name);
@@ -147,9 +162,7 @@ namespace PPPv.Net {
          writer.WriteEndElement(); // value
          writer.WriteEndElement(); // name
          writer.WriteStartElement("initialMarking");
-         foreach(Token token in Tokens){
-            token.WriteXml(writer);
-         }
+         Tokens.WriteXml(writer);
          writer.WriteEndElement(); // initialMarking
       }
 
@@ -183,22 +196,10 @@ namespace PPPv.Net {
                   reader.ReadEndElement(); // name
                break;
                case "initialMarking":
-                  if(!reader.IsEmptyElement){
-                     reader.ReadToDescendant("token");
-                     subTreeReader = reader.ReadSubtree();
-                     Tokens.Add( new Token(subTreeReader));
-                     subTreeReader.Close();
-                     reader.Skip();
-                     while(reader.Name == "token" && reader.NodeType == XmlNodeType.Element){
-                        subTreeReader = reader.ReadSubtree();
-                        Tokens.Add( new Token(subTreeReader));
-                        subTreeReader.Close();
-                        reader.Skip();
-                     }
-                     reader.ReadEndElement(); // initialMarking
-                  }else{
-                     reader.Skip();   // initialMarking
-                  }
+                  subTreeReader = reader.ReadSubtree();
+                  Tokens.ReadXml(subTreeReader);
+                  subTreeReader.Close();
+                  reader.Skip();
                break;
                default:
                break;

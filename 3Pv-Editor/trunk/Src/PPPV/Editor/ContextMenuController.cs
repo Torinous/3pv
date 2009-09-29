@@ -60,13 +60,13 @@ namespace PPPv.Editor{
 
       private void ContextMenuDeleteHandler(object sender, EventArgs e){
          if(contextMenuTarget is Arc){
-            netRef.Delete((Arc)contextMenuTarget);
+            netRef.ElementNullPortal = (Arc)contextMenuTarget;
          }
          if(contextMenuTarget is Transition){
-            netRef.Delete((Transition)contextMenuTarget);
+            netRef.ElementNullPortal =(Transition)contextMenuTarget;
          }
          if(contextMenuTarget is Place){
-            netRef.Delete((Place)contextMenuTarget);
+            netRef.ElementNullPortal = (Place)contextMenuTarget;
          }
          canvas.Invalidate();
       }

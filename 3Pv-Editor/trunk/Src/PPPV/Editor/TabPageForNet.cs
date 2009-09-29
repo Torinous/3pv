@@ -12,31 +12,7 @@ namespace PPPv.Editor{
       private string netName;
       private bool underlyingNetSaved;
 
-      /*Акцессоры доступа*/
-      public NetCanvas NetCanvas {
-         get{
-            return canvas;
-         }
-         private set{
-            if(canvas != null){
-               canvas.LinkedNetSave -= LinkedNetSaveHandler;
-            }
-            canvas = value;
-            if(canvas != null){
-               canvas.LinkedNetSave += LinkedNetSaveHandler;
-            }
-         }
-      }
-
-      public string SavedMark{
-         get{
-            if(underlyingNetSaved)
-               return "";
-            else
-               return "*";
-         }
-      }
-
+      /*Конструкторы*/
       public TabPageForNet(PetriNet net):base() {
          this.Location = new Point(45, 45);
          this.Padding  = new Padding(3);
@@ -45,11 +21,40 @@ namespace PPPv.Editor{
          this.UseVisualStyleBackColor = true;
          this.netName = net.ID;
          this.underlyingNetSaved = net.Saved;
-         CompileShowedName();
+         this.Text = (netName==""?"~":netName+"   ");
          InitializeComponent(net);
       }
 
+      /*Акцессоры доступа*/
+      public NetCanvas NetCanvas {
+         get{
+            return canvas;
+         }
+         private set{
+            if(canvas != null){
+               canvas.LinkedNetSave   -= LinkedNetSaveHandler;
+               canvas.LinkedNetChange -= LinkedNetChangeHandler;
+            }
+            canvas = value;
+            if(canvas != null){
+               canvas.LinkedNetSave   += LinkedNetSaveHandler;
+               canvas.LinkedNetChange += LinkedNetChangeHandler;
+            }
+         }
+      }
+
+      public bool UnderlyingNetSaved{
+         get{
+            return underlyingNetSaved;
+         }
+         private set{
+            underlyingNetSaved = value;
+         }
+      }
+
       protected override void OnParentChanged(EventArgs args){
+         if(Parent != null){
+         }
          base.OnParentChanged(args);
       }
 
@@ -57,16 +62,14 @@ namespace PPPv.Editor{
          netName = args.netID;
          this.ToolTipText = args.fileName;
          underlyingNetSaved = true;
-         CompileShowedName();
+         this.Text = (netName==""?"~":netName+"   ");
       }
 
-      private void LinkedNetChangeHandler(object sender, SaveEventArgs args){
-         underlyingNetSaved = false;
-         CompileShowedName();
-      }
-
-      private string CompileShowedName(){
-         return this.Text = (netName==""?"~~~":netName) + this.SavedMark;
+      private void LinkedNetChangeHandler(object sender, EventArgs args){
+         if(UnderlyingNetSaved){
+            underlyingNetSaved = false;
+            this.Text = (netName==""?"~":netName+"   ");
+         }
       }
 
       private void InitializeComponent(PetriNet net) {
@@ -75,5 +78,6 @@ namespace PPPv.Editor{
          this.ResumeLayout(false);
          this.PerformLayout();
       }
+
    }
 }

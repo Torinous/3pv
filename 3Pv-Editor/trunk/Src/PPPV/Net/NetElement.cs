@@ -63,6 +63,16 @@ namespace PPPv.Net {
          }
       }
 
+      /*События*/
+      public override event EventHandler Change;
+
+      protected override void OnChange(EventArgs args){
+         if(Change != null){
+            Change(this,args);
+         }
+         base.OnChange(args);
+      }
+
       protected void SelectionChangeHandler(object sender, SelectionChangeEventArgs args){
          if(args.newState)
             ParentNet.Select(this);

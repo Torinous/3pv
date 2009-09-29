@@ -39,7 +39,6 @@ namespace PPPv.Net {
          Transitions = new ArrayList(30);
          Arcs = new ArrayList(60);
          currentSelectedObjects = new ArrayList(50);
-         Save += SaveHandler;
       }
 
       /*Свойства*/
@@ -93,49 +92,49 @@ namespace PPPv.Net {
          }
          set{
             if(canvas != null){
-               canvas.CanvasMouseClick      -= CanvasMouseClickHandler;
-               canvas.CanvasMouseClick      -= CanvasMouseClickRetranslator;
-               canvas.CanvasMouseMove       -= CanvasMouseMoveHandler;
-               canvas.CanvasMouseMove       -= CanvasMouseMoveRetranslator;
-               canvas.CanvasMouseDown       -= CanvasMouseDownHandler;
-               canvas.CanvasMouseDown       -= CanvasMouseDownRetranslator;
-               canvas.CanvasMouseUp         -= CanvasMouseUpHandler;
-               canvas.CanvasMouseUp         -= CanvasMouseUpRetranslator;
-               canvas.Paint                 -= CanvasPaintHandler;
-               canvas.Paint                 -= CanvasPaintRetranslator;
-               canvas.RegionSelectionStart  -= RegionSelectionStartHandler;
-               canvas.RegionSelectionStart  -= RegionSelectionStartRetranslator;
-               canvas.RegionSelectionUpdate -= RegionSelectionUpdateHandler;
-               canvas.RegionSelectionUpdate -= RegionSelectionUpdateRetranslator;
-               canvas.RegionSelectionEnd    -= RegionSelectionEndHandler;
-               canvas.RegionSelectionEnd    -= RegionSelectionEndRetranslator;
-               canvas.KeyDown               -= CanvasKeyDownRetranslator;
-               canvas.KeyDown               -= CanvasKeyDownHandler;
-               canvas.Parent.VisibleChanged        -= NetCanvasVisibleChangedHandler;
+               canvas.CanvasMouseClick       -= CanvasMouseClickHandler;
+               canvas.CanvasMouseClick       -= CanvasMouseClickRetranslator;
+               canvas.CanvasMouseMove        -= CanvasMouseMoveHandler;
+               canvas.CanvasMouseMove        -= CanvasMouseMoveRetranslator;
+               canvas.CanvasMouseDown        -= CanvasMouseDownHandler;
+               canvas.CanvasMouseDown        -= CanvasMouseDownRetranslator;
+               canvas.CanvasMouseUp          -= CanvasMouseUpHandler;
+               canvas.CanvasMouseUp          -= CanvasMouseUpRetranslator;
+               canvas.Paint                  -= CanvasPaintHandler;
+               canvas.Paint                  -= CanvasPaintRetranslator;
+               canvas.RegionSelectionStart   -= RegionSelectionStartHandler;
+               canvas.RegionSelectionStart   -= RegionSelectionStartRetranslator;
+               canvas.RegionSelectionUpdate  -= RegionSelectionUpdateHandler;
+               canvas.RegionSelectionUpdate  -= RegionSelectionUpdateRetranslator;
+               canvas.RegionSelectionEnd     -= RegionSelectionEndHandler;
+               canvas.RegionSelectionEnd     -= RegionSelectionEndRetranslator;
+               canvas.KeyDown                -= CanvasKeyDownRetranslator;
+               canvas.KeyDown                -= CanvasKeyDownHandler;
+               canvas.Load                   -= LoadHandler;
             }
 
             canvas = value;
 
             if(canvas != null){
-               canvas.CanvasMouseClick      += CanvasMouseClickHandler;
-               canvas.CanvasMouseClick      += CanvasMouseClickRetranslator;
-               canvas.CanvasMouseMove       += CanvasMouseMoveHandler;
-               canvas.CanvasMouseMove       += CanvasMouseMoveRetranslator;
-               canvas.CanvasMouseDown       += CanvasMouseDownHandler;
-               canvas.CanvasMouseDown       += CanvasMouseDownRetranslator;
-               canvas.CanvasMouseUp         += CanvasMouseUpHandler;
-               canvas.CanvasMouseUp         += CanvasMouseUpRetranslator;
-               canvas.Paint                 += CanvasPaintHandler;
-               canvas.Paint                 += CanvasPaintRetranslator;
-               canvas.RegionSelectionStart  += RegionSelectionStartHandler;
-               canvas.RegionSelectionStart  += RegionSelectionStartRetranslator;
-               canvas.RegionSelectionUpdate += RegionSelectionUpdateHandler;
-               canvas.RegionSelectionUpdate += RegionSelectionUpdateRetranslator;
-               canvas.RegionSelectionEnd    += RegionSelectionEndHandler;
-               canvas.RegionSelectionEnd    += RegionSelectionEndRetranslator;
-               canvas.KeyDown               += CanvasKeyDownHandler;
-               canvas.KeyDown               += CanvasKeyDownRetranslator;
-               canvas.VisibleChanged += NetCanvasVisibleChangedHandler;
+               canvas.CanvasMouseClick       += CanvasMouseClickHandler;
+               canvas.CanvasMouseClick       += CanvasMouseClickRetranslator;
+               canvas.CanvasMouseMove        += CanvasMouseMoveHandler;
+               canvas.CanvasMouseMove        += CanvasMouseMoveRetranslator;
+               canvas.CanvasMouseDown        += CanvasMouseDownHandler;
+               canvas.CanvasMouseDown        += CanvasMouseDownRetranslator;
+               canvas.CanvasMouseUp          += CanvasMouseUpHandler;
+               canvas.CanvasMouseUp          += CanvasMouseUpRetranslator;
+               canvas.Paint                  += CanvasPaintHandler;
+               canvas.Paint                  += CanvasPaintRetranslator;
+               canvas.RegionSelectionStart   += RegionSelectionStartHandler;
+               canvas.RegionSelectionStart   += RegionSelectionStartRetranslator;
+               canvas.RegionSelectionUpdate  += RegionSelectionUpdateHandler;
+               canvas.RegionSelectionUpdate  += RegionSelectionUpdateRetranslator;
+               canvas.RegionSelectionEnd     += RegionSelectionEndHandler;
+               canvas.RegionSelectionEnd     += RegionSelectionEndRetranslator;
+               canvas.KeyDown                += CanvasKeyDownHandler;
+               canvas.KeyDown                += CanvasKeyDownRetranslator;
+               canvas.Load                   += LoadHandler;
             }
          }
       }
@@ -167,6 +166,7 @@ namespace PPPv.Net {
          }
       }
 
+      /*Специальное свойство для добавления элементов в сеть*/
       public NetElement ElementPortal{
          set{
             if(value is Place){
@@ -179,6 +179,26 @@ namespace PPPv.Net {
                Arcs.Add(value);
             }
             value.ParentNet = this;
+            value.Change += NetElementChangeHandler;
+            OnChange(new EventArgs());
+         }
+      }
+
+      /*Специальное свойство для удаления элементов из сети*/
+      public NetElement ElementNullPortal{
+         set{
+            value.PrepareToDeletion();
+            if(value is Place){
+               Places.Remove(value);
+            }
+            if(value is Transition){
+               Transitions.Remove(value);
+            }
+            if(value is Arc){
+               Arcs.Remove(value);
+            }
+            value.Change -= NetElementChangeHandler;
+            OnChange(new EventArgs());
          }
       }
 
@@ -192,10 +212,20 @@ namespace PPPv.Net {
       public event RegionSelectionEventHandler RegionSelectionStart;
       public event RegionSelectionEventHandler RegionSelectionUpdate;
       public event RegionSelectionEventHandler RegionSelectionEnd;
+      
+      public event EventHandler Change;
 
       public event KeyEventHandler KeyDown;
+
       /*Событие генерируется при сохранении сети в файл*/
       public event SaveEventHandler Save;
+      
+      private void OnChange(EventArgs args){
+         Saved = false;
+         if(Change != null){
+            Change(this,args);
+         }
+      }
 
       private void OnMouseClick(MouseEventArgs e){
          if(MouseClick != null){
@@ -253,9 +283,11 @@ namespace PPPv.Net {
          }
       }
 
-      private void OnSave(SaveEventArgs e){
+      private void OnSave(SaveEventArgs args){
+         Saved = true;
+         LinkedFile = args.fileName;
          if (Save != null){
-            Save(this,e);
+            Save(this, args);
          }
       }
 
@@ -348,11 +380,6 @@ namespace PPPv.Net {
       private void CanvasKeyDownHandler(object sender, KeyEventArgs args){
       }
 
-      private void SaveHandler(object sender, SaveEventArgs args){
-         LinkedFile = args.fileName;
-         Saved = true;
-      }
-
       public NetElement AddPlace(int x, int y) {
          Place tmpPlace = new Place(x,y);
          return ElementPortal = tmpPlace;
@@ -366,21 +393,6 @@ namespace PPPv.Net {
       public NetElement AddArc(NetElement startElement) {
          Arc tmpArc = new Arc(startElement);
          return ElementPortal = tmpArc;
-      }
-
-      public void Delete(Arc a){
-         a.PrepareToDeletion();
-         Arcs.Remove(a);
-      }
-
-      public void Delete(Transition t){
-         t.PrepareToDeletion();
-         Transitions.Remove(t);
-      }
-
-      public void Delete(Place p){
-         p.PrepareToDeletion();
-         Places.Remove(p);
       }
 
       public void Select(NetElement ob){
@@ -450,7 +462,31 @@ namespace PPPv.Net {
          return false;
       }
       
-      private void SaveHandler(object sender, System.EventArgs e){
+      private void MenuSaveHandler(object sender, System.EventArgs args){
+         if(Canvas.Visible){
+            if(SaveNet())
+               OnSave(new SaveEventArgs(LinkedFile, this.ID));
+         }
+      }
+
+      private void MenuSaveAsHandler(object sender, System.EventArgs args){
+         if(Canvas.Visible){
+            if(SaveNetAs())
+               OnSave(new SaveEventArgs(LinkedFile, this.ID));
+         }
+      }
+
+      private void NetElementChangeHandler(object sender, System.EventArgs args){
+         OnChange(new EventArgs());
+      }
+      
+      private void LoadHandler(object sender, System.EventArgs args){
+         ((canvas.FindForm() as MainForm).MainMenuStrip as MainMenuStrip).toolStripMenuSave.Click   += MenuSaveHandler;
+         ((canvas.FindForm() as MainForm).MainMenuStrip as MainMenuStrip).toolStripMenuSaveAs.Click += MenuSaveAsHandler;
+      }
+
+      private bool SaveNet(){
+         bool result = false;
          if(LinkedFile != ""){
             if (File.Exists(LinkedFile)){
                File.Delete(LinkedFile);
@@ -459,45 +495,36 @@ namespace PPPv.Net {
                XmlSerializer serealizer = new XmlSerializer(this.GetType());
                serealizer.Serialize(fs, this);
                fs.Close();
-               SaveEventArgs args = new SaveEventArgs(LinkedFile, this.ID);
-               OnSave(args);
+               result = true;
             }
          }else{
-            SaveAsHandler(sender, e);
+            result = SaveNetAs();
          }
+         return result;
       }
-      
-      private void SaveAsHandler(object sender, System.EventArgs e){
+
+      private bool SaveNetAs(){
+         bool result = false;
          Stream stream;
          string fileName = "";
          SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-         saveFileDialog1.Filter = "txt files (*.pnml)|*.pnml|All files (*.*)|*.*";
+         saveFileDialog1.Filter = "pnml files (*.pnml)|*.pnml|All files (*.*)|*.*";
          saveFileDialog1.FilterIndex = 1 ;
          saveFileDialog1.RestoreDirectory = true ;
 
          if(saveFileDialog1.ShowDialog() == DialogResult.OK){
             if((stream = saveFileDialog1.OpenFile()) != null){
-               fileName = (stream as FileStream).Name;
+               LinkedFile = fileName = (stream as FileStream).Name;
                if(this.ID=="")
                   this.ID = fileName.Substring(fileName.LastIndexOf("\\")+1);
+
                XmlSerializer serealizer = new XmlSerializer(this.GetType());
                serealizer.Serialize(stream, this);
                stream.Close();
-               SaveEventArgs args = new SaveEventArgs(fileName, this.ID);
-               OnSave(args);
+               result = true;
             }
          }
-      }
-
-      private void NetCanvasVisibleChangedHandler(object sender, System.EventArgs e){
-         /*Подключаем и отключаем те события, кототые обрабатываются только если сеть на экране*/
-         if(Canvas.Visible){
-            ((this.Canvas.FindForm() as MainForm).MainMenuStrip as MainMenuStrip).toolStripMenuSave.Click   += SaveHandler;
-            ((this.Canvas.FindForm() as MainForm).MainMenuStrip as MainMenuStrip).toolStripMenuSaveAs.Click += SaveAsHandler;
-         }else{
-            ((this.Canvas.FindForm() as MainForm).MainMenuStrip as MainMenuStrip).toolStripMenuSave.Click   -= SaveHandler;
-            ((this.Canvas.FindForm() as MainForm).MainMenuStrip as MainMenuStrip).toolStripMenuSaveAs.Click -= SaveAsHandler;
-         }
+         return result;
       }
 
       public void WriteXml (XmlWriter writer)

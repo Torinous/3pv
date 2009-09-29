@@ -136,7 +136,6 @@ namespace PPPv.Editor {
 
       public void ChangesApproved()
       {
-         
          listPredicates.Clear();
          foreach (string value in lbPredicates.Items)
          {
