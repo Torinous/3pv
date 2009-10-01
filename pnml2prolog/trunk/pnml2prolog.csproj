@@ -1,0 +1,68 @@
+﻿<Project  xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="CoreBuild">
+
+   <PropertyGroup>
+      <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+      <SrcDir>.\Src\</SrcDir>
+      <ResourcesDir>.\Resources\</ResourcesDir>
+      <GenerateFullPaths>True</GenerateFullPaths>
+      <WarningLevel Condition=" '$(WarningLevel)' == '' ">4</WarningLevel>
+   </PropertyGroup>
+
+   <PropertyGroup
+      Condition=" '$(Configuration)' == 'Debug' ">
+      <DebugSymbols>true</DebugSymbols>
+      <DebugType>full</DebugType>
+      <Optimize>false</Optimize>
+      <OutputPath>.\bin\Debug\</OutputPath>
+      <DefineConstants>DEBUG;TRACE</DefineConstants>
+      <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+      <EmitDebugInformation>true</EmitDebugInformation>
+   </PropertyGroup>
+
+   <PropertyGroup
+      Condition=" '$(Configuration)' == 'Release' ">
+      <DebugSymbols>false</DebugSymbols>
+      <Optimize>true</Optimize>
+      <OutputPath>.\bin\Release\</OutputPath>
+      <DefineConstants>TRACE</DefineConstants>
+      <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
+      <EmitDebugInformation>false</EmitDebugInformation>
+   </PropertyGroup>
+
+   <ItemGroup>
+         <CSFiles Include="$(SrcDir)**\*.cs"  />
+   </ItemGroup>
+
+   <ItemGroup>
+      <EmbeddedResource Include="$(ResourcesDir)ctl_kernel.pl" />
+      <EmbeddedResource Include="$(ResourcesDir)ctl_requests.pl" />
+      <EmbeddedResource Include="$(ResourcesDir)ss_kernel.pl" />
+      <EmbeddedResource Include="$(ResourcesDir)ss_requests.pl" />
+      <EmbeddedResource Include="$(ResourcesDir)main.pl" />
+   </ItemGroup>
+   <ItemGroup>
+      <AssemblyInfo Include="$(SrcDir)**\AssemblyInfo.cs"  />
+   </ItemGroup>
+
+   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+
+   <Target Name="BeforeBuild" >
+      <!-- Создадим все нужные кталоги, чтобы не хранить их пустые в репозитории -->
+      <MakeDir Directories="$(OutputPath)"/>
+      <!-- Включим информацию о ревизии в исходный код -->
+      <Exec Command = "SubWCRev.exe ./ AssemblyInfo.in AssemblyInfo.cs" WorkingDirectory = "$(SrcDir)"/>
+   </Target>
+
+   <Target Name="CoreBuild"  Inputs="@(CSFiles);@(EmbeddedResource)" Outputs="$(OutputPath)pnml2prolog.exe" DependsOnTargets="BeforeBuild" >
+      <Csc
+         OutputAssembly="$(OutputPath)pnml2prolog.exe"
+         WarningLevel = "$(WarningLevel)"
+         Sources="@(CSFiles)"
+         TargetType="exe"
+         Resources = "@(EmbeddedResource)"
+         EmitDebugInformation="$(EmitDebugInformation)"
+         DefineConstants="$(DefineConstants)"
+         Optimize="$(Optimize)"
+         NoLogo="true"/>
+   </Target>
+</Project>
