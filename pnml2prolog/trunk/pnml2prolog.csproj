@@ -34,11 +34,11 @@
    </ItemGroup>
 
    <ItemGroup>
-      <EmbeddedResource Include="$(ResourcesDir)ctl_kernel.pl" />
-      <EmbeddedResource Include="$(ResourcesDir)ctl_requests.pl" />
-      <EmbeddedResource Include="$(ResourcesDir)ss_kernel.pl" />
-      <EmbeddedResource Include="$(ResourcesDir)ss_requests.pl" />
-      <EmbeddedResource Include="$(ResourcesDir)main.pl" />
+      <EmbeddedResource Include="$(ResourcesDir)\Verificator\ctl_kernel.pl" />
+      <EmbeddedResource Include="$(ResourcesDir)\Verificator\ctl_requests.pl" />
+      <EmbeddedResource Include="$(ResourcesDir)\Verificator\ss_kernel.pl" />
+      <EmbeddedResource Include="$(ResourcesDir)\Verificator\ss_requests.pl" />
+      <EmbeddedResource Include="$(ResourcesDir)\Verificator\main.pl" />
    </ItemGroup>
    <ItemGroup>
       <AssemblyInfo Include="$(SrcDir)**\AssemblyInfo.cs"  />

@@ -9,7 +9,7 @@ using System.Diagnostics;
 using System.Configuration;
 using System.Collections.Generic;
 
-using PPPV.CommandLineParameterParser;
+using PPPV.Utils;
 
 namespace PPPV.pnml2prolog
 {
