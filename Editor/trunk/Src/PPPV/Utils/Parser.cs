@@ -1,7 +1,7 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace PPPv.Utils {
+namespace PPPV.Utils {
    /// <summary>Implementation of a command-line parsing class.  Is capable of
    /// having switches registered with it directly or can examine a registered
    /// class for any properties with the appropriate attributes appended to

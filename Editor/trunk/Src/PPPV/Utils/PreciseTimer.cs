@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 
-namespace PPPv.Utils {
+namespace PPPV.Utils {
    public class PreciseTimer : IDisposable {
 
       private static long ctr1 = 0, ctr2 = 0, freq = 0;
