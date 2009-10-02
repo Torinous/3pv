@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace PPPv.Editor{
+namespace PPPV.Editor{
 
   public class RegionSelectionEventArgs{
       public Rectangle selectionRectangle;

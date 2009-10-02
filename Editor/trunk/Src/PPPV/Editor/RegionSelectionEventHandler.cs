@@ -3,9 +3,9 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-using PPPv.Net;
+using PPPV.Net;
 
-namespace PPPv.Editor{
+namespace PPPV.Editor{
 
    public delegate void RegionSelectionEventHandler(object source, RegionSelectionEventArgs arg);
 }

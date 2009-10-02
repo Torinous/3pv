@@ -8,10 +8,10 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-using PPPv.Editor;
-using PPPv.Utils;
+using PPPV.Editor;
+using PPPV.Utils;
 
-namespace PPPv.Net {
+namespace PPPV.Net {
    [Serializable()]
    [XmlRoot("pnml")]
    public class PetriNet:IXmlSerializable {

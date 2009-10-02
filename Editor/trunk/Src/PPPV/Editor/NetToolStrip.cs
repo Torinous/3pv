@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using System.Reflection;
 
 
-namespace PPPv.Editor{
+namespace PPPV.Editor{
 
   public class NetToolStrip : ToolStrip{
     public ToolStripButton toolStripButtonPointer;

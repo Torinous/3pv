@@ -2,9 +2,9 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-using PPPv.Net;
+using PPPV.Net;
 
-namespace PPPv.Net{
+namespace PPPV.Net{
 
 public delegate void MoveEventHandler(object source, MoveEventArgs arg);
 

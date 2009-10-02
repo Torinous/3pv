@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace PPPv.Net {
+namespace PPPV.Net {
 
   public class ResizeEventArgs{
     public Point from, to;

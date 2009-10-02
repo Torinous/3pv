@@ -4,9 +4,9 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 
-using PPPv.Net;
+using PPPV.Net;
 
-namespace PPPv.Editor {
+namespace PPPV.Editor {
    public class SelectionController {
       private Rectangle selectedRectangle;
       private ArrayList selectedObjects;

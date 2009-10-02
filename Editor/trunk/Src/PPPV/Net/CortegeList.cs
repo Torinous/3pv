@@ -5,8 +5,7 @@ using System.Xml.Schema;
 using System.Xml.Serialization;
 using System.Windows.Forms;
 
-namespace PPPv.Net {
-
+namespace PPPV.Net {
    [Serializable()]
    [XmlRoot("cortege")]
    public class CortegeList:ArrayList, IXmlSerializable{

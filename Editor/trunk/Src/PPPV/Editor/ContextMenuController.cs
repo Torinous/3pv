@@ -4,9 +4,9 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.ComponentModel;
 
-using PPPv.Net;
+using PPPV.Net;
 
-namespace PPPv.Editor{
+namespace PPPV.Editor{
    class ContextMenuController{
       private ContextMenuStrip contextMenuStrip;
       private NetCanvas canvas;

@@ -5,7 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace PPPv.Editor {
+namespace PPPV.Editor {
    public class MainForm : Form{
 
       /*Меню*/

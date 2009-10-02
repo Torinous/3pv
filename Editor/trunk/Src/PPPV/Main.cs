@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace PPPv
+namespace PPPV
 {
    internal sealed class Program
    {

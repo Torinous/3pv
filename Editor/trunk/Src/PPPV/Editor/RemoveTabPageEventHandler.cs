@@ -2,6 +2,6 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace PPPv.Editor{
+namespace PPPV.Editor{
    public delegate bool RemoveTabPageEventHandler(object source, RemoveTabPageEventArgs arg);
 }

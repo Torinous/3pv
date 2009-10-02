@@ -5,9 +5,9 @@ using System.Collections;
 using System.Drawing;
 using System.Windows.Forms;
 
-using PPPv.Net;
+using PPPV.Net;
 
-namespace PPPv.Editor {
+namespace PPPV.Editor {
    public class TokensEditControl : System.Windows.Forms.UserControl{
       private GroupBox groupBox;
       private ListBox lbTokens;

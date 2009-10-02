@@ -4,9 +4,9 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Xml.Serialization;
 
-using PPPv.Editor;
+using PPPV.Editor;
 
-namespace PPPv.Net {
+namespace PPPV.Net {
    [Serializable()]
    public abstract class GraphicalElement: IDrawable {
       /*Поля*/

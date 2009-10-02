@@ -7,10 +7,10 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-using PPPv.Editor;
-using PPPv.Utils;
+using PPPV.Editor;
+using PPPV.Utils;
 
-namespace PPPv {
+namespace PPPV {
    public class Application {
       private ArrayList _netList;
       private Editor.MainForm _mainFormInst;

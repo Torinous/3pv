@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
 using System.Drawing;
 
-namespace PPPv.Editor{
+namespace PPPV.Editor{
 
    public class MainMenuStrip : MenuStrip{
 

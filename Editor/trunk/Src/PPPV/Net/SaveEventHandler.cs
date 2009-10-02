@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PPPv.Net{
+namespace PPPV.Net{
    public delegate void SaveEventHandler(object source, SaveEventArgs arg);
 }
 

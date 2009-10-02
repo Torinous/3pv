@@ -2,9 +2,9 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-using PPPv.Editor;
+using PPPV.Editor;
 
-namespace PPPv.Net{
+namespace PPPV.Net{
 
    public class SaveEventArgs{
       public string fileName;

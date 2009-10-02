@@ -2,9 +2,9 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-using PPPv.Net;
+using PPPV.Net;
 
-namespace PPPv.Editor{
+namespace PPPV.Editor{
 
   public enum ToolEnum{Pointer, Place, Transition, Arc};
 

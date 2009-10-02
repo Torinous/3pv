@@ -7,10 +7,10 @@ using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 
-using PPPv.Utils;
-using PPPv.Editor;
+using PPPV.Utils;
+using PPPV.Editor;
 
-namespace PPPv.Net {
+namespace PPPV.Net {
    public class Arc : NetElement, IXmlSerializable {
       protected static Pen ArrowedBlackPen = ArrowedBlackPenFactory();
       private NetElement source, target;

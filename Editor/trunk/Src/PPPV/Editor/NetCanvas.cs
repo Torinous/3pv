@@ -6,10 +6,10 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.ComponentModel;
 
-using PPPv.Net;
-using PPPv.Utils;
+using PPPV.Net;
+using PPPV.Utils;
 
-namespace PPPv.Editor{
+namespace PPPV.Editor{
 
    public class NetCanvas : UserControl{
       /*Поля*/

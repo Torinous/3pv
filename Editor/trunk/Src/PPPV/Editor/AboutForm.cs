@@ -7,7 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Reflection;
 
-namespace PPPv
+namespace PPPV.Editor
 {
    public class AboutForm : Form
    {
