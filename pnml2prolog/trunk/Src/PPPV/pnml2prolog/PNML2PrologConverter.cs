@@ -108,45 +108,29 @@ namespace PPPV.pnml2prolog
          string NetType = Nets[0].FirstChild.Attributes["type"].Value;
          switch (NetType)
          {
-            case "P/T net":
-            try
-            {
-               // create the XML serializer.
-                        ptnet.pnml_pt net1 = new ptnet.pnml_pt();
-                        XmlSerializer formatter = new XmlSerializer(net1.GetType());
-                        XmlTextReader tr = new XmlTextReader( new StringReader(PNMLFile.DocumentElement.OwnerDocument.OuterXml));
-                        net1 = (ptnet.pnml_pt)formatter.Deserialize(tr);
-                        AbstractNet = net1;
-                    }
-                    catch (Exception e)
-                    {
-                    	Console.WriteLine("Hello again");
-                        Console.WriteLine(e.Message);
-                        return 1;
-                    }
-                    break;
-                case "PPr/T net":
-                    try
-                    {
-                        // create the XML serializer.
-                        pprtnet.pnml_pprt net1 = new pprtnet.pnml_pprt();
-                        XmlSerializer formatter = new XmlSerializer(net1.GetType());
-                        XmlTextReader tr = new XmlTextReader( new StringReader(PNMLFile.DocumentElement.OwnerDocument.OuterXml));
-                        net1 = (pprtnet.pnml_pprt)formatter.Deserialize(tr);
-                        AbstractNet = net1;
-                    }
-                    catch (Exception e)
-                    {
-                    	Console.WriteLine("Error Deser PPr/T");
-                        Console.WriteLine(e.Message);
-                        return 1;
-                    }
-                    break;
-                default:
-                    Console.WriteLine("I`m sorry, but seems i do not understand that net type.");
-                    Console.WriteLine("\t\t\t\t\t\t\tpnml2prolog v. " + Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            case "PPr/T net":
+               try
+               {
+                  // create the XML serializer.
+                  pprtnet.pnml_pprt net1 = new pprtnet.pnml_pprt();
+                  XmlSerializer formatter = new XmlSerializer(net1.GetType());
+                  XmlTextReader tr = new XmlTextReader( new StringReader(PNMLFile.DocumentElement.OwnerDocument.OuterXml));
+                  net1 = (pprtnet.pnml_pprt)formatter.Deserialize(tr);
+                  AbstractNet = net1;
+               }
+               catch (Exception e)
+               {
+                  Console.WriteLine("Error Deser PPr/T");
+                  Console.WriteLine(e.Message);
                   return 1;
+                  }
+               break;
+               default:
+                  Console.WriteLine("I`m sorry, but seems i do not understand that net type.");
+                  Console.WriteLine("\t\t\t\t\t\t\tpnml2prolog v. " + Assembly.GetExecutingAssembly().GetName().Version.ToString());
+               return 1;
          }
+
          Encoding enc1251 = Encoding.GetEncoding(1251);
          if (outputFileName == "none")
          {
