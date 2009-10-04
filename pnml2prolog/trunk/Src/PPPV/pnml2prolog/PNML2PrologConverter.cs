@@ -10,6 +10,7 @@ using System.Configuration;
 using System.Collections.Generic;
 
 using PPPV.Utils;
+using PPPV.Net;
 
 namespace PPPV.pnml2prolog
 {
@@ -19,7 +20,7 @@ namespace PPPV.pnml2prolog
       private string inputFileName = "none";
       private string outputFileName = "none";
       private bool HelpReq = false;
-      private ITranslatedToProlog AbstractNet;
+      private PetriNet AbstractNet;
       private ResourceManager RManager;
       #endregion
 
@@ -78,13 +79,13 @@ namespace PPPV.pnml2prolog
                return 0;
             }
          }
-
-         XmlDocument PNMLFile = new System.Xml.XmlDocument();
+         
+         XmlSerializer serializer = new XmlSerializer(typeof(PetriNet));
          if (inputFileName == "none")
          {
             try
             {
-               PNMLFile.Load(Console.In);
+               serializer.Deserialize(Console.In);
             }
             catch (Exception ex)
             {
@@ -96,39 +97,13 @@ namespace PPPV.pnml2prolog
          {
             try
             {
-               PNMLFile.Load(inputFileName);
+               serializer.Deserialize(File.OpenText(inputFileName));
             }
             catch (Exception ex)
             {
                Console.WriteLine(ex.Message);
                return 1;
             }
-         }
-         XmlNodeList Nets = PNMLFile.GetElementsByTagName("pnml");
-         string NetType = Nets[0].FirstChild.Attributes["type"].Value;
-         switch (NetType)
-         {
-            case "PPr/T net":
-               try
-               {
-                  // create the XML serializer.
-                  pprtnet.pnml_pprt net1 = new pprtnet.pnml_pprt();
-                  XmlSerializer formatter = new XmlSerializer(net1.GetType());
-                  XmlTextReader tr = new XmlTextReader( new StringReader(PNMLFile.DocumentElement.OwnerDocument.OuterXml));
-                  net1 = (pprtnet.pnml_pprt)formatter.Deserialize(tr);
-                  AbstractNet = net1;
-               }
-               catch (Exception e)
-               {
-                  Console.WriteLine("Error Deser PPr/T");
-                  Console.WriteLine(e.Message);
-                  return 1;
-                  }
-               break;
-               default:
-                  Console.WriteLine("I`m sorry, but seems i do not understand that net type.");
-                  Console.WriteLine("\t\t\t\t\t\t\tpnml2prolog v. " + Assembly.GetExecutingAssembly().GetName().Version.ToString());
-               return 1;
          }
 
          Encoding enc1251 = Encoding.GetEncoding(1251);
@@ -161,31 +136,32 @@ namespace PPPV.pnml2prolog
             TargetText.Close();
          }
       return 0;
-   }
-   #endregion
+      }
+      #endregion
 
-   private string AdditionalCode()
-   {
-      StringBuilder code = new StringBuilder(2000);
-      code.AppendLine(RManager.GetString("gdm_kernel"));
-      code.AppendLine();
-      code.AppendLine(RManager.GetString("gdm_requests"));
-      code.AppendLine();
-      code.AppendLine(RManager.GetString("ctl_kernel"));
-      code.AppendLine();
-      code.AppendLine(RManager.GetString("ctl_requests"));
-      code.AppendLine();
-      code.AppendLine(RManager.GetString("report"));
-      code.AppendLine();
-      code.AppendLine(RManager.GetString("main"));
-      code.AppendLine();
-      return code.ToString();
-   }
+      private string AdditionalCode()
+      {
+         StringBuilder code = new StringBuilder(2000);
+         code.AppendLine(RManager.GetString("gdm_kernel"));
+         code.AppendLine();
+         code.AppendLine(RManager.GetString("gdm_requests"));
+         code.AppendLine();
+         code.AppendLine(RManager.GetString("ctl_kernel"));
+         code.AppendLine();
+         code.AppendLine(RManager.GetString("ctl_requests"));
+         code.AppendLine();
+         code.AppendLine(RManager.GetString("report"));
+         code.AppendLine();
+         code.AppendLine(RManager.GetString("main"));
+         code.AppendLine();
+         return code.ToString();
+      }
 
       //точка входа
       static int Main(string[] args)
       {
          (new PNML2PrologConverter()).Run();
+         return 0;
       }
    }
 }

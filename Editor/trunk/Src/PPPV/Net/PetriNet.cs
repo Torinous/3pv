@@ -14,7 +14,7 @@ using PPPV.Utils;
 namespace PPPV.Net {
    [Serializable()]
    [XmlRoot("pnml")]
-   public class PetriNet:IXmlSerializable {
+   public partial class PetriNet:IXmlSerializable {
       private string id;
       private string type;
       /*Путь к файлу в который сохранена сеть*/
@@ -518,8 +518,8 @@ namespace PPPV.Net {
                if(this.ID=="")
                   this.ID = fileName.Substring(fileName.LastIndexOf("\\")+1);
 
-               XmlSerializer serealizer = new XmlSerializer(this.GetType());
-               serealizer.Serialize(stream, this);
+               XmlSerializer serializer = new XmlSerializer(this.GetType());
+               serializer.Serialize(stream, this);
                stream.Close();
                result = true;
             }

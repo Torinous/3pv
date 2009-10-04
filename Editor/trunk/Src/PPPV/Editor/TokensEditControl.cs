@@ -80,7 +80,7 @@ namespace PPPV.Editor {
 
       private void bAdd_Click(object sender, EventArgs e)
       {
-         lbTokens.Items.Add("("+(lbTokens.Items.Count+1).ToString()+")");
+         lbTokens.Items.Add((lbTokens.Items.Count+1).ToString());
          SetCountText(lbTokens.Items.Count);
          lbTokens.SelectedIndex = lbTokens.Items.Count-1;
          HaveSomeForDeletion();
