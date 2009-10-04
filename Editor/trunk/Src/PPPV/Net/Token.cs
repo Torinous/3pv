@@ -34,6 +34,12 @@ namespace PPPV.Net {
          }
       }
 
+      public string ToString{
+         get{
+            return Text;
+         }
+      }
+
       public void WriteXml (XmlWriter writer)
       {
          writer.WriteStartElement("token");

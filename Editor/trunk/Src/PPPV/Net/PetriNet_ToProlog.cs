@@ -33,7 +33,12 @@ namespace PPPV.Net {
          text.AppendLine("%transitions semantic");
          text.AppendLine();
          foreach (Transition tr in this.Transitions){
-            text.AppendFormat("arc(S0,{0},S2):-{2}remove({1},S0,S1),insert({3},S1,S2).", tr.name[0].value, Precondition(tr.id), Guard(tr.id), Postcondition(tr.id));
+            text.AppendFormat("arc(S0,{0},S2):-{2}remove({1},S0,S1),insert({3},S1,S2).",
+                              tr.Name,
+                              Precondition(tr),
+                              tr.GuardFunction,
+                              Postcondition(tr)
+                             );
             text.AppendLine();
          }
          text.AppendLine("%additional code");
@@ -44,14 +49,13 @@ namespace PPPV.Net {
 
       public string InitialMarking(){
          StringBuilder text = new StringBuilder(400);
-         foreach(Place pl in Places){
-            if(pl.Tokens.Size != 0){
-               foreach(Token token in pl.Tokens){
-                  text.AppendFormat("{0}{1},",pl.name[0].value.ToLower(),Token.value);
-               }
+         foreach(Place pl in this.Places){
+            foreach(Token token in pl.Tokens){
+               text.AppendFormat("{0}({1}),", pl.Name.ToLower(), token);
             }
          }
-         text.Remove(text.Length-1,1);
+         if( text.Length > 0 )
+            text.Remove(text.Length-1,1);
          text.Append("]");
          text.Insert(0, "[");
          return text.ToString();
@@ -59,8 +63,8 @@ namespace PPPV.Net {
 
       public string TransitionsList(){
          StringBuilder text = new StringBuilder(400);
-         foreach (pnmlNetTransition tr in ((pnmlNet)this.Items[0]).transition){
-            text.AppendFormat("transition({0}).", tr.name[0].value);
+         foreach (Transition transition in this.Transitions){
+            text.AppendFormat("transition({0}).", transition.Name);
             text.AppendLine();
          }
          return text.ToString();
@@ -68,71 +72,57 @@ namespace PPPV.Net {
 
       public string PlacesList(){
          StringBuilder text = new StringBuilder(400);
-         foreach (pnmlNetPlace Place in ((pnmlNet)this.Items[0]).place){
-            text.AppendFormat("place({0}).", Place.name[0].value.ToLower());
+         foreach (Place place in Places){
+            text.AppendFormat("place({0}).", place.Name.ToLower());
             text.AppendLine();
          }
          return text.ToString();
       }
 
-      public string Precondition(string inTr){
+      public string Precondition(Transition inTr){
          StringBuilder text = new StringBuilder(100);
-         foreach (pnmlNetArc arc in ((pnmlNet)this.Items[0]).arc){
-            if (arc.target == inTr){
-               foreach(pnmlNetPlace pl in ((pnmlNet)this.Items[0]).place){
-                  if(pl.id == arc.source){
-                     foreach(pnmlNetArcPredicate pr in arc.predicate){
-                        //MessageBox.Show(text.ToString());
-                        text.AppendFormat("{0}{1},",pl.name[0].value.ToLower(),pr.value);
+         foreach (Arc arc in Arcs){
+            if (arc.Target == inTr){
+               foreach(Place place in Places){
+                  if(place == arc.Source){
+                     foreach(string predicate in arc.Cortege){
+                        text.AppendFormat("{0}({1}),",place.Name.ToLower(), predicate);
                      }
                   }
                }
             }
          }
-         text.Remove(text.Length-1,1);
+         if(text.Length >0 )
+            text.Remove(text.Length-1,1);
          text.Append("]");
          text.Insert(0, "[");
          return text.ToString();
       }
-      public string Postcondition(string inTr)
-      {
+
+      public string Postcondition(Transition inTr){
          StringBuilder text = new StringBuilder(100);
-         foreach (pnmlNetArc arc in ((pnmlNet)this.Items[0]).arc){
-            if (arc.source == inTr){
-               foreach(pnmlNetPlace pl in ((pnmlNet)this.Items[0]).place){
-                  if(pl.id == arc.target){
-                     foreach(pnmlNetArcPredicate pr in arc.predicate){
-                        text.AppendFormat("{0}{1},",pl.name[0].value.ToLower(),pr.value);
+         foreach (Arc arc in Arcs){
+            if (arc.Source == inTr){
+               foreach(Place place in Places){
+                  if(place == arc.Target){
+                     foreach(string predicate in arc.Cortege){
+                        text.AppendFormat("{0}({1}),", place.Name.ToLower(), predicate);
                      }
                   }
                }
                
             }
          }
-         text.Remove(text.Length-1,1);
+         if(text.Length >0 )
+            text.Remove(text.Length-1,1);
          text.Append("]");
          text.Insert(0, "[");
          return text.ToString();
       }
-      public string Guard(string TrId)
-      {
-         StringBuilder text = new StringBuilder(400);
-         foreach (pnmlNetTransition tr in ((pnmlNet)this.Items[0]).transition){
-            if(tr.id == TrId){
-               if(tr.guard!=null){
-                  foreach(pnmlNetTransitionGuard guard in tr.guard){
-                     text.Append(guard.value+",");
-                  }
-               }
-            }
-         }
-         text.Replace(",,",",");
-         return text.ToString();
-      }
-      public string AdditionalCode()
-      {
+
+      public string AdditionalCode() {
          StringBuilder text = new StringBuilder();
-         foreach (object Ob in this.Items){
+         /*foreach (object Ob in this.Items){
             if(Ob.GetType().Equals(typeof(pnmlAdditional_code))){
                pnmlAdditional_codeClose[] code = ((pnmlAdditional_code)Ob).close;
                foreach (pnmlAdditional_codeClose Close in code){
@@ -140,7 +130,7 @@ namespace PPPV.Net {
                   text.AppendLine();
                }
             }
-         }
+         }*/
          return text.ToString();
       }
    } // PetriNet
