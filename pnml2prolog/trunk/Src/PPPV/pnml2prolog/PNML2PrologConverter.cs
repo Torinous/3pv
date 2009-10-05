@@ -117,15 +117,15 @@ namespace PPPV.pnml2prolog
 
          stR = new StreamReader(current.GetManifestResourceStream("ss_kernel.pl"), enc1251);
          code.AppendLine(stR.ReadToEnd());
-         stR = new StreamReader(current.GetManifestResourceStream("ss_requests.pl"));
+         stR = new StreamReader(current.GetManifestResourceStream("ss_requests.pl"), enc1251);
          code.AppendLine(stR.ReadToEnd());
-         stR = new StreamReader(current.GetManifestResourceStream("ctl_kernel.pl"));
+         stR = new StreamReader(current.GetManifestResourceStream("ctl_kernel.pl"), enc1251);
          code.AppendLine(stR.ReadToEnd());
-         stR = new StreamReader(current.GetManifestResourceStream("ctl_requests.pl"));
+         stR = new StreamReader(current.GetManifestResourceStream("ctl_requests.pl"), enc1251);
          code.AppendLine(stR.ReadToEnd());
-         stR = new StreamReader(current.GetManifestResourceStream("report_kernel.pl"));
+         stR = new StreamReader(current.GetManifestResourceStream("report_kernel.pl"), enc1251);
          code.AppendLine(stR.ReadToEnd());
-         stR = new StreamReader(current.GetManifestResourceStream("main.pl"));
+         stR = new StreamReader(current.GetManifestResourceStream("main.pl"), enc1251);
          code.AppendLine(stR.ReadToEnd());
          code.AppendLine();
          return code.ToString();
