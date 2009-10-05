@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text;
 using System.Reflection;
+using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -33,7 +34,7 @@ namespace PPPV.Net {
          text.AppendLine("%transitions semantic");
          text.AppendLine();
          foreach (Transition tr in this.Transitions){
-            text.AppendFormat("arc(S0,{0},S2):-{2}remove({1},S0,S1),insert({3},S1,S2).",
+            text.AppendFormat("arc(S0,{0},S2):-{2},remove({1},S0,S1),insert({3},S1,S2).",
                               tr.Name,
                               Precondition(tr),
                               tr.GuardFunction,
@@ -51,7 +52,7 @@ namespace PPPV.Net {
          StringBuilder text = new StringBuilder(400);
          foreach(Place pl in this.Places){
             foreach(Token token in pl.Tokens){
-               text.AppendFormat("{0}({1}),", pl.Name.ToLower(), token);
+               text.AppendFormat("{0}({1}),", pl.Name.ToLower(), token.Text);
             }
          }
          if( text.Length > 0 )

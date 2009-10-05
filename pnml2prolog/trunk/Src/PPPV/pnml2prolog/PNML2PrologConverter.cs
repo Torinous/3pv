@@ -20,46 +20,38 @@ namespace PPPV.pnml2prolog
       private string inputFileName = "none";
       private string outputFileName = "none";
       private bool HelpReq = false;
-      private PetriNet AbstractNet;
-      private ResourceManager RManager;
+      private PetriNet net;
       #endregion
 
       #region Properties and Command Line Switches
       [CommandLineSwitch("O", "Target for output.")]
       [CommandLineAlias("o")]
-      public string outputTarget 
-      {
+      public string outputTarget {
          get {return outputFileName;}
          set {outputFileName = value;}
       }
         
       [CommandLineSwitch("help", "Show some help.")]
       [CommandLineAlias("h")]
-      public bool HelpRequest
-      {
+      public bool HelpRequest{
          get { return HelpReq; }
          set { HelpReq = value; }
       }
       #endregion
 
       #region Constructor and Destructor
-      public PNML2PrologConverter()
-      {
-         RManager = new ResourceManager("pnml2prolog.prolog", this.GetType().Assembly); 
+      public PNML2PrologConverter(){
       }
       #endregion
 
       #region Private Utility Functions
-      private int Run() 
-      {
+      private int Run() {
          Debug.WriteLine(System.Environment.CommandLine);
          Parser cmdParser = new Parser(System.Environment.CommandLine, this);
-         try
-         {
+         try{
             cmdParser.Parse();
          }
-         catch(Exception ex)
-         {
+         catch(Exception ex){
             Console.WriteLine(ex.Message);
             return 1;
          }
@@ -67,68 +59,45 @@ namespace PPPV.pnml2prolog
             Console.WriteLine("pnml2prolog v. " + Assembly.GetExecutingAssembly().GetName().Version.ToString());
             return 0;
          }
-         if (cmdParser.Parameters.Length == 1)
-         {
+         if (cmdParser.Parameters.Length == 1) {
             inputFileName = cmdParser.Parameters[0];
-         }
-         else
-         {
-            if (cmdParser.Parameters.Length > 1)
-            {
+         }else{
+            if (cmdParser.Parameters.Length > 1){
                Console.WriteLine("\nYou must specify only one or none input files.");
                return 0;
             }
          }
-         
          XmlSerializer serializer = new XmlSerializer(typeof(PetriNet));
-         if (inputFileName == "none")
-         {
-            try
-            {
-               serializer.Deserialize(Console.In);
-            }
-            catch (Exception ex)
-            {
+         if (inputFileName == "none"){
+            try{
+               net = (PetriNet)serializer.Deserialize(Console.In);
+            }catch (Exception ex){
                Console.WriteLine(ex.Message);
                return 1;
             }
-         }
-         else 
-         {
-            try
-            {
-               serializer.Deserialize(File.OpenText(inputFileName));
-            }
-            catch (Exception ex)
-            {
+         }else{
+            try{
+               net = (PetriNet)serializer.Deserialize(File.OpenText(inputFileName));
+            }catch (Exception ex){
                Console.WriteLine(ex.Message);
                return 1;
             }
          }
 
          Encoding enc1251 = Encoding.GetEncoding(1251);
-         if (outputFileName == "none")
-         {
-            try
-            {
-               Console.WriteLine(AbstractNet.ToProlog());
-            }
-            catch (Exception e) 
-            {
+         if (outputFileName == "none"){
+            try{
+               Console.WriteLine(net.ToProlog());
+            }catch (Exception e){
                Console.WriteLine(e.Message);
                return 1;
             }
             Console.WriteLine(AdditionalCode());
-         }
-         else 
-         {
-            StreamWriter TargetText = new StreamWriter(outputFileName,false,enc1251);
-            try
-            {
-               TargetText.WriteLine(AbstractNet.ToProlog());
-            }
-            catch (Exception e)
-            {
+         }else{
+            StreamWriter TargetText = new StreamWriter(outputFileName, false, enc1251);
+            try{
+               TargetText.WriteLine(net.ToProlog());
+            }catch (Exception e){
                Console.WriteLine(e.Message);
                return 1;
             }
@@ -139,27 +108,30 @@ namespace PPPV.pnml2prolog
       }
       #endregion
 
-      private string AdditionalCode()
-      {
-         StringBuilder code = new StringBuilder(2000);
-         code.AppendLine(RManager.GetString("gdm_kernel"));
-         code.AppendLine();
-         code.AppendLine(RManager.GetString("gdm_requests"));
-         code.AppendLine();
-         code.AppendLine(RManager.GetString("ctl_kernel"));
-         code.AppendLine();
-         code.AppendLine(RManager.GetString("ctl_requests"));
-         code.AppendLine();
-         code.AppendLine(RManager.GetString("report"));
-         code.AppendLine();
-         code.AppendLine(RManager.GetString("main"));
+      private string AdditionalCode(){
+         Assembly current = Assembly.GetExecutingAssembly();
+         StreamReader stR;
+
+         StringBuilder code = new StringBuilder(3000);
+
+         stR = new StreamReader(current.GetManifestResourceStream("ss_kernel.pl"));
+         code.AppendLine(stR.ReadToEnd());
+         stR = new StreamReader(current.GetManifestResourceStream("ss_requests.pl"));
+         code.AppendLine(stR.ReadToEnd());
+         stR = new StreamReader(current.GetManifestResourceStream("ctl_kernel.pl"));
+         code.AppendLine(stR.ReadToEnd());
+         stR = new StreamReader(current.GetManifestResourceStream("ctl_requests.pl"));
+         code.AppendLine(stR.ReadToEnd());
+         stR = new StreamReader(current.GetManifestResourceStream("report_kernel.pl"));
+         code.AppendLine(stR.ReadToEnd());
+         stR = new StreamReader(current.GetManifestResourceStream("main.pl"));
+         code.AppendLine(stR.ReadToEnd());
          code.AppendLine();
          return code.ToString();
       }
 
       //точка входа
-      static int Main(string[] args)
-      {
+      static int Main(string[] args){
          (new PNML2PrologConverter()).Run();
          return 0;
       }

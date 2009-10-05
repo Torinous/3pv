@@ -38,6 +38,7 @@
       <EmbeddedResource Include="$(ResourcesDir)\Verificator\ctl_requests.pl" />
       <EmbeddedResource Include="$(ResourcesDir)\Verificator\ss_kernel.pl" />
       <EmbeddedResource Include="$(ResourcesDir)\Verificator\ss_requests.pl" />
+      <EmbeddedResource Include="$(ResourcesDir)\Verificator\report_kernel.pl" />
       <EmbeddedResource Include="$(ResourcesDir)\Verificator\main.pl" />
    </ItemGroup>
    <ItemGroup>
