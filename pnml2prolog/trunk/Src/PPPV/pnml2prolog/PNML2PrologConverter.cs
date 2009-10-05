@@ -21,6 +21,7 @@ namespace PPPV.pnml2prolog
       private string outputFileName = "none";
       private bool HelpReq = false;
       private PetriNet net;
+      private Encoding enc1251;
       #endregion
 
       #region Properties and Command Line Switches
@@ -41,6 +42,7 @@ namespace PPPV.pnml2prolog
 
       #region Constructor and Destructor
       public PNML2PrologConverter(){
+         enc1251 = Encoding.GetEncoding(1251);
       }
       #endregion
 
@@ -84,7 +86,6 @@ namespace PPPV.pnml2prolog
             }
          }
 
-         Encoding enc1251 = Encoding.GetEncoding(1251);
          if (outputFileName == "none"){
             try{
                Console.WriteLine(net.ToProlog());
@@ -114,7 +115,7 @@ namespace PPPV.pnml2prolog
 
          StringBuilder code = new StringBuilder(3000);
 
-         stR = new StreamReader(current.GetManifestResourceStream("ss_kernel.pl"));
+         stR = new StreamReader(current.GetManifestResourceStream("ss_kernel.pl"), enc1251);
          code.AppendLine(stR.ReadToEnd());
          stR = new StreamReader(current.GetManifestResourceStream("ss_requests.pl"));
          code.AppendLine(stR.ReadToEnd());
