@@ -51,6 +51,7 @@ namespace PPPV.Editor {
          tbCurrentPredicate.Size = new System.Drawing.Size( 160, 230 );
          tbCurrentPredicate.Multiline = true;
          tbCurrentPredicate.AcceptsReturn = true;
+         tbCurrentPredicate.Enabled = false;
          tbCurrentPredicate.TextChanged += textChangedEventHandler;
 
          bAdd = new Button();
@@ -149,6 +150,12 @@ namespace PPPV.Editor {
          {
             tbCurrentPredicate.Text = lbPredicates.SelectedItem.ToString();
          }
+         if(lbPredicates.SelectedIndex == -1){
+            tbCurrentPredicate.Enabled = false;
+         }else{
+            if(!tbCurrentPredicate.Enabled)
+               tbCurrentPredicate.Enabled = true;
+         }
       }
 
       private void SetCountText(int count)
@@ -158,7 +165,9 @@ namespace PPPV.Editor {
       
       private void textChangedEventHandler(object sender, EventArgs args)
       {
-         lbPredicates.Items[lbPredicates.SelectedIndex] = tbCurrentPredicate.Text;
+         if(lbPredicates.SelectedIndex != -1){
+            lbPredicates.Items[lbPredicates.SelectedIndex] = tbCurrentPredicate.Text;
+         }
       } // end textChangedEventHandler
    } //class
 } // namespace

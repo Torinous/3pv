@@ -51,6 +51,7 @@ namespace PPPV.Editor {
          tbCurrentToken.Size = new System.Drawing.Size( 160, 230 );
          tbCurrentToken.Multiline = true;
          tbCurrentToken.AcceptsReturn = true;
+         tbCurrentToken.Enabled = false;
          tbCurrentToken.TextChanged += textChangedEventHandler;
 
          bAdd = new Button();
@@ -150,6 +151,12 @@ namespace PPPV.Editor {
          {
             tbCurrentToken.Text = lbTokens.SelectedItem.ToString();
          }
+         if(lbTokens.SelectedIndex == -1){
+            tbCurrentToken.Enabled = false;
+         }else{
+            if(!tbCurrentToken.Enabled)
+               tbCurrentToken.Enabled = true;
+         }
       }
 
       private void SetCountText(int count)
@@ -159,7 +166,9 @@ namespace PPPV.Editor {
       
       private void textChangedEventHandler(object sender, EventArgs args)
       {
-         lbTokens.Items[lbTokens.SelectedIndex] = tbCurrentToken.Text;
-      } // end textChangedEventHandler
+         if(lbTokens.SelectedIndex != -1){
+            lbTokens.Items[lbTokens.SelectedIndex] = tbCurrentToken.Text;
+         }
+      }
    } //class
 } // namespace
