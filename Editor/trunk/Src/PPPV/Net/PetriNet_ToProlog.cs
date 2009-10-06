@@ -34,14 +34,15 @@ namespace PPPV.Net {
          text.AppendLine("%transitions semantic");
          text.AppendLine();
          foreach (Transition tr in this.Transitions){
-            text.AppendFormat("arc(S0,{0},S2):-{2},remove({1},S0,S1),insert({3},S1,S2).",
-                              tr.Name,
+            text.AppendFormat("arc(S0,{0},S2):-remove({1},S0,S1),{2}insert({3},S1,S2).",
+                              tr.Name.ToLower(),
                               Precondition(tr),
-                              tr.GuardFunction,
+                              (tr.GuardFunction!=""?tr.GuardFunction+",":""),
                               Postcondition(tr)
                              );
             text.AppendLine();
          }
+         /*TODO: Проверить а есть ли дополнительный код*/
          text.AppendLine("%additional code");
          text.AppendLine();
          text.Append(AdditionalCode());
@@ -65,7 +66,7 @@ namespace PPPV.Net {
       public string TransitionsList(){
          StringBuilder text = new StringBuilder(400);
          foreach (Transition transition in this.Transitions){
-            text.AppendFormat("transition({0}).", transition.Name);
+            text.AppendFormat("transition({0}).", transition.Name.ToLower());
             text.AppendLine();
          }
          return text.ToString();

@@ -20,6 +20,7 @@ namespace PPPV.pnml2prolog
       private string inputFileName = "none";
       private string outputFileName = "none";
       private bool HelpReq = false;
+      private bool addKernel = true;
       private PetriNet net;
       private Encoding enc1251;
       #endregion
@@ -37,6 +38,13 @@ namespace PPPV.pnml2prolog
       public bool HelpRequest{
          get { return HelpReq; }
          set { HelpReq = value; }
+      }
+
+      [CommandLineSwitch("AddKernel", "Add verification Kernel code.")]
+      [CommandLineAlias("ak")]
+      public bool AddKernel{
+         get { return addKernel; }
+         set { addKernel = value; }
       }
       #endregion
 
@@ -93,7 +101,8 @@ namespace PPPV.pnml2prolog
                Console.WriteLine(e.Message);
                return 1;
             }
-            Console.WriteLine(AdditionalCode());
+            if(AddKernel)
+               Console.WriteLine(AdditionalCode());
          }else{
             StreamWriter TargetText = new StreamWriter(outputFileName, false, enc1251);
             try{
@@ -102,7 +111,8 @@ namespace PPPV.pnml2prolog
                Console.WriteLine(e.Message);
                return 1;
             }
-            TargetText.WriteLine(AdditionalCode());
+            if(AddKernel)
+               TargetText.WriteLine(AdditionalCode());
             TargetText.Close();
          }
       return 0;
