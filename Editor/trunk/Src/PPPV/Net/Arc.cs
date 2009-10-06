@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -137,7 +137,19 @@ namespace PPPV.Net {
 
       public override Point Center{
          get{
-            return new Point((sourcePilon.X+targetPilon.X)/2,(sourcePilon.Y+targetPilon.Y)/2);
+            if(Points.Count == 0){
+               return new Point((sourcePilon.X+targetPilon.X)/2,(sourcePilon.Y+targetPilon.Y)/2);
+            }else{
+               if(Points.Count%2 == 1){
+                  Pilon p1 = (Pilon)Points[( (Points.Count+1)/2)-1 ];
+                  return new Point(p1.X, p1.Y);
+               }else{
+                  Pilon p1,p2;
+                  p1 = (Pilon)Points[( (Points.Count)/2)-1 ];
+                  p2 = (Pilon)Points[( (Points.Count)/2+1)-1 ];
+                  return new Point((p1.X + p2.X)/2, (p1.Y + p2.Y)/2);
+               }
+            }
          }
       }
 
@@ -156,24 +168,25 @@ namespace PPPV.Net {
          SolidBrush blackBrush = new SolidBrush(Color.FromArgb(200,0,0,0));
          /*Шрифт*/
          FontFamily fF_Arial = new FontFamily("Arial");
-         Font font1 = new Font(fF_Arial,16,FontStyle.Regular,GraphicsUnit.Pixel);
+         Font font1 = new Font(fF_Arial, 16, FontStyle.Regular, GraphicsUnit.Pixel);
 
          if( Points.Count == 0 ){
             dc.DrawLine(ArrowedBlackPen, sourcePilon, targetPilon);
-            dc.DrawString(Cortege.Text, font1, blackBrush, Center.X, Center.Y+5);
          }else{
             dc.DrawLine(blackPen, sourcePilon,(Points[0] as Pilon).Location);
             for(int i = 1;i < Points.Count; ++i){
                dc.DrawLine(blackPen, (Points[i-1] as Pilon).Location, (Points[i] as Pilon).Location);
             }
             dc.DrawLine(ArrowedBlackPen, (Points[Points.Count-1] as Pilon).Location,targetPilon);
-            dc.DrawString(Cortege.Text, font1, blackBrush, Center.X, Center.Y+5);
          }
+         dc.DrawString(Cortege.Text, font1, blackBrush, Center.X, Center.Y-15);
       }
 
-      /*private override void ShowSelectionMarker(Graphics dc){
-
-      }*/
+      protected override void ShowSelectionMarker(Graphics dc){
+         dc.SmoothingMode = SmoothingMode.HighQuality;
+         SolidBrush redBrush = new SolidBrush(Color.FromArgb(100,250,50,50));
+         dc.FillRegion(redBrush, HitRegion);
+      }
 
 
       private void MoveHandler(object sender, MoveEventArgs args){
@@ -297,28 +310,21 @@ namespace PPPV.Net {
 
       protected override void UpdateHitRegion(){
          using(PreciseTimer pr = new PreciseTimer("Arc.UpdateRegion")){
-            HitRegion.MakeEmpty();
-            GraphicsPath tmpPath = new GraphicsPath();
+            if(!Unfinished){
+               HitRegion.MakeEmpty();
+               GraphicsPath tmpPath = new GraphicsPath();
 
-            Point point1 = new Point(sourcePilon.X,sourcePilon.Y-1);
-            Point point2 = new Point(targetPilon.X,targetPilon.Y-1);
-            tmpPath.AddLine(point1,point2);
+               Point lastPoint = this.SourcePilon;
+               foreach(Pilon p in Points){
+                  tmpPath.AddLine(lastPoint.X, lastPoint.Y, p.X, p.Y);
+                  lastPoint = p.Location;
+               }
+               tmpPath.AddLine(lastPoint.X, lastPoint.Y, TargetPilon.X, TargetPilon.Y);
 
-            point1 = new Point(targetPilon.X,targetPilon.Y-1);
-            point2 = new Point(targetPilon.X,targetPilon.Y+1);
-            tmpPath.AddLine(point1,point2);
+               tmpPath.Widen(new Pen(Color.Red, 4));
 
-            point1 = new Point(targetPilon.X,targetPilon.Y+1);
-            point2 = new Point(sourcePilon.X,sourcePilon.Y+1);
-            tmpPath.AddLine(point1,point2);
-
-            point1 = new Point(sourcePilon.X,sourcePilon.Y+1);
-            point2 = new Point(sourcePilon.X,sourcePilon.Y-1);
-            tmpPath.AddLine(point1,point2);
-
-            tmpPath.Widen(new Pen(Color.Red,3));
-
-            HitRegion.Union(tmpPath);
+               HitRegion.Union(tmpPath);
+            }
          }
       }
 
