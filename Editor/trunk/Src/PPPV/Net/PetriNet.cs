@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.IO;
 using System.Drawing;
 using System.Windows.Forms;
@@ -19,9 +20,11 @@ namespace PPPV.Net {
       private string type;
       /*Путь к файлу в который сохранена сеть*/
       private string linkedFile;
+      /*Элементы сети*/
       private ArrayList places;
       private ArrayList transitions;
       private ArrayList arcs;
+      private string additionalCode;
       /*Флаг, было ли сохранено текущее состояние сети*/
       private bool saved;
 
@@ -198,6 +201,16 @@ namespace PPPV.Net {
                Arcs.Remove(value);
             }
             value.Change -= NetElementChangeHandler;
+            OnChange(new EventArgs());
+         }
+      }
+      
+      public string AdditionalCode{
+         get{
+            return additionalCode;
+         }
+         set{
+            additionalCode = value;
             OnChange(new EventArgs());
          }
       }
@@ -487,14 +500,16 @@ namespace PPPV.Net {
 
       private bool SaveNet(){
          bool result = false;
+         StreamWriter stream;
          if(LinkedFile != ""){
             if (File.Exists(LinkedFile)){
                File.Delete(LinkedFile);
             }
-            using (FileStream fs = File.Create(LinkedFile)){
+            stream = new StreamWriter(LinkedFile, false, Encoding.GetEncoding(1251));
+            if(stream != null){
                XmlSerializer serealizer = new XmlSerializer(this.GetType());
-               serealizer.Serialize(fs, this);
-               fs.Close();
+               serealizer.Serialize(stream, this);
+               stream.Close();
                result = true;
             }
          }else{
@@ -505,7 +520,7 @@ namespace PPPV.Net {
 
       private bool SaveNetAs(){
          bool result = false;
-         Stream stream;
+         StreamWriter stream;
          string fileName = "";
          SaveFileDialog saveFileDialog1 = new SaveFileDialog();
          saveFileDialog1.Filter = "pnml files (*.pnml)|*.pnml|All files (*.*)|*.*";
@@ -513,8 +528,9 @@ namespace PPPV.Net {
          saveFileDialog1.RestoreDirectory = true ;
 
          if(saveFileDialog1.ShowDialog() == DialogResult.OK){
-            if((stream = saveFileDialog1.OpenFile()) != null){
-               LinkedFile = fileName = (stream as FileStream).Name;
+            stream = new StreamWriter(saveFileDialog1.FileName, false, Encoding.GetEncoding(1251));
+            if(stream != null){
+               LinkedFile = fileName = saveFileDialog1.FileName;
                if(this.ID=="")
                   this.ID = fileName.Substring(fileName.LastIndexOf("\\")+1);
 
@@ -548,6 +564,9 @@ namespace PPPV.Net {
             arc.WriteXml(writer);
             writer.WriteEndElement(); // arc
          }
+         writer.WriteStartElement("additionalCode");
+         writer.WriteString(this.AdditionalCode);
+         writer.WriteEndElement(); // additionalCode
          writer.WriteEndElement(); // net
          //writer.WriteEndElement(); // pnml
      }
@@ -581,6 +600,11 @@ namespace PPPV.Net {
                      ElementPortal = new Arc(subTreeReader, this);
                      subTreeReader.Close();
                      reader.Skip();
+                  break;
+                  case "additionalCode":
+                     reader.ReadStartElement("additionalCode");
+                     this.AdditionalCode = reader.ReadString();
+                     reader.ReadEndElement(); // additionalCode
                   break;
                   default:
                      reader.Read();

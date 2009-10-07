@@ -4,6 +4,11 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
+using System.IO;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
+using System.Text;
 
 namespace PPPV.Editor {
    public class MainForm : Form{
@@ -46,6 +51,12 @@ namespace PPPV.Editor {
       public MainForm() {
          this.KeyPreview = true;
          InitializeComponent();
+         /*Привязка обработчиков*/
+         MainMenuStrip.toolStripMenuNew.Click += NewNet;
+         MainMenuStrip.toolStripMenuOpen.Click += OpenNet;
+         MainMenuStrip.toolStripMenuExit.Click += CloseApplication;
+         MainMenuStrip.toolStripMenuAbout.Click += ShowAboutForm;
+         ToolController.toolStripButtonAdditionalCode.Click += EditAdditionalCode;
       }
 
       private void InitializeComponent() {
@@ -123,5 +134,49 @@ namespace PPPV.Editor {
          this.ResumeLayout(false);
          this.PerformLayout();
       }
-   }
-}
+      
+      private void NewNet(object sender, EventArgs e){
+         Net.PetriNet _net = new Net.PetriNet();
+         TabControl.AddNewTab(_net);
+      }
+
+      private void OpenNet(object sender, EventArgs e){
+         StreamReader stream;
+         OpenFileDialog openFileDialog = new OpenFileDialog();
+
+         openFileDialog.Filter = "txt files (*.pnml)|*.pnml|All files (*.*)|*.*";
+         openFileDialog.FilterIndex = 1 ;
+         openFileDialog.RestoreDirectory = true ;
+
+         if(openFileDialog.ShowDialog() == DialogResult.OK){
+            stream = new StreamReader(openFileDialog.FileName, Encoding.GetEncoding(1251));
+            if(stream != null){
+               Net.PetriNet _net = new Net.PetriNet();
+               XmlSerializer serealizer = new XmlSerializer(_net.GetType());
+               _net = (Net.PetriNet)serealizer.Deserialize(stream);
+               _net.LinkedFile = openFileDialog.FileName;
+               TabControl.AddNewTab(_net);
+               stream.Close();
+            }
+         }
+      }
+
+      private void CloseApplication(object sender, EventArgs e){
+         this.Close();
+      }
+
+      private void EditAdditionalCode(object sender, EventArgs e){
+         if(_tabControl.ActiveNet != null){
+            Form f = new AdditionalCodeEditForm(_tabControl.ActiveNet);
+            f.ShowDialog(this);
+            f.Dispose();
+         }
+      }
+
+      private void ShowAboutForm(object sender, EventArgs e){
+         Form f = new AboutForm();
+         f.ShowDialog(this);
+         f.Dispose();
+      }
+   } // class
+} // namespace

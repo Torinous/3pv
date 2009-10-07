@@ -43,9 +43,11 @@ namespace PPPV.Net {
             text.AppendLine();
          }
          /*TODO: Проверить а есть ли дополнительный код*/
-         text.AppendLine("%additional code");
-         text.AppendLine();
-         text.Append(AdditionalCode());
+         if(this.AdditionalCode.Length != 0){
+            text.AppendLine("%additional code");
+            text.AppendLine();
+            text.Append(this.AdditionalCode);
+         }
          return text.ToString();
       }
 
@@ -119,20 +121,6 @@ namespace PPPV.Net {
             text.Remove(text.Length-1,1);
          text.Append("]");
          text.Insert(0, "[");
-         return text.ToString();
-      }
-
-      public string AdditionalCode() {
-         StringBuilder text = new StringBuilder();
-         /*foreach (object Ob in this.Items){
-            if(Ob.GetType().Equals(typeof(pnmlAdditional_code))){
-               pnmlAdditional_codeClose[] code = ((pnmlAdditional_code)Ob).close;
-               foreach (pnmlAdditional_codeClose Close in code){
-                  text.Append(Close.value);
-                  text.AppendLine();
-               }
-            }
-         }*/
          return text.ToString();
       }
    } // PetriNet

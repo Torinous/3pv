@@ -22,6 +22,16 @@ namespace PPPV.Editor{
       }
 
       /*Акцессоры доступа*/
+      public PetriNet ActiveNet{
+         get{
+            if(this.SelectedIndex != -1){
+               return (this.TabPages[this.SelectedIndex] as TabPageForNet).Net;
+            }else{
+               return null;
+            }
+
+         }
+      }
       /*События*/
       public event RemoveTabPageEventHandler RemovingTabPage;
       public event RemoveTabPageEventHandler RemovedTabPage;
@@ -49,7 +59,7 @@ namespace PPPV.Editor{
          GraphicsPath tmpPath = new GraphicsPath();
          tmpPath.AddEllipse(r.X, r.Y, r.Width, r.Height);
          Region fillRegion = new Region(tmpPath);
-         if((this.TabPages[e.Index] as TabPageForNet).UnderlyingNetSaved){
+         if((this.TabPages[e.Index] as TabPageForNet).NetSaved){
             dc.FillRegion(greenBrush, fillRegion);
          }else{
             dc.FillRegion(redBrush, fillRegion);

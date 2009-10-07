@@ -5,15 +5,14 @@ using System.Reflection;
 
 
 namespace PPPV.Editor{
+   public class NetToolStrip : ToolStrip{
+      public ToolStripButton toolStripButtonPointer;
+      public ToolStripButton toolStripButtonPlace;
+      public ToolStripButton toolStripButtonTransition;
+      public ToolStripButton toolStripButtonArc;
+      public ToolStripButton toolStripButtonAdditionalCode;
 
-  public class NetToolStrip : ToolStrip{
-    public ToolStripButton toolStripButtonPointer;
-    public ToolStripButton toolStripButtonPlace;
-    public ToolStripButton toolStripButtonTransition;
-    public ToolStripButton toolStripButtonArc;
-    public ToolStripButton toolStripButtonTest;
-
-    public NetToolStrip() {
+      public NetToolStrip() {
       //this.Location = new System.Drawing.Point(0, 0);
       this.Name = "_toolStrip";
       //this.Size = new System.Drawing.Size(599, 64);
@@ -21,43 +20,43 @@ namespace PPPV.Editor{
       this.Text = "_toolStrip";
       this.AutoSize = true;
       InitializeComponent();
-    }
+   }
 
-    private void OnlyOneToolController(object sender, EventArgs e){
+   private void OnlyOneToolController(object sender, EventArgs e){
       if(((ToolStripButton)sender).CheckState == CheckState.Checked){
-        if((ToolStripButton)sender != toolStripButtonPointer){
-          toolStripButtonPointer.CheckState = CheckState.Unchecked;
-        }
-        if((ToolStripButton)sender != toolStripButtonPlace){
-          toolStripButtonPlace.CheckState = CheckState.Unchecked;
-        }
-        if((ToolStripButton)sender != toolStripButtonTransition){
-          toolStripButtonTransition.CheckState = CheckState.Unchecked;
-        }
-        if((ToolStripButton)sender != toolStripButtonArc){
-          toolStripButtonArc.CheckState = CheckState.Unchecked;
-        }
+         if((ToolStripButton)sender != toolStripButtonPointer){
+            toolStripButtonPointer.CheckState = CheckState.Unchecked;
+         }
+         if((ToolStripButton)sender != toolStripButtonPlace){
+            toolStripButtonPlace.CheckState = CheckState.Unchecked;
+         }
+         if((ToolStripButton)sender != toolStripButtonTransition){
+            toolStripButtonTransition.CheckState = CheckState.Unchecked;
+         }
+         if((ToolStripButton)sender != toolStripButtonArc){
+            toolStripButtonArc.CheckState = CheckState.Unchecked;
+         }
       }
-    }
+   }
 
-    public ToolEnum CurrentTool(){
+   public ToolEnum CurrentTool(){
       if(toolStripButtonPointer.CheckState == CheckState.Checked){
-        return ToolEnum.Pointer;
+         return ToolEnum.Pointer;
       }
       else if(toolStripButtonPlace.CheckState == CheckState.Checked){
-        return ToolEnum.Place;
+         return ToolEnum.Place;
       }
       else if(toolStripButtonTransition.CheckState == CheckState.Checked){
-        return ToolEnum.Transition;
+         return ToolEnum.Transition;
       }
       else if(toolStripButtonArc.CheckState == CheckState.Checked){
-        return ToolEnum.Arc;
+         return ToolEnum.Arc;
       }else{
-        return ToolEnum.Pointer;
+         return ToolEnum.Pointer;
       }
-    }
+   }
 
-    private void InitializeComponent() {
+   private void InitializeComponent() {
       this.toolStripButtonPointer = new ToolStripButton();
       this.toolStripButtonPointer.CheckOnClick = true;
       this.toolStripButtonPointer.DisplayStyle = ToolStripItemDisplayStyle.Image;
@@ -98,21 +97,20 @@ namespace PPPV.Editor{
       this.toolStripButtonArc.CheckStateChanged += OnlyOneToolController;
       //this.toolStripButtonArc.Size = new Size(32, 32);
 
-      this.toolStripButtonTest = new ToolStripButton();
-      this.toolStripButtonTest.CheckOnClick = true;
-      this.toolStripButtonTest.DisplayStyle = ToolStripItemDisplayStyle.Image;
-      this.toolStripButtonTest.Image = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("todo.png"), true);
-      //this.toolStripButtonTest.ImageTransparentColor = Color.Magenta;
-      this.toolStripButtonTest.ImageScaling = ToolStripItemImageScaling.SizeToFit;
-      this.toolStripButtonTest.Name = this.toolStripButtonTest.Text = "toolStripButtonTest";
-      this.toolStripButtonTest.CheckStateChanged += OnlyOneToolController;
-      this.toolStripButtonTest.Size = new Size(80, 80);
+      this.toolStripButtonAdditionalCode = new ToolStripButton();
+      this.toolStripButtonAdditionalCode.DisplayStyle = ToolStripItemDisplayStyle.Image;
+      this.toolStripButtonAdditionalCode.Image = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("todo.png"), true);
+      //this.toolStripButtonAdditionalCode.ImageTransparentColor = Color.Magenta;
+      this.toolStripButtonAdditionalCode.ImageScaling = ToolStripItemImageScaling.SizeToFit;
+      this.toolStripButtonAdditionalCode.Name = this.toolStripButtonAdditionalCode.Text = "toolStripButtonAdditionalCode";
+      //this.toolStripButtonAdditionalCode.CheckStateChanged += OnlyOneToolController;
+      this.toolStripButtonAdditionalCode.Size = new Size(80, 80);
 
       this.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.toolStripButtonPointer,
                                                                     this.toolStripButtonPlace,
                                                                     this.toolStripButtonTransition,
                                                                     this.toolStripButtonArc,
-                                                                    this.toolStripButtonTest});
-    }
-  }
+                                                                    this.toolStripButtonAdditionalCode});
+      }
+   }
 }

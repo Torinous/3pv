@@ -10,7 +10,7 @@ namespace PPPV.Editor{
 
       private NetCanvas canvas;
       private string netName;
-      private bool underlyingNetSaved;
+      private bool netSaved;
 
       /*Конструкторы*/
       public TabPageForNet(PetriNet net):base() {
@@ -20,7 +20,7 @@ namespace PPPV.Editor{
          this.TabIndex = 0;
          this.UseVisualStyleBackColor = true;
          this.netName = net.ID;
-         this.underlyingNetSaved = net.Saved;
+         this.netSaved = net.Saved;
          this.Text = (netName==""?"~":netName+"   ");
          InitializeComponent(net);
       }
@@ -43,13 +43,20 @@ namespace PPPV.Editor{
          }
       }
 
-      public bool UnderlyingNetSaved{
+      public bool NetSaved{
          get{
-            return underlyingNetSaved;
+            return netSaved;
          }
          private set{
-            underlyingNetSaved = value;
+            netSaved = value;
          }
+      }
+
+      public PetriNet Net{
+         get{
+            return NetCanvas.Net;
+         }
+         
       }
 
       protected override void OnParentChanged(EventArgs args){
@@ -61,13 +68,13 @@ namespace PPPV.Editor{
       private void LinkedNetSaveHandler(object sender, SaveEventArgs args){
          netName = args.netID;
          this.ToolTipText = args.fileName;
-         underlyingNetSaved = true;
+         NetSaved = true;
          this.Text = (netName==""?"~":netName+"   ");
       }
 
       private void LinkedNetChangeHandler(object sender, EventArgs args){
-         if(UnderlyingNetSaved){
-            underlyingNetSaved = false;
+         if(NetSaved){
+            NetSaved = false;
             this.Text = (netName==""?"~":netName+"   ");
          }
       }
@@ -78,6 +85,5 @@ namespace PPPV.Editor{
          this.ResumeLayout(false);
          this.PerformLayout();
       }
-
    }
 }
