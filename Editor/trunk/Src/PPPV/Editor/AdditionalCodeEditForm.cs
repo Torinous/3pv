@@ -28,10 +28,7 @@ namespace PPPV.Editor{
          tb.AcceptsTab = true;
          tb.Size = new Size(480, 250);
          tb.Location = new Point(10,10);
-         /*Replace Это жёсткий хак, просле сохранения и чтения из файла переводы строки из \r\n становяться просто \n
-            в результате вместо них мы увидим квадратики если не сделать такой Replace
-          */
-         tb.Text = net.AdditionalCode.Replace("\n", System.Environment.NewLine);
+         tb.Text = net.AdditionalCode;
          tb.Anchor = ((AnchorStyles)((((AnchorStyles.Top | AnchorStyles.Bottom) | AnchorStyles.Left) | AnchorStyles.Right)));
          
          bOK = new Button();

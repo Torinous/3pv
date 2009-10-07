@@ -602,9 +602,14 @@ namespace PPPV.Net {
                      reader.Skip();
                   break;
                   case "additionalCode":
-                     reader.ReadStartElement("additionalCode");
-                     this.AdditionalCode = reader.ReadString();
-                     reader.ReadEndElement(); // additionalCode
+                     if(!reader.IsEmptyElement){
+                        reader.ReadStartElement("additionalCode");
+                        /*Причину Replace см. Issue 27*/
+                        this.AdditionalCode = reader.ReadString().Replace("\n", System.Environment.NewLine);
+                        reader.ReadEndElement(); // additionalCode
+                     }else{
+                        reader.Skip();
+                     }
                   break;
                   default:
                      reader.Read();
