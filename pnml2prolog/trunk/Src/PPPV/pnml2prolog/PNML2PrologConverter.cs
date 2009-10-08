@@ -102,7 +102,7 @@ namespace PPPV.pnml2prolog
                return 1;
             }
             if(AddKernel)
-               Console.WriteLine(AdditionalCode());
+               Console.WriteLine(KernelCode());
          }else{
             StreamWriter TargetText = new StreamWriter(outputFileName, false, enc1251);
             try{
@@ -112,14 +112,14 @@ namespace PPPV.pnml2prolog
                return 1;
             }
             if(AddKernel)
-               TargetText.WriteLine(AdditionalCode());
+               TargetText.WriteLine(KernelCode());
             TargetText.Close();
          }
       return 0;
       }
       #endregion
 
-      private string AdditionalCode(){
+      private string KernelCode(){
          Assembly current = Assembly.GetExecutingAssembly();
          StreamReader stR;
 
