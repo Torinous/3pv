@@ -44,9 +44,11 @@ namespace PPPV.Net {
          }
          /*TODO: Проверить а есть ли дополнительный код*/
          if(this.AdditionalCode.Length != 0){
+            text.AppendLine();
             text.AppendLine("%additional code");
             text.AppendLine();
             text.Append(this.AdditionalCode);
+            text.AppendLine();
          }
          return text.ToString();
       }
