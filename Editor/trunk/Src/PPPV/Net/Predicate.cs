@@ -19,7 +19,7 @@ namespace PPPV.Net {
       }
 
       public Predicate(string text_){
-         text = text_;
+         text = Upperfy(text_);
       }
 
       public Predicate(XmlReader reader){
@@ -32,13 +32,25 @@ namespace PPPV.Net {
             return text;
          }
          set{
-            text = value;
+            text = Upperfy(value);
          }
       }
       
       public override string ToString()
       {
          return Text;
+      }
+
+      private string Upperfy(string t){
+         string txt;
+         if(t.Length >1 )
+            txt = t.Substring(0,1).ToUpper() + t.Substring(1);
+         else
+            if(t.Length == 1)
+               txt = t.ToUpper();
+            else
+               txt = t;
+         return txt;
       }
 
       public void WriteXml (XmlWriter writer)
