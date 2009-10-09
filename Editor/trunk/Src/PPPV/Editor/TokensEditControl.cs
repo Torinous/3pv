@@ -10,7 +10,7 @@ using PPPV.Net;
 namespace PPPV.Editor {
    public class TokensEditControl : System.Windows.Forms.UserControl{
       private GroupBox groupBox;
-      private ListBox lbTokens;
+      private RefreshingListBox lbTokens;
       private TextBox tbCurrentToken;
       private Button bAdd;
       private Button bDelete;
@@ -40,10 +40,9 @@ namespace PPPV.Editor {
          groupBox.Location = new Point( 0, 0 );
          groupBox.Size = new System.Drawing.Size( 400, 260 );
 
-         lbTokens =  new ListBox();
+         lbTokens =  new RefreshingListBox();
          lbTokens.Location = new Point( 10, 20 );
          lbTokens.Size = new System.Drawing.Size( 160, 230 );
-         //lbTokens.SelectionChanged += SelectionChangedHandler;
          lbTokens.SelectedIndexChanged += SelectedIndexChangedHandler;
 
          tbCurrentToken = new TextBox();
@@ -65,6 +64,7 @@ namespace PPPV.Editor {
          bDelete.Size = new System.Drawing.Size( 40, 20 );
          bDelete.Text = "-";
          bDelete.Click += bDelete_Click;
+         bDelete.Enabled = false;
          
          this.SuspendLayout();
          this.groupBox.SuspendLayout();
@@ -79,95 +79,67 @@ namespace PPPV.Editor {
          this.PerformLayout();
       }
 
-      private void bAdd_Click(object sender, EventArgs e)
-      {
-         lbTokens.Items.Add((lbTokens.Items.Count+1).ToString());
+      private void bAdd_Click(object sender, EventArgs e){
+         lbTokens.Items.Add(new Token((lbTokens.Items.Count+1).ToString()));
          SetCountText(lbTokens.Items.Count);
          lbTokens.SelectedIndex = lbTokens.Items.Count-1;
-         HaveSomeForDeletion();
       }
 
-      private void bDelete_Click(object sender, EventArgs e)
-      {
-         try
-         {
+      private void bDelete_Click(object sender, EventArgs e){
+         int index = lbTokens.SelectedIndex;
+         try{
             lbTokens.Items.RemoveAt(lbTokens.SelectedIndex);
-         }
-         catch
-         {
+         }catch{
          }
          SetCountText(lbTokens.Items.Count);
-
-         if(HaveSomeForDeletion())
-         {
+         if(index <= lbTokens.Items.Count-1)
+            lbTokens.SelectedIndex = index;
+         else
             lbTokens.SelectedIndex = lbTokens.Items.Count-1;
-         }
-         else
-         {
-            tbCurrentToken.Clear();
-         }
       }
 
-      private bool HaveSomeForDeletion()
-      {
-         bool have = false;
-         if (lbTokens.Items.Count == 0)
-         {
-            bDelete.Enabled = false;
-            have = false;
-         }
-         else
-         {
-            bDelete.Enabled = true;
-            have = true;
-         }
-         return have;
-      }
-
-      private void FetchFromList()
-      {
+      private void FetchFromList(){
          lbTokens.BeginUpdate();
-         foreach( Token value in listTokens)
-         {
-            lbTokens.Items.Add(value.Text);
+         foreach( Token value in listTokens){
+            lbTokens.Items.Add(value);
          }
          lbTokens.EndUpdate();
          SetCountText(lbTokens.Items.Count);
       }
 
-      public void ChangesApproved()
-      {
-         
+      public void ChangesApproved(){
          listTokens.Clear();
-         foreach (string value in lbTokens.Items)
+         foreach (Token value in lbTokens.Items)
          {
-            listTokens.Add(new Token(value));
+            listTokens.Add(value);
          }
       }
 
-      public void SelectedIndexChangedHandler(object sender, EventArgs e)
-      {
-         if(lbTokens.SelectedItem != null)
-         {
-            tbCurrentToken.Text = lbTokens.SelectedItem.ToString();
-         }
+      public void SelectedIndexChangedHandler(object sender, EventArgs e){
          if(lbTokens.SelectedIndex == -1){
+            tbCurrentToken.Text = "";
             tbCurrentToken.Enabled = false;
+            bDelete.Enabled = false;
          }else{
-            if(!tbCurrentToken.Enabled)
-               tbCurrentToken.Enabled = true;
+            tbCurrentToken.Text = lbTokens.SelectedItem.ToString();
+            tbCurrentToken.Enabled = true;
+            bDelete.Enabled = true;
          }
       }
 
-      private void SetCountText(int count)
-      {
+      private void SetCountText(int count){
          groupBox.Text = "Метки[" + count.ToString()+ "]";
       }
       
-      private void textChangedEventHandler(object sender, EventArgs args)
-      {
+      private void textChangedEventHandler(object sender, EventArgs args){
          if(lbTokens.SelectedIndex != -1){
-            lbTokens.Items[lbTokens.SelectedIndex] = tbCurrentToken.Text;
+            int p1 = tbCurrentToken.SelectionStart,
+                p2 = tbCurrentToken.SelectionLength;
+            (lbTokens.Items[lbTokens.SelectedIndex] as Token).Text = tbCurrentToken.Text;
+            lbTokens.RefreshItem(lbTokens.SelectedIndex);
+            tbCurrentToken.Focus();
+            tbCurrentToken.SelectionStart  = p1;
+            tbCurrentToken.SelectionLength = p2;
          }
       }
    } //class

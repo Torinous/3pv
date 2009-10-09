@@ -1,5 +1,4 @@
 ﻿using System;
-using System;
 using System.Windows.Forms;
 using System.Collections;
 using System.Xml;
@@ -11,19 +10,19 @@ using PPPV.Utils;
 namespace PPPV.Net {
 
    [Serializable()]
-   [XmlRoot("token")]
-   public class Token: IXmlSerializable{
+   [XmlRoot("predicate")]
+   public class Predicate: IXmlSerializable{
       private string text;
 
       /*Конструктор*/
-      public Token(){
+      public Predicate(){
       }
 
-      public Token(string text_){
+      public Predicate(string text_){
          text = text_;
       }
-      
-      public Token(XmlReader reader){
+
+      public Predicate(XmlReader reader){
          this.ReadXml(reader);
       }
 
@@ -37,33 +36,37 @@ namespace PPPV.Net {
          }
       }
       
-      public override string ToString(){
+      public override string ToString()
+      {
          return Text;
       }
 
-      public void WriteXml (XmlWriter writer){
-         writer.WriteStartElement("token");
+      public void WriteXml (XmlWriter writer)
+      {
+         writer.WriteStartElement("predicate");
          writer.WriteStartElement("value");
          writer.WriteString(this.Text);
          writer.WriteEndElement(); // value
          writer.WriteEndElement(); // token
       }
 
-      public void ReadXml (XmlReader reader){
+      public void ReadXml (XmlReader reader)
+      {
          reader.Read();
-         if(reader.Name == "token" && reader.NodeType == XmlNodeType.Element ){
+         if(reader.Name == "predicate" && reader.NodeType == XmlNodeType.Element ){
             reader.ReadToDescendant("value");
             this.Text = reader.ReadString();
             reader.ReadEndElement(); // value
             reader.ReadEndElement(); // token
          }else{
-            throw new Exception("Невозможно десереализовать Token. Не верен тип узла xml.");
+            throw new Exception("Невозможно десереализовать Predicate. Не верен тип узла xml.");
          }
       }
 
-      public XmlSchema GetSchema(){
+      public XmlSchema GetSchema()
+      {
          return(null);
       }
-   } // Token
+   } // Predicate
 } // namespace
 

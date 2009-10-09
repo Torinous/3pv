@@ -6,19 +6,20 @@ using System.Xml.Serialization;
 using System.Windows.Forms;
 
 namespace PPPV.Net {
+
    [Serializable()]
    [XmlRoot("cortege")]
-   public class CortegeList:ArrayList, IXmlSerializable{
+   public class PredicateList:ArrayList, IXmlSerializable{
 
       /*Конструкторы*/
-      public CortegeList(int a):base(a){
+      public PredicateList(int a):base(a){
       }
-
+      
       /*Акцессоры доступа*/
       public string Text{
          get{
             string t = "";
-            foreach(string predicate in this){
+            foreach(Predicate predicate in this){
                if(t != "")
                   t = t + "+";
                t = t + "<" + predicate + ">";
@@ -27,7 +28,9 @@ namespace PPPV.Net {
          }
       }
 
+      /*События*/
       public event EventHandler Change;
+      
 
       /*Методы*/
 
@@ -45,38 +48,29 @@ namespace PPPV.Net {
 
       public void WriteXml (XmlWriter writer)
       {
-         foreach(string predicate in this){
-            writer.WriteStartElement("predicate");
-            writer.WriteStartElement("value");
-            writer.WriteString(predicate);
-            writer.WriteEndElement(); // value
-            writer.WriteEndElement(); // predicate
+         foreach(Predicate predicate in this){
+            predicate.WriteXml(writer);
          }
-         
       }
 
-      public void ReadXml (XmlReader reader)
-      {
+      public void ReadXml (XmlReader reader){
+         XmlReader subTreeReader;
          reader.Read();
          if(reader.Name == "cortege" && reader.NodeType == XmlNodeType.Element ){
             if(!reader.IsEmptyElement){
                reader.ReadToDescendant("predicate");
-               reader.ReadToDescendant("value");
-               this.Add(reader.ReadString());
-               reader.ReadEndElement(); // value
-               reader.ReadEndElement(); // predicate
                while(reader.Name == "predicate" && reader.NodeType == XmlNodeType.Element){
-                  reader.ReadToDescendant("value");
-                  this.Add(reader.ReadString());
-                  reader.ReadEndElement(); // value
-                  reader.ReadEndElement(); // predicate
+                  subTreeReader = reader.ReadSubtree();
+                  this.Add(new Predicate(subTreeReader));
+                  subTreeReader.Close();
+                  reader.Skip();
                }
-               reader.ReadEndElement(); // cortege
+               reader.ReadEndElement(); // initialMarking
             }else{
-               reader.Skip(); // cortege
+               reader.Skip(); // initialMarking
             }
          }else{
-            throw new Exception("Невозможно десереализовать СortegeList. Не верен тип узла xml.");
+            throw new Exception("Невозможно десереализовать PredicateList. Не верен тип узла xml.");
          }
       }
 
@@ -84,6 +78,6 @@ namespace PPPV.Net {
       {
          return(null);
       }
-   } // CortegeList
+   } // PredicateList
 } // namespace
 

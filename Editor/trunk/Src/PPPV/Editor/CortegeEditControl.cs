@@ -10,7 +10,7 @@ using PPPV.Net;
 namespace PPPV.Editor {
    public class CortegeEditControl : System.Windows.Forms.UserControl{
       private GroupBox groupBox;
-      private ListBox lbPredicates;
+      private RefreshingListBox lbPredicates;
       private TextBox tbCurrentPredicate;
       private Button bAdd;
       private Button bDelete;
@@ -27,7 +27,7 @@ namespace PPPV.Editor {
       }
 
       /*Методы*/
-      public CortegeEditControl(CortegeList listPredicates_){
+      public CortegeEditControl(PredicateList listPredicates_){
          listPredicates = listPredicates_;
          this.Size = new System.Drawing.Size( 400, 260 );
          InitializeComponent();
@@ -40,7 +40,7 @@ namespace PPPV.Editor {
          groupBox.Location = new Point( 0, 0 );
          groupBox.Size = new System.Drawing.Size( 400, 260 );
 
-         lbPredicates =  new ListBox();
+         lbPredicates =  new RefreshingListBox();
          lbPredicates.Location = new Point( 10, 20 );
          lbPredicates.Size = new System.Drawing.Size( 160, 230 );
          //lbPredicates.SelectionChanged += SelectionChangedHandler;
@@ -65,6 +65,7 @@ namespace PPPV.Editor {
          bDelete.Size = new System.Drawing.Size( 40, 20 );
          bDelete.Text = "-";
          bDelete.Click += bDelete_Click;
+         bDelete.Enabled = false;
          
          this.SuspendLayout();
          this.groupBox.SuspendLayout();
@@ -79,94 +80,66 @@ namespace PPPV.Editor {
          this.PerformLayout();
       }
 
-      private void bAdd_Click(object sender, EventArgs e)
-      {
-         lbPredicates.Items.Add((lbPredicates.Items.Count+1).ToString());
+      private void bAdd_Click(object sender, EventArgs e){
+         lbPredicates.Items.Add(new Predicate((lbPredicates.Items.Count+1).ToString()));
          SetCountText(lbPredicates.Items.Count);
          lbPredicates.SelectedIndex = lbPredicates.Items.Count-1;
-         HaveSomeForDeletion();
       }
 
-      private void bDelete_Click(object sender, EventArgs e)
-      {
-         try
-         {
+      private void bDelete_Click(object sender, EventArgs e){
+         int index = lbPredicates.SelectedIndex;
+         try {
             lbPredicates.Items.RemoveAt(lbPredicates.SelectedIndex);
-         }
-         catch
-         {
+         }catch{
          }
          SetCountText(lbPredicates.Items.Count);
-
-         if(HaveSomeForDeletion())
-         {
+         if(index <= lbPredicates.Items.Count-1)
+            lbPredicates.SelectedIndex = index;
+         else
             lbPredicates.SelectedIndex = lbPredicates.Items.Count-1;
-         }
-         else
-         {
-            tbCurrentPredicate.Clear();
-         }
       }
 
-      private bool HaveSomeForDeletion()
-      {
-         bool have = false;
-         if (lbPredicates.Items.Count == 0)
-         {
-            bDelete.Enabled = false;
-            have = false;
-         }
-         else
-         {
-            bDelete.Enabled = true;
-            have = true;
-         }
-         return have;
-      }
-
-      private void FetchFromList()
-      {
+      private void FetchFromList(){
          lbPredicates.BeginUpdate();
-         foreach( string value in listPredicates)
-         {
-            lbPredicates.Items.Add(value);
+         foreach( Predicate predicate in listPredicates){
+            lbPredicates.Items.Add(predicate);
          }
          lbPredicates.EndUpdate();
          SetCountText(lbPredicates.Items.Count);
       }
 
-      public void ChangesApproved()
-      {
+      public void ChangesApproved(){
          listPredicates.Clear();
-         foreach (string value in lbPredicates.Items)
-         {
-            listPredicates.Add(value);
+         foreach (Predicate predicate in lbPredicates.Items){
+            listPredicates.Add(predicate);
          }
       }
 
-      public void SelectedIndexChangedHandler(object sender, EventArgs e)
-      {
-         if(lbPredicates.SelectedItem != null)
-         {
-            tbCurrentPredicate.Text = lbPredicates.SelectedItem.ToString();
-         }
+      public void SelectedIndexChangedHandler(object sender, EventArgs e){
          if(lbPredicates.SelectedIndex == -1){
+            tbCurrentPredicate.Text = "";
             tbCurrentPredicate.Enabled = false;
+            bDelete.Enabled = false;
          }else{
-            if(!tbCurrentPredicate.Enabled)
-               tbCurrentPredicate.Enabled = true;
+            tbCurrentPredicate.Text = lbPredicates.SelectedItem.ToString();
+            tbCurrentPredicate.Enabled = true;
+            bDelete.Enabled = true;
          }
       }
 
-      private void SetCountText(int count)
-      {
+      private void SetCountText(int count){
          groupBox.Text = "Предикаты в кортеже[" + count.ToString()+ "]";
       }
       
-      private void textChangedEventHandler(object sender, EventArgs args)
-      {
+      private void textChangedEventHandler(object sender, EventArgs args){
          if(lbPredicates.SelectedIndex != -1){
-            lbPredicates.Items[lbPredicates.SelectedIndex] = tbCurrentPredicate.Text;
+            int p1 = tbCurrentPredicate.SelectionStart,
+                p2 = tbCurrentPredicate.SelectionLength;
+            (lbPredicates.Items[lbPredicates.SelectedIndex] as Predicate).Text = tbCurrentPredicate.Text;
+            lbPredicates.RefreshItem(lbPredicates.SelectedIndex);
+            tbCurrentPredicate.Focus();
+            tbCurrentPredicate.SelectionStart  = p1;
+            tbCurrentPredicate.SelectionLength = p2;
          }
       } // end textChangedEventHandler
    } //class

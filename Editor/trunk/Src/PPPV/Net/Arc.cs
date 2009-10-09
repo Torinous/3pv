@@ -15,7 +15,7 @@ namespace PPPV.Net {
       protected static Pen ArrowedBlackPen = ArrowedBlackPenFactory();
       private NetElement source, target;
       private Point sourcePilon, targetPilon;
-      private CortegeList cortege;
+      private PredicateList cortege;
       private ArrayList points;
 
       /*Конструктор*/
@@ -24,7 +24,7 @@ namespace PPPV.Net {
          if(Source != null)
             targetPilon = Source.Center;
          Points = new ArrayList(20);
-         Cortege = new CortegeList(10);
+         Cortege = new PredicateList(10);
       }
 
       public Arc(XmlReader reader, PetriNet net):this((NetElement)null){
@@ -53,7 +53,7 @@ namespace PPPV.Net {
          }
       }
 
-      public CortegeList Cortege{
+      public PredicateList Cortege{
          get{
             return cortege;
          }
