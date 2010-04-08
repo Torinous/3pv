@@ -10,206 +10,205 @@ using System.Xml.Serialization;
 //using PPPV.Editor;
 using PPPV.Utils;
 
-namespace PPPV.Net {
+namespace PPPV.Net
+{
+  [Serializable()]
+  [XmlRoot("place")]
+public class Place : NetElement, IXmlSerializable
+  {
+    private static int _ID = 0;
+    private TokensList tokens;
 
-   [Serializable()]
-   [XmlRoot("place")]
-   public class Place : NetElement, IXmlSerializable {
-      private static int _ID = 0;
-      private TokensList tokens;
+    /*Конструкторы*/
+public Place(int x_, int y_):base(x_, y_, 50, 50, true)
+    {
+      _ID++;
+      Name = ID = "P"+_ID;
+      tokens = new TokensList(10);
+    }
 
-      /*Конструкторы*/
-      public Place(int x_, int y_):base(x_, y_, 50, 50, true) {
-         _ID++;
-         Name = ID = "P"+_ID;
-         tokens = new TokensList(10);
-      }
+public Place(XmlReader reader):this(0,0)
+    {
+      ReadXml(reader);
+    }
 
-      public Place(XmlReader reader):this(0,0){
-         ReadXml(reader);
-      }
-
-      public TokensList Tokens{
-         get{
-            return tokens;
-         }
-         private set{
-            if(tokens != null){
-               tokens.Change -= TokensListChangeHandler;
-            }
-            tokens = value;
-            if(tokens != null){
-               tokens.Change += TokensListChangeHandler;
-            }
-            OnChange(new EventArgs());
-         }
-      }
-
-      public override Point Center{
-         get{
-            return new Point(X + (int)Width/2, Y + (int)Height/2);
-         }
-      }
-
-      public override void Draw(object sender, PaintEventArgs e){
-
-         base.Draw(sender,e);
-
-         Graphics dc = e.Graphics;
-         dc.SmoothingMode = SmoothingMode.HighQuality;
-         Pen blackPen = new Pen(Color.FromArgb(255,0,0,0));
-         Pen RedPen = new Pen(Color.FromArgb(255,255,0,0));
-
-         /*Кисти*/
-         SolidBrush grayBrush = new SolidBrush(Color.FromArgb(200,100,100,100));
-         SolidBrush blackBrush = new SolidBrush(Color.FromArgb(200,0,0,0));
-         /*Шрифт*/
-         FontFamily fF_Arial = new FontFamily("Arial");
-         Font font1 = new Font(fF_Arial, 16, FontStyle.Regular, GraphicsUnit.Pixel);
-
-         GraphicsPath tmpPath = new GraphicsPath();
-         tmpPath.AddEllipse(X, Y, Width, Height);
-         Region fillRegion = new Region(tmpPath);
-         dc.FillRegion(grayBrush, fillRegion);
-         dc.DrawEllipse(blackPen, X, Y, Width, Height);
-         dc.DrawString(Name, font1, blackBrush, X + (int)Width/2+5,Y-5);
-         dc.DrawString(Tokens.Count.ToString(), font1, blackBrush, X + (int)Width/2-10, Y + (int)Height/2-10);
-      }
-
-      protected override void UpdateHitRegion(){
-         using(PreciseTimer pr = new PreciseTimer("Place.UpdateRegion")){
-           HitRegion.MakeEmpty();
-           GraphicsPath tmpPath = new GraphicsPath();
-           tmpPath.AddEllipse(X, Y, Width, Height);
-           HitRegion.Union(tmpPath);
-         }
-      }
-
-      protected override void MouseClickHandler(object sender, MouseEventArgs args){
-      }
-
-      protected override void MouseMoveHandler(object sender, MouseEventArgs args){
-         base.MouseMoveHandler(sender,args);
-         if(args.Button == MouseButtons.Left){
-            switch(args.currentTool){
-               case Editor.ToolEnum.Pointer:
-                  break;
-                case Editor.ToolEnum.Place:
-                  break;
-                case Editor.ToolEnum.Transition:
-                  break;
-                case Editor.ToolEnum.Arc:
-                  break;
-                default:
-                  break;
-            }
-         }
-      }
-
-      protected override void MouseDownHandler(object sender, MouseEventArgs args){
-         base.MouseDownHandler(sender,args);
-         if(args.Button == MouseButtons.Left){
-            switch(args.currentTool){
-               case Editor.ToolEnum.Pointer:
-                  break;
-               case Editor.ToolEnum.Place:
-                  break;
-               case Editor.ToolEnum.Transition:
-                  break;
-               case Editor.ToolEnum.Arc:
-                  break;
-               default:
-                  break;
-            }
-         }
-      }
-
-      protected override void MouseUpHandler(object sender, MouseEventArgs args){
-      }
-
-      protected override void RegionSelectionStartHandler(object sender, RegionSelectionEventArgs args){
-      }
-
-      protected override void RegionSelectionUpdateHandler(object sender, RegionSelectionEventArgs args){
-      }
-
-      protected override void RegionSelectionEndHandler(object sender, RegionSelectionEventArgs args){
-      }
-
-      protected override void KeyDownHandler(object sender, KeyEventArgs arg){
-      }
-
-      /*public override Point GetPilon(Point from, NetCanvas on){
-         
-      }*/
-
-      private void TokensListChangeHandler(object sender, EventArgs args){
-         OnChange(args);
-      }
-
-      public void WriteXml (XmlWriter writer)
+    public TokensList Tokens
+    {
+      get
       {
-         writer.WriteAttributeString("id", this.Name);
-         writer.WriteStartElement("graphics");
-         writer.WriteStartElement("position");
-         writer.WriteAttributeString("x", this.X.ToString()+".0");
-         writer.WriteAttributeString("y", this.Y.ToString()+".0");
-         writer.WriteEndElement(); // position
-         writer.WriteEndElement(); // graphics
-         writer.WriteStartElement("name");
-         writer.WriteStartElement("value");
-         writer.WriteString(this.Name);
-         writer.WriteEndElement(); // value
-         writer.WriteEndElement(); // name
-         writer.WriteStartElement("initialMarking");
-         Tokens.WriteXml(writer);
-         writer.WriteEndElement(); // initialMarking
+        return tokens;
       }
-
-      public void ReadXml (XmlReader reader)
+      private set
       {
-         XmlReader subTreeReader;
-         reader.Read();
-         reader.MoveToAttribute("id");
-         this.ID = reader.Value;
-         reader.ReadStartElement("place");
-         while(reader.NodeType != XmlNodeType.EndElement)
-         {
-            switch(reader.Name){
-               case "graphics":
-                  reader.ReadStartElement("graphics");
-                  /* Обработаем position*/{
-                  reader.ReadToDescendant("position");
-                  reader.MoveToAttribute("x");
-                  this.X = (int)reader.ReadContentAsDouble();
-                  reader.MoveToAttribute("y");
-                  this.Y = (int)reader.ReadContentAsDouble();
-                  reader.MoveToElement();
-                  reader.Skip();
-                  }
-                  reader.ReadEndElement(); // graphics
-               break;
-               case "name":
-                  reader.ReadToDescendant("value");
-                  this.Name = reader.ReadString();
-                  reader.ReadEndElement(); // value
-                  reader.ReadEndElement(); // name
-               break;
-               case "initialMarking":
-                  subTreeReader = reader.ReadSubtree();
-                  Tokens.ReadXml(subTreeReader);
-                  subTreeReader.Close();
-                  reader.Skip();
-               break;
-               default:
-               break;
-            }
-         }
-      }
-
-      public XmlSchema GetSchema()
+        if(tokens != null)
       {
-         return(null);
+        tokens.Change -= TokensListChangeHandler;
       }
-   }  // Place
+      tokens = value;
+      if(tokens != null)
+      {
+        tokens.Change += TokensListChangeHandler;
+      }
+      OnChange(new EventArgs());
+    }
+  }
+
+  public override Point Center
+  {
+    get
+    {
+      return new Point(X + (int)Width/2, Y + (int)Height/2);
+    }
+  }
+
+  public override void Draw(object sender, PaintEventArgs e)
+    {
+
+      base.Draw(sender,e);
+
+      Graphics dc = e.Graphics;
+      dc.SmoothingMode = SmoothingMode.HighQuality;
+      Pen blackPen = new Pen(Color.FromArgb(255,0,0,0));
+      Pen RedPen = new Pen(Color.FromArgb(255,255,0,0));
+
+      /*Кисти*/
+      SolidBrush grayBrush = new SolidBrush(Color.FromArgb(200,100,100,100));
+      SolidBrush blackBrush = new SolidBrush(Color.FromArgb(200,0,0,0));
+      /*Шрифт*/
+      FontFamily fF_Arial = new FontFamily("Arial");
+      Font font1 = new Font(fF_Arial, 16, FontStyle.Regular, GraphicsUnit.Pixel);
+
+      GraphicsPath tmpPath = new GraphicsPath();
+      tmpPath.AddEllipse(X, Y, Width, Height);
+      Region fillRegion = new Region(tmpPath);
+      dc.FillRegion(grayBrush, fillRegion);
+      dc.DrawEllipse(blackPen, X, Y, Width, Height);
+      dc.DrawString(Name, font1, blackBrush, X + (int)Width/2+5,Y-5);
+      dc.DrawString(Tokens.Count.ToString(), font1, blackBrush, X + (int)Width/2-10, Y + (int)Height/2-10);
+    }
+
+    protected override void UpdateHitRegion()
+    {
+      using(PreciseTimer pr = new PreciseTimer("Place.UpdateRegion"))
+      {
+        HitRegion.MakeEmpty();
+        GraphicsPath tmpPath = new GraphicsPath();
+        tmpPath.AddEllipse(X, Y, Width, Height);
+        HitRegion.Union(tmpPath);
+      }
+    }
+
+    protected override void MouseClickHandler(object sender, MouseEventArgs args)
+    {
+    }
+
+    protected override void MouseMoveHandler(object sender, MouseEventArgs args)
+    {
+      base.MouseMoveHandler(sender,args);
+    }
+
+    protected override void MouseDownHandler(object sender, MouseEventArgs args)
+    {
+      base.MouseDownHandler(sender,args);
+      if(args.Button == MouseButtons.Left)
+      {
+      }
+    }
+
+    protected override void MouseUpHandler(object sender, MouseEventArgs args)
+    {
+    }
+
+    protected override void RegionSelectionStartHandler(object sender, RegionSelectionEventArgs args)
+    {
+    }
+
+    protected override void RegionSelectionUpdateHandler(object sender, RegionSelectionEventArgs args)
+    {
+    }
+
+    protected override void RegionSelectionEndHandler(object sender, RegionSelectionEventArgs args)
+    {
+    }
+
+    protected override void KeyDownHandler(object sender, KeyEventArgs arg)
+    {
+    }
+
+    /*public override Point GetPilon(Point from, NetCanvas on){
+       
+  }*/
+
+    private void TokensListChangeHandler(object sender, EventArgs args)
+    {
+      OnChange(args);
+    }
+
+    public void WriteXml (XmlWriter writer)
+    {
+      writer.WriteAttributeString("id", this.Name);
+      writer.WriteStartElement("graphics");
+      writer.WriteStartElement("position");
+      writer.WriteAttributeString("x", this.X.ToString()+".0");
+      writer.WriteAttributeString("y", this.Y.ToString()+".0");
+      writer.WriteEndElement(); // position
+      writer.WriteEndElement(); // graphics
+      writer.WriteStartElement("name");
+      writer.WriteStartElement("value");
+      writer.WriteString(this.Name);
+      writer.WriteEndElement(); // value
+      writer.WriteEndElement(); // name
+      writer.WriteStartElement("initialMarking");
+      Tokens.WriteXml(writer);
+      writer.WriteEndElement(); // initialMarking
+    }
+
+    public void ReadXml (XmlReader reader)
+    {
+      XmlReader subTreeReader;
+      reader.Read();
+      reader.MoveToAttribute("id");
+      this.ID = reader.Value;
+      reader.ReadStartElement("place");
+      while(reader.NodeType != XmlNodeType.EndElement)
+      {
+        switch(reader.Name)
+        {
+        case "graphics":
+          reader.ReadStartElement("graphics");
+          /* Обработаем position*/
+          {
+            reader.ReadToDescendant("position");
+            reader.MoveToAttribute("x");
+            this.X = (int)reader.ReadContentAsDouble();
+            reader.MoveToAttribute("y");
+            this.Y = (int)reader.ReadContentAsDouble();
+            reader.MoveToElement();
+            reader.Skip();
+          }
+          reader.ReadEndElement(); // graphics
+          break;
+        case "name":
+          reader.ReadToDescendant("value");
+          this.Name = reader.ReadString();
+          reader.ReadEndElement(); // value
+          reader.ReadEndElement(); // name
+          break;
+        case "initialMarking":
+          subTreeReader = reader.ReadSubtree();
+          Tokens.ReadXml(subTreeReader);
+          subTreeReader.Close();
+          reader.Skip();
+          break;
+        default:
+          break;
+        }
+      }
+    }
+
+    public XmlSchema GetSchema()
+    {
+      return(null);
+    }
+  }  // Place
 }  //namespace

@@ -34,31 +34,31 @@ namespace PPPV.Net {
             if(parent != null){
                parent.Paint                 -= this.Draw;
                parent.Paint                 -= this.PaintRetranslator;
-               parent.MouseMove             -= this.MouseMoveHandler;
-               parent.MouseMove             -= this.MouseMoveRetranslator;
-               parent.MouseClick            -= this.MouseClickHandler;
-               parent.MouseUp               -= this.MouseUpHandler;
-               parent.MouseDown             -= this.MouseDownHandler;
-               parent.MouseDown             -= this.MouseDownRetranslator;
-               parent.RegionSelectionStart  -= this.RegionSelectionStartHandler;
-               parent.RegionSelectionUpdate -= this.RegionSelectionUpdateHandler;
-               parent.RegionSelectionEnd    -= this.RegionSelectionEndHandler;
-               parent.KeyDown               -= this.KeyDownHandler;
+               //parent.MouseMove             -= this.MouseMoveHandler;
+               //parent.MouseMove             -= this.MouseMoveRetranslator;
+               //parent.MouseClick            -= this.MouseClickHandler;
+               //parent.MouseUp               -= this.MouseUpHandler;
+               //parent.MouseDown             -= this.MouseDownHandler;
+               //parent.MouseDown             -= this.MouseDownRetranslator;
+               //parent.RegionSelectionStart  -= this.RegionSelectionStartHandler;
+               //parent.RegionSelectionUpdate -= this.RegionSelectionUpdateHandler;
+               //parent.RegionSelectionEnd    -= this.RegionSelectionEndHandler;
+               //parent.KeyDown               -= this.KeyDownHandler;
             }
             parent = value;
             if(parent != null){
                parent.Paint                 += this.Draw;
                parent.Paint                 += this.PaintRetranslator;
-               parent.MouseMove             += this.MouseMoveHandler;
-               parent.MouseMove             += this.MouseMoveRetranslator;
-               parent.MouseClick            += this.MouseClickHandler;
-               parent.MouseUp               += this.MouseUpHandler;
-               parent.MouseDown             += this.MouseDownHandler;
-               parent.MouseDown             += this.MouseDownRetranslator;
-               parent.RegionSelectionStart  += this.RegionSelectionStartHandler;
-               parent.RegionSelectionUpdate += this.RegionSelectionUpdateHandler;
-               parent.RegionSelectionEnd    += this.RegionSelectionEndHandler;
-               parent.KeyDown               += this.KeyDownHandler;
+               //parent.MouseMove             += this.MouseMoveHandler;
+               //parent.MouseMove             += this.MouseMoveRetranslator;
+               //parent.MouseClick            += this.MouseClickHandler;
+               //parent.MouseUp               += this.MouseUpHandler;
+               //parent.MouseDown             += this.MouseDownHandler;
+               //parent.MouseDown             += this.MouseDownRetranslator;
+               //parent.RegionSelectionStart  += this.RegionSelectionStartHandler;
+               //parent.RegionSelectionUpdate += this.RegionSelectionUpdateHandler;
+               //parent.RegionSelectionEnd    += this.RegionSelectionEndHandler;
+               //parent.KeyDown               += this.KeyDownHandler;
             }
          }
       }

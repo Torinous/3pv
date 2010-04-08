@@ -109,8 +109,7 @@ namespace PPPV.Editor {
 
       public void ChangesApproved(){
          listTokens.Clear();
-         foreach (Token value in lbTokens.Items)
-         {
+         foreach (Token value in lbTokens.Items){
             listTokens.Add(value);
          }
       }

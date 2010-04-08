@@ -10,7 +10,8 @@ using System.Xml.Schema;
 using System.Xml.Serialization;
 using System.Text;
 
-namespace PPPV.Editor {
+namespace PPPV.Editor 
+{
    public class MainForm : Form{
 
       /*Меню*/
@@ -18,7 +19,7 @@ namespace PPPV.Editor {
 
 
       /*Панель инструментов*/
-      public NetToolStrip toolStrip;
+      public Tools.ToolStrip toolStrip;
 
 
       private StatusStrip _statusStrip;
@@ -31,7 +32,7 @@ namespace PPPV.Editor {
          }
       }
 
-      public NetToolStrip ToolController {
+      public ToolStrip ToolStrip {
          get{
             return toolStrip;
          }
@@ -56,7 +57,7 @@ namespace PPPV.Editor {
          MainMenuStrip.toolStripMenuOpen.Click += OpenNet;
          MainMenuStrip.toolStripMenuExit.Click += CloseApplication;
          MainMenuStrip.toolStripMenuAbout.Click += ShowAboutForm;
-         ToolController.toolStripButtonAdditionalCode.Click += EditAdditionalCode;
+         //ToolStrip.toolStripButtonAdditionalCode.Click += EditAdditionalCode;
       }
 
       private void InitializeComponent() {
@@ -64,7 +65,7 @@ namespace PPPV.Editor {
          this.menuStrip          = new MainMenuStrip();
 
          /*Панель инструментов*/
-         this.toolStrip          = new NetToolStrip();
+         this.toolStrip          = new Tools.ToolStrip();
          /*Статус строка*/
          this._statusStrip       = new StatusStrip();
 
