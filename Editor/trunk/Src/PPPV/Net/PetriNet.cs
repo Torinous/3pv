@@ -15,7 +15,8 @@ using PPPV.Utils;
 namespace PPPV.Net {
   [Serializable()]
   [XmlRoot("pnml")]
-public partial class PetriNet:IXmlSerializable {
+  public partial class PetriNet:IXmlSerializable 
+  {
     private string id;
     private string type;
     /*Путь к файлу в который сохранена сеть*/
@@ -89,102 +90,84 @@ public partial class PetriNet:IXmlSerializable {
       }
     }
 
-    public Editor.NetCanvas Canvas{
-      get{
+    public Editor.NetCanvas Canvas
+    {
+      get
+      {
         return canvas;
       }
-      set{
+      set
+      {
         if(canvas != null)
-      {
-        //canvas.CanvasMouseClick       -= CanvasMouseClickHandler;
-        //canvas.CanvasMouseClick       -= CanvasMouseClickRetranslator;
-        //canvas.CanvasMouseMove        -= CanvasMouseMoveHandler;
-        //canvas.CanvasMouseMove        -= CanvasMouseMoveRetranslator;
-        //canvas.CanvasMouseDown        -= CanvasMouseDownHandler;
-        //canvas.CanvasMouseDown        -= CanvasMouseDownRetranslator;
-        //canvas.CanvasMouseUp          -= CanvasMouseUpHandler;
-        //canvas.CanvasMouseUp          -= CanvasMouseUpRetranslator;
-        canvas.Paint                  -= CanvasPaintHandler;
-        canvas.Paint                  -= CanvasPaintRetranslator;
-        //canvas.RegionSelectionStart   -= RegionSelectionStartHandler;
-        //canvas.RegionSelectionStart   -= RegionSelectionStartRetranslator;
-        //canvas.RegionSelectionUpdate  -= RegionSelectionUpdateHandler;
-        //canvas.RegionSelectionUpdate  -= RegionSelectionUpdateRetranslator;
-        //canvas.RegionSelectionEnd     -= RegionSelectionEndHandler;
-        //canvas.RegionSelectionEnd     -= RegionSelectionEndRetranslator;
-        //canvas.KeyDown                -= CanvasKeyDownRetranslator;
-        //canvas.KeyDown                -= CanvasKeyDownHandler;
-        canvas.Load                   -= LoadHandler;
-      }
+        {
+          canvas.Paint                  -= CanvasPaintHandler;
+          canvas.Paint                  -= CanvasPaintRetranslator;
+          canvas.Load                   -= LoadHandler;
+        }
 
-      canvas = value;
+        canvas = value;
 
-      if(canvas != null)
-      {
-        //canvas.CanvasMouseClick       += CanvasMouseClickHandler;
-        //canvas.CanvasMouseClick       += CanvasMouseClickRetranslator;
-        //canvas.CanvasMouseMove        += CanvasMouseMoveHandler;
-        //canvas.CanvasMouseMove        += CanvasMouseMoveRetranslator;
-        //canvas.CanvasMouseDown        += CanvasMouseDownHandler;
-        //canvas.CanvasMouseDown        += CanvasMouseDownRetranslator;
-        //canvas.CanvasMouseUp          += CanvasMouseUpHandler;
-        //canvas.CanvasMouseUp          += CanvasMouseUpRetranslator;
-        canvas.Paint                  += CanvasPaintHandler;
-        canvas.Paint                  += CanvasPaintRetranslator;
-        //canvas.RegionSelectionStart   += RegionSelectionStartHandler;
-        //canvas.RegionSelectionStart   += RegionSelectionStartRetranslator;
-        //canvas.RegionSelectionUpdate  += RegionSelectionUpdateHandler;
-        //canvas.RegionSelectionUpdate  += RegionSelectionUpdateRetranslator;
-        //canvas.RegionSelectionEnd     += RegionSelectionEndHandler;
-        //canvas.RegionSelectionEnd     += RegionSelectionEndRetranslator;
-        //canvas.KeyDown                += CanvasKeyDownHandler;
-        //canvas.KeyDown                += CanvasKeyDownRetranslator;
-        canvas.Load                   += LoadHandler;
+        if(canvas != null)
+        {
+          canvas.Paint                  += CanvasPaintHandler;
+          canvas.Paint                  += CanvasPaintRetranslator;
+          canvas.Load                   += LoadHandler;
+        }
       }
     }
-  }
 
-  public ArrayList Places{
-    get{
-      return places;
-    }
-    private set{
-      places = value;
-    }
-  }
-
-  public ArrayList Transitions{
-    get{
-      return transitions;
-    }
-    private set{
-      transitions = value;
-    }
-  }
-
-  public ArrayList Arcs{
-    get{
-      return arcs;
-    }
-    private set{
-      arcs = value;
-    }
-  }
-
-  /*Специальное свойство для добавления элементов в сеть*/
-  public NetElement ElementPortal{
-    set{
-      if(value is Place)
+    public ArrayList Places
+    {
+      get
       {
-        Places.Add(value);
+        return places;
+      }
+      private set
+      {
+        places = value;
+      }
+    }
+
+    public ArrayList Transitions
+    {
+      get
+      {
+        return transitions;
+      }
+      private set
+      {
+        transitions = value;
+      }
+    }
+  
+    public ArrayList Arcs
+    {
+      get
+      {
+        return arcs;
+      }
+      private set
+      {
+        arcs = value;
+      }
+    }
+
+    /*Специальное свойство для добавления элементов в сеть*/
+    public NetElement ElementPortal
+    {
+      set
+      {
+        if(value is Place)
+        {
+          Places.Add(value);
         }
         if(value is Transition)
-      {
-        Transitions.Add(value);
+        {
+          Transitions.Add(value);
         }
         if(value is Arc)
-      {
-        Arcs.Add(value);
+        {
+          Arcs.Add(value);
         }
         value.ParentNet = this;
         value.Change += NetElementChangeHandler;
@@ -193,31 +176,36 @@ public partial class PetriNet:IXmlSerializable {
     }
 
     /*Специальное свойство для удаления элементов из сети*/
-    public NetElement ElementNullPortal{
-      set{
+    public NetElement ElementNullPortal
+    {
+      set
+      {
         value.PrepareToDeletion();
         if(value is Place)
-      {
-        Places.Remove(value);
+        {
+          Places.Remove(value);
         }
         if(value is Transition)
-      {
-        Transitions.Remove(value);
+        {
+          Transitions.Remove(value);
         }
         if(value is Arc)
-      {
-        Arcs.Remove(value);
+        {
+          Arcs.Remove(value);
         }
         value.Change -= NetElementChangeHandler;
         OnChange(new EventArgs());
       }
     }
 
-    public string AdditionalCode{
-      get{
+    public string AdditionalCode
+    {
+      get
+      {
         return additionalCode;
       }
-      set{
+      set
+      {
         additionalCode = value;
         OnChange(new EventArgs());
       }
@@ -240,7 +228,8 @@ public partial class PetriNet:IXmlSerializable {
     /*Событие генерируется при сохранении сети в файл*/
     public event SaveEventHandler Save;
 
-    private void OnChange(EventArgs args){
+    private void OnChange(EventArgs args)
+    {
       Saved = false;
       if(Change != null)
       {
@@ -248,35 +237,16 @@ public partial class PetriNet:IXmlSerializable {
       }
     }
 
-    private void OnPaint(PaintEventArgs e){
+    private void OnPaint(PaintEventArgs e)
+    {
       if(Paint != null)
       {
-        using(PreciseTimer pr = new PreciseTimer("PetriNet.Draw")){
+        using(PreciseTimer pr = new PreciseTimer("PetriNet.Draw"))
+        {
           Paint(this,e);
         }
       }
     }
-
-    /*private void OnRegionSelectionStart(Editor.RegionSelectionEventArgs e){
-      if(RegionSelectionStart != null)
-      {
-        RegionSelectionStart(this,new RegionSelectionEventArgs(e));
-      }
-    }
-
-    private void OnRegionSelectionUpdate(Editor.RegionSelectionEventArgs e){
-      if(RegionSelectionUpdate != null)
-      {
-        RegionSelectionUpdate(this,new RegionSelectionEventArgs(e));
-      }
-    }
-
-    private void OnRegionSelectionEnd(Editor.RegionSelectionEventArgs e){
-      if(RegionSelectionEnd != null)
-      {
-        RegionSelectionEnd(this,new RegionSelectionEventArgs(e));
-      }
-    }*/
 
     private void OnSave(SaveEventArgs args){
       Saved = true;
@@ -338,7 +308,8 @@ public partial class PetriNet:IXmlSerializable {
       return null;
     }
 
-    public ArrayList NetElementUnder(Rectangle selectedRectangle){
+    public ArrayList NetElementUnder(Rectangle selectedRectangle)
+    {
       ArrayList selectedObjects = new ArrayList();
       int i = 0;
       for(i=0;i<Transitions.Count;++i)

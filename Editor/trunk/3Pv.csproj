@@ -34,11 +34,14 @@
    </ItemGroup>
 
    <ItemGroup>
-      <EmbeddedResource Include="$(ResourcesDir)pointer.png" />
-      <EmbeddedResource Include="$(ResourcesDir)place.png" />
-      <EmbeddedResource Include="$(ResourcesDir)transition.png" />
-      <EmbeddedResource Include="$(ResourcesDir)arc.png" />
-      <EmbeddedResource Include="$(ResourcesDir)todo.png" />
+      <EmbeddedResource Include="$(ResourcesDir)Pointer.png" />
+      <EmbeddedResource Include="$(ResourcesDir)Place.png" />
+      <EmbeddedResource Include="$(ResourcesDir)Transition.png" />
+      <EmbeddedResource Include="$(ResourcesDir)Arc.png" />
+      <EmbeddedResource Include="$(ResourcesDir)Todo.png" />
+      <EmbeddedResource Include="$(ResourcesDir)Undo.png" />
+      <EmbeddedResource Include="$(ResourcesDir)Redo.png" />
+      <EmbeddedResource Include="$(ResourcesDir)Exit.png" />
    </ItemGroup>
    <ItemGroup>
       <AssemblyInfo Include="$(SrcDir)**\AssemblyInfo.cs"  />

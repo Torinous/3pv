@@ -15,7 +15,7 @@ public class NetCanvas : UserControl{
     /**/
     private PetriNet net;
     private int _gridStep;
-    private SelectionController selectionController;
+    //private SelectionController selectionController;
     /**/
     private Rectangle selectedRectangle;
     private Point selectFrom;
@@ -36,17 +36,17 @@ public class NetCanvas : UserControl{
       /**/
       this.SetStyle( ControlStyles.AllPaintingInWmPaint |  ControlStyles.UserPaint |  ControlStyles.DoubleBuffer, true);
 
-      selectionController = new SelectionController();
+      //selectionController = new SelectionController();
 
       /**/
       this.Paint += Draw;
       this.CanvasMouseClick += CanvasMouseClickHandler;
       this.CanvasMouseMove  += CanvasMouseMoveHandler;
-      this.CanvasMouseMove  += selectionController.CanvasMouseMoveHandler;
+      //this.CanvasMouseMove  += selectionController.CanvasMouseMoveHandler;
       this.CanvasMouseDown  += CanvasMouseDownHandler;
-      this.CanvasMouseDown  += selectionController.CanvasMouseDownHandler;
+      //this.CanvasMouseDown  += selectionController.CanvasMouseDownHandler;
       this.CanvasMouseUp    += CanvasMouseUpHandler;
-      this.CanvasMouseUp    += selectionController.CanvasMouseUpHandler;
+      //this.CanvasMouseUp    += selectionController.CanvasMouseUpHandler;
       this.ParentChanged    += ParentChangedHandler;
     }
 

@@ -25,7 +25,8 @@ namespace PPPV.Editor{
 
       }
 
-      public void Show(Point point, NetElement netElement, PetriNet netRef){
+      public void Show(Point point, NetElement netElement, PetriNet netRef)
+      {
          if(netElement == null){
             contextMenuStrip.Items[0].Enabled = false;
             contextMenuStrip.Items[1].Enabled = false;
@@ -58,7 +59,8 @@ namespace PPPV.Editor{
 
       }
 
-      private void ContextMenuDeleteHandler(object sender, EventArgs e){
+      private void ContextMenuDeleteHandler(object sender, EventArgs e)
+      {
          if(contextMenuTarget is Arc){
             netRef.ElementNullPortal = (Arc)contextMenuTarget;
          }

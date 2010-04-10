@@ -3,23 +3,11 @@ using System.Windows.Forms;
 
 namespace PPPV
 {
-   internal sealed class Program
-   {
-      /// <summary>
-      /// The main entry point for the application.
-      /// </summary>
-      [STAThread]
-      private static void Main(string[] args) {
-         /*Application.EnableVisualStyles();
-         Application.SetCompatibleTextRenderingDefault(false);*/
-      try
-      {
-        (new Application()).Run();
-      }
-      catch (Exception ex)
-      {
-        MessageBox.Show(ex.Message);
-      }
-    }
+  internal sealed class Program
+  {
+    /// <summary>
+    /// The main entry point for the application.
+    /// </summary>
+
   }
 }
