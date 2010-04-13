@@ -2,6 +2,7 @@
 using System.Drawing;
 
 using PPPV.Editor.Commands;
+using PPPV.Editor.Tools;
 
 namespace PPPV.Editor
 {
@@ -10,15 +11,29 @@ public class MainMenuStrip : MenuStrip
     public EditorToolStripMenuItem toolStripMenuFile;
     public EditorToolStripMenuItem toolStripMenuNew;
     public EditorToolStripMenuItem toolStripMenuOpen;
+    public EditorToolStripMenuItem toolStripMenuClose;
     public EditorToolStripMenuItem toolStripMenuSave;
     public EditorToolStripMenuItem toolStripMenuSaveAs;
     public EditorToolStripMenuItem toolStripMenuExit;
+    
     public EditorToolStripMenuItem toolStripMenuEdit;
     public EditorToolStripMenuItem toolStripMenuUndo;
     public EditorToolStripMenuItem toolStripMenuRedo;
+    public EditorToolStripMenuItem toolStripMenuCut;
+    public EditorToolStripMenuItem toolStripMenuCopy;
+    public EditorToolStripMenuItem toolStripMenuPaste;
+    public EditorToolStripMenuItem toolStripMenuDelete;
 
     public EditorToolStripMenuItem toolStripMenuView;
+    
     public EditorToolStripMenuItem toolStripMenuNet;
+    public EditorToolStripMenuItem toolStripMenuPointer;
+    public EditorToolStripMenuItem toolStripMenuPlace;
+    public EditorToolStripMenuItem toolStripMenuTransition;
+    public EditorToolStripMenuItem toolStripMenuArc;
+    public EditorToolStripMenuItem toolStripMenuInhibitorArc;
+    public EditorToolStripMenuItem toolStripMenuAnnotation;
+    
     public EditorToolStripMenuItem toolStripMenuHelp;
     public EditorToolStripMenuItem toolStripMenuAbout;
 
@@ -34,42 +49,70 @@ public class MainMenuStrip : MenuStrip
     private void InitializeComponent()
     {
       toolStripMenuFile    = new EditorToolStripMenuItem( );
-      toolStripMenuNew     = new EditorToolStripMenuItem( new NullCommand() );
-      toolStripMenuOpen    = new EditorToolStripMenuItem( new NullCommand() );
-      toolStripMenuSave    = new EditorToolStripMenuItem( new NullCommand() );
-      toolStripMenuSaveAs  = new EditorToolStripMenuItem( new NullCommand() );
-      toolStripMenuExit    = new EditorToolStripMenuItem( new QuitCommand( this as Control ) );
+      toolStripMenuNew     = new EditorToolStripMenuItem( new NewNetCommand() );
+      toolStripMenuOpen    = new EditorToolStripMenuItem( new OpenNetCommand() );
+      toolStripMenuClose   = new EditorToolStripMenuItem( new CloseNetCommand() );
+      toolStripMenuSave    = new EditorToolStripMenuItem( new SaveCommand() );
+      toolStripMenuSaveAs  = new EditorToolStripMenuItem( new SaveAsCommand() );
+      toolStripMenuExit    = new EditorToolStripMenuItem( new QuitCommand() );
+      
       toolStripMenuEdit    = new EditorToolStripMenuItem( );
       toolStripMenuUndo    = new EditorToolStripMenuItem( new UndoCommand() );
       toolStripMenuRedo    = new EditorToolStripMenuItem( new RedoCommand() );
+      toolStripMenuCut     = new EditorToolStripMenuItem( new CutCommand() );
+      toolStripMenuCopy    = new EditorToolStripMenuItem( new CopyCommand() );
+      toolStripMenuPaste   = new EditorToolStripMenuItem( new PasteCommand() );
+      toolStripMenuDelete  = new EditorToolStripMenuItem( new DeleteCommand() );
+      
       toolStripMenuView    = new EditorToolStripMenuItem( );
-      toolStripMenuNet     = new EditorToolStripMenuItem( );
+      
+      toolStripMenuNet          = new EditorToolStripMenuItem( );
+      toolStripMenuPointer      = new EditorToolStripMenuItem( new SelectToolCommand( PointerTool.Instance ) );
+      toolStripMenuPlace        = new EditorToolStripMenuItem( new SelectToolCommand( PlaceTool.Instance ) );
+      toolStripMenuTransition   = new EditorToolStripMenuItem( new SelectToolCommand( TransitionTool.Instance ) );
+      toolStripMenuArc          = new EditorToolStripMenuItem( new SelectToolCommand( ArcTool.Instance ) );
+      toolStripMenuInhibitorArc = new EditorToolStripMenuItem( new SelectToolCommand( InhibitorArcTool.Instance ) );
+      toolStripMenuAnnotation   = new EditorToolStripMenuItem( new SelectToolCommand( AnnotationTool.Instance ) );
+      
       toolStripMenuHelp    = new EditorToolStripMenuItem( );
       toolStripMenuAbout   = new EditorToolStripMenuItem( new AboutCommand( this as Control ) );
 
       /* toolStripMenuFile*/
-      this.Items.AddRange(new ToolStripItem[] {this.toolStripMenuFile});
+      this.Items.Add(this.toolStripMenuFile);
       this.toolStripMenuFile.Name = this.toolStripMenuFile.Text = "Файл";
-      this.toolStripMenuFile.DropDownItems.AddRange(new ToolStripItem[] {this.toolStripMenuNew});
-      this.toolStripMenuFile.DropDownItems.AddRange(new ToolStripItem[] {this.toolStripMenuOpen});
-      this.toolStripMenuFile.DropDownItems.AddRange(new ToolStripItem[] {this.toolStripMenuSaveAs});
-      this.toolStripMenuFile.DropDownItems.AddRange(new ToolStripItem[] {this.toolStripMenuSave});
-      this.toolStripMenuFile.DropDownItems.AddRange(new ToolStripItem[] {this.toolStripMenuExit});
+      this.toolStripMenuFile.DropDownItems.Add(this.toolStripMenuNew);
+      this.toolStripMenuFile.DropDownItems.Add(this.toolStripMenuOpen);
+      this.toolStripMenuFile.DropDownItems.Add(this.toolStripMenuClose);
+      this.toolStripMenuFile.DropDownItems.Add(this.toolStripMenuSave);
+      this.toolStripMenuFile.DropDownItems.Add(this.toolStripMenuSaveAs);
+      this.toolStripMenuFile.DropDownItems.Add(new ToolStripSeparator());
+      this.toolStripMenuFile.DropDownItems.Add(this.toolStripMenuExit);
 
-      this.Items.AddRange(new ToolStripItem[] {this.toolStripMenuEdit});
+      this.Items.Add(this.toolStripMenuEdit);
       this.toolStripMenuEdit.Name = this.toolStripMenuEdit.Text = "Правка";
-      this.toolStripMenuEdit.DropDownItems.AddRange(new ToolStripItem[] {this.toolStripMenuUndo});
-      this.toolStripMenuEdit.DropDownItems.AddRange(new ToolStripItem[] {this.toolStripMenuRedo});
+      this.toolStripMenuEdit.DropDownItems.Add(this.toolStripMenuUndo);
+      this.toolStripMenuEdit.DropDownItems.Add(this.toolStripMenuRedo);
+      this.toolStripMenuEdit.DropDownItems.Add(new ToolStripSeparator());
+      this.toolStripMenuEdit.DropDownItems.Add(this.toolStripMenuCut);
+      this.toolStripMenuEdit.DropDownItems.Add(this.toolStripMenuCopy);
+      this.toolStripMenuEdit.DropDownItems.Add(this.toolStripMenuPaste);
+      this.toolStripMenuEdit.DropDownItems.Add(this.toolStripMenuDelete);
 
-      this.Items.AddRange(new ToolStripItem[] {this.toolStripMenuView});
+      this.Items.Add(this.toolStripMenuView);
       this.toolStripMenuView.Name = this.toolStripMenuView.Text = "Вид";
 
-      this.Items.AddRange(new ToolStripItem[] {this.toolStripMenuNet});
+      this.Items.Add(this.toolStripMenuNet);
       this.toolStripMenuNet.Name = this.toolStripMenuNet.Text = "Сеть";
+      this.toolStripMenuNet.DropDownItems.Add(this.toolStripMenuPointer);
+      this.toolStripMenuNet.DropDownItems.Add(this.toolStripMenuPlace);
+      this.toolStripMenuNet.DropDownItems.Add(this.toolStripMenuTransition);
+      this.toolStripMenuNet.DropDownItems.Add(this.toolStripMenuArc);
+      this.toolStripMenuNet.DropDownItems.Add(this.toolStripMenuInhibitorArc);
+      this.toolStripMenuNet.DropDownItems.Add(this.toolStripMenuAnnotation);
 
-      this.Items.AddRange(new ToolStripItem[] {this.toolStripMenuHelp});
+      this.Items.Add(this.toolStripMenuHelp);
       this.toolStripMenuHelp.Name = this.toolStripMenuHelp.Text = "Помощь";
-      this.toolStripMenuHelp.DropDownItems.AddRange(new ToolStripItem[] {this.toolStripMenuAbout});
+      this.toolStripMenuHelp.DropDownItems.Add(this.toolStripMenuAbout);
     }
   }
 }

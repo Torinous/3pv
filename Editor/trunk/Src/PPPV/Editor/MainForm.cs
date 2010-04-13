@@ -4,22 +4,23 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
-using System.IO;
-using System.Xml;
-using System.Xml.Schema;
-using System.Xml.Serialization;
-using System.Text;
+
+using PPPV.Editor.Commands;
+using PPPV.Editor.Tools;
 
 namespace PPPV.Editor
 {
-public class MainForm : Form
+  public class MainForm : Form
   {
+    private EditorApplication app;
     /*Меню*/
     public MainMenuStrip menuStrip;
-    private EditorApplication app;
 
-    /*Панель инструментов*/
-    public Tools.ToolStrip toolStrip;
+    /*Панели инструментов*/
+    private EditorToolStrip fileToolStrip;
+    private EditorToolStrip toolToolStrip;
+    private EditorToolStrip editToolStrip;
+    
 
     private StatusStrip _statusStrip;
 
@@ -33,9 +34,11 @@ public class MainForm : Form
       }
     }
 
-    public ToolStrip ToolStrip {
-      get{
-        return toolStrip;
+    public EditorToolStrip ToolToolStrip
+    {
+      get
+      {
+        return toolToolStrip;
       }
     }
 
@@ -59,37 +62,55 @@ public class MainForm : Form
       }
     }
 
-    private ToolStripContainer toolStripContainer;
+    private ToolStripContainer toolToolStripContainer;
 
     public MainForm(EditorApplication a)
     {
       app = a;
       this.KeyPreview = true;
       InitializeComponent();
-      /*Привязка обработчиков*/
-      MainMenuStrip.toolStripMenuNew.Click += NewNet;
-      MainMenuStrip.toolStripMenuOpen.Click += OpenNet;
-      //ToolStrip.toolStripButtonAdditionalCode.Click += EditAdditionalCode;
+      //ToolStrip.toolToolStripButtonAdditionalCode.Click += EditAdditionalCode;
     }
 
-    private void InitializeComponent() {
+    private void InitializeComponent()
+    {
       /*Меню*/
       this.menuStrip          = new MainMenuStrip();
 
       /*Панель инструментов*/
-      this.toolStrip          = new Tools.ToolStrip();
+      
+      this.toolToolStrip          = new EditorToolStrip( new SelectToolCommand( PointerTool.Instance ),
+                                                         new SelectToolCommand( PlaceTool.Instance ),
+                                                         new SelectToolCommand( TransitionTool.Instance ),
+                                                         new SelectToolCommand( ArcTool.Instance ),
+                                                         new SelectToolCommand( InhibitorArcTool.Instance ),
+                                                         new SelectToolCommand( AnnotationTool.Instance )
+                                                       );
+      this.fileToolStrip          = new EditorToolStrip( new NewNetCommand(),
+                                                         new OpenNetCommand(),
+                                                         new CloseNetCommand(),
+                                                         new SaveCommand(),
+                                                         new SaveAsCommand() 
+                                                       );
+      this.editToolStrip          = new EditorToolStrip( new UndoCommand(),
+                                                         new RedoCommand(),
+                                                         new CutCommand(),
+                                                         new CopyCommand(),
+                                                         new PasteCommand(),
+                                                         new DeleteCommand()
+                                                       );
       /*Статус строка*/
       this._statusStrip       = new StatusStrip();
 
       this._tabControl        = new TabControlForNets();
-      this.toolStripContainer = new ToolStripContainer();
+      this.toolToolStripContainer = new ToolStripContainer();
       /*System.ComponentModel.ComponentResourceManager resources = new ComponentResourceManager(typeof(MainForm));*/
 
-      this.toolStripContainer.ContentPanel.SuspendLayout();
-      this.toolStripContainer.TopToolStripPanel.SuspendLayout();
-      this.toolStripContainer.SuspendLayout();
+      this.toolToolStripContainer.ContentPanel.SuspendLayout();
+      this.toolToolStripContainer.TopToolStripPanel.SuspendLayout();
+      this.toolToolStripContainer.SuspendLayout();
       this._tabControl.SuspendLayout();
-      this.toolStrip.SuspendLayout();
+      this.toolToolStrip.SuspendLayout();
       this.SuspendLayout();
       //
       // _statusStrip
@@ -99,88 +120,63 @@ public class MainForm : Form
       this._statusStrip.Size = new System.Drawing.Size(599, 24);
       this._statusStrip.TabIndex = 1;
       //
-      // toolStrip
+      // toolToolStrip
       //
-      this.toolStrip.AutoSize = true;
+      this.toolToolStrip.AutoSize = true;
       //
-      // toolStripContainer
+      // toolToolStripContainer
       //
-      this.toolStripContainer.Anchor = ( (System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)| System.Windows.Forms.AnchorStyles.Left)| System.Windows.Forms.AnchorStyles.Right)));
-      this.toolStripContainer.Location = new System.Drawing.Point(0, 24);
-      this.toolStripContainer.Name = this.toolStripContainer.Text = "toolStripContainer";
-      this.toolStripContainer.Size = new System.Drawing.Size(599, 252);
-      this.toolStripContainer.AutoSize = true;
-      this.toolStripContainer.TabIndex = 2;
+      this.toolToolStripContainer.Anchor = ( (System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)| System.Windows.Forms.AnchorStyles.Left)| System.Windows.Forms.AnchorStyles.Right)));
+      this.toolToolStripContainer.Location = new System.Drawing.Point(0, 24);
+      this.toolToolStripContainer.Name = this.toolToolStripContainer.Text = "toolToolStripContainer";
+      this.toolToolStripContainer.Size = new System.Drawing.Size(599, 252);
+      this.toolToolStripContainer.AutoSize = true;
+      this.toolToolStripContainer.TabIndex = 2;
       //
-      // toolStripContainer.ContentPanel
+      // toolToolStripContainer.ContentPanel
       //
 
-      this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(599, 228);
-      this.toolStripContainer.TopToolStripPanel.AutoSize = true;
+      this.toolToolStripContainer.ContentPanel.Size = new System.Drawing.Size(599, 228);
+      this.toolToolStripContainer.TopToolStripPanel.AutoSize = true;
       //
       // Form1
       //
       //this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       //this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(599, 299);
-      this.MainMenuStrip = this.menuStrip;
       this.Name = "MainForm";
-      this.Text = "3Pv";
+      this.Text = "3Pv:Editor " + App.AssemblyVersion;
 
-      this.toolStripContainer.ContentPanel.ResumeLayout(false);
-      this.toolStripContainer.ContentPanel.PerformLayout();
-      this.toolStripContainer.TopToolStripPanel.ResumeLayout(false);
-      this.toolStripContainer.TopToolStripPanel.PerformLayout();
-      this.toolStripContainer.ResumeLayout(false);
+      this.toolToolStripContainer.ContentPanel.ResumeLayout(false);
+      this.toolToolStripContainer.ContentPanel.PerformLayout();
+      this.toolToolStripContainer.TopToolStripPanel.ResumeLayout(false);
+      this.toolToolStripContainer.TopToolStripPanel.PerformLayout();
+      this.toolToolStripContainer.ResumeLayout(false);
 
-      this.Controls.Add(this.toolStripContainer);
+      this.Controls.Add(this.toolToolStripContainer);
       this.Controls.Add(this._statusStrip);
       this.Controls.Add(this.menuStrip);
-      this.toolStripContainer.TopToolStripPanel.Controls.Add(this.toolStrip);
-      this.toolStripContainer.ContentPanel.Controls.Add(this._tabControl);
 
-      this.toolStripContainer.PerformLayout();
+      this.toolToolStripContainer.TopToolStripPanel.Controls.Add(this.toolToolStrip);
+      this.toolToolStripContainer.TopToolStripPanel.Controls.Add(this.editToolStrip);
+      this.toolToolStripContainer.TopToolStripPanel.Controls.Add(this.fileToolStrip);
+      this.toolToolStripContainer.ContentPanel.Controls.Add(this._tabControl);
+
+      this.toolToolStripContainer.PerformLayout();
       this._tabControl.ResumeLayout(false);
       this._tabControl.PerformLayout();
-      this.toolStrip.ResumeLayout(false);
-      this.toolStrip.PerformLayout();
+      this.toolToolStrip.ResumeLayout(false);
+      this.toolToolStrip.PerformLayout();
       this.ResumeLayout(false);
       this.PerformLayout();
     }
 
-    private void NewNet(object sender, EventArgs e){
-      Net.PetriNet _net = new Net.PetriNet();
-      TabControl.AddNewTab(_net);
-    }
-
-    private void OpenNet(object sender, EventArgs e){
-      StreamReader stream;
-      OpenFileDialog openFileDialog = new OpenFileDialog();
-
-      openFileDialog.Filter = "txt files (*.pnml)|*.pnml|All files (*.*)|*.*";
-      openFileDialog.FilterIndex = 1 ;
-      openFileDialog.RestoreDirectory = true ;
-
-      if(openFileDialog.ShowDialog() == DialogResult.OK)
-      {
-        stream = new StreamReader(openFileDialog.FileName, Encoding.GetEncoding(1251));
-        if(stream != null)
-        {
-          Net.PetriNet _net = new Net.PetriNet();
-          XmlSerializer serealizer = new XmlSerializer(_net.GetType());
-          _net = (Net.PetriNet)serealizer.Deserialize(stream);
-          _net.LinkedFile = openFileDialog.FileName;
-          TabControl.AddNewTab(_net);
-          stream.Close();
-        }
-      }
-    }
-
     private void EditAdditionalCode(object sender, EventArgs e)
     {
-      if(_tabControl.ActiveNet != null)
+      EditorApplication app = EditorApplication.Instance;
+      if(app.ActiveNet != null)
       {
-        Form f = new AdditionalCodeEditForm(_tabControl.ActiveNet);
+        Form f = new AdditionalCodeEditForm(app.ActiveNet);
         f.ShowDialog(this);
         f.Dispose();
       }

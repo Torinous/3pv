@@ -38,10 +38,20 @@
       <EmbeddedResource Include="$(ResourcesDir)Place.png" />
       <EmbeddedResource Include="$(ResourcesDir)Transition.png" />
       <EmbeddedResource Include="$(ResourcesDir)Arc.png" />
-      <EmbeddedResource Include="$(ResourcesDir)Todo.png" />
+      <EmbeddedResource Include="$(ResourcesDir)Inhibitor arc.png" />
+      <EmbeddedResource Include="$(ResourcesDir)Annotation.png" />
       <EmbeddedResource Include="$(ResourcesDir)Undo.png" />
       <EmbeddedResource Include="$(ResourcesDir)Redo.png" />
       <EmbeddedResource Include="$(ResourcesDir)Exit.png" />
+      <EmbeddedResource Include="$(ResourcesDir)Open.png" />
+      <EmbeddedResource Include="$(ResourcesDir)New.png" />
+      <EmbeddedResource Include="$(ResourcesDir)Save.png" />
+      <EmbeddedResource Include="$(ResourcesDir)Save as.png" />
+      <EmbeddedResource Include="$(ResourcesDir)Close.png" />
+      <EmbeddedResource Include="$(ResourcesDir)Cut.png" />
+      <EmbeddedResource Include="$(ResourcesDir)Copy.png" />
+      <EmbeddedResource Include="$(ResourcesDir)Paste.png" />
+      <EmbeddedResource Include="$(ResourcesDir)Delete.png" />
    </ItemGroup>
    <ItemGroup>
       <AssemblyInfo Include="$(SrcDir)**\AssemblyInfo.cs"  />
