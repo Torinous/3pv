@@ -1,4 +1,4 @@
-
+﻿
 using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
@@ -6,7 +6,8 @@ using System.Drawing.Drawing2D;
 namespace PPPV.Net {
    public class Pilon: NetElementElement {
 
-      public Pilon(int x_, int y_, GraphicalElement parent_):base(x_, y_, 0, 0, false){
+      public Pilon(int x_, int y_, GraphicalElement parent_):base(x_, y_, 0, 0, false)
+      {
          ParentNetElement = parent_;
       }
 
@@ -18,7 +19,7 @@ namespace PPPV.Net {
          Pen blackPen = new Pen(Color.FromArgb(255,0,0,0));
          Pen RedPen = new Pen(Color.FromArgb(255,255,0,0));
 
-         /*Кисти*/
+         /*╨Ъ╨╕╤Б╤В╨╕*/
          SolidBrush whiteBrush = new SolidBrush(Color.FromArgb(255,255,255,0));
 
          Region fillRegion = new Region(new Rectangle( X-2, Y-2, 5, 5));
@@ -26,7 +27,8 @@ namespace PPPV.Net {
          dc.DrawRectangle(blackPen, X-3, Y-3, 7, 7);
       }
 
-      public override Point Center{
+      public override Point Center
+      {
          get{
             return new Point(X+3, Y+3);
          }

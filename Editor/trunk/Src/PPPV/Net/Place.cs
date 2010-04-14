@@ -14,20 +14,20 @@ namespace PPPV.Net
 {
   [Serializable()]
   [XmlRoot("place")]
-public class Place : NetElement, IXmlSerializable
+  public class Place : NetElement, IXmlSerializable
   {
     private static int _ID = 0;
     private TokensList tokens;
 
     /*Конструкторы*/
-public Place(int x_, int y_):base(x_, y_, 50, 50, true)
+    public Place(int x_, int y_):base(x_, y_, 50, 50, true)
     {
       _ID++;
       Name = ID = "P"+_ID;
       tokens = new TokensList(10);
     }
 
-public Place(XmlReader reader):this(0,0)
+    public Place(XmlReader reader):this(0,0)
     {
       ReadXml(reader);
     }
@@ -104,15 +104,10 @@ public Place(XmlReader reader):this(0,0)
 
     protected override void MouseMoveHandler(object sender, MouseEventArgs args)
     {
-      base.MouseMoveHandler(sender,args);
     }
 
     protected override void MouseDownHandler(object sender, MouseEventArgs args)
     {
-      base.MouseDownHandler(sender,args);
-      if(args.Button == MouseButtons.Left)
-      {
-      }
     }
 
     protected override void MouseUpHandler(object sender, MouseEventArgs args)

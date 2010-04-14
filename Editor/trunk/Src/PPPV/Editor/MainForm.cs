@@ -68,6 +68,7 @@ namespace PPPV.Editor
     {
       app = a;
       this.KeyPreview = true;
+      this.SetStyle( ControlStyles.AllPaintingInWmPaint |  ControlStyles.UserPaint |  ControlStyles.DoubleBuffer, true);
       InitializeComponent();
       //ToolStrip.toolToolStripButtonAdditionalCode.Click += EditAdditionalCode;
     }

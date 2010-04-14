@@ -12,11 +12,10 @@ public class TabControlForNets : TabControl
     /*Конструкторы*/
     public TabControlForNets()
     {
-      this.Anchor = ((AnchorStyles)((((AnchorStyles.Top | AnchorStyles.Bottom)| AnchorStyles.Left)| AnchorStyles.Right)));
-      this.Location = new Point(0, 0);
+      this.SetStyle( ControlStyles.AllPaintingInWmPaint |  ControlStyles.UserPaint |  ControlStyles.DoubleBuffer, true);
+      this.Dock = DockStyle.Fill;
       this.ShowToolTips = true;
       this.SelectedIndex = 0;
-      this.Size = new Size(599, 228);
       this.TabIndex = 3;
       this.DrawMode = TabDrawMode.OwnerDrawFixed;
     }

@@ -12,11 +12,13 @@ using System.Xml.Serialization;
 using PPPV.Editor;
 using PPPV.Utils;
 
-namespace PPPV.Net {
+namespace PPPV.Net
+{
   [Serializable()]
   [XmlRoot("pnml")]
-  public partial class PetriNet:IXmlSerializable 
+  public partial class PetriNet:IXmlSerializable
   {
+    private int width, height;
     private string id;
     private string type;
     /*Путь к файлу в который сохранена сеть*/
@@ -29,12 +31,13 @@ namespace PPPV.Net {
     /*Флаг, было ли сохранено текущее состояние сети*/
     private bool saved;
 
-    private ArrayList currentSelectedObjects;
+    //private ArrayList currentSelectedObjects;
 
     private Editor.NetCanvas canvas;
 
     /*Конструктор*/
-    public PetriNet() {
+    public PetriNet()
+    {
       Saved = false;
       LinkedFile = "";
       ID = "";
@@ -42,53 +45,91 @@ namespace PPPV.Net {
       Places = new ArrayList(30);
       Transitions = new ArrayList(30);
       Arcs = new ArrayList(60);
-      currentSelectedObjects = new ArrayList(50);
+      Change += CalculateSize;
     }
 
     /*Свойства*/
-    public string ID{
-      get {
+    public int Width
+    {
+      get
+      {
+        return width;
+      }
+      set
+      {
+       width = value;
+      }
+    }
+    
+    public int Height
+    {
+      get
+      {
+        return height;
+      }
+      set
+      {
+        height = value;
+      }
+    }
+    
+    public string ID
+    {
+      get
+      {
         return id;
       }
-      private set{
+      private set
+      {
         id = value;
       }
     }
 
-    public bool Saved{
-      get {
+    public bool Saved
+    {
+      get
+      {
         return saved;
       }
-      private set{
+      private set
+      {
         saved = value;
       }
     }
 
-    public string LinkedFile{
-      get {
+    public string LinkedFile
+    {
+      get
+      {
         return linkedFile;
       }
-      set{
+      set
+      {
         linkedFile = value;
       }
     }
 
-    public string Type{
-      get {
+    public string Type
+    {
+      get
+      {
         return type;
       }
-      private set{
+      private set
+      {
         type = value;
       }
     }
-    public ArrayList CurrentSelected{
-      get{
+    /*public ArrayList CurrentSelected{
+      get
+      {
         return currentSelectedObjects;
       }
-      private set{
+      private set
+      {
         currentSelectedObjects = value;
       }
-    }
+    }*/
 
     public Editor.NetCanvas Canvas
     {
@@ -248,7 +289,8 @@ namespace PPPV.Net {
       }
     }
 
-    private void OnSave(SaveEventArgs args){
+    private void OnSave(SaveEventArgs args)
+    {
       Saved = true;
       LinkedFile = args.fileName;
       if (Save != null)
@@ -269,20 +311,24 @@ namespace PPPV.Net {
       return ElementPortal = tmpTransition;
     }
 
-    public NetElement AddArc(NetElement startElement) {
+    public NetElement AddArc(NetElement startElement)
+    {
       Arc tmpArc = new Arc(startElement);
       return ElementPortal = tmpArc;
     }
 
-    public void Select(NetElement ob){
+    /*public void Select(NetElement ob)
+    {
       currentSelectedObjects.Add(ob);
     }
 
-    public void Unselect(NetElement ob){
+    public void Unselect(NetElement ob)
+    {
       currentSelectedObjects.Remove(ob);
-    }
+    }*/
 
-    public NetElement NetElementUnder(Point _p){
+    public NetElement NetElementUnder(Point _p)
+    {
       int i = 0;
       for(i=0;i<Transitions.Count;++i)
       {
@@ -348,7 +394,8 @@ namespace PPPV.Net {
       return false;
     }
 
-    public bool HaveArcBetween(NetElement from_, NetElement to_){
+    public bool HaveArcBetween(NetElement from_, NetElement to_)
+    {
       for(int i=0;i<Arcs.Count;++i)
       {
         if((Arcs[i] as Arc).Source == from_ && (Arcs[i] as Arc).Target == to_)
@@ -359,7 +406,8 @@ namespace PPPV.Net {
       return false;
     }
 
-    private void MenuSaveHandler(object sender, System.EventArgs args){
+    private void MenuSaveHandler(object sender, System.EventArgs args)
+    {
       if(Canvas.Visible)
       {
         if(SaveNet())
@@ -367,7 +415,8 @@ namespace PPPV.Net {
       }
     }
 
-    private void MenuSaveAsHandler(object sender, System.EventArgs args){
+    private void MenuSaveAsHandler(object sender, System.EventArgs args)
+    {
       if(Canvas.Visible)
       {
         if(SaveNetAs())
@@ -375,16 +424,19 @@ namespace PPPV.Net {
       }
     }
 
-    private void NetElementChangeHandler(object sender, System.EventArgs args){
+    private void NetElementChangeHandler(object sender, System.EventArgs args)
+    {
       OnChange(new EventArgs());
     }
 
-    private void LoadHandler(object sender, System.EventArgs args){
+    private void LoadHandler(object sender, System.EventArgs args)
+    {
       ((canvas.FindForm() as MainForm).MainMenuStrip as MainMenuStrip).toolStripMenuSave.Click   += MenuSaveHandler;
       ((canvas.FindForm() as MainForm).MainMenuStrip as MainMenuStrip).toolStripMenuSaveAs.Click += MenuSaveAsHandler;
     }
 
-    private bool SaveNet(){
+    private bool SaveNet()
+    {
       bool result = false;
       StreamWriter stream;
       if(LinkedFile != "")
@@ -532,7 +584,8 @@ namespace PPPV.Net {
       return(null);
     }
 
-    public NetElement GetElementByID(string ID_){
+    public NetElement GetElementByID(string ID_)
+    {
       if(ID_ == "")
         return null;
       foreach(Place place in Places){
@@ -548,6 +601,31 @@ namespace PPPV.Net {
           return arc;
       }
       return null;
+    }
+
+    private void CalculateSize(object sender, System.EventArgs args)
+    {
+      Width = Height = 0;
+      int testX = 0,
+          testY = 0;
+      foreach(Place place in Places)
+      {
+        testX = place.X + place.Width;
+        testY = place.Y + place.Height;
+        if(testX > Width)
+          Width = testX;
+        if(testY > Height)
+          Height = testY;
+      }
+      foreach(Transition transition in Transitions)
+      {
+        testX = transition.X + transition.Width;
+        testY = transition.Y + transition.Height;
+        if(testX > Width)
+          Width = testX;
+        if(testY > Height)
+          Height = testY;
+      }
     }
   } // PetriNet
 } // namespace

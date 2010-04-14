@@ -5,11 +5,12 @@ using System.Drawing.Drawing2D;
 using System.Xml.Serialization;
 
 using PPPV.Editor;
+using PPPV.Utils;
 
-namespace PPPV.Net 
+namespace PPPV.Net
 {
   [Serializable()]
-  public abstract class GraphicalElement: IDrawable 
+  public abstract class GraphicalElement: IDrawable
   {
     /*Поля*/
     protected Point location;
@@ -46,72 +47,94 @@ namespace PPPV.Net
       }
     }
 
-    public Point Location{
-      get{
+    public Point Location
+    {
+      get
+      {
         return location;
       }
-      set{
-        MoveEventArgs args = new MoveEventArgs(location,value);
+      set
+      {
+        if(value.X < 0) value.X = 0;
+        if(value.Y < 0) value.Y = 0;
+        MoveEventArgs args = new MoveEventArgs(location, value);
         location = value;
         OnMove(args);
       }
     }
 
-    public int X{
-      get{
+    public int X
+    {
+      get
+      {
         return location.X;
       }
-      set{
+      set
+      {
         Point old = new Point(location.X,location.Y);
         location.X = value;
-        MoveEventArgs args = new MoveEventArgs(old,location);
+        if(location.X < 0) location.X = 0;
+        MoveEventArgs args = new MoveEventArgs(old, location);
         OnMove(args);
       }
     }
 
-    public int Y{
-      get{
+    public int Y
+    {
+      get
+      {
         return location.Y;
       }
-      set{
+      set
+      {
         Point old = new Point(location.X,location.Y);
         location.Y = value;
+        if(location.Y<0) location.Y =0;
         MoveEventArgs args = new MoveEventArgs(old,location);
         OnMove(args);
       }
     }
 
-    public string Name{
-      get{
+    public string Name
+    {
+      get
+      {
         return _name;
       }
-      set{
+      set
+      {
         _name = value;
         OnChange(new EventArgs());
       }
     }
 
-    public Region HitRegion{
-      get{
+    public Region HitRegion
+    {
+      get
+      {
         return _hitRegion;
       }
-      protected set{
+      protected set
+      {
         _hitRegion = value;
       }
     }
 
     /*Центр объекта*/
-    public abstract Point Center{
+    public abstract Point Center
+    {
       get;
     }
 
-    public virtual int Height{
+    public virtual int Height
+    {
       get{
         return sizeController.Y - this.Y;
       }
     }
 
-    public virtual int Width{
+    public virtual int Width
+    {
       get{
         return sizeController.X - this.X;
       }
@@ -137,13 +160,15 @@ namespace PPPV.Net
 
     /*Методы*/
     /*Перемещение на*/
-    public void MoveBy(Point p){
+    public void MoveBy(Point p)
+    {
       /* Входной параметр это радиус-вектор перемещения */
       Point old = new Point(location.X,location.Y);
       Location = new Point(X + p.X,Y + p.Y);
     }
 
-    public void MoveBy(){
+    public void MoveBy()
+    {
       /* Входной параметр это радиус-вектор перемещения */
       Point old = new Point(location.X,location.Y);
       Location = new Point(X,Y);
@@ -225,6 +250,7 @@ namespace PPPV.Net
             dragPoint.X = args.X - Location.X;
             dragPoint.Y = args.Y - Location.Y;
             args.alreadyPerform = true;
+            DebugAssistant.LogTrace("Here");
             //(sender as PetriNet).Canvas.Invalidate();
           }
           /*break;
@@ -279,7 +305,8 @@ namespace PPPV.Net
         ShowSelectionMarker(e.Graphics);
     }
 
-    public virtual Point GetPilon(Point from, NetCanvas on){
+    public virtual Point GetPilon(Point from, NetCanvas on)
+    {
       Graphics g;
       Point pilon = new Point();
       if (on != null)
@@ -360,7 +387,8 @@ namespace PPPV.Net
       OnChange(new EventArgs());
     }
 
-    protected void OnResize(ResizeEventArgs args){
+    protected void OnResize(ResizeEventArgs args)
+    {
       UpdateHitRegion();
       if(Resize != null)
       {
@@ -369,24 +397,28 @@ namespace PPPV.Net
       OnChange(new EventArgs());
     }
 
-    protected void OnSelectionChange(SelectionChangeEventArgs args){
+    protected void OnSelectionChange(SelectionChangeEventArgs args)
+    {
       if(SelectionChange != null)
       {
         SelectionChange(this,args);
       }
     }
 
-    protected virtual void MoveSizeControllerHandler(object sender, MoveEventArgs arg){
+    protected virtual void MoveSizeControllerHandler(object sender, MoveEventArgs arg)
+    {
       ResizeEventArgs arg2 = new ResizeEventArgs(new Point( arg.from.X, arg.from.Y ), new Point(arg.to.X,arg.to.Y));
       OnResize(arg2);
     }
 
     /*Вся внутренняя подготовка перед удалением элемента сети*/
-    public virtual void PrepareToDeletion(){
+    public virtual void PrepareToDeletion()
+    {
       /*Отпишемся от всех событый*/
     }
 
-    protected static Pen ArrowedBlackPenFactory(){
+    protected static Pen ArrowedBlackPenFactory()
+    {
       Pen p = new Pen(Color.Black,1);
       GraphicsPath hPath = new GraphicsPath();
       hPath.AddLine(new Point(4, -7), new Point(0, 0));

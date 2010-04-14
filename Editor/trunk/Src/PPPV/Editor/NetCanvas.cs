@@ -9,9 +9,10 @@ using System.ComponentModel;
 using PPPV.Net;
 using PPPV.Utils;
 
-namespace PPPV.Editor{
-
-public class NetCanvas : UserControl{
+namespace PPPV.Editor
+{
+  public class NetCanvas : UserControl
+  {
     /**/
     private PetriNet net;
     private int _gridStep;
@@ -24,19 +25,17 @@ public class NetCanvas : UserControl{
     /**/
     public NetCanvas()
     {
-      this.Anchor = ((AnchorStyles)((((AnchorStyles.Top | AnchorStyles.Bottom)| AnchorStyles.Left)| AnchorStyles.Right)));
-      this.Location = new Point(1, 1);
+      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+      this.AutoScaleDimensions = new SizeF(100F,100F);
+      this.Anchor = ((AnchorStyles)((((AnchorStyles.Top | AnchorStyles.Bottom) | AnchorStyles.Left) | AnchorStyles.Right)));
       this.Name = "NetCanvas";
-      this.Size = new Size(597, 226);
-      //this.Size = new Size(Parent.ClientRectangle.Size.Height, Parent.ClientRectangle.Size.Width); Parent=null!!!
       _gridStep = 30;
       this.BackColor = Color.FromArgb(0,50,50,50);
       this.BorderStyle = BorderStyle.FixedSingle;
 
+
       /**/
       this.SetStyle( ControlStyles.AllPaintingInWmPaint |  ControlStyles.UserPaint |  ControlStyles.DoubleBuffer, true);
-
-      //selectionController = new SelectionController();
 
       /**/
       this.Paint += Draw;
@@ -50,54 +49,69 @@ public class NetCanvas : UserControl{
       this.ParentChanged    += ParentChangedHandler;
     }
 
-public NetCanvas(PetriNet _net):this(){
+    public NetCanvas(PetriNet _net):this()
+    {
       Net = _net;
       Net.Canvas = this;
     }
 
     /**/
-    public PetriNet Net{
-      get{
+    public PetriNet Net
+    {
+      get
+      {
         return net;
       }
-      private set{
+      private set
+      {
         if(net != null)
-      {
-        net.Save -= LinkedNetSaveHandler;
-        net.Change -= LinkedNetChangeHandler;
+        {
+          net.Save -= LinkedNetSaveHandler;
+          net.Change -= LinkedNetChangeHandler;
+        }
+        net = value;
+        if(net != null)
+        {
+          net.Save += LinkedNetSaveHandler;
+          net.Change += LinkedNetChangeHandler;
+        }
       }
-      net = value;
-      if(net != null)
+    }
+
+    public Rectangle SelectedRectangle
+    {
+      get
       {
-        net.Save += LinkedNetSaveHandler;
-        net.Change += LinkedNetChangeHandler;
+        return selectedRectangle;
+      }
+      private set
+      {
+        selectedRectangle = value;
       }
     }
-  }
 
-  public Rectangle SelectedRectangle{
-    get{
-      return selectedRectangle;
+    /**/
+    public event CanvasMouseEventHandler CanvasMouseClick;
+    public event CanvasMouseEventHandler CanvasMouseMove;
+    public event CanvasMouseEventHandler CanvasMouseDown;
+    public event CanvasMouseEventHandler CanvasMouseUp;
+  
+    public event RegionSelectionEventHandler RegionSelectionStart;
+    public event RegionSelectionEventHandler RegionSelectionEnd;
+    public event RegionSelectionEventHandler RegionSelectionUpdate;
+  
+    public event SaveEventHandler LinkedNetSave;
+    public event EventHandler     LinkedNetChange;
+    
+    protected override void OnLoad( 	EventArgs e)
+    {
+      base.OnLoad(e);
+      (Parent as TabPageForNet).Resize += ParentResizeHandler;
+      SetSize();
     }
-    private set{
-      selectedRectangle = value;
-    }
-  }
-
-  /**/
-  public event CanvasMouseEventHandler CanvasMouseClick;
-  public event CanvasMouseEventHandler CanvasMouseMove;
-  public event CanvasMouseEventHandler CanvasMouseDown;
-  public event CanvasMouseEventHandler CanvasMouseUp;
-
-  public event RegionSelectionEventHandler RegionSelectionStart;
-  public event RegionSelectionEventHandler RegionSelectionEnd;
-  public event RegionSelectionEventHandler RegionSelectionUpdate;
-
-  public event SaveEventHandler LinkedNetSave;
-  public event EventHandler     LinkedNetChange;
-
-  protected override void OnPaintBackground(PaintEventArgs e){
+  
+    protected override void OnPaintBackground(PaintEventArgs e)
+    {
       //Don't allow the background to paint
       using(PreciseTimer pr = new PreciseTimer("NetCanvas.OnPaintBackground")){
         Graphics dc = e.Graphics;
@@ -126,7 +140,8 @@ public NetCanvas(PetriNet _net):this(){
       }
     }
 
-    public void Draw(object sender, PaintEventArgs e){
+    public void Draw(object sender, PaintEventArgs e)
+    {
       Graphics dc = e.Graphics;
       dc.SmoothingMode = SmoothingMode.HighQuality;
       Pen RedPen = new Pen(Color.Red, 1);
@@ -284,9 +299,32 @@ public NetCanvas(PetriNet _net):this(){
 
     private void LinkedNetChangeHandler(object sender, EventArgs args)
     {
+      //PetriNet net = sender as PetriNet;
+      SetSize();
       OnLinkedNetChange(args);
     }
-
+    
+    protected void SetSize()
+    {
+      int w_ = 0,
+          h_ = 0;
+      if(net.Width >= Parent.ClientRectangle.Width)
+        w_ = net.Width;
+      else
+        w_ = Parent.ClientRectangle.Width;
+      
+      if(net.Height >= Parent.ClientRectangle.Height)
+        h_ =  net.Height;
+      else
+        h_ = Parent.ClientRectangle.Height;
+      this.Size = new Size(w_,h_);
+    }
+    
+    private void ParentResizeHandler(object sender, EventArgs args)
+    {
+      SetSize();
+    }
+    
     protected override void OnParentChanged(EventArgs e)
     {
       if(Parent != null)
@@ -296,3 +334,4 @@ public NetCanvas(PetriNet _net):this(){
     }
   }
 }
+

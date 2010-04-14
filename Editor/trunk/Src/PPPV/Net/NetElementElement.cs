@@ -7,17 +7,20 @@ using System.Xml.Serialization;
 namespace PPPV.Net {
 
    [Serializable()]
-   public abstract class NetElementElement: GraphicalElement {
+   public abstract class NetElementElement: GraphicalElement
+   {
       /*Поля*/
       [XmlIgnore]
       protected GraphicalElement parent;
 
       /*Конструкторы*/
-      public NetElementElement(int x_, int y_, int width_, int height_, bool sizeable_):base(x_, y_, width_, height_, sizeable_){
+      public NetElementElement(int x_, int y_, int width_, int height_, bool sizeable_):base(x_, y_, width_, height_, sizeable_)
+      {
       }
 
       /*Свойства*/
-      public GraphicalElement ParentNetElement{
+      public GraphicalElement ParentNetElement
+      {
          get{
             return parent;
          }
@@ -39,16 +42,19 @@ namespace PPPV.Net {
       }
 
       /*Вся внутренняя подготовка перед удалением элемента сети*/
-      public override void PrepareToDeletion(){
+      public override void PrepareToDeletion()
+      {
          /*Отпишемся от всех событый*/
          ParentNetElement = null;
       }
 
-      protected override void ShowSelectionMarker(Graphics dc){
+      protected override void ShowSelectionMarker(Graphics dc)
+      {
 
       }
 
-      protected virtual void MoveHandler(object sender, MoveEventArgs args){
+      protected virtual void MoveHandler(object sender, MoveEventArgs args)
+      {
 
       }
    }
