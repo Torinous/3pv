@@ -1,4 +1,4 @@
-﻿<Project  xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="CoreBuild">
+<Project  xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="CoreBuild">
 
    <PropertyGroup>
       <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -52,7 +52,11 @@
       <EmbeddedResource Include="$(ResourcesDir)Copy.png" />
       <EmbeddedResource Include="$(ResourcesDir)Paste.png" />
       <EmbeddedResource Include="$(ResourcesDir)Delete.png" />
+      <EmbeddedResource Include="$(ResourcesDir)Zoom.png" />
+      <EmbeddedResource Include="$(ResourcesDir)Zoom in.png" />
+      <EmbeddedResource Include="$(ResourcesDir)Zoom out.png" />
    </ItemGroup>
+
    <ItemGroup>
       <AssemblyInfo Include="$(SrcDir)**\AssemblyInfo.cs"  />
    </ItemGroup>

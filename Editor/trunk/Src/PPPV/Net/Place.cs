@@ -41,31 +41,29 @@ namespace PPPV.Net
       private set
       {
         if(tokens != null)
-      {
-        tokens.Change -= TokensListChangeHandler;
+        {
+          tokens.Change -= TokensListChangeHandler;
+        }
+        tokens = value;
+        if(tokens != null)
+        {
+          tokens.Change += TokensListChangeHandler;
+        }
+        OnChange(new EventArgs());
       }
-      tokens = value;
-      if(tokens != null)
+    }
+
+    public override Point Center
+    {
+      get
       {
-        tokens.Change += TokensListChangeHandler;
+        return new Point(X + (int)Width/2, Y + (int)Height/2);
       }
-      OnChange(new EventArgs());
     }
-  }
 
-  public override Point Center
-  {
-    get
+    public override void Draw(object sender, PaintEventArgs e)
     {
-      return new Point(X + (int)Width/2, Y + (int)Height/2);
-    }
-  }
-
-  public override void Draw(object sender, PaintEventArgs e)
-    {
-
       base.Draw(sender,e);
-
       Graphics dc = e.Graphics;
       dc.SmoothingMode = SmoothingMode.HighQuality;
       Pen blackPen = new Pen(Color.FromArgb(255,0,0,0));

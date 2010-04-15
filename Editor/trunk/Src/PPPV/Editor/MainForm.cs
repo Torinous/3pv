@@ -20,6 +20,7 @@ namespace PPPV.Editor
     private EditorToolStrip fileToolStrip;
     private EditorToolStrip toolToolStrip;
     private EditorToolStrip editToolStrip;
+    private EditorToolStrip viewToolStrip;
     
 
     private StatusStrip _statusStrip;
@@ -100,6 +101,10 @@ namespace PPPV.Editor
                                                          new PasteCommand(),
                                                          new DeleteCommand()
                                                        );
+      this.viewToolStrip          = new EditorToolStrip( new ZoomInCommand(),
+                                                         new ZoomOutCommand()
+                                                       );
+      
       /*Статус строка*/
       this._statusStrip       = new StatusStrip();
 
@@ -142,8 +147,6 @@ namespace PPPV.Editor
       //
       // Form1
       //
-      //this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-      //this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(599, 299);
       this.Name = "MainForm";
       this.Text = "3Pv:Editor " + App.AssemblyVersion;
@@ -158,6 +161,7 @@ namespace PPPV.Editor
       this.Controls.Add(this._statusStrip);
       this.Controls.Add(this.menuStrip);
 
+      this.toolToolStripContainer.TopToolStripPanel.Controls.Add(this.viewToolStrip);
       this.toolToolStripContainer.TopToolStripPanel.Controls.Add(this.toolToolStrip);
       this.toolToolStripContainer.TopToolStripPanel.Controls.Add(this.editToolStrip);
       this.toolToolStripContainer.TopToolStripPanel.Controls.Add(this.fileToolStrip);

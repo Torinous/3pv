@@ -25,6 +25,8 @@ public class MainMenuStrip : MenuStrip
     public EditorToolStripMenuItem toolStripMenuDelete;
 
     public EditorToolStripMenuItem toolStripMenuView;
+    public EditorToolStripMenuItem toolStripMenuZoomIn;
+    public EditorToolStripMenuItem toolStripMenuZoomOut;
     
     public EditorToolStripMenuItem toolStripMenuNet;
     public EditorToolStripMenuItem toolStripMenuPointer;
@@ -65,6 +67,8 @@ public class MainMenuStrip : MenuStrip
       toolStripMenuDelete  = new EditorToolStripMenuItem( new DeleteCommand() );
       
       toolStripMenuView    = new EditorToolStripMenuItem( );
+      toolStripMenuZoomIn  = new EditorToolStripMenuItem( new ZoomInCommand() );
+      toolStripMenuZoomOut = new EditorToolStripMenuItem( new ZoomOutCommand() );
       
       toolStripMenuNet          = new EditorToolStripMenuItem( );
       toolStripMenuPointer      = new EditorToolStripMenuItem( new SelectToolCommand( PointerTool.Instance ) );
@@ -100,6 +104,9 @@ public class MainMenuStrip : MenuStrip
 
       this.Items.Add(this.toolStripMenuView);
       this.toolStripMenuView.Name = this.toolStripMenuView.Text = "Вид";
+      this.toolStripMenuView.DropDownItems.Add(this.toolStripMenuZoomIn);
+      this.toolStripMenuView.DropDownItems.Add(this.toolStripMenuZoomOut);
+      this.toolStripMenuView.DropDownItems.Add(new ToolStripSeparator());
 
       this.Items.Add(this.toolStripMenuNet);
       this.toolStripMenuNet.Name = this.toolStripMenuNet.Text = "Сеть";

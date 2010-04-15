@@ -13,32 +13,31 @@ namespace PPPV.Editor
 {
   public class NetCanvas : UserControl
   {
-    /**/
     private PetriNet net;
     private int _gridStep;
     //private SelectionController selectionController;
-    /**/
     private Rectangle selectedRectangle;
     private Point selectFrom;
     private bool isSelectionActive = false;
+    private Matrix scaleMatrix;
+    private Single scaleAmount;
 
     /**/
     public NetCanvas()
     {
-      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-      this.AutoScaleDimensions = new SizeF(100F,100F);
       this.Anchor = ((AnchorStyles)((((AnchorStyles.Top | AnchorStyles.Bottom) | AnchorStyles.Left) | AnchorStyles.Right)));
       this.Name = "NetCanvas";
       _gridStep = 30;
       this.BackColor = Color.FromArgb(0,50,50,50);
       this.BorderStyle = BorderStyle.FixedSingle;
-
-
+      
+      ScaleMatrix = new Matrix();
+      ScaleAmount = 1.0F;
+      ScaleMatrix.Scale(ScaleAmount, ScaleAmount);
       /**/
       this.SetStyle( ControlStyles.AllPaintingInWmPaint |  ControlStyles.UserPaint |  ControlStyles.DoubleBuffer, true);
 
       /**/
-      this.Paint += Draw;
       this.CanvasMouseClick += CanvasMouseClickHandler;
       this.CanvasMouseMove  += CanvasMouseMoveHandler;
       //this.CanvasMouseMove  += selectionController.CanvasMouseMoveHandler;
@@ -55,7 +54,32 @@ namespace PPPV.Editor
       Net.Canvas = this;
     }
 
-    /**/
+    public Matrix ScaleMatrix
+    {
+      get
+      {
+        return scaleMatrix;
+      }
+      set
+      {
+        scaleMatrix = value;
+      }
+    }
+    
+    public Single ScaleAmount
+    {
+      get
+      {
+        return scaleAmount;
+      }
+      set
+      {
+        scaleAmount = value;
+        ScaleMatrix = new Matrix();
+        ScaleMatrix.Scale(ScaleAmount, ScaleAmount);
+      }
+    }
+
     public PetriNet Net
     {
       get
@@ -113,23 +137,37 @@ namespace PPPV.Editor
     protected override void OnPaintBackground(PaintEventArgs e)
     {
       //Don't allow the background to paint
-      using(PreciseTimer pr = new PreciseTimer("NetCanvas.OnPaintBackground")){
+      using(PreciseTimer pr = new PreciseTimer("NetCanvas.OnPaintBackground"))
+      {
+        Point[] p = {new Point( e.ClipRectangle.Left, e.ClipRectangle.Top),
+                     new Point( e.ClipRectangle.Right, e.ClipRectangle.Bottom)};
+        Matrix mi = (Matrix)ScaleMatrix.Clone();
+        mi.Invert();
+        mi.TransformPoints(p);
+        Rectangle newClipRectangle = new Rectangle(p[0].X, p[0].Y, p[1].X-p[0].X,p[1].Y-p[0].Y);
         Graphics dc = e.Graphics;
+        e.Graphics.Transform = ScaleMatrix;
         Pen GrayPen = new Pen(Color.FromArgb(255,170,170,170), 1);
         dc.SmoothingMode = SmoothingMode.HighQuality;
         dc.Clear(Color.White);
         int x,y;
-        y = _gridStep*((e.ClipRectangle.Top-1)/_gridStep) + _gridStep;
-        x = _gridStep*((e.ClipRectangle.Left-1)/_gridStep) + _gridStep;
-        for(;y<=e.ClipRectangle.Bottom;y+=_gridStep)
+        y = _gridStep *((newClipRectangle.Top-1)/_gridStep) + _gridStep;
+        x = _gridStep *((newClipRectangle.Left-1)/_gridStep) + _gridStep;
+        for(; y<=newClipRectangle.Bottom; y+=_gridStep)
         {
-          dc.DrawLine(GrayPen,e.ClipRectangle.Left,y,e.ClipRectangle.Right,y);
+          dc.DrawLine(GrayPen, newClipRectangle.Left, y, newClipRectangle.Right, y);
         }
-        for(;x<=e.ClipRectangle.Right;x+=_gridStep)
+        for(;x<=newClipRectangle.Right; x+=_gridStep)
         {
-          dc.DrawLine(GrayPen,x,e.ClipRectangle.Top,x,e.ClipRectangle.Bottom);
+          dc.DrawLine(GrayPen, x, newClipRectangle.Top, x, newClipRectangle.Bottom);
         }
       }
+    }
+    
+    protected override void OnPaint(PaintEventArgs e)
+    {
+      e.Graphics.Transform = ScaleMatrix;
+      base.OnPaint(e);
     }
 
     private void ParentChangedHandler(object sender, EventArgs arg){
@@ -138,15 +176,6 @@ namespace PPPV.Editor
       {
         f.KeyDown += CanvasKeyDownHandler;
       }
-    }
-
-    public void Draw(object sender, PaintEventArgs e)
-    {
-      Graphics dc = e.Graphics;
-      dc.SmoothingMode = SmoothingMode.HighQuality;
-      Pen RedPen = new Pen(Color.Red, 1);
-
-      dc.DrawRectangle(RedPen, SelectedRectangle);
     }
 
     protected override void OnMouseClick(System.Windows.Forms.MouseEventArgs e)
@@ -177,7 +206,11 @@ namespace PPPV.Editor
     {
       if(CanvasMouseClick != null)
       {
-        CanvasMouseEventArgs arg = new CanvasMouseEventArgs(_arg);
+        Point[] p = {_arg.Location};
+        Matrix mi = (Matrix)ScaleMatrix.Clone();
+        mi.Invert();
+        mi.TransformPoints(p);
+        CanvasMouseEventArgs arg = new CanvasMouseEventArgs(_arg, p[0]);
         CanvasMouseClick(this,arg);
       }
     }
@@ -186,7 +219,11 @@ namespace PPPV.Editor
     {
       if(CanvasMouseMove != null)
       {
-        CanvasMouseEventArgs arg = new CanvasMouseEventArgs(_arg);
+        Point[] p = {_arg.Location};
+        Matrix mi = (Matrix)ScaleMatrix.Clone();
+        mi.Invert();
+        mi.TransformPoints(p);
+        CanvasMouseEventArgs arg = new CanvasMouseEventArgs(_arg, p[0]);
         CanvasMouseMove(this,arg);
       }
     }
@@ -195,7 +232,11 @@ namespace PPPV.Editor
     {
       if(CanvasMouseDown != null)
       {
-        CanvasMouseEventArgs arg = new CanvasMouseEventArgs(_arg);
+        Point[] p = {_arg.Location};
+        Matrix mi = (Matrix)ScaleMatrix.Clone();
+        mi.Invert();
+        mi.TransformPoints(p);
+        CanvasMouseEventArgs arg = new CanvasMouseEventArgs(_arg, p[0]);
         CanvasMouseDown(this,arg);
       }
     }
@@ -204,13 +245,18 @@ namespace PPPV.Editor
     {
       if(CanvasMouseUp != null)
       {
-        CanvasMouseEventArgs arg = new CanvasMouseEventArgs(_arg);
+        Point[] p = {_arg.Location};
+        Matrix mi = (Matrix)ScaleMatrix.Clone();
+        mi.Invert();
+        mi.TransformPoints(p);
+        CanvasMouseEventArgs arg = new CanvasMouseEventArgs(_arg, p[0]);
         CanvasMouseUp(this,arg);
       }
     }
 
 
-    private void OnCanvasRegionSelectionStart(){
+    private void OnCanvasRegionSelectionStart()
+    {
       if(RegionSelectionStart != null)
       {
         RegionSelectionEventArgs args = new RegionSelectionEventArgs();
@@ -306,15 +352,19 @@ namespace PPPV.Editor
     
     protected void SetSize()
     {
-      int w_ = 0,
-          h_ = 0;
-      if(net.Width >= Parent.ClientRectangle.Width)
-        w_ = net.Width;
+      int w_ = 0, h_ = 0;
+      Point[] p = {new Point(net.Width, net.Height)};
+      Matrix mi = (Matrix)ScaleMatrix.Clone();
+      //mi.Invert();
+      mi.TransformPoints(p);
+          
+      if(p[0].X >= Parent.ClientRectangle.Width)
+        w_ = p[0].X;
       else
         w_ = Parent.ClientRectangle.Width;
       
-      if(net.Height >= Parent.ClientRectangle.Height)
-        h_ =  net.Height;
+      if(p[0].Y >= Parent.ClientRectangle.Height)
+        h_ =  p[0].Y;
       else
         h_ = Parent.ClientRectangle.Height;
       this.Size = new Size(w_,h_);
@@ -331,6 +381,12 @@ namespace PPPV.Editor
       {
       }
       base.OnParentChanged(e);
+    }
+
+    public override void Refresh()
+    {
+      SetSize();
+      base.Refresh();
     }
   }
 }
