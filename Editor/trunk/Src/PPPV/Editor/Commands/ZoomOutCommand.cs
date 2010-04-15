@@ -40,7 +40,7 @@ namespace PPPV.Editor.Commands
     
     public override Image GetPictogram()
     {
-      return Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Zoom in.png"), true);
+      return Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Zoom out.png"), true);
     }
   }
 }

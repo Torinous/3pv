@@ -170,6 +170,7 @@ public class EditorApplication : ApplicationContext
     {
       
     }
+    
     public void CloseNet(PetriNet net)
     {
       if(this.MainFormInst.TabControl.SelectedIndex != -1)

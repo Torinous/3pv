@@ -120,16 +120,6 @@ namespace PPPV.Net
         type = value;
       }
     }
-    /*public ArrayList CurrentSelected{
-      get
-      {
-        return currentSelectedObjects;
-      }
-      private set
-      {
-        currentSelectedObjects = value;
-      }
-    }*/
 
     public Editor.NetCanvas Canvas
     {
@@ -143,7 +133,6 @@ namespace PPPV.Net
         {
           canvas.Paint                  -= CanvasPaintHandler;
           canvas.Paint                  -= CanvasPaintRetranslator;
-          canvas.Load                   -= LoadHandler;
         }
 
         canvas = value;
@@ -152,7 +141,6 @@ namespace PPPV.Net
         {
           canvas.Paint                  += CanvasPaintHandler;
           canvas.Paint                  += CanvasPaintRetranslator;
-          canvas.Load                   += LoadHandler;
         }
       }
     }
@@ -406,36 +394,12 @@ namespace PPPV.Net
       return false;
     }
 
-    private void MenuSaveHandler(object sender, System.EventArgs args)
-    {
-      if(Canvas.Visible)
-      {
-        if(SaveNet())
-          OnSave(new SaveEventArgs(LinkedFile, this.ID));
-      }
-    }
-
-    private void MenuSaveAsHandler(object sender, System.EventArgs args)
-    {
-      if(Canvas.Visible)
-      {
-        if(SaveNetAs())
-          OnSave(new SaveEventArgs(LinkedFile, this.ID));
-      }
-    }
-
     private void NetElementChangeHandler(object sender, System.EventArgs args)
     {
       OnChange(new EventArgs());
     }
 
-    private void LoadHandler(object sender, System.EventArgs args)
-    {
-      ((canvas.FindForm() as MainForm).MainMenuStrip as MainMenuStrip).toolStripMenuSave.Click   += MenuSaveHandler;
-      ((canvas.FindForm() as MainForm).MainMenuStrip as MainMenuStrip).toolStripMenuSaveAs.Click += MenuSaveAsHandler;
-    }
-
-    private bool SaveNet()
+    public bool SaveNet()
     {
       bool result = false;
       StreamWriter stream;
@@ -461,7 +425,8 @@ namespace PPPV.Net
       return result;
     }
 
-    private bool SaveNetAs(){
+    public bool SaveNetAs()
+    {
       bool result = false;
       StreamWriter stream;
       string fileName = "";

@@ -22,7 +22,8 @@ namespace PPPV.Editor.Commands
     public override void Execute()
     {
       EditorApplication app = EditorApplication.Instance;
-      app.SaveAsNet();
+      if(app.ActiveNet != null)
+        app.ActiveNet.SaveNetAs();
     }
 
     public override void UnExecute()
