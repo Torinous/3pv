@@ -10,41 +10,21 @@ using PPPV.Utils;
 namespace PPPV.Net
 {
   [Serializable()]
-  public abstract class GraphicalElement: IDrawable
+  public abstract class Graphical
   {
     /*Поля*/
     protected Point location;
+    protected Size size;
     protected Region _hitRegion; //регион где проверяется клик в объект
     protected string _name;
-    protected bool selected;
-    protected Point dragPoint;
-    protected Pilon sizeController;
-    protected bool sizeable;
 
     /*Конструкторы*/
-    public GraphicalElement(int x_, int y_, int width_, int height_, bool sizeable_) {
-      location = new Point(0,0);
-      dragPoint = new Point(0,0);
+    public Graphical(Point p)
+    {
+      //location = new Point(0,0);
       HitRegion = new Region();
-
-      if(sizeable = sizeable_)
-      {
-        sizeController = new Pilon( X + width_, Y + height_, this);
-        sizeController.Move += MoveSizeControllerHandler;
-      }
-
-      Location = new Point(x_-(int)(width_/2), (y_-(int)(height_/2)));
-    }
-
-    /*Аксессоры доступа*/
-    protected bool Selected{
-      get{
-        return selected;
-      }
-      set{
-        selected = value;
-        OnSelectionChange(new SelectionChangeEventArgs(selected));
-      }
+      //Location = new Point(x_-(int)(width_/2), (y_-(int)(height_/2)));
+      Location = p;
     }
 
     public Point Location
@@ -126,32 +106,29 @@ namespace PPPV.Net
       get;
     }
 
-    public virtual int Height
+    public virtual Size Size
     {
-      get{
-        return sizeController.Y - this.Y;
+      get
+      {
+        return size;
       }
-    }
-
-    public virtual int Width
-    {
-      get{
-        return sizeController.X - this.X;
+      protected set
+      {
+        Size oldSize = size;
+        size = value;
+        OnResize(new ResizeEventArgs(oldSize, size));
       }
     }
 
     /*События*/
     public virtual event MoveEventHandler            Move;
-    public virtual event SelectionChangeEventHandler SelectionChange;
-
-    public virtual event MouseEventHandler           MouseMove;
-    public virtual event MouseEventHandler           MouseDown;
     public virtual event PaintEventHandler           Paint;
     public virtual event ResizeEventHandler          Resize;
 
     public virtual event EventHandler                Change;
 
-    protected virtual void OnChange(EventArgs args){
+    protected virtual void OnChange(EventArgs args)
+    {
       if(Change != null)
       {
         Change(this, args);
@@ -176,20 +153,6 @@ namespace PPPV.Net
 
     /* Абстрактые методы класса */
 
-    protected virtual void OnMouseMove(MouseEventArgs e){
-      if(MouseMove != null)
-      {
-        MouseMove(this,e);
-      }
-    }
-
-    protected virtual void OnMouseDown(MouseEventArgs e){
-      if(MouseDown != null)
-      {
-        MouseDown(this,e);
-      }
-    }
-
     private void OnPaint(PaintEventArgs e){
       if(Paint != null)
       {
@@ -197,115 +160,31 @@ namespace PPPV.Net
       }
     }
 
-    public virtual bool IsIntersectWith(Point _point){
+    public virtual bool Intersect(Point _point)
+    {
       return HitRegion.IsVisible(_point);
     }
 
-    public virtual bool IsIntersectWith(Rectangle _rectangle){
+    public virtual bool Intersect(Rectangle _rectangle)
+    {
       return HitRegion.IsVisible(_rectangle);
     }
 
-    public virtual bool IsIntersectWith(Region _region){
+    public virtual bool Intersect(Region _region)
+    {
       /*Region tmp = new Region(HitRegion);
       tmp.Intersect(_region);
       return tmp.IsEmpty;*/
       return false;
     }
 
-    protected virtual void MouseClickHandler(object sender, MouseEventArgs args){
-    }
-
-    protected virtual void MouseMoveHandler(object sender, MouseEventArgs args){
-      if(args.Button == MouseButtons.Left)
-      {
-        //switch(args.currentTool)
-        //{
-        //case Editor.ToolEnum.Pointer:
-          if(Selected && !args.alreadyPerform)
-          {
-            this.MoveBy(new Point(args.Location.X - Location.X - dragPoint.X, args.Location.Y - Location.Y - dragPoint.Y));
-            //(sender as PetriNet).Canvas.Invalidate();
-          }
-          //break;
-        /*case Editor.ToolEnum.Place:
-          break;
-        case Editor.ToolEnum.Transition:
-          break;
-        case Editor.ToolEnum.Arc:
-          break;
-        default:
-          break;
-        }*/
-      }
-    }
-
-    protected virtual void MouseDownHandler(object sender, MouseEventArgs args){
-      if(args.Button == MouseButtons.Left)
-      {
-        /*switch(args.currentTool)
-        {
-        case Editor.ToolEnum.Pointer:*/
-          if(Selected = this.IsIntersectWith(new Point(args.X,args.Y)) && !args.alreadyPerform)
-          {
-            dragPoint.X = args.X - Location.X;
-            dragPoint.Y = args.Y - Location.Y;
-            args.alreadyPerform = true;
-            DebugAssistant.LogTrace("Here");
-            //(sender as PetriNet).Canvas.Invalidate();
-          }
-          /*break;
-        case Editor.ToolEnum.Place:
-          break;
-        case Editor.ToolEnum.Transition:
-          break;
-        case Editor.ToolEnum.Arc:
-          break;
-        default:
-          break;
-        }*/
-      }
-    }
-
-    protected virtual void MouseUpHandler(object sender, MouseEventArgs args){
-    }
-
-    protected virtual void RegionSelectionStartHandler(object sender, RegionSelectionEventArgs args){
-    }
-
-    protected virtual void RegionSelectionUpdateHandler(object sender, RegionSelectionEventArgs args){
-    }
-
-    protected virtual void RegionSelectionEndHandler(object sender, RegionSelectionEventArgs args){
-    }
-
-    protected virtual void KeyDownHandler(object sender, KeyEventArgs arg){
-    }
-
     protected abstract void UpdateHitRegion();
 
-    protected virtual void ShowSelectionMarker(Graphics dc)
-    {
-      dc.SmoothingMode = SmoothingMode.HighQuality;
-      Pen RedPen = new Pen(Color.FromArgb(255,255,0,0));
-      RectangleF tmp = HitRegion.GetBounds(dc);
-      dc.DrawRectangle(RedPen, Rectangle.Inflate(Rectangle.Ceiling(HitRegion.GetBounds(dc)),2,2));
-    }
+    public abstract void Draw(object sender, PaintEventArgs e);
 
-    public virtual void Draw(object sender, PaintEventArgs e){
-
-      Graphics dc = e.Graphics;
-      dc.SmoothingMode = SmoothingMode.HighQuality;
-
-      /*Кисти*/
-      SolidBrush blueBrush = new SolidBrush(Color.Blue);
-
-      //dc.FillRegion(blueBrush,HitRegion);
-
-      if(Selected)
-        ShowSelectionMarker(e.Graphics);
-    }
-
-    public virtual Point GetPilon(Point from, NetCanvas on)
+    public abstract Point GetPilon(Point from);
+    
+    protected virtual Point GetPilon(Point from, NetCanvas on)
     {
       Graphics g;
       Point pilon = new Point();
@@ -366,19 +245,13 @@ namespace PPPV.Net
       return pilon;
     }
 
-    protected void PaintRetranslator(object sender, PaintEventArgs args){
+    protected void PaintRetranslator(object sender, PaintEventArgs args)
+    {
       OnPaint(args);
     }
 
-    protected void MouseMoveRetranslator(object sender, MouseEventArgs args){
-      OnMouseMove(args);
-    }
-
-    protected void MouseDownRetranslator(object sender, MouseEventArgs args){
-      OnMouseDown(args);
-    }
-
-    protected void OnMove(MoveEventArgs args){
+    protected void OnMove(MoveEventArgs args)
+    {
       UpdateHitRegion();
       if(Move != null)
       {
@@ -395,20 +268,6 @@ namespace PPPV.Net
         Resize(this,args);
       }
       OnChange(new EventArgs());
-    }
-
-    protected void OnSelectionChange(SelectionChangeEventArgs args)
-    {
-      if(SelectionChange != null)
-      {
-        SelectionChange(this,args);
-      }
-    }
-
-    protected virtual void MoveSizeControllerHandler(object sender, MoveEventArgs arg)
-    {
-      ResizeEventArgs arg2 = new ResizeEventArgs(new Point( arg.from.X, arg.from.Y ), new Point(arg.to.X,arg.to.Y));
-      OnResize(arg2);
     }
 
     /*Вся внутренняя подготовка перед удалением элемента сети*/

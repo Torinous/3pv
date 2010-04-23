@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using System.IO;
 using System.Drawing;
@@ -131,7 +131,7 @@ namespace PPPV.Net
       {
         if(canvas != null)
         {
-          canvas.Paint                  -= CanvasPaintHandler;
+          //canvas.Paint                  -= CanvasPaintHandler;
           canvas.Paint                  -= CanvasPaintRetranslator;
         }
 
@@ -139,7 +139,7 @@ namespace PPPV.Net
 
         if(canvas != null)
         {
-          canvas.Paint                  += CanvasPaintHandler;
+          //canvas.Paint                  += CanvasPaintHandler;
           canvas.Paint                  += CanvasPaintRetranslator;
         }
       }
@@ -245,9 +245,6 @@ namespace PPPV.Net
 
     public event EventHandler Change;
     
-    private void CanvasPaintHandler(object sender, PaintEventArgs args)
-    {
-    }
     
     private void CanvasPaintRetranslator(object sender, PaintEventArgs args)
     {
@@ -287,54 +284,27 @@ namespace PPPV.Net
       }
     }
 
-    public NetElement AddPlace(Point position)
-    {
-      Place tmpPlace = new Place(position.X, position.Y);
-      return ElementPortal = tmpPlace;
-    }
-
-    public NetElement AddTransition(Point position)
-    {
-      Transition tmpTransition = new Transition(position.X, position.Y);
-      return ElementPortal = tmpTransition;
-    }
-
-    public NetElement AddArc(NetElement startElement)
-    {
-      Arc tmpArc = new Arc(startElement);
-      return ElementPortal = tmpArc;
-    }
-
-    /*public void Select(NetElement ob)
-    {
-      currentSelectedObjects.Add(ob);
-    }
-
-    public void Unselect(NetElement ob)
-    {
-      currentSelectedObjects.Remove(ob);
-    }*/
-
     public NetElement NetElementUnder(Point _p)
     {
       int i = 0;
       for(i=0;i<Transitions.Count;++i)
       {
-        if(((NetElement)Transitions[i]).IsIntersectWith(_p))
+        if(((Graphical)Transitions[i]).Intersect(_p))
         {
           return (NetElement)Transitions[i];
         }
       }
       for(i=0;i<Places.Count;++i)
       {
-        if(((NetElement)Places[i]).IsIntersectWith(_p))
+        DebugAssistant.LogTrace(_p.ToString());
+        if(((Graphical)Places[i]).Intersect(_p))
         {
           return (NetElement)Places[i];
         }
       }
       for(i=0;i<Arcs.Count;++i)
       {
-        if(((NetElement)Arcs[i]).IsIntersectWith(_p))
+        if(((Graphical)Arcs[i]).Intersect(_p))
         {
           return (NetElement)Arcs[i];
         }
@@ -348,38 +318,26 @@ namespace PPPV.Net
       int i = 0;
       for(i=0;i<Transitions.Count;++i)
       {
-        if(((NetElement)Transitions[i]).IsIntersectWith(selectedRectangle))
+        if(((NetElement)Transitions[i]).Intersect(selectedRectangle))
         {
           selectedObjects.Add((NetElement)Transitions[i]);
         }
       }
       for(i=0;i<Places.Count;++i)
       {
-        if(((NetElement)Places[i]).IsIntersectWith(selectedRectangle))
+        if(((NetElement)Places[i]).Intersect(selectedRectangle))
         {
           selectedObjects.Add((NetElement)Places[i]);
         }
       }
       for(i=0;i<Arcs.Count;++i)
       {
-        if(((NetElement)Arcs[i]).IsIntersectWith(selectedRectangle))
+        if(((NetElement)Arcs[i]).Intersect(selectedRectangle))
         {
           selectedObjects.Add((NetElement)Arcs[i]);
         }
       }
       return selectedObjects;
-    }
-
-    public bool HaveUnfinishedArcs()
-    {
-      for(int i=0; i<Arcs.Count; ++i)
-      {
-        if(((Arc)Arcs[i]).Unfinished)
-        {
-          return true;
-        }
-      }
-      return false;
     }
 
     public bool HaveArcBetween(NetElement from_, NetElement to_)
@@ -557,7 +515,8 @@ namespace PPPV.Net
         if(place.ID == ID_)
           return place;
       }
-      foreach(Transition transition in Transitions){
+      foreach(Transition transition in Transitions)
+      {
         if(transition.ID == ID_)
           return transition;
       }
@@ -575,8 +534,8 @@ namespace PPPV.Net
           testY = 0;
       foreach(Place place in Places)
       {
-        testX = place.X + place.Width;
-        testY = place.Y + place.Height;
+        testX = place.X + place.Size.Width;
+        testY = place.Y + place.Size.Height;
         if(testX > Width)
           Width = testX;
         if(testY > Height)
@@ -584,8 +543,8 @@ namespace PPPV.Net
       }
       foreach(Transition transition in Transitions)
       {
-        testX = transition.X + transition.Width;
-        testY = transition.Y + transition.Height;
+        testX = transition.X + transition.Size.Width;
+        testY = transition.Y + transition.Size.Height;
         if(testX > Width)
           Width = testX;
         if(testY > Height)

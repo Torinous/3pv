@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Diagnostics;
 using System.Threading;
@@ -112,7 +112,7 @@ public class EditorApplication : ApplicationContext
        {*/
       EditorApplication context = EditorApplication.Instance;
 
-      //Установим старторвый инструмент
+      //Установим стартовый инструмент
       (new SelectToolCommand(PointerTool.Instance)).Execute();
 
       Application.ThreadException += new ThreadExceptionEventHandler(new ThreadExceptionHandler().ApplicationThreadException);
@@ -147,28 +147,17 @@ public class EditorApplication : ApplicationContext
     {
       if(netStream != null)
       {
-        Net.PetriNet _net = new Net.PetriNet();
+        PetriNetWrapper _net = new PetriNetWrapper();
         XmlSerializer serealizer = new XmlSerializer(_net.GetType());
-        _net = (Net.PetriNet)serealizer.Deserialize(netStream);
+        _net = (PetriNetWrapper)serealizer.Deserialize(netStream);
         _net.LinkedFile = fileName;
         MainFormInst.TabControl.AddNewTab(_net);
       }
       else
       {
-        Net.PetriNet _net = new Net.PetriNet();
+        PetriNetWrapper _net = new PetriNetWrapper();
         MainFormInst.TabControl.AddNewTab(_net);
       }
-      
-    }
-    
-    public void SaveAsNet()
-    {
-      
-    }
-    
-    public void SaveNet()
-    {
-      
     }
     
     public void CloseNet(PetriNet net)

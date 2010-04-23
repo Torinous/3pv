@@ -15,7 +15,6 @@ namespace PPPV.Editor.Tools
     private Point lastMouseDownPoint;
     private bool isActive = false;
     private Rectangle selectedRectangle;
-    private SelectedNetObjectsList selectedObjects;
     private Point selectFrom;
     private static PointerTool instance;
 
@@ -43,6 +42,7 @@ namespace PPPV.Editor.Tools
         selectedRectangle = value;
       }
     }
+
     //cons
     private PointerTool()
     {
@@ -50,27 +50,27 @@ namespace PPPV.Editor.Tools
       Description = "Инструмент выбора и перемещения элементов сети";
       ShortcutKeys = Keys.Control|Keys.Shift|Keys.M;
       SelectedRectangle = new Rectangle( new Point(0,0), new Size(0,0));
-      selectedObjects = new SelectedNetObjectsList(20, this);
     }
     
     /*Методы*/
     public override void HandleMouseDown(object sender, System.Windows.Forms.MouseEventArgs args)
     {
+      PetriNetWrapper pnw = ((NetCanvas)sender).Net;
       lastMouseDownPoint = new Point(args.X, args.Y);
       if(args.Button == MouseButtons.Left)
       {
-        NetElement tmp = ((NetCanvas)sender).Net.NetElementUnder(new Point(args.X, args.Y));
+        NetElement tmp = pnw.NetElementUnder(new Point(args.X, args.Y));
         if(tmp!=null)
         {
-           if(!selectedObjects.Contains(tmp))
+           if(!pnw.SelectedObjects.Contains(tmp))
            {
-              selectedObjects.Clear();
-              selectedObjects.Add(tmp);
+              pnw.SelectedObjects.Clear();
+              pnw.SelectedObjects.Add(tmp);
            }
         }
         else
         {
-           selectedObjects.Clear();
+           pnw.SelectedObjects.Clear();
            isActive = true;
            selectFrom = new Point(args.X, args.Y);
         }
@@ -82,6 +82,7 @@ namespace PPPV.Editor.Tools
 
     public override void HandleMouseMove(object sender, System.Windows.Forms.MouseEventArgs args)
     {
+      PetriNetWrapper pnw = ((NetCanvas)sender).Net;
       if(args.Button == MouseButtons.Left)
       {
         if(isActive)
@@ -93,8 +94,8 @@ namespace PPPV.Editor.Tools
               startPoint.Y = args.Y;
            selectedRectangle.Location = startPoint;
            selectedRectangle.Size = new Size(Math.Abs(args.X-selectFrom.X), System.Math.Abs(args.Y-selectFrom.Y));
-           selectedObjects.Clear();
-           selectedObjects.AddRange(((NetCanvas)sender).Net.NetElementUnder(SelectedRectangle));
+           pnw.SelectedObjects.Clear();
+           pnw.SelectedObjects.AddRange(((NetCanvas)sender).Net.NetElementUnder(SelectedRectangle));
            ((NetCanvas)sender).Invalidate();
         }
         else
@@ -102,8 +103,9 @@ namespace PPPV.Editor.Tools
            Net.NetElement tmpEl;
            Point delta = new Point(args.X - lastMouseDownPoint.X, args.Y - lastMouseDownPoint.Y);
         
-           for(int i=0;i<selectedObjects.Count;++i) {
-              ((NetElement)selectedObjects[i]).MoveBy(delta);
+           for(int i=0;i<pnw.SelectedObjects.Count;++i)
+           {
+             ((NetElement)pnw.SelectedObjects[i]).MoveBy(delta);
            }
            ((NetCanvas)sender).Invalidate();
            lastMouseDownPoint.X = args.X;
@@ -142,14 +144,6 @@ namespace PPPV.Editor.Tools
       }
     }
 
-    public void DrawSelectionMarker(object sender, PaintEventArgs e)
-    {
-      Pen RedPen = new Pen(Color.Red, 1);
-      Graphics dc = e.Graphics;
-      RectangleF tmp = ((NetElement)sender).HitRegion.GetBounds(dc);
-      dc.DrawRectangle(RedPen, new Rectangle((int)tmp.X, (int)tmp.Y, (int)tmp.Width, (int)tmp.Height) );
-    }
-    
     public override Image GetPictogram()
     {
       return Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pointer.png"), true);      

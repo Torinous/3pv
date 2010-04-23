@@ -75,34 +75,9 @@ namespace PPPV.Editor.Tools
         PetriNet pn = (sender as Editor.NetCanvas).Net;
         NetElement clicked = pn.NetElementUnder(new Point(args.X,args.Y));
         clicked = (clicked is Arc) ? null : clicked;
-        if(clicked != null && !pn.HaveUnfinishedArcs())
-          pn.AddArc(clicked);
+        //if(clicked != null && !pn.HaveUnfinishedArcs())
+          //pn.AddArc(clicked);
         (sender as Editor.NetCanvas).Invalidate();
-        
-        //if(IsActive)
-        {
-           /*Point startPoint = new Point(selectFrom.X, selectFrom.Y);
-           if(arg.X < selectFrom.X)
-              startPoint.X = arg.X;
-           if(arg.Y < selectFrom.Y)
-              startPoint.Y = arg.Y;
-           selectedRectangle.Location = startPoint;
-           selectedRectangle.Size = new Size(Math.Abs(arg.X-selectFrom.X),Math.Abs(arg.Y-selectFrom.Y));
-           ((NetCanvas)sender).Invalidate();
-           selectedObjects = ((NetCanvas)sender).Net.NetElementUnder(SelectedRectangle);*/
-        }
-        //else
-        {
-           Net.NetElement tmpEl;
-           /*Point delta = new Point(arg.X - lastMouseDownPoint.X,arg.Y - lastMouseDownPoint.Y);
-        
-           for(int i=0;i<selectedObjects.Count;++i) {
-              ((NetElement)selectedObjects[i]).MoveBy(delta);
-           }
-           ((NetCanvas)sender).Invalidate();
-           lastMouseDownPoint.X = arg.X;
-           lastMouseDownPoint.Y = arg.Y;*/
-        }
       }
       base.HandleMouseMove(sender, args);
     }

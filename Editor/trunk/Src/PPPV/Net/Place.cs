@@ -20,14 +20,15 @@ namespace PPPV.Net
     private TokensList tokens;
 
     /*Конструкторы*/
-    public Place(int x_, int y_):base(x_, y_, 50, 50, true)
+    public Place(Point p):base(p)
     {
       _ID++;
       Name = ID = "P"+_ID;
+      Size = new Size(50, 50);
       tokens = new TokensList(10);
     }
 
-    public Place(XmlReader reader):this(0,0)
+    public Place(XmlReader reader):this(new Point(0,0))
     {
       ReadXml(reader);
     }
@@ -57,13 +58,12 @@ namespace PPPV.Net
     {
       get
       {
-        return new Point(X + (int)Width/2, Y + (int)Height/2);
+        return new Point(X + (int)Size.Width/2, Y + (int)Size.Height/2);
       }
     }
 
     public override void Draw(object sender, PaintEventArgs e)
     {
-      base.Draw(sender,e);
       Graphics dc = e.Graphics;
       dc.SmoothingMode = SmoothingMode.HighQuality;
       Pen blackPen = new Pen(Color.FromArgb(255,0,0,0));
@@ -77,12 +77,12 @@ namespace PPPV.Net
       Font font1 = new Font(fF_Arial, 16, FontStyle.Regular, GraphicsUnit.Pixel);
 
       GraphicsPath tmpPath = new GraphicsPath();
-      tmpPath.AddEllipse(X, Y, Width, Height);
+      tmpPath.AddEllipse(X, Y, Size.Width, Size.Height);
       Region fillRegion = new Region(tmpPath);
       dc.FillRegion(grayBrush, fillRegion);
-      dc.DrawEllipse(blackPen, X, Y, Width, Height);
-      dc.DrawString(Name, font1, blackBrush, X + (int)Width/2+5,Y-5);
-      dc.DrawString(Tokens.Count.ToString(), font1, blackBrush, X + (int)Width/2-10, Y + (int)Height/2-10);
+      dc.DrawEllipse(blackPen, X, Y, Size.Width, Size.Height);
+      dc.DrawString(Name, font1, blackBrush, X + (int)Size.Width/2+5,Y-5);
+      dc.DrawString(Tokens.Count.ToString(), font1, blackBrush, X + (int)Size.Width/2-10, Y + (int)Size.Height/2-10);
     }
 
     protected override void UpdateHitRegion()
@@ -91,46 +91,15 @@ namespace PPPV.Net
       {
         HitRegion.MakeEmpty();
         GraphicsPath tmpPath = new GraphicsPath();
-        tmpPath.AddEllipse(X, Y, Width, Height);
+        tmpPath.AddEllipse(X, Y, Size.Width, Size.Height);
         HitRegion.Union(tmpPath);
       }
     }
 
-    protected override void MouseClickHandler(object sender, MouseEventArgs args)
+    public override Point GetPilon(Point from)
     {
+      return this.GetPilon(from, this.ParentNet.Canvas);
     }
-
-    protected override void MouseMoveHandler(object sender, MouseEventArgs args)
-    {
-    }
-
-    protected override void MouseDownHandler(object sender, MouseEventArgs args)
-    {
-    }
-
-    protected override void MouseUpHandler(object sender, MouseEventArgs args)
-    {
-    }
-
-    protected override void RegionSelectionStartHandler(object sender, RegionSelectionEventArgs args)
-    {
-    }
-
-    protected override void RegionSelectionUpdateHandler(object sender, RegionSelectionEventArgs args)
-    {
-    }
-
-    protected override void RegionSelectionEndHandler(object sender, RegionSelectionEventArgs args)
-    {
-    }
-
-    protected override void KeyDownHandler(object sender, KeyEventArgs arg)
-    {
-    }
-
-    /*public override Point GetPilon(Point from, NetCanvas on){
-       
-  }*/
 
     private void TokensListChangeHandler(object sender, EventArgs args)
     {

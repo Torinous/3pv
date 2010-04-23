@@ -13,6 +13,14 @@ namespace PPPV.Editor.Commands
     //Данные
     private Tool tool;
 
+    //Акцессоры доступа
+    public Tool Tool
+    {
+      get
+      {
+        return tool;
+      }
+    }
     //Конструктор
     public SelectToolCommand(Tool t)
     {
@@ -28,7 +36,7 @@ namespace PPPV.Editor.Commands
       ToolController tc = PPPV.Editor.ToolController.Instance;
       tc.CurrentTool = tool;
       EditorApplication app = EditorApplication.Instance;
-      //app.MainFormInst.ToolToolStrip.CheckTool(tool.GetType());
+      app.MainFormInst.ToolToolStrip.CheckTool(this.tool.GetType());
     }
 
     public override void UnExecute()

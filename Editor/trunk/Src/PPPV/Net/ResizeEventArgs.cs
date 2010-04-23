@@ -4,16 +4,14 @@ using System.Windows.Forms;
 
 namespace PPPV.Net {
 
-  public class ResizeEventArgs{
-    public Point from, to;
+  public class ResizeEventArgs
+  {
+    public Size oldSize, newSize;
 
-    public ResizeEventArgs(Point start, Point stop){
-      from = new Point(0,0);
-      to = new Point(0,0);
-      from.X = start.X;
-      from.Y = start.Y;
-      to.X = stop.X;
-      to.Y = stop.Y;
+    public ResizeEventArgs(Size old_, Size new_)
+    {
+      oldSize = old_;
+      newSize = new_;
     }
   }
 }

@@ -40,7 +40,7 @@ public class TabControlForNets : TabControl
       return true;
     }
 
-    public NetCanvas AddNewTab(PetriNet _net)
+    public NetCanvas AddNewTab(PetriNetWrapper _net)
     {
       TabPageForNet tmpTabPage  = new TabPageForNet(_net);
       this.SuspendLayout();

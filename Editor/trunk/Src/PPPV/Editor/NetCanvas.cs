@@ -13,7 +13,7 @@ namespace PPPV.Editor
 {
   public class NetCanvas : UserControl
   {
-    private PetriNet net;
+    private PetriNetWrapper net;
     private int _gridStep;
     //private SelectionController selectionController;
     private Rectangle selectedRectangle;
@@ -48,7 +48,7 @@ namespace PPPV.Editor
       this.ParentChanged    += ParentChangedHandler;
     }
 
-    public NetCanvas(PetriNet _net):this()
+    public NetCanvas(PetriNetWrapper _net):this()
     {
       Net = _net;
       Net.Canvas = this;
@@ -80,7 +80,7 @@ namespace PPPV.Editor
       }
     }
 
-    public PetriNet Net
+    public PetriNetWrapper Net
     {
       get
       {

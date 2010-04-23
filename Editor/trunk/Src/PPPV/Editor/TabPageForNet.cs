@@ -14,7 +14,7 @@ namespace PPPV.Editor
     private bool netSaved;
 
     /*Конструктор*/
-    public TabPageForNet(PetriNet net):base()
+    public TabPageForNet(PetriNetWrapper net):base()
     {
       this.SetStyle( ControlStyles.AllPaintingInWmPaint |  ControlStyles.UserPaint |  ControlStyles.DoubleBuffer, true);
       this.Location = new Point(45, 45);
@@ -112,7 +112,7 @@ namespace PPPV.Editor
     }
     
 
-    private void InitializeComponent(PetriNet net)
+    private void InitializeComponent(PetriNetWrapper net)
     {
       this.SuspendLayout();
       this.Controls.Add(NetCanvas = new NetCanvas(net));

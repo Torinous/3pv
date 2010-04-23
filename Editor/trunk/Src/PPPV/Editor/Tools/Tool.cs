@@ -3,10 +3,11 @@ using System.Windows.Forms;
 
 using PPPV.Net;
 using PPPV.Editor;
+using PPPV.Editor.Commands;
 
 namespace PPPV.Editor.Tools
 {
-  public abstract class Tool 
+  public abstract class Tool
   {
     /*Данные*/
     private string name;
@@ -73,10 +74,8 @@ namespace PPPV.Editor.Tools
       /*Контекстное меню по умолчанию показывают все инструменты*/
       if(args.Button == MouseButtons.Right)
       {
-        ContextMenuController contextMenuController = new ContextMenuController(sender as Editor.NetCanvas);
-        PetriNet n = (sender as Editor.NetCanvas).Net;
-        NetElement contextMenuTarget = n.NetElementUnder(new Point(args.X, args.Y));
-        contextMenuController.Show( (sender as Editor.NetCanvas).PointToScreen(args.Location), contextMenuTarget, n);
+        ShowContextMenuCommand c = new ShowContextMenuCommand(sender as Editor.NetCanvas, args.Location);
+        c.Execute();
       }
     }
 

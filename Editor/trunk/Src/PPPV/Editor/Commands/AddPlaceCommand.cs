@@ -34,7 +34,7 @@ namespace PPPV.Editor.Commands
     //Методы
     public override void Execute()
     {
-      Net.AddPlace(Position);
+      Net.ElementPortal = new Place(new Point(Position.X, Position.Y));
     }
 
     public override void UnExecute()
