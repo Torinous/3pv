@@ -24,7 +24,7 @@ namespace PPPV.Editor
     {
       command = c_;
       this.Text = command.Name;
-      this.Image = command.GetPictogram();
+      this.Image = command.Pictogram;
       this.ToolTipText = command.Description;
       this.Size = new System.Drawing.Size(25,20);
       this.ShortcutKeys = command.ShortcutKeys;
@@ -38,7 +38,7 @@ namespace PPPV.Editor
       this.Click += ClickHandler;
     }
     
-    private void ClickHandler(object sender, EventArgs e)
+    protected void ClickHandler(object sender, EventArgs e)
     {
       if(command != null)
       {
@@ -47,7 +47,7 @@ namespace PPPV.Editor
       }
     }
 
-    private void SetShortcutString()
+    protected void SetShortcutString()
     {
       // testToolStripMenuItem имеет хоткей вида Ctrl+Oem5, я хочу сделать из него Ctrl+\
 

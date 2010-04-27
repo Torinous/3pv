@@ -10,47 +10,14 @@ namespace PPPV.Editor.Tools
   public abstract class Tool
   {
     /*Данные*/
-    private string name;
-    private string description;
-    private Keys shortcutKeys;
     
-    //Акцессоры
-    public string Name
-    {
-      get
-      {
-        return name;
-      }
-      set
-      {
-        name = value;
-      }
-    }
+    //Акцессоры доступа
+    public string Name;
+    public string Description;
+    public Keys ShortcutKeys;
+    public Image Pictogram;
     
-    public string Description
-    {
-      get
-      {
-        return description;
-      }
-      set
-      {
-        description = value;
-      }
-    }
-
-    public Keys ShortcutKeys
-    {
-      get
-      {
-        return shortcutKeys;
-      }
-      protected set
-      {
-        shortcutKeys = value;
-      }
-    }
-    
+        
     //Конструктор
     public Tool()
     {
@@ -82,11 +49,6 @@ namespace PPPV.Editor.Tools
     public virtual void HandleKeyDown( object sender, KeyEventArgs arg )
     {
       
-    }
-    
-    public virtual Image GetPictogram()
-    {
-      return null;
     }
   }
 }

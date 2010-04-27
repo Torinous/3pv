@@ -4,48 +4,56 @@ using System.Reflection;
 using System.Windows.Forms;
 
 using PPPV.Net;
+using PPPV.Utils;
 using PPPV.Editor.Tools;
 
 namespace PPPV.Editor.Commands
 {
-  public class SelectToolCommand : Command
+  public class SelectToolCommand : NetCommand
   {
-    //�����
-    private Tool tool;
+    //Данные
+    private Type toolType;
 
-    //������� ����㯠
-    public Tool Tool
+    //Акцессоры доступа
+    public Type ToolType
     {
       get
       {
-        return tool;
+        return toolType;
       }
     }
-    //���������
-    public SelectToolCommand(Tool t)
+    //Конструктор
+    public SelectToolCommand(Type t)
     {
-      tool = t;
-      Name = tool.Name;
-      Description = tool.Description;
-      ShortcutKeys = tool.ShortcutKeys;
+      toolType = t;
+      FieldInfo[] fields;
+
+      fields = t.GetFields( BindingFlags.Static | BindingFlags.NonPublic );
+      foreach(FieldInfo f in fields)
+      {
+        DebugAssistant.LogTrace(String.Format("{0}",f.Name));
+        if(f.Name == "name")
+          Name = f.GetValue(null) as string;
+        if(f.Name == "description")
+          Description = f.GetValue(null) as string;
+        if(f.Name == "shortcutKeys")
+          ShortcutKeys = (Keys)f.GetValue(null);
+        if(f.Name == "pictogram")
+          Pictogram = (Image)f.GetValue(null);
+      }
     }
 
-    //��⮤�
     public override void Execute()
     {
-      ToolController tc = PPPV.Editor.ToolController.Instance;
-      tc.CurrentTool = tool;
       EditorApplication app = EditorApplication.Instance;
-      app.MainFormInst.ToolToolStrip.CheckTool(this.tool.GetType());
+      //Установим инструмент для текущей сети
+      app.ActiveNet.SelectToolByType(ToolType);
+      //Отметим его на панели инструментов
+      app.MainFormInst.ToolToolStrip.CheckTool(ToolType);
     }
 
     public override void UnExecute()
     {
-    }
-    
-    public override Image GetPictogram()
-    {
-      return tool.GetPictogram();
     }
   }
 }

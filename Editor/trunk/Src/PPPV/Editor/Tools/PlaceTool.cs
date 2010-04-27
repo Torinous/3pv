@@ -10,27 +10,71 @@ namespace PPPV.Editor.Tools
   public class PlaceTool : Tool
   {
     /*Данные*/
-    private static PlaceTool instance;
-
+    static string name;
+    static string description;
+    static Keys shortcutKeys;
+    static Image pictogram;
+    
     /*Акцессоры доступа*/
-    public static PlaceTool Instance
+    public string Name
     {
       get
       {
-         if (instance == null)
-         {
-            instance = new PlaceTool();
-         }
-         return instance;
+        return name;
+      }
+      set
+      {
+        name = value;
+      }
+    }
+    
+    public string Description
+    {
+      get
+      {
+        return description;
+      }
+      set
+      {
+        description = value;
+      }
+    }
+
+    public Keys ShortcutKeys
+    {
+      get
+      {
+        return shortcutKeys;
+      }
+      set
+      {
+        shortcutKeys = value;
+      }
+    }
+    
+    public Image Pictogram
+    {
+      get
+      {
+        return pictogram;
+      }
+      set
+      {
+        pictogram = value;
       }
     }
     
     //cons
-    private PlaceTool()
+    static PlaceTool()
     {
-      Name = "Позиция";
-      Description = "Инструмент создания позиций сети";
-      ShortcutKeys = Keys.Control|Keys.Shift|Keys.P;
+      name = "Позиция";
+      description = "Инструмент создания позиций сети";
+      shortcutKeys = Keys.Control|Keys.Shift|Keys.P;
+      pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Place.png"), true);
+    }
+
+    public PlaceTool()
+    {
     }
     
     /*Методы*/
@@ -64,11 +108,6 @@ namespace PPPV.Editor.Tools
     public override void HandleKeyDown( object sender, KeyEventArgs args )
     {
       base.HandleKeyDown(sender, args);
-    }
-
-    public override Image GetPictogram()
-    {
-      return Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Place.png"), true);
     }
   }
 }

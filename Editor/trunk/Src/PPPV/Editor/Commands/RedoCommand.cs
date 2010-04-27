@@ -17,6 +17,7 @@ namespace PPPV.Editor.Commands
     {
       Name = "Повтор";
       Description = "Повтор последнего отменённого действия";
+      Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Redo.png"), true);
     }
     //Методы
     public override void Execute()
@@ -27,10 +28,6 @@ namespace PPPV.Editor.Commands
     public override void UnExecute()
     {
       
-    }
-    public override Image GetPictogram()
-    {
-      return Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Redo.png"), true);
     }
   }
 }

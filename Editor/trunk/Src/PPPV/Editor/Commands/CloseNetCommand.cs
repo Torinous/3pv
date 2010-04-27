@@ -17,7 +17,9 @@ namespace PPPV.Editor.Commands
       Name = "Закрыть";
       Description = "Закрыть сеть";
       ShortcutKeys = Keys.Control | Keys.W;
+      Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Close.png"), true);
     }
+
     //Методы
     public override void Execute()
     {
@@ -27,11 +29,6 @@ namespace PPPV.Editor.Commands
 
     public override void UnExecute()
     {
-    }
-    
-    public override Image GetPictogram()
-    {
-      return Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Close.png"), true);
     }
   }
 }

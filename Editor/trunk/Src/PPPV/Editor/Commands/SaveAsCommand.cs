@@ -17,6 +17,7 @@ namespace PPPV.Editor.Commands
       Name = "Сохранить как...";
       Description = "Сохранить сеть в файл с заданным именем";
       ShortcutKeys = Keys.Control| Keys.Shift | Keys.S;
+      Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Save as.png"), true);
     }
     //Методы
     public override void Execute()
@@ -28,11 +29,6 @@ namespace PPPV.Editor.Commands
 
     public override void UnExecute()
     {
-    }
-    
-    public override Image GetPictogram()
-    {
-      return Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Save as.png"), true);
     }
   }
 }

@@ -19,6 +19,7 @@ namespace PPPV.Editor.Commands
       Name = "Копировать";
       Description = "Копировать выделенный элемент сети";
       ShortcutKeys = Keys.Control | Keys.C;
+      Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Copy.png"), true);
     }
 
     //Методы
@@ -30,11 +31,6 @@ namespace PPPV.Editor.Commands
     public override void UnExecute()
     {
       
-    }
-    
-    public override Image GetPictogram()
-    {
-      return Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Copy.png"), true);
     }
   }
 }

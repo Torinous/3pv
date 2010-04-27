@@ -12,22 +12,62 @@ namespace PPPV.Editor.Tools
   public class PointerTool : Tool
   {
     /*Данные*/
+    static string name;
+    static string description;
+    static Keys shortcutKeys;
+    static Image pictogram;
+    
     private Point lastMouseDownPoint;
     private bool isActive = false;
     private Rectangle selectedRectangle;
     private Point selectFrom;
-    private static PointerTool instance;
 
     /*Акцессоры доступа*/
-    public static PointerTool Instance
+    public string Name
     {
       get
       {
-         if (instance == null)
-         {
-            instance = new PointerTool();
-         }
-         return instance;
+        return name;
+      }
+      set
+      {
+        name = value;
+      }
+    }
+    
+    public string Description
+    {
+      get
+      {
+        return description;
+      }
+      set
+      {
+        description = value;
+      }
+    }
+
+    public Keys ShortcutKeys
+    {
+      get
+      {
+        return shortcutKeys;
+      }
+      set
+      {
+        shortcutKeys = value;
+      }
+    }
+    
+    public Image Pictogram
+    {
+      get
+      {
+        return pictogram;
+      }
+      set
+      {
+        pictogram = value;
       }
     }
 
@@ -44,11 +84,16 @@ namespace PPPV.Editor.Tools
     }
 
     //cons
-    private PointerTool()
+    static PointerTool()
     {
-      Name = "Указатель";
-      Description = "Инструмент выбора и перемещения элементов сети";
-      ShortcutKeys = Keys.Control|Keys.Shift|Keys.M;
+      name = "Указатель";
+      description = "Инструмент выбора и перемещения элементов сети";
+      shortcutKeys = Keys.Control|Keys.Shift|Keys.M;
+      pictogram  = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pointer.png"), true);
+    }
+    
+    public PointerTool()
+    {
       SelectedRectangle = new Rectangle( new Point(0,0), new Size(0,0));
     }
     
@@ -142,11 +187,6 @@ namespace PPPV.Editor.Tools
         dc.SmoothingMode = SmoothingMode.HighQuality;
         dc.DrawRectangle(RedPen, SelectedRectangle);
       }
-    }
-
-    public override Image GetPictogram()
-    {
-      return Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pointer.png"), true);      
     }
   }
 }

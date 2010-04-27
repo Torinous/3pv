@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows.Forms;
 
 using PPPV.Net;
 
@@ -36,10 +37,15 @@ namespace PPPV.Editor.Commands
     }
 
     //Конструктор
-    public ShowContextMenuCommand(NetCanvas c, Point pos)
+    public ShowContextMenuCommand()
     {
       Name = "Контекстное меню";
       Description = "Команда вызывающая контекстное меню для элемента сети";
+      Pictogram = null;
+    }
+
+    public ShowContextMenuCommand(NetCanvas c, Point pos):this()
+    {
       Canvas = c;
       Position = pos;
     }
@@ -47,10 +53,13 @@ namespace PPPV.Editor.Commands
     //Методы
     public override void Execute()
     {
-      ContextMenuController contextMenuController = new ContextMenuController(Canvas);
       PetriNet n = Canvas.Net;
       NetElement contextMenuTarget = n.NetElementUnder(Position);
-      contextMenuController.Show( Canvas.PointToScreen(Position), contextMenuTarget, n);
+      ContextMenuStrip contextMenuStrip = new ContextMenuStrip();
+      contextMenuStrip.Items.Add( new EditorContextToolStripMenuItem( new EditNetElementCommand(n, contextMenuTarget) ) );
+      contextMenuStrip.Items.Add( new EditorContextToolStripMenuItem( new DeleteCommand(n, contextMenuTarget) ) );
+      contextMenuStrip.Show(Canvas.PointToScreen(Position));
+      
     }
 
     public override void UnExecute()

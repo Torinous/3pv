@@ -16,12 +16,12 @@ namespace PPPV.Editor
     /*Конструктор*/
     public TabPageForNet(PetriNetWrapper net):base()
     {
-      this.SetStyle( ControlStyles.AllPaintingInWmPaint |  ControlStyles.UserPaint |  ControlStyles.DoubleBuffer, true);
+      //this.SetStyle( ControlStyles.AllPaintingInWmPaint |  ControlStyles.UserPaint |  ControlStyles.DoubleBuffer, true);
       this.Location = new Point(45, 45);
       this.Padding  = new Padding(3);
       this.Size     = new Size(599, 228);
       this.TabIndex = 0;
-      this.UseVisualStyleBackColor = true;
+      //this.UseVisualStyleBackColor = true;
       this.netName = net.ID;
       this.netSaved = net.Saved;
       this.Text = (netName==""?"~":netName+"   ");
@@ -66,7 +66,7 @@ namespace PPPV.Editor
       }
     }
   
-    public PetriNet Net
+    public PetriNetWrapper Net
     {
       get
       {

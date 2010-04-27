@@ -5,7 +5,7 @@ using PPPV.Net;
 
 namespace PPPV.Editor.Commands
 {
-  public class AddTransitionCommand : Command
+  public class AddTransitionCommand : NetCommand
   {
     //Данные
     private Point position;

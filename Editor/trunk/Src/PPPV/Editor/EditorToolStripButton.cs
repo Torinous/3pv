@@ -23,7 +23,7 @@ namespace PPPV.Editor
       this.ImageScaling = ToolStripItemImageScaling.SizeToFit;
       this.Name = c.Name;
       this.Text = c.Description;
-      this.Image = c.GetPictogram();
+      this.Image = c.Pictogram;
       this.command = c;
       this.Click += new System.EventHandler(this.ClickHandler);
     }

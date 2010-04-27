@@ -81,12 +81,12 @@ namespace PPPV.Editor
 
       /*Панель инструментов*/
       
-      this.toolToolStrip          = new EditorToolStrip( new SelectToolCommand( PointerTool.Instance ),
-                                                         new SelectToolCommand( PlaceTool.Instance ),
-                                                         new SelectToolCommand( TransitionTool.Instance ),
-                                                         new SelectToolCommand( ArcTool.Instance ),
-                                                         new SelectToolCommand( InhibitorArcTool.Instance ),
-                                                         new SelectToolCommand( AnnotationTool.Instance )
+      this.toolToolStrip          = new EditorToolStrip( new SelectToolCommand(typeof(PointerTool)),
+                                                         new SelectToolCommand(typeof(PlaceTool)),
+                                                         new SelectToolCommand(typeof(TransitionTool)),
+                                                         new SelectToolCommand(typeof(ArcTool)),
+                                                         new SelectToolCommand(typeof(InhibitorArcTool)),
+                                                         new SelectToolCommand(typeof(AnnotationTool))
                                                        );
       this.fileToolStrip          = new EditorToolStrip( new NewNetCommand(),
                                                          new OpenNetCommand(),

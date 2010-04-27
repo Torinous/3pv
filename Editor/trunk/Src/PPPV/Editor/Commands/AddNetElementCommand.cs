@@ -5,37 +5,26 @@ using PPPV.Net;
 
 namespace PPPV.Editor.Commands
 {
-  public class AddNetElementCommand : Command
+  public class AddNetElementCommand : ElementCommand
   {
     //Данные
-    private NetElement ne;
-    
-    public NetElement Element
-    {
-      get
-      {
-        return ne;
-      }
-      set
-      {
-        ne = value;
-      }
-    }
 
     //Конструктор
-    public AddNetElementCommand(PetriNet n, NetElement _ne)
+    public AddNetElementCommand()
     {
-      Net = n;
-      Element = _ne;
       Name = "Добавить элемент к сети";
       Description = "Команда добавляющая к заданной сети элемент";
+      Pictogram = null;
     }
 
-    public AddNetElementCommand(PetriNet n)
+    public AddNetElementCommand(PetriNet n):this()
     {
       Net = n;
-      Name = "Добавить элемент к сети";
-      Description = "Команда добавляющая к заданной сети элемент";
+    }
+    
+    public AddNetElementCommand(NetElement _ne):this(_ne.ParentNet)
+    {
+      Element = _ne;
     }
     
     //Методы

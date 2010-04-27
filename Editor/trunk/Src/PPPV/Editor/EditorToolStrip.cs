@@ -8,7 +8,7 @@ namespace PPPV.Editor
 {
   public class EditorToolStrip : ToolStrip
   {
-    //„ ­­ë¥
+    //Ð”Ð°Ð½Ð½Ñ‹Ðµ
     
     public EditorToolStrip(params Command[] cmdList)
     {
@@ -22,7 +22,7 @@ namespace PPPV.Editor
     {
       foreach(EditorToolStripButton b in Items)
       {
-        if((b.Command as SelectToolCommand).Tool.GetType() == t)
+        if((b.Command as SelectToolCommand).ToolType.GetType() == t)
           b.Checked = true;
         else
           b.Checked = false;

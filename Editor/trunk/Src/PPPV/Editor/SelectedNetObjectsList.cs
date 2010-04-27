@@ -1,6 +1,7 @@
 ﻿using System.Drawing;
 using System.Collections;
 using System.Windows.Forms;
+using System.Drawing.Drawing2D;
 
 using PPPV.Editor.Tools;
 using PPPV.Net;
@@ -36,10 +37,14 @@ namespace PPPV.Editor
     
     public void DrawSelectionMarker(object sender, PaintEventArgs e)
     {
-      Pen RedPen = new Pen(Color.Red, 1);
+      /*Pen RedPen = new Pen(Color.Red, 1);
       Graphics dc = e.Graphics;
       RectangleF tmp = ((NetElement)sender).HitRegion.GetBounds(dc);
-      dc.DrawRectangle(RedPen, new Rectangle((int)tmp.X, (int)tmp.Y, (int)tmp.Width, (int)tmp.Height) );
+      dc.DrawRectangle(RedPen, new Rectangle((int)tmp.X, (int)tmp.Y, (int)tmp.Width, (int)tmp.Height) );*/
+      Graphics dc = e.Graphics;
+      dc.SmoothingMode = SmoothingMode.HighQuality;
+      SolidBrush b = new SolidBrush(Color.FromArgb(125, 245, 0, 0));
+      dc.FillRegion(b,((NetElement)sender).HitRegion);
     }
   }
 }

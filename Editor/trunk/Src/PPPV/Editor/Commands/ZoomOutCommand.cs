@@ -19,6 +19,7 @@ namespace PPPV.Editor.Commands
       Name = "Уменьшить";
       Description = "Уменьшение";
       ShortcutKeys = Keys.Control | Keys.Down;
+      Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Zoom out.png"), true);
     }
 
     //Методы
@@ -36,11 +37,6 @@ namespace PPPV.Editor.Commands
     public override void UnExecute()
     {
       
-    }
-    
-    public override Image GetPictogram()
-    {
-      return Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Zoom out.png"), true);
     }
   }
 }

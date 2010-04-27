@@ -7,7 +7,7 @@ using PPPV.Net;
 
 namespace PPPV.Editor
 {
-public class TabControlForNets : TabControl
+  public class TabControlForNets : TabControl
   {
     /*Конструкторы*/
     public TabControlForNets()
@@ -17,7 +17,7 @@ public class TabControlForNets : TabControl
       this.ShowToolTips = true;
       this.SelectedIndex = 0;
       this.TabIndex = 3;
-      this.DrawMode = TabDrawMode.OwnerDrawFixed;
+      //this.DrawMode = TabDrawMode.OwnerDrawFixed;
     }
     
     /*События*/

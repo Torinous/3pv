@@ -300,36 +300,34 @@ namespace PPPV.Editor
     private void CanvasMouseClickHandler(object sender, CanvasMouseEventArgs arg)
     {
       //Передать событие текущему инструменту ToolController`а.
-      ToolController tc = ToolController.Instance;
-      if(tc.CurrentTool != null)
-        tc.CurrentTool.HandleMouseClick(sender, arg);
+      if(this.Net.CurrentTool != null)
+        this.Net.CurrentTool.HandleMouseClick(sender, arg);
       this.Invalidate();
     }
 
     private void CanvasMouseMoveHandler(object sender, CanvasMouseEventArgs arg)
     {
       //Передать событие текущему инструменту ToolController`а.
-      ToolController tc = ToolController.Instance;
-      if(tc.CurrentTool != null)
-        tc.CurrentTool.HandleMouseMove(sender, arg);
+      
+      if(this.Net.CurrentTool != null)
+        this.Net.CurrentTool.HandleMouseMove(sender, arg);
       this.Invalidate();
     }
 
     private void CanvasMouseDownHandler(object sender, CanvasMouseEventArgs arg)
     {
       //Передать событие текущему инструменту ToolController`а.
-      ToolController tc = ToolController.Instance;
-      if(tc.CurrentTool != null)
-        tc.CurrentTool.HandleMouseDown(sender, arg);
+
+      if(this.Net.CurrentTool != null)
+        this.Net.CurrentTool.HandleMouseDown(sender, arg);
       this.Invalidate();
     }
 
     private void CanvasMouseUpHandler(object sender, CanvasMouseEventArgs arg)
     {
       //Передать событие текущему инструменту ToolController`а.
-      ToolController tc = ToolController.Instance;
-      if(tc.CurrentTool != null)
-        tc.CurrentTool.HandleMouseUp(sender, arg);
+      if(this.Net.CurrentTool != null)
+        this.Net.CurrentTool.HandleMouseUp(sender, arg);
       this.Invalidate();
     }
 

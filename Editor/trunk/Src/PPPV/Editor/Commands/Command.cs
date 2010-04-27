@@ -9,23 +9,11 @@ namespace PPPV.Editor.Commands
   public abstract class Command
   {
     //Данные
-    private PetriNet net;
     private string name;
     private string description;
     private Keys shortcutKeys;
+    private Image pictogram;
     
-    //Акцессоры
-    public PetriNet Net
-    {
-      get
-      {
-        return net;
-      }
-      set
-      {
-        net = value;
-      }
-    }
     public string Name
     {
       get
@@ -61,6 +49,18 @@ namespace PPPV.Editor.Commands
         shortcutKeys = value;
       }
     }
+
+    public Image Pictogram
+    {
+      get
+      {
+        return pictogram;
+      }
+      protected set
+      {
+        pictogram = value;
+      }
+    }
     
     //Конструктор
     public Command()
@@ -69,10 +69,11 @@ namespace PPPV.Editor.Commands
       isHistorical = false;
       Name = "";
       Description = "";
+      Pictogram = null;
     }
+    
     public abstract void Execute();
     public virtual void UnExecute(){}
-    public virtual Image GetPictogram(){return null;}
     public bool isHistorical;
   }
 }

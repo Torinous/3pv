@@ -19,6 +19,7 @@ namespace PPPV.Editor.Commands
       Name = "Открыть";
       Description = "Открыть сеть из файла";
       ShortcutKeys = Keys.Control | Keys.O;
+      Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Open.png"), true);
     }
     //Методы
     public override void Execute()
@@ -34,17 +35,12 @@ namespace PPPV.Editor.Commands
         EditorApplication app = EditorApplication.Instance;
         stream = new StreamReader(openFileDialog.FileName, Encoding.GetEncoding(1251));
         app.NewNet(stream, openFileDialog.FileName);
-        stream.Close();  
+        stream.Close();
       }
     }
 
     public override void UnExecute()
     {
-    }
-    
-    public override Image GetPictogram()
-    {
-      return Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Open.png"), true);
     }
   }
 }

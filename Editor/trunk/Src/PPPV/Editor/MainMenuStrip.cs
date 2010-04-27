@@ -71,12 +71,12 @@ public class MainMenuStrip : MenuStrip
       toolStripMenuZoomOut = new EditorToolStripMenuItem( new ZoomOutCommand() );
       
       toolStripMenuNet          = new EditorToolStripMenuItem( );
-      toolStripMenuPointer      = new EditorToolStripMenuItem( new SelectToolCommand( PointerTool.Instance ) );
-      toolStripMenuPlace        = new EditorToolStripMenuItem( new SelectToolCommand( PlaceTool.Instance ) );
-      toolStripMenuTransition   = new EditorToolStripMenuItem( new SelectToolCommand( TransitionTool.Instance ) );
-      toolStripMenuArc          = new EditorToolStripMenuItem( new SelectToolCommand( ArcTool.Instance ) );
-      toolStripMenuInhibitorArc = new EditorToolStripMenuItem( new SelectToolCommand( InhibitorArcTool.Instance ) );
-      toolStripMenuAnnotation   = new EditorToolStripMenuItem( new SelectToolCommand( AnnotationTool.Instance ) );
+      toolStripMenuPointer      = new EditorToolStripMenuItem( new SelectToolCommand( typeof(PointerTool) ) );
+      toolStripMenuPlace        = new EditorToolStripMenuItem( new SelectToolCommand( typeof(PlaceTool) ) );
+      toolStripMenuTransition   = new EditorToolStripMenuItem( new SelectToolCommand( typeof(TransitionTool) ) );
+      toolStripMenuArc          = new EditorToolStripMenuItem( new SelectToolCommand( typeof(ArcTool) ) );
+      toolStripMenuInhibitorArc = new EditorToolStripMenuItem( new SelectToolCommand( typeof(InhibitorArcTool) ) );
+      toolStripMenuAnnotation   = new EditorToolStripMenuItem( new SelectToolCommand( typeof(AnnotationTool) ) );
       
       toolStripMenuHelp    = new EditorToolStripMenuItem( );
       toolStripMenuAbout   = new EditorToolStripMenuItem( new AboutCommand( this as Control ) );

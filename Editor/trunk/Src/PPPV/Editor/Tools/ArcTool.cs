@@ -11,19 +11,58 @@ namespace PPPV.Editor.Tools
   public class ArcTool : Tool
   {
     /*Данные*/
-    private static ArcTool instance;
+    static string name;
+    static string description;
+    static Keys shortcutKeys;
+    static Image pictogram;
     private Arc arc;
-
+    
     /*Акцессоры доступа*/
-    public static ArcTool Instance
+    public string Name
     {
       get
       {
-         if (instance == null)
-         {
-            instance = new ArcTool();
-         }
-         return instance;
+        return name;
+      }
+      set
+      {
+        name = value;
+      }
+    }
+    
+    public string Description
+    {
+      get
+      {
+        return description;
+      }
+      set
+      {
+        description = value;
+      }
+    }
+
+    public Keys ShortcutKeys
+    {
+      get
+      {
+        return shortcutKeys;
+      }
+      set
+      {
+        shortcutKeys = value;
+      }
+    }
+    
+    public Image Pictogram
+    {
+      get
+      {
+        return pictogram;
+      }
+      set
+      {
+        pictogram = value;
       }
     }
     
@@ -50,11 +89,16 @@ namespace PPPV.Editor.Tools
     }
 
     //cons
-    private ArcTool()
+    static ArcTool()
     {
-      Name = "Дуга";
-      Description = "Инструмент создание дуг сети";
-      ShortcutKeys = Keys.Control|Keys.Shift|Keys.A;
+      name = "Дуга";
+      description = "Инструмент создание дуг сети";
+      shortcutKeys = Keys.Control|Keys.Shift|Keys.A;
+      pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Arc.png"), true);
+    }
+    
+    public ArcTool()
+    {
     }
     
     /*Методы*/
@@ -114,11 +158,6 @@ namespace PPPV.Editor.Tools
           (sender as PetriNet).Canvas.Invalidate();//TODO: полный Invalidate это нехорошо!!!
         }
       }
-    }
-    
-    public override Image GetPictogram()
-    {
-      return Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Arc.png"), true);
     }
   }
 }

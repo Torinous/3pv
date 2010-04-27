@@ -10,27 +10,71 @@ namespace PPPV.Editor.Tools
   public class TransitionTool : Tool
   {
     /*Данные*/
-    private static TransitionTool instance;
-
+    static string name;
+    static string description;
+    static Keys shortcutKeys;
+    static Image pictogram;
+    
     /*Акцессоры доступа*/
-    public static TransitionTool Instance
+    public string Name
     {
       get
       {
-         if (instance == null)
-         {
-            instance = new TransitionTool();
-         }
-         return instance;
+        return name;
+      }
+      set
+      {
+        name = value;
+      }
+    }
+    
+    public string Description
+    {
+      get
+      {
+        return description;
+      }
+      set
+      {
+        description = value;
+      }
+    }
+
+    public Keys ShortcutKeys
+    {
+      get
+      {
+        return shortcutKeys;
+      }
+      set
+      {
+        shortcutKeys = value;
+      }
+    }
+    
+    public Image Pictogram
+    {
+      get
+      {
+        return pictogram;
+      }
+      set
+      {
+        pictogram = value;
       }
     }
 
     //cons
-    private TransitionTool()
+    static TransitionTool()
     {
-      Name = "Переход";
-      Description = "Инструмент создания переходов сети";
-      ShortcutKeys = Keys.Control|Keys.Shift|Keys.T;
+      name = "Переход";
+      description = "Инструмент создания переходов сети";
+      shortcutKeys = Keys.Control|Keys.Shift|Keys.T;
+      pictogram   = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Transition.png"), true);
+    }
+    
+    public TransitionTool()
+    {
     }
     
     /*Методы*/
@@ -63,11 +107,6 @@ namespace PPPV.Editor.Tools
     public override void HandleKeyDown( object sender, KeyEventArgs args )
     {
       base.HandleKeyDown(sender, args);
-    }
-
-    public override Image GetPictogram()
-    {
-      return Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Transition.png"), true);
     }
   }
 }

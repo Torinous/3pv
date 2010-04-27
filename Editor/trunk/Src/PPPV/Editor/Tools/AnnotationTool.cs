@@ -10,27 +10,71 @@ namespace PPPV.Editor.Tools
   public class AnnotationTool : Tool
   {
     /*Данные*/
-    private static AnnotationTool instance;
-
+    static string name;
+    static string description;
+    static Keys shortcutKeys;
+    static Image pictogram;
+    
     /*Акцессоры доступа*/
-    public static AnnotationTool Instance
+    public string Name
     {
       get
       {
-         if (instance == null)
-         {
-            instance = new AnnotationTool();
-         }
-         return instance;
+        return name;
+      }
+      set
+      {
+        name = value;
+      }
+    }
+    
+    public string Description
+    {
+      get
+      {
+        return description;
+      }
+      set
+      {
+        description = value;
       }
     }
 
-    //cons
-    private AnnotationTool()
+    public Keys ShortcutKeys
     {
-      Name = "Аннотация";
-      Description = "Инструмент создания аннотация";
-      ShortcutKeys = Keys.Control|Keys.Shift|Keys.O;
+      get
+      {
+        return shortcutKeys;
+      }
+      set
+      {
+        shortcutKeys = value;
+      }
+    }
+    
+    public Image Pictogram
+    {
+      get
+      {
+        return pictogram;
+      }
+      set
+      {
+        pictogram = value;
+      }
+    }
+    
+    //cons
+    static AnnotationTool()
+    {
+      name         = "Аннотация";
+      description  = "Инструмент создания аннотация";
+      shortcutKeys = Keys.Control|Keys.Shift|Keys.O;
+      pictogram    = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Annotation.png"), true);
+    }
+    
+    public AnnotationTool()
+    {
     }
     
     /*Методы*/
@@ -89,11 +133,6 @@ namespace PPPV.Editor.Tools
     public override void HandleKeyDown( object sender, KeyEventArgs args )
     {
       base.HandleKeyDown(sender, args);
-    }
-
-    public override Image GetPictogram()
-    {
-      return Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Annotation.png"), true);      
     }
   }
 }

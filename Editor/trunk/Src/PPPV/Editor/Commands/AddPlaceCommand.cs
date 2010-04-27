@@ -6,7 +6,7 @@ using PPPV.Net;
 
 namespace PPPV.Editor.Commands
 {
-  public class AddPlaceCommand : Command
+  public class AddPlaceCommand : NetCommand
   {
     //Данные
     private Point position;

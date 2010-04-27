@@ -46,7 +46,7 @@ public class EditorApplication : ApplicationContext
     }
     
 
-    public PetriNet ActiveNet
+    public PetriNetWrapper ActiveNet
     {
       get
       {
@@ -111,9 +111,6 @@ public class EditorApplication : ApplicationContext
       /* try
        {*/
       EditorApplication context = EditorApplication.Instance;
-
-      //Установим стартовый инструмент
-      (new SelectToolCommand(PointerTool.Instance)).Execute();
 
       Application.ThreadException += new ThreadExceptionEventHandler(new ThreadExceptionHandler().ApplicationThreadException);
       Application.Run(context);
