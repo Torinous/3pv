@@ -1,0 +1,1 @@
+main:-goalgds;make_report,halt.
