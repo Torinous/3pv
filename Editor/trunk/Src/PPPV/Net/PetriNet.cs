@@ -14,22 +14,16 @@ using PPPV.Utils;
 
 namespace PPPV.Net
 {
-  [Serializable()]
-  [XmlRoot("pnml")]
-  public partial class PetriNet:IXmlSerializable
+  public partial class PetriNet: IXmlSerializable
   {
     private int width, height;
     private string id;
     private string type;
-    /*Путь к файлу в который сохранена сеть*/
-    private string linkedFile;
     /*Элементы сети*/
     private ArrayList places;
     private ArrayList transitions;
     private ArrayList arcs;
     private string additionalCode;
-    /*Флаг, было ли сохранено текущее состояние сети*/
-    private bool saved;
 
     //private ArrayList currentSelectedObjects;
 
@@ -38,8 +32,6 @@ namespace PPPV.Net
     /*Конструктор*/
     public PetriNet()
     {
-      Saved = false;
-      LinkedFile = "";
       ID = "";
       Type = "PPr/T net";
       Places = new ArrayList(30);
@@ -79,33 +71,9 @@ namespace PPPV.Net
       {
         return id;
       }
-      private set
+      protected set
       {
         id = value;
-      }
-    }
-
-    public bool Saved
-    {
-      get
-      {
-        return saved;
-      }
-      private set
-      {
-        saved = value;
-      }
-    }
-
-    public string LinkedFile
-    {
-      get
-      {
-        return linkedFile;
-      }
-      set
-      {
-        linkedFile = value;
       }
     }
 
@@ -115,7 +83,7 @@ namespace PPPV.Net
       {
         return type;
       }
-      private set
+      protected set
       {
         type = value;
       }
@@ -251,12 +219,8 @@ namespace PPPV.Net
       OnPaint(args);
     }
 
-    /*Событие генерируется при сохранении сети в файл*/
-    public event SaveEventHandler Save;
-
     private void OnChange(EventArgs args)
     {
-      Saved = false;
       if(Change != null)
       {
         Change(this,args);
@@ -271,16 +235,6 @@ namespace PPPV.Net
         {
           Paint(this,e);
         }
-      }
-    }
-
-    private void OnSave(SaveEventArgs args)
-    {
-      Saved = true;
-      LinkedFile = args.fileName;
-      if (Save != null)
-      {
-        Save(this, args);
       }
     }
 
@@ -357,156 +311,6 @@ namespace PPPV.Net
       OnChange(new EventArgs());
     }
 
-    public bool SaveNet()
-    {
-      bool result = false;
-      StreamWriter stream;
-      if(LinkedFile != "")
-      {
-        if (File.Exists(LinkedFile))
-        {
-          File.Delete(LinkedFile);
-        }
-        stream = new StreamWriter(LinkedFile, false, Encoding.GetEncoding(1251));
-        if(stream != null)
-        {
-          XmlSerializer serealizer = new XmlSerializer(this.GetType());
-          serealizer.Serialize(stream, this);
-          stream.Close();
-          result = true;
-        }
-      }
-      else
-      {
-        result = SaveNetAs();
-      }
-      return result;
-    }
-
-    public bool SaveNetAs()
-    {
-      bool result = false;
-      StreamWriter stream;
-      string fileName = "";
-      SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-      saveFileDialog1.Filter = "pnml files (*.pnml)|*.pnml|All files (*.*)|*.*";
-      saveFileDialog1.FilterIndex = 1 ;
-      saveFileDialog1.RestoreDirectory = true ;
-
-      if(saveFileDialog1.ShowDialog() == DialogResult.OK)
-      {
-        stream = new StreamWriter(saveFileDialog1.FileName, false, Encoding.GetEncoding(1251));
-        if(stream != null)
-        {
-          LinkedFile = fileName = saveFileDialog1.FileName;
-          if(this.ID=="")
-            this.ID = fileName.Substring(fileName.LastIndexOf("\\")+1);
-
-          XmlSerializer serializer = new XmlSerializer(this.GetType());
-          serializer.Serialize(stream, this);
-          stream.Close();
-          result = true;
-        }
-      }
-      return result;
-    }
-
-    public void WriteXml (XmlWriter writer)
-    {
-      //writer.WriteStartElement("pnml");
-      writer.WriteStartElement("net");
-      writer.WriteAttributeString("id", ID);
-      writer.WriteAttributeString("type", Type);
-      foreach(Place place in Places){
-        writer.WriteStartElement("place");
-        place.WriteXml(writer);
-        writer.WriteEndElement(); // place
-      }
-      foreach(Transition transition in Transitions){
-        writer.WriteStartElement("transition");
-        transition.WriteXml(writer);
-        writer.WriteEndElement(); // transition
-      }
-      foreach(Arc arc in Arcs){
-        writer.WriteStartElement("arc");
-        arc.WriteXml(writer);
-        writer.WriteEndElement(); // arc
-      }
-      writer.WriteStartElement("additionalCode");
-      writer.WriteString(this.AdditionalCode);
-      writer.WriteEndElement(); // additionalCode
-      writer.WriteEndElement(); // net
-      //writer.WriteEndElement(); // pnml
-    }
-
-    public void ReadXml (XmlReader reader)
-    {
-      XmlReader subTreeReader;
-      reader.ReadStartElement("pnml");
-      this.ID = reader.GetAttribute("id");
-      this.Type = reader.GetAttribute("type");
-      ;
-
-      if(!reader.IsEmptyElement)
-      {
-        reader.ReadStartElement("net");
-        while(reader.NodeType != XmlNodeType.EndElement)
-        {
-          switch(reader.Name)
-          {
-          case "place":
-            subTreeReader = reader.ReadSubtree();
-            ElementPortal = new Place(subTreeReader);
-            subTreeReader.Close();
-            reader.Skip();
-            break;
-          case "transition":
-            subTreeReader = reader.ReadSubtree();
-            ElementPortal = new Transition(subTreeReader);
-            subTreeReader.Close();
-            reader.Skip();
-            break;
-          case "arc":
-            subTreeReader = reader.ReadSubtree();
-            ElementPortal = new Arc(subTreeReader, this);
-            subTreeReader.Close();
-            reader.Skip();
-            break;
-          case "additionalCode":
-            if(!reader.IsEmptyElement)
-            {
-              reader.ReadStartElement("additionalCode");
-              /*Причину Replace см. Issue 27*/
-              this.AdditionalCode = reader.ReadString().Replace("\n", System.Environment.NewLine);
-              reader.ReadEndElement(); // additionalCode
-            }
-            else
-            {
-              reader.Skip();
-            }
-            break;
-          default:
-            reader.Read();
-            break;
-          }
-        }
-        reader.ReadEndElement();
-        reader.ReadEndElement();
-      }
-      else
-      {
-        reader.Skip();
-        reader.ReadEndElement();
-      }
-
-      Saved = true;
-    }
-
-    public XmlSchema GetSchema()
-    {
-      return(null);
-    }
-
     public NetElement GetElementByID(string ID_)
     {
       if(ID_ == "")
@@ -551,5 +355,17 @@ namespace PPPV.Net
           Height = testY;
       }
     }
+    /*Это видимо нужно чтобы наследники могли реализовать IXmlSerializable*/
+    public void WriteXml (XmlWriter writer)
+    {}
+
+    public void ReadXml (XmlReader reader)
+    {}
+
+    public XmlSchema GetSchema()
+    {
+      return null;
+    }
+
   } // PetriNet
 } // namespace
