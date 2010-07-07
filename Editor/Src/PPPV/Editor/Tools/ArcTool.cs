@@ -1,4 +1,4 @@
-using System.Reflection;
+﻿using System.Reflection;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -94,7 +94,7 @@ namespace PPPV.Editor.Tools
       name = "Дуга";
       description = "Инструмент создание дуг сети";
       shortcutKeys = Keys.Control|Keys.Shift|Keys.A;
-      pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Arc.png"), true);
+      pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Arc.png"), true);
     }
     
     public ArcTool()

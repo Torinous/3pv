@@ -19,7 +19,7 @@ namespace PPPV.Editor.Commands
       Name = "Вставить";
       Description = "Вставить элемент сети из буфера обмена";
       ShortcutKeys = Keys.Control | Keys.P;
-      Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Paste.png"), true);
+      Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Paste.png"), true);
     }
     
     //Методы

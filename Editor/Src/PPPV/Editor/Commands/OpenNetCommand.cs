@@ -19,7 +19,7 @@ namespace PPPV.Editor.Commands
       Name = "Открыть";
       Description = "Открыть сеть из файла";
       ShortcutKeys = Keys.Control | Keys.O;
-      Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Open.png"), true);
+      Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Open.png"), true);
     }
     //Методы
     public override void Execute()

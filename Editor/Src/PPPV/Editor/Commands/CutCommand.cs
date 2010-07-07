@@ -19,7 +19,7 @@ namespace PPPV.Editor.Commands
       Name = "Вырезать";
       Description = "Вырезать выделенный элемент сети";
       ShortcutKeys = Keys.Control | Keys.X;
-      Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Cut.png"), true);
+      Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Cut.png"), true);
     }
     
     //Методы

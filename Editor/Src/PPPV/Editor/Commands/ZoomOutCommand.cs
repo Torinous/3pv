@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Drawing;
 using System.Reflection;
 using System.Diagnostics;
@@ -19,7 +19,7 @@ namespace PPPV.Editor.Commands
       Name = "Уменьшить";
       Description = "Уменьшение";
       ShortcutKeys = Keys.Control | Keys.Down;
-      Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Zoom out.png"), true);
+      Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Zoom out.png"), true);
     }
 
     //Методы

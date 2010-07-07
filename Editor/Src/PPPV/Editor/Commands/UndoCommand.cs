@@ -16,7 +16,7 @@ namespace PPPV.Editor.Commands
     {
       Name = "Отмена";
       Description = "Отмена последнего выполненного действия";
-      Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Undo.png"), true);
+      Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Undo.png"), true);
     }
     //Методы
     public override void Execute()
