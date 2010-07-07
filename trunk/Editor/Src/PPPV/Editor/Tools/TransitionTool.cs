@@ -70,7 +70,7 @@ namespace PPPV.Editor.Tools
       name = "Переход";
       description = "Инструмент создания переходов сети";
       shortcutKeys = Keys.Control|Keys.Shift|Keys.T;
-      pictogram   = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Transition.png"), true);
+      pictogram   = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Transition.png"), true);
     }
     
     public TransitionTool()

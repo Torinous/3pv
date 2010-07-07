@@ -19,7 +19,7 @@ namespace PPPV.Editor.Commands
       Name = "Выход";
       Description = "Завершение работы приложения 3PV:Editor";
       ShortcutKeys = Keys.Control | Keys.Q;
-      Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Exit.png"), true);
+      Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Exit.png"), true);
     }
     
     //Методы

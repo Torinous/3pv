@@ -17,7 +17,7 @@ namespace PPPV.Editor.Commands
       Name = "Создать";
       Description = "Создать новую сеть";
       ShortcutKeys = Keys.Control | Keys.N;
-      Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("New.png"), true);
+      Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.New.png"), true);
     }
     //Методы
     public override void Execute()

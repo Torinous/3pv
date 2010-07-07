@@ -70,7 +70,7 @@ namespace PPPV.Editor.Tools
       name         = "Аннотация";
       description  = "Инструмент создания аннотация";
       shortcutKeys = Keys.Control|Keys.Shift|Keys.O;
-      pictogram    = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Annotation.png"), true);
+      pictogram    = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Annotation.png"), true);
     }
     
     public AnnotationTool()

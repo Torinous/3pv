@@ -89,7 +89,7 @@ namespace PPPV.Editor.Tools
       name = "Указатель";
       description = "Инструмент выбора и перемещения элементов сети";
       shortcutKeys = Keys.Control|Keys.Shift|Keys.M;
-      pictogram  = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pointer.png"), true);
+      pictogram  = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Pointer.png"), true);
     }
     
     public PointerTool()

@@ -1,0 +1,182 @@
+﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{8C38059E-436D-468D-A131-040EF303CBF1}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>PPPV</RootNamespace>
+    <AssemblyName>Editor</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SourceAnalysisOverrideSettingsFile>C:\Users\Torinous\AppData\Roaming\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Src\PPPV\Editor\AboutForm.cs" />
+    <Compile Include="Src\PPPV\Editor\AdditionalCodeEditForm.cs" />
+    <Compile Include="Src\PPPV\Editor\Application.cs" />
+    <Compile Include="Src\PPPV\Editor\ArcEditForm.cs" />
+    <Compile Include="Src\PPPV\Editor\CanvasMouseEventArgs.cs" />
+    <Compile Include="Src\PPPV\Editor\CanvasMouseEventHandler.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\AboutCommand.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\AddNetElementCommand.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\AddPlaceCommand.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\AddTransitionCommand.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\CloseNetCommand.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\Command.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\CopyCommand.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\CutCommand.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\DeleteCommand.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\EditNetElementCommand.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\ElementCommand.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\MacroCommand.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\NetCommand.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\NewNetCommand.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\NullCommand.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\OpenNetCommand.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\PasteCommand.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\QuitCommand.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\RedoCommand.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\SaveAsCommand.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\SaveCommand.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\SelectToolCommand.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\ShowContextMenuCommand.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\UndoCommand.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\ZoomInCommand.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\ZoomOutCommand.cs" />
+    <Compile Include="Src\PPPV\Editor\ContextMenuController.cs" />
+    <Compile Include="Src\PPPV\Editor\CortegeEditControl.cs" />
+    <Compile Include="Src\PPPV\Editor\EditorContextToolStripMenuItem.cs" />
+    <Compile Include="Src\PPPV\Editor\EditorToolStrip.cs" />
+    <Compile Include="Src\PPPV\Editor\EditorToolStripButton.cs" />
+    <Compile Include="Src\PPPV\Editor\EditorToolStripMenuItem.cs" />
+    <Compile Include="Src\PPPV\Editor\GuardEditForm.cs" />
+    <Compile Include="Src\PPPV\Editor\MainForm.cs" />
+    <Compile Include="Src\PPPV\Editor\MainMenuStrip.cs" />
+    <Compile Include="Src\PPPV\Editor\NetCanvas.cs" />
+    <Compile Include="Src\PPPV\Editor\PetriNetWrapper.cs" />
+    <Compile Include="Src\PPPV\Editor\PlaceEditForm.cs" />
+    <Compile Include="Src\PPPV\Editor\RegionSelectionEventArgs.cs" />
+    <Compile Include="Src\PPPV\Editor\RegionSelectionEventHandler.cs" />
+    <Compile Include="Src\PPPV\Editor\RemoveTabPageEventArgs.cs" />
+    <Compile Include="Src\PPPV\Editor\RemoveTabPageEventHandler.cs" />
+    <Compile Include="Src\PPPV\Editor\SelectedNetObjectsList.cs" />
+    <Compile Include="Src\PPPV\Editor\TabControlForNets.cs" />
+    <Compile Include="Src\PPPV\Editor\TabPageForNet.cs" />
+    <Compile Include="Src\PPPV\Editor\TokensEditControl.cs" />
+    <Compile Include="Src\PPPV\Editor\Tools\AnnotationTool.cs" />
+    <Compile Include="Src\PPPV\Editor\Tools\ArcTool.cs" />
+    <Compile Include="Src\PPPV\Editor\Tools\InhibitorArcTool.cs" />
+    <Compile Include="Src\PPPV\Editor\Tools\PlaceTool.cs" />
+    <Compile Include="Src\PPPV\Editor\Tools\PointerTool.cs" />
+    <Compile Include="Src\PPPV\Editor\Tools\Tool.cs" />
+    <Compile Include="Src\PPPV\Editor\Tools\TransitionTool.cs" />
+    <Compile Include="Src\PPPV\Main.cs" />
+    <Compile Include="Src\PPPV\Net\Arc.cs" />
+    <Compile Include="Src\PPPV\Net\Graphical.cs" />
+    <Compile Include="Src\PPPV\Net\MouseEventArgs.cs" />
+    <Compile Include="Src\PPPV\Net\MouseEventHandler.cs" />
+    <Compile Include="Src\PPPV\Net\MoveEventArgs.cs" />
+    <Compile Include="Src\PPPV\Net\MoveEventHandler.cs" />
+    <Compile Include="Src\PPPV\Net\NetElement.cs" />
+    <Compile Include="Src\PPPV\Net\PetriNet.cs" />
+    <Compile Include="Src\PPPV\Net\PetriNet_ToProlog.cs" />
+    <Compile Include="Src\PPPV\Net\Pilon.cs" />
+    <Compile Include="Src\PPPV\Net\Place.cs" />
+    <Compile Include="Src\PPPV\Net\Predicate.cs" />
+    <Compile Include="Src\PPPV\Net\PredicateList.cs" />
+    <Compile Include="Src\PPPV\Net\ResizeEventArgs.cs" />
+    <Compile Include="Src\PPPV\Net\ResizeEventHandler.cs" />
+    <Compile Include="Src\PPPV\Net\SaveEventArgs.cs" />
+    <Compile Include="Src\PPPV\Net\SaveEventHandler.cs" />
+    <Compile Include="Src\PPPV\Net\SelectionChangeEventArgs.cs" />
+    <Compile Include="Src\PPPV\Net\SelectionChangeEventHandler.cs" />
+    <Compile Include="Src\PPPV\Net\Token.cs" />
+    <Compile Include="Src\PPPV\Net\TokensList.cs" />
+    <Compile Include="Src\PPPV\Net\Transition.cs" />
+    <Compile Include="Src\PPPV\Utils\CommandLineSwitchAttribute.cs" />
+    <Compile Include="Src\PPPV\Utils\DebugAssistant.cs" />
+    <Compile Include="Src\PPPV\Utils\Parser.cs" />
+    <Compile Include="Src\PPPV\Utils\PreciseTimer.cs" />
+    <Compile Include="Src\PPPV\Utils\RefreshingListBox.cs" />
+    <Compile Include="Src\PPPV\Utils\Singleton.cs" />
+    <EmbeddedResource Include="Resources\About.png" />
+    <EmbeddedResource Include="Resources\Annotation.png" />
+    <EmbeddedResource Include="Resources\Arc.png" />
+    <EmbeddedResource Include="Resources\Close.png" />
+    <EmbeddedResource Include="Resources\Copy.png" />
+    <EmbeddedResource Include="Resources\Cut.png" />
+    <EmbeddedResource Include="Resources\Delete.png" />
+    <EmbeddedResource Include="Resources\Exit.png" />
+    <EmbeddedResource Include="Resources\Inhibitor Arc.png" />
+    <EmbeddedResource Include="Resources\Net.png" />
+    <EmbeddedResource Include="Resources\New.png" />
+    <EmbeddedResource Include="Resources\Open.png" />
+    <EmbeddedResource Include="Resources\Paste.png" />
+    <EmbeddedResource Include="Resources\Place.png" />
+    <EmbeddedResource Include="Resources\Pointer.png" />
+    <EmbeddedResource Include="Resources\Print.png" />
+    <EmbeddedResource Include="Resources\Redo.png" />
+    <EmbeddedResource Include="Resources\Save as.png" />
+    <EmbeddedResource Include="Resources\Save.png" />
+    <EmbeddedResource Include="Resources\Transition.png" />
+    <EmbeddedResource Include="Resources\Undo.png" />
+    <EmbeddedResource Include="Resources\Zoom in.png" />
+    <EmbeddedResource Include="Resources\Zoom out.png" />
+    <EmbeddedResource Include="Resources\Zoom.png" />
+    <None Include="app.manifest" />
+    <None Include="Properties\AssemblyInfo.in" />
+    <None Include="Src\AssemblyInfo.in" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources" />
+    <Folder Include="Src" />
+    <Folder Include="Src\PPPV" />
+    <Folder Include="Src\PPPV\Editor" />
+    <Folder Include="Src\PPPV\Editor\Commands" />
+    <Folder Include="Src\PPPV\Editor\Tools" />
+    <Folder Include="Src\PPPV\Net" />
+    <Folder Include="Src\PPPV\Utils" />
+  </ItemGroup>
+  <PropertyGroup>
+    <PreBuildEvent>SubWCRev.exe ../../Properties ../../Properties/AssemblyInfo.in ../../Properties/AssemblyInfo.cs&gt; kk</PreBuildEvent>
+  </PropertyGroup>
+</Project>

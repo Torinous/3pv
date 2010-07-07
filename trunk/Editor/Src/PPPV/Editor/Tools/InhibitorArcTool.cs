@@ -69,7 +69,7 @@ namespace PPPV.Editor.Tools
       name = "Ингибиторная дуга";
       description = "Инструмент создание ингибиторных дуг сети";
       shortcutKeys = Keys.Control|Keys.Shift|Keys.I;
-      pictogram  = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Inhibitor arc.png"), true);
+      pictogram  = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Inhibitor Arc.png"), true);
     }
     
     public InhibitorArcTool()

@@ -70,7 +70,7 @@ namespace PPPV.Editor.Tools
       name = "Позиция";
       description = "Инструмент создания позиций сети";
       shortcutKeys = Keys.Control|Keys.Shift|Keys.P;
-      pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Place.png"), true);
+      pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Place.png"), true);
     }
 
     public PlaceTool()
