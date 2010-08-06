@@ -100,7 +100,7 @@
     <Compile Include="Src\PPPV\Editor\EditorToolStripMenuItem.cs" />
     <Compile Include="Src\PPPV\Editor\GuardEditForm.cs" />
     <Compile Include="Src\PPPV\Editor\MainForm.cs" />
-    <Compile Include="Src\PPPV\Editor\MainMenuStrip.cs" />
+    <Compile Include="Src\PPPV\Editor\EditorMainMenuStrip.cs" />
     <Compile Include="Src\PPPV\Editor\NetCanvas.cs" />
     <Compile Include="Src\PPPV\Editor\PetriNetWrapper.cs" />
     <Compile Include="Src\PPPV\Editor\PlaceEditForm.cs" />
@@ -128,7 +128,7 @@
     <Compile Include="Src\PPPV\Net\MoveEventHandler.cs" />
     <Compile Include="Src\PPPV\Net\NetElement.cs" />
     <Compile Include="Src\PPPV\Net\PetriNet.cs" />
-    <Compile Include="Src\PPPV\Net\PetriNet_ToProlog.cs" />
+    <Compile Include="Src\PPPV\Net\PetriNetPrologTranslated.cs" />
     <Compile Include="Src\PPPV\Net\Pilon.cs" />
     <Compile Include="Src\PPPV\Net\Place.cs" />
     <Compile Include="Src\PPPV\Net\Predicate.cs" />
@@ -175,7 +175,6 @@
     <None Include="app.manifest" />
     <None Include="Properties\AssemblyInfo.in" />
     <None Include="Src\AssemblyInfo.in" />
-    <Content Include="Editor.cd" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources" />

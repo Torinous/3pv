@@ -1,11 +1,12 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-using System.ComponentModel;
+﻿namespace PPPV.Editor{
+	
+	using System;
+	using System.Drawing;
+	using System.Windows.Forms;
+	using System.ComponentModel;
+	
+	using PPPV.Net;
 
-using PPPV.Net;
-
-namespace PPPV.Editor{
    class AdditionalCodeEditForm : Form{
 
       private PetriNet net;

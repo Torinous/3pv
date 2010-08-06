@@ -22,7 +22,7 @@ namespace PPPV.Editor
     
     /*События*/
     public event RemoveTabPageEventHandler RemovingTabPage;
-    public event RemoveTabPageEventHandler RemovedTabPage;
+    //public event RemoveTabPageEventHandler RemovedTabPage;
 
     public void CloseTab(int i)
     {

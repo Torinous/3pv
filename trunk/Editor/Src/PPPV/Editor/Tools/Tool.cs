@@ -7,48 +7,67 @@ using PPPV.Editor.Commands;
 
 namespace PPPV.Editor.Tools
 {
-  public abstract class Tool
-  {
-    /*Данные*/
-    
-    //Акцессоры доступа
-    public string Name;
-    public string Description;
-    public Keys ShortcutKeys;
-    public Image Pictogram;
-    
-        
-    //Конструктор
-    public Tool()
-    {
-    }
+	public abstract class Tool
+	{
+		/*Данные*/
+	
+		//Акцессоры доступа
+		//string name;
+		//string description;
+		//Keys shortcutKeys;
+		//Image pictogram;
 
-    /*Методы*/
-    public virtual void HandleMouseDown( object sender, System.Windows.Forms.MouseEventArgs args )
-    {
-    }
+		//Свойства
+		public virtual string Name{
+			get;
+			set;
+		}
 
-    public virtual void HandleMouseMove( object sender, System.Windows.Forms.MouseEventArgs args )
-    {
-    }
+		public virtual string Description{
+			get;
+			set;
+		}
 
-    public virtual void HandleMouseUp( object sender, System.Windows.Forms.MouseEventArgs args )
-    {
-    }
+		public virtual Keys ShortcutKeys{
+			get;
+			set;
+		}
 
-    public virtual void HandleMouseClick( object sender, System.Windows.Forms.MouseEventArgs args )
-    {
-      /*Контекстное меню по умолчанию показывают все инструменты*/
-      if(args.Button == MouseButtons.Right)
-      {
-        ShowContextMenuCommand c = new ShowContextMenuCommand(sender as Editor.NetCanvas, args.Location);
-        c.Execute();
-      }
-    }
+		public virtual Image Pictogram{
+			get;
+			set;
+		}
+		//Конструктор
+		public Tool()
+		{
+		}
 
-    public virtual void HandleKeyDown( object sender, KeyEventArgs arg )
-    {
-      
-    }
-  }
+		/*Методы*/
+		public virtual void HandleMouseDown( object sender, System.Windows.Forms.MouseEventArgs args )
+		{
+		}
+
+		public virtual void HandleMouseMove( object sender, System.Windows.Forms.MouseEventArgs args )
+		{
+		}
+
+		public virtual void HandleMouseUp( object sender, System.Windows.Forms.MouseEventArgs args )
+		{
+		}
+
+		public virtual void HandleMouseClick( object sender, System.Windows.Forms.MouseEventArgs args )
+		{
+			/*Контекстное меню по умолчанию показывают все инструменты*/
+			if(args.Button == MouseButtons.Right)
+			{
+				ShowContextMenuCommand c = new ShowContextMenuCommand(sender as Editor.NetCanvas, args.Location);
+				c.Execute();
+			}
+		}
+
+		public virtual void HandleKeyDown( object sender, KeyEventArgs arg )
+		{
+		
+		}
+	}
 }
