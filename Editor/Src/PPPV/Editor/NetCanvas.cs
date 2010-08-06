@@ -17,8 +17,8 @@ namespace PPPV.Editor
     private int _gridStep;
     //private SelectionController selectionController;
     private Rectangle selectedRectangle;
-    private Point selectFrom;
-    private bool isSelectionActive = false;
+    //private Point selectFrom; TODO Удалить?
+    //private bool isSelectionActive = false; TODO Удалить?
     private Matrix scaleMatrix;
     private Single scaleAmount;
 

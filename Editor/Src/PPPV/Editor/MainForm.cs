@@ -1,87 +1,77 @@
-﻿using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Windows.Forms;
-
-using PPPV.Editor.Commands;
-using PPPV.Editor.Tools;
-
-namespace PPPV.Editor
+﻿namespace PPPV.Editor
 {
-  public class MainForm : Form
-  {
-    private EditorApplication app;
-    /*Меню*/
-    public MainMenuStrip menuStrip;
+	using System;
+	using System.Collections;
+	using System.ComponentModel;
+	using System.Data;
+	using System.Drawing;
+	using System.Windows.Forms;
 
-    /*Панели инструментов*/
-    private EditorToolStrip fileToolStrip;
-    private EditorToolStrip toolToolStrip;
-    private EditorToolStrip editToolStrip;
-    private EditorToolStrip viewToolStrip;
-    
+	using PPPV.Editor.Commands;
+	using PPPV.Editor.Tools;
 
-    private StatusStrip _statusStrip;
+	public class MainForm : Form
+	{
+		private EditorApplication app;
+		/*Меню*/
+		public EditorMainMenuStrip menuStrip;
 
-    private TabControlForNets _tabControl;
+		/*Панели инструментов*/
+		private EditorToolStrip fileToolStrip;
+		private EditorToolStrip toolToolStrip;
+		private EditorToolStrip editToolStrip;
+		private EditorToolStrip viewToolStrip;
 
-    public TabControlForNets TabControl
-    {
-      get
-      {
-        return _tabControl;
-      }
-    }
+		private StatusStrip _statusStrip;
 
-    public EditorToolStrip ToolToolStrip
-    {
-      get
-      {
-        return toolToolStrip;
-      }
-    }
+		private TabControlForNets _tabControl;
 
-    public MainMenuStrip MainMenuStrip
-    {
-      get
-      {
-        return menuStrip;
-      }
-      private set
-      {
-        menuStrip = value;
-      }
-    }
+		public TabControlForNets TabControl{
+			get{
+				return _tabControl;
+			}
+		}
 
-    public EditorApplication App
-    {
-      get
-      {
-        return app;
-      }
-    }
+		public EditorToolStrip ToolToolStrip{
+			get{
+				return toolToolStrip;
+			}
+		}
 
-    private ToolStripContainer toolToolStripContainer;
+		public EditorMainMenuStrip MainEditorMenuStrip{
+			get{
+				return menuStrip;
+			}
+			private set{
+				menuStrip = value;
+			}
+		}
 
-    public MainForm(EditorApplication a)
-    {
-      app = a;
-      this.KeyPreview = true;
-      this.SetStyle( ControlStyles.AllPaintingInWmPaint |  ControlStyles.UserPaint |  ControlStyles.DoubleBuffer, true);
-      InitializeComponent();
-      //ToolStrip.toolToolStripButtonAdditionalCode.Click += EditAdditionalCode;
-    }
 
-    private void InitializeComponent()
-    {
-      /*Меню*/
-      this.menuStrip          = new MainMenuStrip();
+		public EditorApplication App{
+			get{
+				return app;
+			}
+		}
 
-      /*Панель инструментов*/
-      
-      this.toolToolStrip          = new EditorToolStrip( new SelectToolCommand(typeof(PointerTool)),
+		private ToolStripContainer toolToolStripContainer;
+
+		public MainForm(EditorApplication a)
+		{
+			app = a;
+			this.KeyPreview = true;
+			this.SetStyle( ControlStyles.AllPaintingInWmPaint |  ControlStyles.UserPaint |  ControlStyles.DoubleBuffer, true);
+			InitializeComponent();
+			//ToolStrip.toolToolStripButtonAdditionalCode.Click += EditAdditionalCode;
+		}
+
+		private void InitializeComponent()
+		{
+			/*Меню*/
+			this.MainEditorMenuStrip          = new EditorMainMenuStrip();
+
+			/*Панель инструментов*/
+			this.toolToolStrip          = new EditorToolStrip( new SelectToolCommand(typeof(PointerTool)),
                                                          new SelectToolCommand(typeof(PlaceTool)),
                                                          new SelectToolCommand(typeof(TransitionTool)),
                                                          new SelectToolCommand(typeof(ArcTool)),

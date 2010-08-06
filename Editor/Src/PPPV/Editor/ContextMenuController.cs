@@ -20,7 +20,6 @@ namespace PPPV.Editor
     {
       this.canvas = canvas;
       contextMenuStrip = new ContextMenuStrip();
-      this.contextMenuStrip = contextMenuStrip;
       contextMenuStrip.Items.Add("Редактировать");
       contextMenuStrip.Items.Add("Удалить");
       contextMenuStrip.Items[0].Click += ContextMenuEditHandler;
