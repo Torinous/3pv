@@ -7,5 +7,5 @@ using PPPV.Net;
 
 namespace PPPV.Editor{
 
-   public delegate void RegionSelectionEventHandler(object source, RegionSelectionEventArgs arg);
+   public delegate void RegionSelectionEventHandler(object sender, RegionSelectionEventArgs e);
 }

@@ -16,10 +16,10 @@
 		protected Point location;
 		protected Size size;
 		protected Region _hitRegion; //регион где проверяется клик в объект
-		protected string _name;
+		protected string name;
 
 		/*Конструкторы*/
-		public Graphical(Point p)
+		protected Graphical(Point p)
 		{
 			//location = new Point(0,0);
 			HitRegion = new Region();
@@ -79,11 +79,11 @@
 		{
 			get
 			{
-				return _name;
+				return name;
 			}
 			set
 			{
-				_name = value;
+				name = value;
 				OnChange(new EventArgs());
 			}
 		}
@@ -137,11 +137,11 @@
 
 		/*Методы*/
 		/*Перемещение на*/
-		public void MoveBy(Point p)
+		public void MoveBy(Point radiusVector)
 		{
 			/* Входной параметр это радиус-вектор перемещения */
 			Point old = new Point(location.X,location.Y);
-			Location = new Point(X + p.X,Y + p.Y);
+			Location = new Point(X + radiusVector.X,Y + radiusVector.Y);
 		}
 
 		public void MoveBy()
@@ -153,16 +153,17 @@
 
 		/* Абстрактые методы класса */
 
-		private void OnPaint(PaintEventArgs e){
+		private void OnPaint(PaintEventArgs e)
+		{
 			if(Paint != null)
 			{
 				Paint(this,e);
 			}
 		}
 
-		public virtual bool Intersect(Point _point)
+		public virtual bool Intersect(Point point)
 		{
-			return HitRegion.IsVisible(_point);
+			return HitRegion.IsVisible(point);
 		}
 
 		public virtual bool Intersect(Rectangle _rectangle)
@@ -184,13 +185,13 @@
 
 		public abstract Point GetPilon(Point from);
 		
-		protected virtual Point GetPilon(Point from, NetCanvas on)
+		protected virtual Point GetPilon(Point from, NetCanvas onCanvas)
 		{
 			Graphics g;
 			Point pilon = new Point();
-			if (on != null)
+			if (onCanvas != null)
 			{
-				g = on.CreateGraphics();
+				g = onCanvas.CreateGraphics();
 				Region reg = new Region();
 				reg = HitRegion.Clone();
 				Pen greenPen = new Pen(Color.Black, 1);
@@ -285,6 +286,20 @@
 			CustomLineCap ArrowCap = new CustomLineCap(null, hPath);
 			ArrowCap.SetStrokeCaps(LineCap.Triangle, LineCap.Triangle);
 			p.CustomEndCap = ArrowCap;
+			return p;
+		}
+
+		protected static Pen CircledBlackPenFactory()
+		{
+			Pen p = new Pen(Color.Black,1);
+			GraphicsPath hPath = new GraphicsPath();
+			hPath.AddEllipse(-4, -8, 8, 8);
+			GraphicsPath hPath2 = new GraphicsPath();
+			hPath2.AddLine(new Point(0, -8), new Point(0, 0));
+			CustomLineCap ArrowCap = new CustomLineCap(hPath2, hPath);
+			//ArrowCap.SetStrokeCaps(LineCap.Round, LineCap.Round);
+			p.CustomEndCap = ArrowCap;
+			p.CustomStartCap = ArrowCap;
 			return p;
 		}
 	}

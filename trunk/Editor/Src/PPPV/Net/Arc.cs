@@ -14,7 +14,7 @@
 	
 	public class Arc : NetElement, IXmlSerializable
 	{
-		protected static Pen ArrowedBlackPen = ArrowedBlackPenFactory();
+		protected static Pen ArrowedBlackPen = CircledBlackPenFactory();
 		private NetElement source, target;
 		private Point sourcePilon, targetPilon;
 		private PredicateList cortege;
@@ -191,14 +191,8 @@
 			dc.SmoothingMode = SmoothingMode.HighQuality;
 
 			Pen blackPen = new Pen(Color.FromArgb(255,0,0,0));
-			Pen RedPen = new Pen(Color.FromArgb(255,255,0,0));
-
-			/*Кисти*/
-			SolidBrush grayBrush = new SolidBrush(Color.FromArgb(200,100,100,100));
 			SolidBrush blackBrush = new SolidBrush(Color.FromArgb(200,0,0,0));
-			/*Шрифт*/
-			FontFamily fF_Arial = new FontFamily("Arial");
-			Font font1 = new Font(fF_Arial, 16, FontStyle.Regular, GraphicsUnit.Pixel);
+			Font font1 = new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel);
 
 			if( Points.Count == 0 )
 			{
@@ -285,7 +279,7 @@
 		}
 
 		/*Чисто фиктивно, просто чтобы реализовать абстрактный член*/
-		public override Point GetPilon(Point source)
+		public override Point GetPilon(Point from)
 		{
 			return Center;
 		}

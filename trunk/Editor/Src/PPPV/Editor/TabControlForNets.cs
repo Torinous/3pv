@@ -12,7 +12,7 @@ namespace PPPV.Editor
     /*Конструкторы*/
     public TabControlForNets()
     {
-      this.SetStyle( ControlStyles.AllPaintingInWmPaint |  ControlStyles.UserPaint |  ControlStyles.DoubleBuffer, true);
+      //this.SetStyle( ControlStyles.AllPaintingInWmPaint |  ControlStyles.UserPaint |  ControlStyles.DoubleBuffer, true);
       this.Dock = DockStyle.Fill;
       this.ShowToolTips = true;
       this.SelectedIndex = 0;
@@ -24,10 +24,10 @@ namespace PPPV.Editor
     public event RemoveTabPageEventHandler RemovingTabPage;
     //public event RemoveTabPageEventHandler RemovedTabPage;
 
-    public void CloseTab(int i)
+    public void CloseTab(int indexOfTab)
     {
-      if(OnRemovingTabPage(new RemoveTabPageEventArgs(i)))
-        TabPages.Remove(TabPages[i]);
+      if(OnRemovingTabPage(new RemoveTabPageEventArgs(indexOfTab)))
+        TabPages.Remove(TabPages[indexOfTab]);
     }
 
     private bool OnRemovingTabPage(RemoveTabPageEventArgs args)

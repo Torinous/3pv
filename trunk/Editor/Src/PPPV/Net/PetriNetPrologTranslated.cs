@@ -85,10 +85,10 @@ namespace PPPV.Net {
          return text.ToString();
       }
 
-      public string Precondition(Transition inTr){
+      public string Precondition(Transition inTransition){
          StringBuilder text = new StringBuilder(100);
          foreach (Arc arc in Arcs){
-            if (arc.Target == inTr){
+            if (arc.Target == inTransition){
                foreach(Place place in Places){
                   if(place == arc.Source){
                      foreach(string predicate in arc.Cortege){

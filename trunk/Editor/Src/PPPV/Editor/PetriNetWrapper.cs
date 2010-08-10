@@ -15,8 +15,9 @@ namespace PPPV.Editor
 	[XmlRoot("pnml")]
 	public class PetriNetWrapper : PetriNet, IXmlSerializable
 	{
-		//Данные
+		[NonSerializedAttribute]
 		protected SelectedNetObjectsList selectedObjects;
+		[NonSerializedAttribute]
 		public   Tool currentTool,
 					pointerTool,
 					placeTool,
@@ -26,8 +27,10 @@ namespace PPPV.Editor
 					annotationTool;
 
 		/*Путь к файлу в который сохранена сеть*/
+		[NonSerializedAttribute]
 		private string linkedFile;
 		/*Флаг, было ли сохранено текущее состояние сети*/
+		[NonSerializedAttribute]
 		private bool saved;
 
 		public PetriNetWrapper():base()

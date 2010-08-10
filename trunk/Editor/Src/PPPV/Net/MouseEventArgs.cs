@@ -10,7 +10,7 @@ namespace PPPV.Net{
    {
       public bool alreadyPerform;
 
-      public MouseEventArgs(CanvasMouseEventArgs _arg):base(_arg.Button,_arg.Clicks,_arg.X,_arg.Y,_arg.Delta)
+      public MouseEventArgs(CanvasMouseEventArgs arg):base(arg.Button,arg.Clicks,arg.X,arg.Y,arg.Delta)
       {
          alreadyPerform = false;
       }
