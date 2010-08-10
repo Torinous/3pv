@@ -238,27 +238,27 @@ namespace PPPV.Net
 			}
 		}
 
-		public NetElement NetElementUnder(Point _p)
+		public NetElement NetElementUnder(Point testPoint)
 		{
 			int i = 0;
 			for(i=0;i<Transitions.Count;++i)
 			{
-				if(((Graphical)Transitions[i]).Intersect(_p))
+				if(((Graphical)Transitions[i]).Intersect(testPoint))
 				{
 					return (NetElement)Transitions[i];
 				}
 			}
 			for(i=0;i<Places.Count;++i)
 			{
-				DebugAssistant.LogTrace(_p.ToString());
-				if(((Graphical)Places[i]).Intersect(_p))
+				DebugAssistant.LogTrace(testPoint.ToString());
+				if(((Graphical)Places[i]).Intersect(testPoint))
 				{
 					return (NetElement)Places[i];
 				}
 			}
 			for(i=0;i<Arcs.Count;++i)
 			{
-				if(((Graphical)Arcs[i]).Intersect(_p))
+				if(((Graphical)Arcs[i]).Intersect(testPoint))
 				{
 					return (NetElement)Arcs[i];
 				}
@@ -294,11 +294,11 @@ namespace PPPV.Net
 			return selectedObjects;
 		}
 
-		public bool HaveArcBetween(NetElement from_, NetElement to_)
+		public bool HaveArcBetween(NetElement fromElement, NetElement toElement)
 		{
 			for(int i=0;i<Arcs.Count;++i)
 			{
-				if((Arcs[i] as Arc).Source == from_ && (Arcs[i] as Arc).Target == to_)
+				if((Arcs[i] as Arc).Source == fromElement && (Arcs[i] as Arc).Target == toElement)
 				{
 					return true;
 				}

@@ -6,7 +6,7 @@
 
 	public class Pilon: NetElement
 	{
-		public Pilon(Point p):base(p)
+		public Pilon(Point point):base(point)
 		{
 			Size = new Size(7, 7);
 		}

@@ -21,7 +21,7 @@ namespace PPPV.Editor
       this.Padding  = new Padding(3);
       this.Size     = new Size(599, 228);
       this.TabIndex = 0;
-      //this.UseVisualStyleBackColor = true;
+      this.UseVisualStyleBackColor = true;
       this.netName = net.ID;
       this.netSaved = net.Saved;
       this.Text = (netName==""?"~":netName+"   ");
@@ -75,18 +75,18 @@ namespace PPPV.Editor
   
     }
   
-    protected override void OnResize(EventArgs args)
+    protected override void OnResize(EventArgs e)
     {
       AutoScroll = false;
-      base.OnResize(args);
+      base.OnResize(e);
       AutoScroll = true;
     }
-    protected override void OnParentChanged(EventArgs args)
+    protected override void OnParentChanged(EventArgs e)
     {
       if(Parent != null)
       {
       }
-      base.OnParentChanged(args);
+      base.OnParentChanged(e);
     }
 
     private void LinkedNetSaveHandler(object sender, SaveEventArgs args)

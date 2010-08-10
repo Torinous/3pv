@@ -6,6 +6,6 @@ using PPPV.Net;
 
 namespace PPPV.Net
 {
-	public delegate void MoveEventHandler(object source, MoveEventArgs arg);
+	public delegate void MoveEventHandler(object sender, MoveEventArgs e);
 }
 

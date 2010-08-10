@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
-
-namespace PPPV
+//TODO: Удалить файл из репозитория
+/*namespace PPPV
 {
 	internal sealed class Program
 	{
@@ -9,4 +9,4 @@ namespace PPPV
 		/// The main entry point for the application.
 		/// </summary>
 	}
-}
+}*/
