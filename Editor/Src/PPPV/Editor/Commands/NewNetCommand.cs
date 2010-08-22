@@ -1,11 +1,11 @@
-﻿namespace PPPV.Editor.Commands
+﻿namespace Pppv.Editor.Commands
 {
    using System;
    using System.Drawing;
    using System.Reflection;
    using System.Windows.Forms;
 
-   using PPPV.Net;
+   using Pppv.Net;
 
    public class NewNetCommand : Command
    {
@@ -17,7 +17,7 @@
          Name = "Создать";
          Description = "Создать новую сеть";
          ShortcutKeys = Keys.Control | Keys.N;
-         Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.New.png"), true);
+         Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.New.png"), true);
       }
       //Методы
       public override void Execute()

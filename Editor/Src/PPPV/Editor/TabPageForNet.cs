@@ -1,11 +1,11 @@
-﻿namespace PPPV.Editor
+﻿namespace Pppv.Editor
 {
    using System;
    using System.Drawing;
    using System.Windows.Forms;
 
-   using PPPV.Net;
-   using PPPV.Utils;
+   using Pppv.Net;
+   using Pppv.Utils;
 
    public class TabPageForNet : TabPage
    {

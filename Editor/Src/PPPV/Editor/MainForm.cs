@@ -1,4 +1,4 @@
-﻿namespace PPPV.Editor
+﻿namespace Pppv.Editor
 {
    using System;
    using System.Collections;
@@ -7,8 +7,8 @@
    using System.Drawing;
    using System.Windows.Forms;
 
-   using PPPV.Editor.Commands;
-   using PPPV.Editor.Tools;
+   using Pppv.Editor.Commands;
+   using Pppv.Editor.Tools;
 
    public class MainForm : Form
    {

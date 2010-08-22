@@ -1,4 +1,4 @@
-﻿namespace PPPV.Editor.Commands
+﻿namespace Pppv.Editor.Commands
 {
    using System;
    using System.IO;
@@ -7,7 +7,7 @@
    using System.Reflection;
    using System.Windows.Forms;
 
-   using PPPV.Net;
+   using Pppv.Net;
 
    public class OpenNetCommand : Command
    {
@@ -16,7 +16,7 @@
          Name = "Открыть";
          Description = "Открыть сеть из файла";
          ShortcutKeys = Keys.Control | Keys.O;
-         Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Open.png"), true);
+         Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Open.png"), true);
       }
 
       public override void Execute()

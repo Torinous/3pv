@@ -1,4 +1,4 @@
-﻿namespace PPPV.Net
+﻿namespace Pppv.Net
 {
    using System.Drawing;
    using System.Windows.Forms;

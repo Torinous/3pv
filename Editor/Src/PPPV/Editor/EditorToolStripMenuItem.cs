@@ -1,4 +1,4 @@
-﻿namespace PPPV.Editor
+﻿namespace Pppv.Editor
 {
 	using System;
 	using System.Windows.Forms;
@@ -6,8 +6,8 @@
 
 	using System.Globalization;
 	
-	using PPPV.Editor.Commands;
-	using PPPV.Utils;
+	using Pppv.Editor.Commands;
+	using Pppv.Utils;
 	
   public class EditorToolStripMenuItem : ToolStripMenuItem
   {

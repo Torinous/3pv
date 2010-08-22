@@ -2,9 +2,9 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-using PPPV.Net;
+using Pppv.Net;
 
-namespace PPPV.Editor.Commands
+namespace Pppv.Editor.Commands
 {
   public abstract class Command
   {

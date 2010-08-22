@@ -4,10 +4,10 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 using System.Collections.Generic;
 
-using PPPV.Editor.Tools;
-using PPPV.Net;
+using Pppv.Editor.Tools;
+using Pppv.Net;
 
-namespace PPPV.Editor
+namespace Pppv.Editor
 {
   public class SelectedNetObjectsList
   {

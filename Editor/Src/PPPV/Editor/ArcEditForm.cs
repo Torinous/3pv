@@ -3,9 +3,9 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.ComponentModel;
 
-using PPPV.Net;
+using Pppv.Net;
 
-namespace PPPV.Editor{
+namespace Pppv.Editor{
    class ArcEditForm : Form{
       private Arc arc;
       private Label lableName;

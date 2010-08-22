@@ -1,4 +1,4 @@
-﻿namespace PPPV.Editor.Tools
+﻿namespace Pppv.Editor.Tools
 {
    using System;
    using System.Drawing;
@@ -7,14 +7,14 @@
    using System.Windows.Forms;
    using System.Drawing.Drawing2D;
 
-   using PPPV.Net;
+   using Pppv.Net;
 
    public class PointerTool : Tool
    {
       private static string name = "Указатель";
       private static string description = "Инструмент выбора и перемещения элементов сети";
       private static Keys shortcutKeys = Keys.Control|Keys.Shift|Keys.M;
-      private static Image pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Pointer.png"), true);
+      private static Image pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Pointer.png"), true);
       
       private Point lastMouseDownPoint;
       private bool isActive;

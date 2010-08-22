@@ -1,4 +1,4 @@
-﻿namespace PPPV.Net
+﻿namespace Pppv.Net
 {
    using System;
    using System.IO;
@@ -10,8 +10,8 @@
    using System.Xml.Serialization;
    using System.Globalization;
 
-   using PPPV.Editor;
-   using PPPV.Utils;
+   using Pppv.Editor;
+   using Pppv.Utils;
 
    public class PetriNetPrologTranslated : PetriNet{
       public string ToProlog(){

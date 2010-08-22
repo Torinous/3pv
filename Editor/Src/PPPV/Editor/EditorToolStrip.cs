@@ -1,10 +1,10 @@
-﻿namespace PPPV.Editor
+﻿namespace Pppv.Editor
 {
    using System;
    using System.Reflection;
    using System.Windows.Forms;
 
-   using PPPV.Editor.Commands;
+   using Pppv.Editor.Commands;
 
    public class EditorToolStrip : ToolStrip
    {

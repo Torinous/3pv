@@ -1,4 +1,4 @@
-﻿namespace PPPV.Editor.Commands
+﻿namespace Pppv.Editor.Commands
 {
    using System;
    using System.Drawing;
@@ -6,9 +6,9 @@
    using System.Windows.Forms;
    using System.Globalization;
 
-   using PPPV.Net;
-   using PPPV.Utils;
-   using PPPV.Editor.Tools;
+   using Pppv.Net;
+   using Pppv.Utils;
+   using Pppv.Editor.Tools;
 
    public class SelectToolCommand : NetCommand
    {

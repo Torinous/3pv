@@ -1,18 +1,18 @@
-﻿namespace PPPV.Editor.Tools
+﻿namespace Pppv.Editor.Tools
 {
    using System.Drawing;
    using System.Reflection;
    using System.Windows.Forms;
 
-   using PPPV.Net;
-   using PPPV.Editor.Commands;
+   using Pppv.Net;
+   using Pppv.Editor.Commands;
 
    public class AnnotationTool : Tool
    {
       static string name = "Аннотация";
       static string description = "Инструмент создания аннотация";
       static Keys shortcutKeys = Keys.Control|Keys.Shift|Keys.O;
-      static Image pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Annotation.png"), true);
+      static Image pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Annotation.png"), true);
 
       public override string Name{
          get{

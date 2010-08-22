@@ -1,4 +1,4 @@
-﻿namespace PPPV.Net
+﻿namespace Pppv.Net
 {
    using System;
    using System.Collections;
@@ -10,8 +10,8 @@
    using System.Xml.Schema;
    using System.Xml.Serialization;
 
-   using PPPV.Editor;
-   using PPPV.Utils;
+   using Pppv.Editor;
+   using Pppv.Utils;
 
 
    public class Arc : NetElement, IXmlSerializable

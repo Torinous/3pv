@@ -1,4 +1,4 @@
-﻿namespace PPPV.Net 
+﻿namespace Pppv.Net 
 {
    using System;
    using System.Windows.Forms;
@@ -7,7 +7,7 @@
    using System.Xml.Schema;
    using System.Xml.Serialization;
    
-   using PPPV.Utils;
+   using Pppv.Utils;
 
    [Serializable()]
    [XmlRoot("token")]

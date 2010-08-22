@@ -1,18 +1,18 @@
-﻿namespace PPPV.Editor.Tools
+﻿namespace Pppv.Editor.Tools
 {
    using System.Drawing;
    using System.Reflection;
    using System.Windows.Forms;
 
-   using PPPV.Net;
-   using PPPV.Editor.Commands;
+   using Pppv.Net;
+   using Pppv.Editor.Commands;
 
    public class TransitionTool : Tool
    {
       private static string name  = "Переход";
       private static string description = "Инструмент создания переходов сети";
       private static Keys shortcutKeys = Keys.Control|Keys.Shift|Keys.T;
-      private static Image pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Transition.png"), true);
+      private static Image pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Transition.png"), true);
 
       public override string Name{
          get{

@@ -1,18 +1,18 @@
-﻿namespace PPPV.Editor.Tools
+﻿namespace Pppv.Editor.Tools
 {
    using System.Reflection;
    using System.Drawing;
    using System.Windows.Forms;
 
-   using PPPV.Net;
-   using PPPV.Editor.Commands;
+   using Pppv.Net;
+   using Pppv.Editor.Commands;
 
    public class InhibitorArcTool : Tool
    {
       private static string name  = "Ингибиторная дуга";
       private static string description = "Инструмент создание ингибиторных дуг сети";
       private static Keys shortcutKeys = Keys.Control|Keys.Shift|Keys.I;
-      private static Image pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Inhibitor Arc.png"), true);
+      private static Image pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Inhibitor Arc.png"), true);
       private InhibitorArc arc;
 
       public override string Name{

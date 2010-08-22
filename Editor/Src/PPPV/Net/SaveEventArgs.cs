@@ -1,10 +1,10 @@
-﻿namespace PPPV.Net
+﻿namespace Pppv.Net
 {
    using System;
    using System.Drawing;
    using System.Windows.Forms;
 
-   using PPPV.Editor;
+   using Pppv.Editor;
 
    public class SaveEventArgs : EventArgs
    {

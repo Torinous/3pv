@@ -7,7 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
-namespace PPPV.Editor
+namespace Pppv.Editor
 {
 	using System;
 	using System.Runtime.Serialization;

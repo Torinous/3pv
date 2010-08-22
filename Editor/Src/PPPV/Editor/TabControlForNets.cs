@@ -3,9 +3,9 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-using PPPV.Net;
+using Pppv.Net;
 
-namespace PPPV.Editor
+namespace Pppv.Editor
 {
   public class TabControlForNets : TabControl
   {

@@ -3,9 +3,9 @@ using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
 
-using PPPV.Net;
+using Pppv.Net;
 
-namespace PPPV.Editor.Commands
+namespace Pppv.Editor.Commands
 {
   public class CloseNetCommand : Command
   {
@@ -17,7 +17,7 @@ namespace PPPV.Editor.Commands
       Name = "Закрыть";
       Description = "Закрыть сеть";
       ShortcutKeys = Keys.Control | Keys.W;
-      Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Close.png"), true);
+      Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Close.png"), true);
     }
 
     //Методы

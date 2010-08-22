@@ -1,19 +1,19 @@
-﻿namespace PPPV.Editor.Tools
+﻿namespace Pppv.Editor.Tools
 {
    using System.Reflection;
    using System.Drawing;
    using System.Windows.Forms;
 
-   using PPPV.Net;
-   using PPPV.Utils;
-   using PPPV.Editor.Commands;
+   using Pppv.Net;
+   using Pppv.Utils;
+   using Pppv.Editor.Commands;
 
    public class ArcTool : Tool
    {
       private static string name  = "Дуга";
       private static string description = "Инструмент создание дуг сети";
       private static Keys shortcutKeys = Keys.Control|Keys.Shift|Keys.A;
-      private static Image pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Arc.png"), true);
+      private static Image pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Arc.png"), true);
       private Arc arc;
 
       public override string Name{

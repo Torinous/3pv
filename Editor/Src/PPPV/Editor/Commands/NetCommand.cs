@@ -1,10 +1,10 @@
-﻿namespace PPPV.Editor.Commands
+﻿namespace Pppv.Editor.Commands
 {
    using System;
    using System.Drawing;
    using System.Windows.Forms;
    
-   using PPPV.Net;
+   using Pppv.Net;
 
    public abstract class NetCommand:Command
    {

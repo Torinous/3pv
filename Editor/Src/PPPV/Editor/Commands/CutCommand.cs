@@ -1,4 +1,4 @@
-﻿namespace PPPV.Editor.Commands
+﻿namespace Pppv.Editor.Commands
 {
    using System;
    using System.Drawing;
@@ -6,8 +6,8 @@
    using System.Diagnostics;
    using System.Windows.Forms;
 
-   using PPPV.Net;
-   using PPPV.Utils;
+   using Pppv.Net;
+   using Pppv.Utils;
 
    public class CutCommand : Command
    {
@@ -17,7 +17,7 @@
          Name = "Вырезать";
          Description = "Вырезать выделенный элемент сети";
          ShortcutKeys = Keys.Control | Keys.X;
-         Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Cut.png"), true);
+         Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Cut.png"), true);
       }
 
       public override void Execute()
