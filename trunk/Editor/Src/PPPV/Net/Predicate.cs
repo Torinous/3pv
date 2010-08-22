@@ -1,13 +1,14 @@
-﻿using System;
-using System.Windows.Forms;
-using System.Collections;
-using System.Xml;
-using System.Xml.Schema;
-using System.Xml.Serialization;
-
-using PPPV.Utils;
-
-namespace PPPV.Net {
+﻿namespace PPPV.Net
+{
+	using System;
+	using System.Windows.Forms;
+	using System.Collections;
+	using System.Xml;
+	using System.Xml.Schema;
+	using System.Xml.Serialization;
+	using System.Globalization;
+	
+	using PPPV.Utils;
 
    [Serializable()]
    [XmlRoot("predicate")]
@@ -44,10 +45,10 @@ namespace PPPV.Net {
       private string Upperfy(string t){
          string txt;
          if(t.Length >1 )
-            txt = t.Substring(0,1).ToUpper() + t.Substring(1);
+            txt = t.Substring(0,1).ToUpper(CultureInfo.CurrentCulture) + t.Substring(1);
          else
             if(t.Length == 1)
-               txt = t.ToUpper();
+               txt = t.ToUpper(CultureInfo.CurrentCulture);
             else
                txt = t;
          return txt;
@@ -71,7 +72,7 @@ namespace PPPV.Net {
             reader.ReadEndElement(); // value
             reader.ReadEndElement(); // token
          }else{
-            throw new Exception("Невозможно десереализовать Predicate. Не верен тип узла xml.");
+            throw new NetException("Невозможно десереализовать Predicate. Не верен тип узла xml.");
          }
       }
 

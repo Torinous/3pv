@@ -1,16 +1,18 @@
-﻿using System;
-using System.IO;
-using System.Text;
-using System.Reflection;
-using System.Windows.Forms;
-using System.Xml;
-using System.Xml.Schema;
-using System.Xml.Serialization;
-
-using PPPV.Editor;
-using PPPV.Utils;
-
-namespace PPPV.Net {
+﻿namespace PPPV.Net
+{
+	using System;
+	using System.IO;
+	using System.Text;
+	using System.Reflection;
+	using System.Windows.Forms;
+	using System.Xml;
+	using System.Xml.Schema;
+	using System.Xml.Serialization;
+	using System.Globalization;
+	
+	using PPPV.Editor;
+	using PPPV.Utils;
+	
 	public class PetriNetPrologTranslated : PetriNet{
       public string ToProlog(){
          StringBuilder text = new StringBuilder(2000);
@@ -18,9 +20,9 @@ namespace PPPV.Net {
          text.AppendLine();
          text.AppendLine("%Changes to this file may cause incorrect behavior. Manual editing, only for experts.");
          text.AppendLine();
-         text.AppendFormat("netname('{0}').", ID);
+         text.AppendFormat("netname('{0}').", Id);
          text.AppendLine();
-         text.AppendFormat("nettype('{0}').", Type);
+         text.AppendFormat("nettype('{0}').", NetType);
          text.AppendLine();
          text.AppendLine();
          text.Append(TransitionsList());
@@ -56,7 +58,7 @@ namespace PPPV.Net {
       public string InitialMarking(){
          StringBuilder text = new StringBuilder(400);
          foreach(Place pl in this.Places){
-            foreach(Token token in pl.Tokens){
+            foreach(Token token in pl.Tokens.List){
                text.AppendFormat("{0}({1}),", pl.Name.ToLower(), token.Text);
             }
          }

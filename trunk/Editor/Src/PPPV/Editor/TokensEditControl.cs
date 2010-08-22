@@ -1,23 +1,28 @@
-﻿using System;
-using System.Data;
-using System.ComponentModel;
-using System.Collections;
-using System.Drawing;
-using System.Windows.Forms;
-
-using PPPV.Net;
-
-namespace PPPV.Editor {
-   public class TokensEditControl : System.Windows.Forms.UserControl{
+﻿namespace PPPV.Editor
+{
+	using System;
+	using System.Data;
+	using System.ComponentModel;
+	using System.Collections;
+	using System.Collections.Generic;
+	using System.Drawing;
+	using System.Windows.Forms;
+	using System.Globalization;
+	
+	using PPPV.Net;
+	using PPPV.Utils;
+	
+   public class TokensEditControl : System.Windows.Forms.UserControl
+   {
       private GroupBox groupBox;
       private RefreshingListBox lbTokens;
       private TextBox tbCurrentToken;
       private Button bAdd;
       private Button bDelete;
-      private ArrayList listTokens;
+      private List<Token> listTokens;
 
       /*Свойства*/
-      public ArrayList ListTokens{
+      public List<Token> ListTokens{
          get{
             return listTokens;
          }
@@ -27,8 +32,8 @@ namespace PPPV.Editor {
       }
 
       /*Методы*/
-      public TokensEditControl(ArrayList listTokens_){
-         listTokens = listTokens_;
+      public TokensEditControl(List<Token> listTokens){
+         this.listTokens = listTokens;
          this.Size = new System.Drawing.Size( 400, 260 );
          InitializeComponent();
          FetchFromList();
@@ -80,7 +85,7 @@ namespace PPPV.Editor {
       }
 
       private void bAdd_Click(object sender, EventArgs e){
-         lbTokens.Items.Add(new Token((lbTokens.Items.Count+1).ToString()));
+         lbTokens.Items.Add(new Token((lbTokens.Items.Count+1).ToString(CultureInfo.CurrentCulture)));
          SetCountText(lbTokens.Items.Count);
          lbTokens.SelectedIndex = lbTokens.Items.Count-1;
       }
@@ -127,7 +132,7 @@ namespace PPPV.Editor {
       }
 
       private void SetCountText(int count){
-         groupBox.Text = "Метки[" + count.ToString()+ "]";
+         groupBox.Text = "Метки[" + count.ToString(CultureInfo.CurrentCulture)+ "]";
       }
       
       private void textChangedEventHandler(object sender, EventArgs args){

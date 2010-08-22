@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using PPPV.Net;
+using PPPV.Editor;
 
 namespace PPPV.Editor.Commands
 {
@@ -56,10 +57,13 @@ namespace PPPV.Editor.Commands
       PetriNet n = Canvas.Net;
       NetElement contextMenuTarget = n.NetElementUnder(Position);
       ContextMenuStrip contextMenuStrip = new ContextMenuStrip();
-      contextMenuStrip.Items.Add( new EditorContextToolStripMenuItem( new EditNetElementCommand(n, contextMenuTarget) ) );
-      contextMenuStrip.Items.Add( new EditorContextToolStripMenuItem( new DeleteCommand(n, contextMenuTarget) ) );
+      EditorContextToolStripMenuItem item = new EditorContextToolStripMenuItem( new EditNetElementCommand(n, contextMenuTarget) );
+      contextMenuStrip.Items.Add( item );
+      item.CheckEnabled();
+      item = new EditorContextToolStripMenuItem( new DeleteCommand(n, contextMenuTarget) );
+      contextMenuStrip.Items.Add( item );
+      item.CheckEnabled();
       contextMenuStrip.Show(Canvas.PointToScreen(Position));
-      
     }
 
     public override void UnExecute()

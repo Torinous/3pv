@@ -8,12 +8,17 @@ namespace PPPV.Editor.Commands
 {
   public abstract class Command
   {
-    //Данные
-    private string name;
-    private string description;
-    private Keys shortcutKeys;
-    private Image pictogram;
+    string name;
+    string description;
+    Keys shortcutKeys;
+    Image pictogram;
+    bool isHistorical;
     
+		public bool IsHistorical {
+			get { return isHistorical; }
+			set { isHistorical = value; }
+		}
+
     public string Name
     {
       get
@@ -62,11 +67,8 @@ namespace PPPV.Editor.Commands
       }
     }
     
-    //Конструктор
-    public Command()
+    protected Command()
     {
-      //По умолчанию команда не влияет на историю
-      isHistorical = false;
       Name = "";
       Description = "";
       Pictogram = null;
@@ -74,6 +76,5 @@ namespace PPPV.Editor.Commands
     
     public abstract void Execute();
     public virtual void UnExecute(){}
-    public bool isHistorical;
   }
 }

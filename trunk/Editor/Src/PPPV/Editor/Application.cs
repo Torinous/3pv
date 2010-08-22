@@ -1,22 +1,23 @@
-using System;
-using System.Collections;
-using System.Diagnostics;
-using System.Threading;
-using System.Reflection;
-using System.Windows.Forms;
-using System.IO;
-using System.Xml;
-using System.Xml.Schema;
-using System.Xml.Serialization;
-using System.Text;
-
-using PPPV.Utils;
-using PPPV.Net;
-using PPPV.Editor.Commands;
-using PPPV.Editor.Tools;
-
-namespace PPPV.Editor
+﻿namespace PPPV.Editor
 {
+	using System;
+	using System.Collections;
+	using System.Diagnostics;
+	using System.Threading;
+	using System.Reflection;
+	using System.Windows.Forms;
+	using System.IO;
+	using System.Xml;
+	using System.Xml.Schema;
+	using System.Xml.Serialization;
+	using System.Text;
+	using System.Globalization;
+	
+	using PPPV.Utils;
+	using PPPV.Net;
+	using PPPV.Editor.Commands;
+	using PPPV.Editor.Tools;
+
 public class EditorApplication : ApplicationContext
   {
     //Данные
@@ -75,7 +76,7 @@ public class EditorApplication : ApplicationContext
       _mainFormInst.Closed += MainFormCloseHandler;
     }
 
-    public void PrepareLog()
+    public static void PrepareLog()
     {
       TextWriterTraceListener tr1 = new TextWriterTraceListener(System.Console.Out);
       FileStream LogFile = new FileStream(System.Windows.Forms.Application.StartupPath + "\\log", FileMode.Create);
@@ -124,7 +125,7 @@ public class EditorApplication : ApplicationContext
     /// <summary>
     /// Handles any thread exceptions
     /// </summary>
-    public class ThreadExceptionHandler
+    private class ThreadExceptionHandler
     {
       public void ApplicationThreadException(object sender, ThreadExceptionEventArgs e)
       {
@@ -132,7 +133,7 @@ public class EditorApplication : ApplicationContext
       }
     }
 
-    public string AssemblyVersion
+    public static string AssemblyVersion
     {
       get
       {

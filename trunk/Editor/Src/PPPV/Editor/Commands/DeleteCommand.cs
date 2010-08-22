@@ -33,7 +33,7 @@ namespace PPPV.Editor.Commands
     {
       EditorApplication ap = EditorApplication.Instance;
       PetriNetWrapper pn = ap.ActiveNet;
-      foreach(NetElement ne in pn.SelectedObjects)
+      foreach(NetElement ne in pn.SelectedObjects.List)
       {
         pn.ElementNullPortal = ne;
         

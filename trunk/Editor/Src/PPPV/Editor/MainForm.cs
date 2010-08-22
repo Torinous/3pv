@@ -56,9 +56,9 @@
 
 		private ToolStripContainer toolToolStripContainer;
 
-		public MainForm(EditorApplication a)
+		public MainForm(EditorApplication application)
 		{
-			app = a;
+			app = application;
 			this.KeyPreview = true;
 			this.SetStyle( ControlStyles.AllPaintingInWmPaint |  ControlStyles.UserPaint |  ControlStyles.DoubleBuffer, true);
 			InitializeComponent();
@@ -139,7 +139,7 @@
       //
       this.ClientSize = new System.Drawing.Size(599, 299);
       this.Name = "MainForm";
-      this.Text = "3Pv:Editor " + App.AssemblyVersion;
+      this.Text = "3Pv:Editor " + EditorApplication.AssemblyVersion;
 
       this.toolToolStripContainer.ContentPanel.ResumeLayout(false);
       this.toolToolStripContainer.ContentPanel.PerformLayout();

@@ -18,7 +18,7 @@
          this.Size = new Size(505, 335);
          this.StartPosition = FormStartPosition.CenterScreen;
          //this.FormBorderStyle = FormBorderStyle.FixedDialog;
-         this.Text = "Дополнительный код сети: " + net.ID;
+         this.Text = "Дополнительный код сети: " + net.Id;
          InitializeComponent();
       }
 

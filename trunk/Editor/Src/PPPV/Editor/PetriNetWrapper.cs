@@ -16,15 +16,15 @@ namespace PPPV.Editor
 	public class PetriNetWrapper : PetriNet, IXmlSerializable
 	{
 		[NonSerializedAttribute]
-		protected SelectedNetObjectsList selectedObjects;
+		SelectedNetObjectsList selectedObjects;
 		[NonSerializedAttribute]
-		public   Tool currentTool,
-					pointerTool,
-					placeTool,
-					transitionTool,
-					arcTool,
-					inhibitorArcTool,
-					annotationTool;
+		Tool	currentTool,
+				pointerTool,
+				placeTool,
+				transitionTool,
+				arcTool,
+				inhibitorArcTool,
+				annotationTool;
 
 		/*Путь к файлу в который сохранена сеть*/
 		[NonSerializedAttribute]
@@ -85,19 +85,19 @@ namespace PPPV.Editor
 		/*Событие генерируется при сохранении сети в файл*/
 		public event SaveEventHandler Save;
 
-		public void SelectToolByType(Type t)
+		public void SelectToolByType(Type toolType)
 		{
-			if(t == typeof(PointerTool))
+			if(toolType == typeof(PointerTool))
 				currentTool = pointerTool;
-			else if(t == typeof(PlaceTool))
+			else if(toolType == typeof(PlaceTool))
 				currentTool = placeTool;
-			else if(t == typeof(TransitionTool))
+			else if(toolType == typeof(TransitionTool))
 				currentTool = transitionTool;
-			else if(t == typeof(ArcTool))
+			else if(toolType == typeof(ArcTool))
 				currentTool = arcTool;
-			else if(t == typeof(InhibitorArcTool))
+			else if(toolType == typeof(InhibitorArcTool))
 				currentTool = inhibitorArcTool;
-			else if(t == typeof(AnnotationTool))
+			else if(toolType == typeof(AnnotationTool))
 				currentTool = annotationTool;
 			else
 				throw new Exception("Not appropriate tool type!");
@@ -107,7 +107,7 @@ namespace PPPV.Editor
 		{
 			bool result = false;
 			StreamWriter stream;
-			if(LinkedFile != "")
+			if(!String.IsNullOrEmpty(LinkedFile))
 			{
 				if (File.Exists(LinkedFile))
 				{
@@ -145,8 +145,8 @@ namespace PPPV.Editor
 				if(stream != null)
 				{
 					LinkedFile = fileName = saveFileDialog1.FileName;
-					if(this.ID=="")
-						this.ID = fileName.Substring(fileName.LastIndexOf("\\")+1);
+					if(this.Id=="")
+						this.Id = fileName.Substring(fileName.LastIndexOf("\\")+1);
 
 					XmlSerializer serializer = new XmlSerializer(this.GetType());
 					serializer.Serialize(stream, this);
@@ -160,7 +160,7 @@ namespace PPPV.Editor
 		private void OnSave(SaveEventArgs args)
 		{
 			Saved = true;
-			LinkedFile = args.fileName;
+			LinkedFile = args.FileName;
 			if (Save != null)
 			{
 				Save(this, args);
@@ -171,8 +171,8 @@ namespace PPPV.Editor
 		{
 			//writer.WriteStartElement("pnml");
 			writer.WriteStartElement("net");
-			writer.WriteAttributeString("id", ID);
-			writer.WriteAttributeString("type", Type);
+			writer.WriteAttributeString("id", Id);
+			writer.WriteAttributeString("type", NetType);
 			foreach(Place place in Places)
 			{
 				writer.WriteStartElement("place");
@@ -202,8 +202,8 @@ namespace PPPV.Editor
 		{
 			XmlReader subTreeReader;
 			reader.ReadStartElement("pnml");
-			this.ID = reader.GetAttribute("id");
-			this.Type = reader.GetAttribute("type");
+			this.Id = reader.GetAttribute("id");
+			this.NetType = reader.GetAttribute("type");
 
 			if(!reader.IsEmptyElement)
 			{

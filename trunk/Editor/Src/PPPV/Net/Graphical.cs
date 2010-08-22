@@ -13,10 +13,10 @@
 	public abstract class Graphical
 	{
 		/*Поля*/
-		protected Point location;
-		protected Size size;
-		protected Region _hitRegion; //регион где проверяется клик в объект
-		protected string name;
+		Point location;
+		Size size;
+		Region _hitRegion; //регион где проверяется клик в объект
+		string name;
 
 		/*Конструкторы*/
 		protected Graphical(Point p)
@@ -163,7 +163,9 @@
 
 		public virtual bool Intersect(Point point)
 		{
-			return HitRegion.IsVisible(point);
+			bool isIntersect;
+			isIntersect = HitRegion.IsVisible(point);
+			return isIntersect;
 		}
 
 		public virtual bool Intersect(Rectangle _rectangle)
@@ -275,32 +277,6 @@
 		public virtual void PrepareToDeletion()
 		{
 			/*Отпишемся от всех событый*/
-		}
-
-		protected static Pen ArrowedBlackPenFactory()
-		{
-			Pen p = new Pen(Color.Black,1);
-			GraphicsPath hPath = new GraphicsPath();
-			hPath.AddLine(new Point(4, -7), new Point(0, 0));
-			hPath.AddLine(new Point(-4, -7), new Point(0, 0));
-			CustomLineCap ArrowCap = new CustomLineCap(null, hPath);
-			ArrowCap.SetStrokeCaps(LineCap.Triangle, LineCap.Triangle);
-			p.CustomEndCap = ArrowCap;
-			return p;
-		}
-
-		protected static Pen CircledBlackPenFactory()
-		{
-			Pen p = new Pen(Color.Black,1);
-			GraphicsPath hPath = new GraphicsPath();
-			hPath.AddEllipse(-4, -8, 8, 8);
-			GraphicsPath hPath2 = new GraphicsPath();
-			hPath2.AddLine(new Point(0, -8), new Point(0, 0));
-			CustomLineCap ArrowCap = new CustomLineCap(hPath2, hPath);
-			//ArrowCap.SetStrokeCaps(LineCap.Round, LineCap.Round);
-			p.CustomEndCap = ArrowCap;
-			p.CustomStartCap = ArrowCap;
-			return p;
 		}
 	}
 }

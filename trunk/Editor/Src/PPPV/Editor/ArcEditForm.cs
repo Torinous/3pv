@@ -64,7 +64,7 @@ namespace PPPV.Editor{
          this.CancelButton = bCancel;
          
          /* Предварительное заполнение данных */
-         tbID.Text = arc.ID;
+         tbID.Text = arc.Id;
          
          this.SuspendLayout();
          this.groupBox.SuspendLayout();

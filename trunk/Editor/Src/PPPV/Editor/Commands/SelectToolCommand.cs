@@ -1,14 +1,15 @@
-using System;
-using System.Drawing;
-using System.Reflection;
-using System.Windows.Forms;
-
-using PPPV.Net;
-using PPPV.Utils;
-using PPPV.Editor.Tools;
-
-namespace PPPV.Editor.Commands
+﻿namespace PPPV.Editor.Commands
 {
+	using System;
+	using System.Drawing;
+	using System.Reflection;
+	using System.Windows.Forms;
+	using System.Globalization;
+	
+	using PPPV.Net;
+	using PPPV.Utils;
+	using PPPV.Editor.Tools;
+
   public class SelectToolCommand : NetCommand
   {
     //Данные
@@ -23,15 +24,15 @@ namespace PPPV.Editor.Commands
       }
     }
     //Конструктор
-    public SelectToolCommand(Type t)
+    public SelectToolCommand(Type type)
     {
-      toolType = t;
+      toolType = type;
       FieldInfo[] fields;
 
-      fields = t.GetFields( BindingFlags.Static | BindingFlags.NonPublic );
+      fields = type.GetFields( BindingFlags.Static | BindingFlags.NonPublic );
       foreach(FieldInfo f in fields)
       {
-        DebugAssistant.LogTrace(String.Format("{0}",f.Name));
+        DebugAssistant.LogTrace(String.Format(CultureInfo.CurrentCulture, "{0}", f.Name));
         if(f.Name == "name")
           Name = f.GetValue(null) as string;
         if(f.Name == "description")

@@ -11,10 +11,10 @@ namespace PPPV.Editor.Tools
 	public class ArcTool : Tool
 	{
 		/*Данные*/
-		static string name;
-		static string description;
-		static Keys shortcutKeys;
-		static Image pictogram;
+		static string name  = "Дуга";
+		static string description = "Инструмент создание дуг сети";
+		static Keys shortcutKeys = Keys.Control|Keys.Shift|Keys.A;
+		static Image pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Arc.png"), true);
 		private Arc arc;
 	
 		/*Акцессоры доступа*/
@@ -73,25 +73,16 @@ namespace PPPV.Editor.Tools
 			}
 		}
 
-		//cons
-		static ArcTool()
-		{
-			name = "Дуга";
-			description = "Инструмент создание дуг сети";
-			shortcutKeys = Keys.Control|Keys.Shift|Keys.A;
-			pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Arc.png"), true);
-		}
-
 		public ArcTool()
 		{
 		}
 
-		/*Методы*/
 		public override void HandleMouseDown(object sender, System.Windows.Forms.MouseEventArgs args)
 		{
+			NetCanvas someCanvas = sender as Editor.NetCanvas;
 			if(args.Button == MouseButtons.Left)
 			{
-				PetriNet pn = (sender as Editor.NetCanvas).Net;
+				PetriNet pn = someCanvas.Net;
 				NetElement clicked = pn.NetElementUnder(new Point(args.X, args.Y));
 				if(Arc == null)
 				{
@@ -109,7 +100,7 @@ namespace PPPV.Editor.Tools
 						Arc = null;
 					}
 				}
-				(sender as Editor.NetCanvas).Invalidate();
+				someCanvas.Invalidate();
 			}
 
 			base.HandleMouseDown(sender, args);

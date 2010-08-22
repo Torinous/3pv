@@ -1,26 +1,27 @@
-using System;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Windows.Forms;
-using System.Xml;
-using System.Xml.Schema;
-using System.Xml.Serialization;
-
-using PPPV.Utils;
-
-namespace PPPV.Net
+﻿namespace PPPV.Net
 {
+	using System;
+	using System.Drawing;
+	using System.Drawing.Drawing2D;
+	using System.Windows.Forms;
+	using System.Xml;
+	using System.Xml.Schema;
+	using System.Xml.Serialization;
+	using System.Globalization;
+
+	using PPPV.Utils;
+
   [Serializable()]
   [XmlRoot("transition")]
   public class Transition : NetElement, IXmlSerializable
   {
-    private static int _ID = 0;
+    private static int _ID;
     private string guardFunction;
 
-    public Transition(Point p):base(p)
+    public Transition(Point point):base(point)
     {
       _ID++;
-      Name = ID = "T"+_ID;
+      Name = Id = "T"+_ID;
       Size = new Size(20,50);
       guardFunction = "";
     }
@@ -85,8 +86,8 @@ namespace PPPV.Net
 
       writer.WriteStartElement("graphics");
       writer.WriteStartElement("position");
-      writer.WriteAttributeString("x", this.X.ToString()+".0");
-      writer.WriteAttributeString("y", this.Y.ToString()+".0");
+      writer.WriteAttributeString("x", this.X.ToString(CultureInfo.CurrentCulture)+".0");
+      writer.WriteAttributeString("y", this.Y.ToString(CultureInfo.CurrentCulture)+".0");
       writer.WriteEndElement(); // position
       writer.WriteEndElement(); // graphics
 
@@ -107,7 +108,7 @@ namespace PPPV.Net
     {
       reader.Read();
       reader.MoveToAttribute("id");
-      this.ID = reader.Value;
+      this.Id = reader.Value;
       reader.ReadStartElement("transition");
       while(reader.NodeType != XmlNodeType.EndElement)
       {

@@ -46,7 +46,7 @@
 		}*/
 		
 		/*Чисто фиктивно, просто чтобы реализовать абстрактный член*/
-		public override Point GetPilon(Point source)
+		public override Point GetPilon(Point from)
 		{
 			return Center;
 		}

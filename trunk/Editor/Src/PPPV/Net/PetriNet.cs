@@ -4,10 +4,12 @@ using System.IO;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Collections;
+using System.Collections.Generic;
 using System.Drawing.Drawing2D;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
+using System.Globalization;
 
 using PPPV.Editor;
 using PPPV.Utils;
@@ -32,9 +34,9 @@ namespace PPPV.Net
 		/*Конструктор*/
 		public PetriNet()
 		{
-			ID = "";
-			Type = "PPr/T net";
-			Places = new ArrayList(30);
+			Id = "";
+			NetType = "PPr/T net";
+			places = new ArrayList(30);
 			Transitions = new ArrayList(30);
 			Arcs = new ArrayList(60);
 			Change += CalculateSize;
@@ -65,7 +67,7 @@ namespace PPPV.Net
 			}
 		}
 		
-		public string ID
+		public string Id
 		{
 			get
 			{
@@ -77,7 +79,7 @@ namespace PPPV.Net
 			}
 		}
 
-		public string Type
+		public string NetType
 		{
 			get
 			{
@@ -118,10 +120,6 @@ namespace PPPV.Net
 			get
 			{
 				return places;
-			}
-			protected set
-			{
-				places = value;
 			}
 		}
 
@@ -266,9 +264,9 @@ namespace PPPV.Net
 			return null;
 		}
 
-		public ArrayList NetElementUnder(Rectangle selectedRectangle)
+		public List<NetElement> NetElementUnder(Rectangle selectedRectangle)
 		{
-			ArrayList selectedObjects = new ArrayList();
+			List<NetElement> selectedObjects = new List<NetElement>(20);
 			int i = 0;
 			for(i=0;i<Transitions.Count;++i)
 			{
@@ -311,21 +309,21 @@ namespace PPPV.Net
 			OnChange(new EventArgs());
 		}
 
-		public NetElement GetElementByID(string ID_)
+		public NetElement GetElementById(string searchingId)
 		{
-			if(ID_ == "")
+			if(String.IsNullOrEmpty(searchingId))
 				return null;
 			foreach(Place place in Places){
-				if(place.ID == ID_)
+				if(place.Id == searchingId)
 					return place;
 			}
 			foreach(Transition transition in Transitions)
 			{
-				if(transition.ID == ID_)
+				if(transition.Id == searchingId)
 					return transition;
 			}
 			foreach(Arc arc in Arcs){
-				if(arc.ID == ID_)
+				if(arc.Id == searchingId)
 					return arc;
 			}
 			return null;

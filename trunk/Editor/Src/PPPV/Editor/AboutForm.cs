@@ -8,6 +8,7 @@ namespace PPPV.Editor
 	using System.Text;
 	using System.Windows.Forms;
 	using System.Reflection;
+	using System.Globalization;
 	
   public class AboutForm : Form
   {
@@ -23,11 +24,11 @@ namespace PPPV.Editor
 
     private void AboutForm_Load(object sender, EventArgs e)
     {
-      label1.Text = AssemblyTitle + String.Format("  Version {0}", EditorApplication.Instance.AssemblyVersion);
+      label1.Text = AssemblyTitle + String.Format(CultureInfo.CurrentCulture, "  Version {0}", EditorApplication.AssemblyVersion);
       DescBox.Text = AssemblyDescription;
     }
 
-    public string AssemblyTitle
+    public static string AssemblyTitle
     {
       get
       {
@@ -39,7 +40,7 @@ namespace PPPV.Editor
         // Select the first one
         AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
           // If it is not an empty string, return it
-          if (titleAttribute.Title != "")
+          if (!String.IsNullOrEmpty(titleAttribute.Title))
             return titleAttribute.Title;
         }
         // If there was no Title attribute, or if the Title attribute was the empty string, return the .exe name
@@ -47,7 +48,7 @@ namespace PPPV.Editor
       }
     }
 
-    public string AssemblyDescription
+    public static string AssemblyDescription
     {
       get
       {

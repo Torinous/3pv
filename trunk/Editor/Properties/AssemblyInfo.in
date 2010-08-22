@@ -13,6 +13,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("Copyright © vv 2008")]
 [assembly: AssemblyTrademark("Антонов Дмитрий Александрович AKA Torinous")]
 [assembly: AssemblyCulture("")]
+[assembly: ComVisible(false)]
 
 // Version information for an assembly consists of the following four values:
 //

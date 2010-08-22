@@ -1,18 +1,26 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
 using System.Windows.Forms;
 
-namespace PPPV.Net {
-
+namespace PPPV.Net 
+{
    [Serializable()]
    [XmlRoot("initialMarking")]
-   public class TokensList:ArrayList, IXmlSerializable{
+   public class TokensList : IXmlSerializable
+   {
+		List<Token> list;
+		
+		public List<Token> List {
+			get { return list; }
+		}
 
-      /*Конструкторы*/
-      public TokensList(int a):base(a){
+      public TokensList(int size)
+      {
+      	list = new List<Token>(size);
       }
 
       public event EventHandler Change;
@@ -25,15 +33,15 @@ namespace PPPV.Net {
          }
       }
 
-      public override int Add(object obj){
-         int val = base.Add(obj);
+      public int Add(Token value){
+         int val =((IList)this).Add((object) value);
          OnChange(new EventArgs());
          return val;
       }
 
       public void WriteXml (XmlWriter writer)
       {
-         foreach(Token token in this){
+         foreach(Token token in list){
             token.WriteXml(writer);
          }
       }
@@ -55,7 +63,7 @@ namespace PPPV.Net {
                reader.Skip(); // initialMarking
             }
          }else{
-            throw new Exception("Невозможно десереализовать TokensList. Не верен тип узла xml.");
+            throw new NetException("Невозможно десереализовать TokensList. Не верен тип узла xml.");
          }
       }
 

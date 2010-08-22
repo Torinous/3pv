@@ -17,7 +17,7 @@ namespace PPPV.Net
 		}
 		
 		/*Акцессоры доступа*/
-		public virtual string ID{
+		public virtual string Id{
 			get;
 			protected set;
 		}
@@ -47,7 +47,7 @@ namespace PPPV.Net
 		protected override void OnChange(EventArgs args){
 			if(Change != null)
 			{
-				Change(this,args);
+				Change(this, args);
 			}
 			base.OnChange(args);
 		}

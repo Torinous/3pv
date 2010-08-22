@@ -23,10 +23,10 @@ namespace PPPV.Editor.Commands
     }
 
     //Конструктор
-    public AddTransitionCommand(PetriNet n, Point p)
+    public AddTransitionCommand(PetriNet net, Point position)
     {
-      Net = n;
-      Position = p;
+      Net = net;
+      Position = position;
       Name = "Добавить Переход к сети";
       Description = "Команда добавляющая к заданной сети Переход по заданным координатам";
     }

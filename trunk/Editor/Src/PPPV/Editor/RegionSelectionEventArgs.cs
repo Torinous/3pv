@@ -4,7 +4,8 @@ using System.Windows.Forms;
 
 namespace PPPV.Editor{
 
-  public class RegionSelectionEventArgs{
+	public class RegionSelectionEventArgs : EventArgs
+	{
       public Rectangle selectionRectangle;
 
       public RegionSelectionEventArgs(){
