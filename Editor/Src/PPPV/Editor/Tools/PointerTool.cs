@@ -86,14 +86,15 @@ namespace PPPV.Editor.Tools
 		/*Методы*/
 		public override void HandleMouseDown(object sender, System.Windows.Forms.MouseEventArgs args)
 		{
-			PetriNetWrapper pnw = ((NetCanvas)sender).Net;
+			NetCanvas someCanvas = (NetCanvas)sender;
+			PetriNetWrapper pnw = someCanvas.Net;
 			lastMouseDownPoint = new Point(args.X, args.Y);
 			if(args.Button == MouseButtons.Left)
 			{
 				NetElement tmp = pnw.NetElementUnder(new Point(args.X, args.Y));
 				if(tmp!=null)
 				{
-					if(!pnw.SelectedObjects.Contains(tmp))
+					if(!pnw.SelectedObjects.List.Contains(tmp))
 					{
 						pnw.SelectedObjects.Clear();
 						pnw.SelectedObjects.Add(tmp);
@@ -105,9 +106,9 @@ namespace PPPV.Editor.Tools
 					isActive = true;
 					selectFrom = new Point(args.X, args.Y);
 				}
-				((NetCanvas)sender).Invalidate();
+				someCanvas.Invalidate();
 			}
-			((NetCanvas)sender).Paint += DrawSelectionRegion;
+			someCanvas.Paint += DrawSelectionRegion;
 			base.HandleMouseDown(sender, args);
 		}
 
@@ -126,16 +127,16 @@ namespace PPPV.Editor.Tools
 					selectedRectangle.Location = startPoint;
 					selectedRectangle.Size = new Size(Math.Abs(args.X-selectFrom.X), System.Math.Abs(args.Y-selectFrom.Y));
 					pnw.SelectedObjects.Clear();
-					pnw.SelectedObjects.AddRange(((NetCanvas)sender).Net.NetElementUnder(SelectedRectangle));
+					pnw.SelectedObjects.List.AddRange(((NetCanvas)sender).Net.NetElementUnder(SelectedRectangle));
 					((NetCanvas)sender).Invalidate();
 				}
 				else
 				{
 					Point delta = new Point(args.X - lastMouseDownPoint.X, args.Y - lastMouseDownPoint.Y);
 
-					for(int i=0;i<pnw.SelectedObjects.Count;++i)
+					for(int i=0;i<pnw.SelectedObjects.List.Count;++i)
 					{
-						((NetElement)pnw.SelectedObjects[i]).MoveBy(delta);
+						((NetElement)pnw.SelectedObjects.List[i]).MoveBy(delta);
 					}
 					((NetCanvas)sender).Invalidate();
 					lastMouseDownPoint.X = args.X;

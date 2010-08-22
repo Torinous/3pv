@@ -22,9 +22,9 @@ namespace PPPV.Editor
       this.Size     = new Size(599, 228);
       this.TabIndex = 0;
       this.UseVisualStyleBackColor = true;
-      this.netName = net.ID;
+      this.netName = net.Id;
       this.netSaved = net.Saved;
-      this.Text = (netName==""?"~":netName+"   ");
+      this.Text = (String.IsNullOrEmpty(netName)?"~":netName+"   ");
       InitializeComponent(net);
       this.AutoScroll = true;
     }
@@ -91,10 +91,10 @@ namespace PPPV.Editor
 
     private void LinkedNetSaveHandler(object sender, SaveEventArgs args)
     {
-      netName = args.netID;
-      this.ToolTipText = args.fileName;
+      netName = args.NetID;
+      this.ToolTipText = args.FileName;
       NetSaved = true;
-      this.Text = (netName==""?"~":netName+"   ");
+      this.Text = (String.IsNullOrEmpty(netName)?"~":netName+"   ");
     }
 
     private void LinkedNetChangeHandler(object sender, EventArgs args)
@@ -102,7 +102,7 @@ namespace PPPV.Editor
       if(NetSaved)
       {
         NetSaved = false;
-        this.Text = (netName==""?"~":netName+"   ");
+        this.Text = (String.IsNullOrEmpty(netName)?"~":netName+"   ");
       }
     }
     

@@ -9,9 +9,6 @@ namespace PPPV.Editor.Tools
 {
 	public abstract class Tool
 	{
-		/*Данные*/
-	
-		//Акцессоры доступа
 		//string name;
 		//string description;
 		//Keys shortcutKeys;
@@ -37,8 +34,8 @@ namespace PPPV.Editor.Tools
 			get;
 			set;
 		}
-		//Конструктор
-		public Tool()
+
+		protected Tool()
 		{
 		}
 

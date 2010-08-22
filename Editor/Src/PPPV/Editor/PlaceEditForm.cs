@@ -57,7 +57,7 @@ namespace PPPV.Editor{
          bCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
          bCancel.DialogResult = DialogResult.Cancel;
          
-         tokensEditControl = new TokensEditControl(place.Tokens);
+         tokensEditControl = new TokensEditControl(place.Tokens.List);
          tokensEditControl.Location = new Point( 30, 80);
          
          this.AcceptButton = bOK;

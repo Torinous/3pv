@@ -8,10 +8,10 @@ namespace PPPV.Net {
   {
     public Size oldSize, newSize;
 
-    public ResizeEventArgs(Size old_, Size new_)
+    public ResizeEventArgs(Size oldSize, Size newSize)
     {
-      oldSize = old_;
-      newSize = new_;
+      this.oldSize = oldSize;
+      this.newSize = newSize;
     }
   }
 }

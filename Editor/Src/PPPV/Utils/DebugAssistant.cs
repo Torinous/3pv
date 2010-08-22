@@ -1,18 +1,12 @@
-﻿using System;
-using System.Diagnostics;
-using System.Collections;
-using System.Reflection;
-
-namespace PPPV.Utils
+﻿namespace PPPV.Utils
 {
-  /// <summary>
-  /// The debugAssistant class.
-  /// </summary>
+	using System;
+	using System.Diagnostics;
+	using System.Collections;
+	using System.Reflection;
+	using System.Globalization;
   public class DebugAssistant
   {
-    /// <summary>
-    /// The top level namespaces that can be singled out for debugging.
-    /// </summary>
     protected static Hashtable namespaces;
 
     /// <summary>
@@ -38,7 +32,7 @@ namespace PPPV.Utils
           if( ! namespaces.Contains( type.Namespace ) )
           {
             namespaces.Add( type.Namespace, true );
-            Trace.WriteLine( "\tNameSpace:" + type.Namespace.ToString());
+            Trace.WriteLine( "\tNameSpace:" + type.Namespace.ToString(CultureInfo.CurrentCulture));
           }
         }
       }

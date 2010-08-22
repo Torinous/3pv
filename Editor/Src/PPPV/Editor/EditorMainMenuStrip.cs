@@ -8,36 +8,36 @@ namespace PPPV.Editor
 {
 public class EditorMainMenuStrip : MenuStrip
 	{
-		public EditorToolStripMenuItem toolStripMenuFile;
-		public EditorToolStripMenuItem toolStripMenuNew;
-		public EditorToolStripMenuItem toolStripMenuOpen;
-		public EditorToolStripMenuItem toolStripMenuClose;
-		public EditorToolStripMenuItem toolStripMenuSave;
-		public EditorToolStripMenuItem toolStripMenuSaveAs;
-		public EditorToolStripMenuItem toolStripMenuExit;
+		private EditorToolStripMenuItem toolStripMenuFile;
+		private EditorToolStripMenuItem toolStripMenuNew;
+		private EditorToolStripMenuItem toolStripMenuOpen;
+		private EditorToolStripMenuItem toolStripMenuClose;
+		private EditorToolStripMenuItem toolStripMenuSave;
+		private EditorToolStripMenuItem toolStripMenuSaveAs;
+		private EditorToolStripMenuItem toolStripMenuExit;
 
-		public EditorToolStripMenuItem toolStripMenuEdit;
-		public EditorToolStripMenuItem toolStripMenuUndo;
-		public EditorToolStripMenuItem toolStripMenuRedo;
-		public EditorToolStripMenuItem toolStripMenuCut;
-		public EditorToolStripMenuItem toolStripMenuCopy;
-		public EditorToolStripMenuItem toolStripMenuPaste;
-		public EditorToolStripMenuItem toolStripMenuDelete;
+		private EditorToolStripMenuItem toolStripMenuEdit;
+		private EditorToolStripMenuItem toolStripMenuUndo;
+		private EditorToolStripMenuItem toolStripMenuRedo;
+		private EditorToolStripMenuItem toolStripMenuCut;
+		private EditorToolStripMenuItem toolStripMenuCopy;
+		private EditorToolStripMenuItem toolStripMenuPaste;
+		private EditorToolStripMenuItem toolStripMenuDelete;
 
-		public EditorToolStripMenuItem toolStripMenuView;
-		public EditorToolStripMenuItem toolStripMenuZoomIn;
-		public EditorToolStripMenuItem toolStripMenuZoomOut;
+		private EditorToolStripMenuItem toolStripMenuView;
+		private EditorToolStripMenuItem toolStripMenuZoomIn;
+		private EditorToolStripMenuItem toolStripMenuZoomOut;
 
-		public EditorToolStripMenuItem toolStripMenuNet;
-		public EditorToolStripMenuItem toolStripMenuPointer;
-		public EditorToolStripMenuItem toolStripMenuPlace;
-		public EditorToolStripMenuItem toolStripMenuTransition;
-		public EditorToolStripMenuItem toolStripMenuArc;
-		public EditorToolStripMenuItem toolStripMenuInhibitorArc;
-		public EditorToolStripMenuItem toolStripMenuAnnotation;
+		private EditorToolStripMenuItem toolStripMenuNet;
+		private EditorToolStripMenuItem toolStripMenuPointer;
+		private EditorToolStripMenuItem toolStripMenuPlace;
+		private EditorToolStripMenuItem toolStripMenuTransition;
+		private EditorToolStripMenuItem toolStripMenuArc;
+		private EditorToolStripMenuItem toolStripMenuInhibitorArc;
+		private EditorToolStripMenuItem toolStripMenuAnnotation;
 
-		public EditorToolStripMenuItem toolStripMenuHelp;
-		public EditorToolStripMenuItem toolStripMenuAbout;
+		private EditorToolStripMenuItem toolStripMenuHelp;
+		private EditorToolStripMenuItem toolStripMenuAbout;
 
 		public EditorMainMenuStrip()
 		{

@@ -2,12 +2,12 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace PPPV.Editor{
-
+namespace PPPV.Editor
+{
   public class RemoveTabPageEventArgs
   {
-      public int tabIndex;
-      
+		int tabIndex;
+
 		public int TabIndex{
 			get { return tabIndex; }
 			set { tabIndex = value; }

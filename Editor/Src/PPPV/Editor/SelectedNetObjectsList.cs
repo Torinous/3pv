@@ -2,40 +2,47 @@
 using System.Collections;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using System.Collections.Generic;
 
 using PPPV.Editor.Tools;
 using PPPV.Net;
 
 namespace PPPV.Editor
 {
-  public class SelectedNetObjectsList : ArrayList
+  public class SelectedNetObjectsList
   {
+  	private List<NetElement> list;
+  	
+		public List<NetElement> List {
+			get { return list; }
+		}
     //Данные
-    public SelectedNetObjectsList(int a):base(a)
+    public SelectedNetObjectsList(int size)
     {
+    	list = new List<NetElement>(size);
     }
     
-    public override int Add(object value)
+    public void Add(NetElement value)
     {
       (value as NetElement).Paint += DrawSelectionMarker;
-      return base.Add(value);
+      list.Add(value);
     }
     
-    public override void AddRange(ICollection c)
+    /*public void AddRange(IEnumarable c)
     {
       foreach(object obj in c)
         (obj as NetElement).Paint += DrawSelectionMarker;
-      base.AddRange(c);
-    }
+      list.AddRange(c);
+    }*/
     
-    public override void Clear()
+    public void Clear()
     {
-      foreach(object obj in this)
+      foreach(object obj in list)
         (obj as NetElement).Paint -= DrawSelectionMarker;
-      base.Clear();
+      list.Clear();
     }
     
-    public void DrawSelectionMarker(object sender, PaintEventArgs e)
+    private void DrawSelectionMarker(object sender, PaintEventArgs e)
     {
       /*Pen RedPen = new Pen(Color.Red, 1);
       Graphics dc = e.Graphics;

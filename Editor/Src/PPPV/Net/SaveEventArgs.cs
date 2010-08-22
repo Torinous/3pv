@@ -6,13 +6,24 @@ using PPPV.Editor;
 
 namespace PPPV.Net{
 
-   public class SaveEventArgs{
-      public string fileName;
-      public string netID;
+	public class SaveEventArgs : EventArgs
+	{
+		string fileName;
+		string netID;
 
-      public SaveEventArgs(string fileName_, string netID_){
-         fileName = fileName_;
-         netID = netID_;
-      }
-   }
+		public string NetID {
+			get { return netID; }
+			set { netID = value; }
+		}
+
+		public string FileName {
+			get { return fileName; }
+			set { fileName = value; }
+		}
+
+		public SaveEventArgs(string fileName_, string netID_){
+			fileName = fileName_;
+			netID = netID_;
+		}
+	}
 }

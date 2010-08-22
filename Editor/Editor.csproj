@@ -65,7 +65,6 @@
     <Compile Include="Src\PPPV\Editor\Application.cs" />
     <Compile Include="Src\PPPV\Editor\ArcEditForm.cs" />
     <Compile Include="Src\PPPV\Editor\CanvasMouseEventArgs.cs" />
-    <Compile Include="Src\PPPV\Editor\CanvasMouseEventHandler.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\AboutCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\AddNetElementCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\AddPlaceCommand.cs" />
@@ -92,15 +91,16 @@
     <Compile Include="Src\PPPV\Editor\Commands\UndoCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\ZoomInCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\ZoomOutCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\ContextMenuController.cs" />
     <Compile Include="Src\PPPV\Editor\CortegeEditControl.cs" />
     <Compile Include="Src\PPPV\Editor\EditorContextToolStripMenuItem.cs" />
+    <Compile Include="Src\PPPV\Editor\EditorException.cs" />
     <Compile Include="Src\PPPV\Editor\EditorToolStrip.cs" />
     <Compile Include="Src\PPPV\Editor\EditorToolStripButton.cs" />
     <Compile Include="Src\PPPV\Editor\EditorToolStripMenuItem.cs" />
     <Compile Include="Src\PPPV\Editor\GuardEditForm.cs" />
     <Compile Include="Src\PPPV\Editor\MainForm.cs" />
     <Compile Include="Src\PPPV\Editor\EditorMainMenuStrip.cs" />
+    <Compile Include="Src\PPPV\Editor\NativeMethods.cs" />
     <Compile Include="Src\PPPV\Editor\NetCanvas.cs" />
     <Compile Include="Src\PPPV\Editor\PetriNetWrapper.cs" />
     <Compile Include="Src\PPPV\Editor\PlaceEditForm.cs" />
@@ -119,14 +119,15 @@
     <Compile Include="Src\PPPV\Editor\Tools\PointerTool.cs" />
     <Compile Include="Src\PPPV\Editor\Tools\Tool.cs" />
     <Compile Include="Src\PPPV\Editor\Tools\TransitionTool.cs" />
-    <Compile Include="Src\PPPV\Main.cs" />
     <Compile Include="Src\PPPV\Net\Arc.cs" />
+    <Compile Include="Src\PPPV\Net\InhibitorArc.cs" />
     <Compile Include="Src\PPPV\Net\Graphical.cs" />
     <Compile Include="Src\PPPV\Net\MouseEventArgs.cs" />
     <Compile Include="Src\PPPV\Net\MouseEventHandler.cs" />
     <Compile Include="Src\PPPV\Net\MoveEventArgs.cs" />
     <Compile Include="Src\PPPV\Net\MoveEventHandler.cs" />
     <Compile Include="Src\PPPV\Net\NetElement.cs" />
+    <Compile Include="Src\PPPV\Net\NetException.cs" />
     <Compile Include="Src\PPPV\Net\PetriNet.cs" />
     <Compile Include="Src\PPPV\Net\PetriNetPrologTranslated.cs" />
     <Compile Include="Src\PPPV\Net\Pilon.cs" />
@@ -174,7 +175,6 @@
     <EmbeddedResource Include="Resources\Zoom.png" />
     <None Include="app.manifest" />
     <None Include="Properties\AssemblyInfo.in" />
-    <None Include="Src\AssemblyInfo.in" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources" />

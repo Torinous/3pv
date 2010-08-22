@@ -8,18 +8,16 @@
 
 	 [Serializable()]
 	 [XmlRoot("cortege")]
-	 public class PredicateList:ArrayList, IXmlSerializable{
-
-			/*Конструкторы*/
-			public PredicateList(int a):base(a){
+	 public class PredicateList : ArrayList, IXmlSerializable
+	 {
+			public PredicateList(int size):base(size){
 			}
 			
-			/*Акцессоры доступа*/
 			public string Text{
 				 get{
 						string t = "";
 						foreach(Predicate predicate in this){
-							 if(t != "")
+							if(!String.IsNullOrEmpty(t))
 									t = t + "+";
 							 t = t + "<" + predicate + ">";
 						}
@@ -27,23 +25,25 @@
 				 }
 			}
 
-			/*События*/
 			public event EventHandler Change;
 			
-
-			/*Методы*/
-
 			protected void OnChange(EventArgs args){
 				 if(Change != null){
 						Change(this, args);
 				 }
 			}
 
-			public override int Add(object obj){
-				 int val = base.Add(obj);
+			public override int Add(object value)
+			{
+				 int val = base.Add(value);
 				 OnChange(new EventArgs());
 				 return val;
 			}
+			
+			public void Remove(Predicate value) 
+      {
+         ((IList)this).Remove((object) value);
+      }
 
 			public void WriteXml (XmlWriter writer)
 			{
@@ -69,7 +69,7 @@
 							 reader.Skip(); // initialMarking
 						}
 				 }else{
-						throw new Exception("Невозможно десереализовать PredicateList. Не верен тип узла xml.");
+						throw new NetException("Невозможно десереализовать PredicateList. Не верен тип узла xml.");
 				 }
 			}
 

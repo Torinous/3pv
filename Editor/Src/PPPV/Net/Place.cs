@@ -1,17 +1,17 @@
-﻿using System;
-using System.Drawing;
-using System.Collections;
-using System.Drawing.Drawing2D;
-using System.Windows.Forms;
-using System.Xml;
-using System.Xml.Schema;
-using System.Xml.Serialization;
-
-//using PPPV.Editor;
-using PPPV.Utils;
-
-namespace PPPV.Net
+﻿namespace PPPV.Net
 {
+	using System;
+	using System.Drawing;
+	using System.Collections;
+	using System.Drawing.Drawing2D;
+	using System.Windows.Forms;
+	using System.Xml;
+	using System.Xml.Schema;
+	using System.Xml.Serialization;
+	using System.Globalization;
+	
+	using PPPV.Utils;
+	
   [Serializable()]
   [XmlRoot("place")]
   public class Place : NetElement, IXmlSerializable
@@ -23,7 +23,7 @@ namespace PPPV.Net
     public Place(Point p):base(p)
     {
       _ID++;
-      Name = ID = "P"+_ID;
+      Name = Id = "P"+_ID;
       Size = new Size(50, 50);
       tokens = new TokensList(10);
     }
@@ -82,7 +82,7 @@ namespace PPPV.Net
       dc.FillRegion(grayBrush, fillRegion);
       dc.DrawEllipse(blackPen, X, Y, Size.Width, Size.Height);
       dc.DrawString(Name, font1, blackBrush, X + (int)Size.Width/2+5,Y-5);
-      dc.DrawString(Tokens.Count.ToString(), font1, blackBrush, X + (int)Size.Width/2-10, Y + (int)Size.Height/2-10);
+      dc.DrawString(Tokens.List.Count.ToString(CultureInfo.CurrentCulture), font1, blackBrush, X + (int)Size.Width/2-10, Y + (int)Size.Height/2-10);
     }
 
     protected override void UpdateHitRegion()
@@ -111,8 +111,8 @@ namespace PPPV.Net
       writer.WriteAttributeString("id", this.Name);
       writer.WriteStartElement("graphics");
       writer.WriteStartElement("position");
-      writer.WriteAttributeString("x", this.X.ToString()+".0");
-      writer.WriteAttributeString("y", this.Y.ToString()+".0");
+      writer.WriteAttributeString("x", this.X.ToString(CultureInfo.CurrentCulture)+".0");
+      writer.WriteAttributeString("y", this.Y.ToString(CultureInfo.CurrentCulture)+".0");
       writer.WriteEndElement(); // position
       writer.WriteEndElement(); // graphics
       writer.WriteStartElement("name");
@@ -130,7 +130,7 @@ namespace PPPV.Net
       XmlReader subTreeReader;
       reader.Read();
       reader.MoveToAttribute("id");
-      this.ID = reader.Value;
+      this.Id = reader.Value;
       reader.ReadStartElement("place");
       while(reader.NodeType != XmlNodeType.EndElement)
       {

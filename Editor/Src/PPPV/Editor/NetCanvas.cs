@@ -48,9 +48,9 @@ namespace PPPV.Editor
       this.ParentChanged    += ParentChangedHandler;
     }
 
-    public NetCanvas(PetriNetWrapper _net):this()
+    public NetCanvas(PetriNetWrapper net):this()
     {
-      Net = _net;
+      Net = net;
       Net.Canvas = this;
     }
 
@@ -115,10 +115,10 @@ namespace PPPV.Editor
     }
 
     /**/
-    public event CanvasMouseEventHandler CanvasMouseClick;
-    public event CanvasMouseEventHandler CanvasMouseMove;
-    public event CanvasMouseEventHandler CanvasMouseDown;
-    public event CanvasMouseEventHandler CanvasMouseUp;
+    public event EventHandler<CanvasMouseEventArgs> CanvasMouseClick;
+    public event EventHandler<CanvasMouseEventArgs> CanvasMouseMove;
+    public event EventHandler<CanvasMouseEventArgs> CanvasMouseDown;
+    public event EventHandler<CanvasMouseEventArgs> CanvasMouseUp;
   
     public event RegionSelectionEventHandler RegionSelectionStart;
     public event RegionSelectionEventHandler RegionSelectionEnd;
@@ -202,29 +202,29 @@ namespace PPPV.Editor
       base.OnMouseUp(e);
     }
 
-    public void OnCanvasMouseClick(System.Windows.Forms.MouseEventArgs _arg)
+    public void OnCanvasMouseClick(System.Windows.Forms.MouseEventArgs arg)
     {
       if(CanvasMouseClick != null)
       {
-        Point[] p = {_arg.Location};
+        Point[] p = {arg.Location};
         Matrix mi = (Matrix)ScaleMatrix.Clone();
         mi.Invert();
         mi.TransformPoints(p);
-        CanvasMouseEventArgs arg = new CanvasMouseEventArgs(_arg, p[0]);
-        CanvasMouseClick(this,arg);
+        CanvasMouseEventArgs canvasArg = new CanvasMouseEventArgs(arg, p[0]);
+        CanvasMouseClick(this, canvasArg);
       }
     }
 
-    public void OnCanvasMouseMove(System.Windows.Forms.MouseEventArgs _arg)
+    public void OnCanvasMouseMove(System.Windows.Forms.MouseEventArgs arg)
     {
       if(CanvasMouseMove != null)
       {
-        Point[] p = {_arg.Location};
+        Point[] p = {arg.Location};
         Matrix mi = (Matrix)ScaleMatrix.Clone();
         mi.Invert();
         mi.TransformPoints(p);
-        CanvasMouseEventArgs arg = new CanvasMouseEventArgs(_arg, p[0]);
-        CanvasMouseMove(this,arg);
+        CanvasMouseEventArgs canvasArg = new CanvasMouseEventArgs(arg, p[0]);
+        CanvasMouseMove(this, canvasArg);
       }
     }
 

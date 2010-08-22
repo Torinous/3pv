@@ -8,26 +8,27 @@
 	using System.Xml;
 	using System.Xml.Schema;
 	using System.Xml.Serialization;
+	using System.Globalization;
 	
 	using PPPV.Utils;
 	using PPPV.Editor;
 	
 	public class Arc : NetElement, IXmlSerializable
 	{
-		protected static Pen ArrowedBlackPen = CircledBlackPenFactory();
-		private NetElement source, target;
-		private Point sourcePilon, targetPilon;
-		private PredicateList cortege;
-		private ArrayList points;
+		NetElement source, target;
+		Point sourcePilon, targetPilon;
+		PredicateList cortege;
+		ArrayList points;
 
 		/*Конструктор*/
 		public Arc(NetElement startElement):base(new Point(0,0))
 		{
-			Source = startElement;
-			if(Source != null)
-				targetPilon = Source.Center;
-			Points = new ArrayList(20);
-			Cortege = new PredicateList(10);
+			source = startElement;
+			if(source != null)
+				targetPilon = source.Center;
+			points = new ArrayList(20);
+			cortege = new PredicateList(10);
+			cortege.Change += CortegeChangeHandler;
 		}
 
 		public Arc(XmlReader reader, PetriNet net):this((NetElement)null)
@@ -36,89 +37,72 @@
 			this.ReadXml(reader);
 		}
 
-		public override string ID
+		public override string Id
 		{
 			get
 			{
 				string source_="", target_="";
 				if(Source != null)
-				source_ = Source.ID;
+				source_ = Source.Id;
 				if(Target != null)
-					target_ = Target.ID;
+					target_ = Target.Id;
 					return source_+" to "+target_;
 				}
 			}
 
-			public ArrayList Points{
-				get{
-					return points;
-				}
-				set{
-					points = value;
+		public ArrayList Points{
+			get{
+				return points;
+			}
+		}
+
+		public PredicateList Cortege{
+			get{
+				return cortege;
+			}
+		}
+
+		private Point SourcePilon{
+			get{
+				return sourcePilon;
+			}
+			/*set{
+				sourcePilon = value;
+				UpdateHitRegion();
+				OnChange(new EventArgs());
+			}*/
+		}
+
+		public Point TargetPilon{
+			get{
+				return targetPilon;
+			}
+			set{
+				if(Target == null)
+				{
+					targetPilon = value;
+					UpdateHitRegion();
 					OnChange(new EventArgs());
 				}
 			}
+		}
 
-			public PredicateList Cortege{
-				get{
-					return cortege;
+		public NetElement Target
+		{
+			get{
+				return target;
+			}
+			set
+			{
+				if(target != null)
+				{
+					target.Move -= MoveHandler;
+					target.Resize -= ResizeLinkedElementsHandler;
 				}
-				set{
-					if(cortege != null)
-					{
-						cortege.Change -= CortegeChangeHandler;
-					}
-			cortege = value;
-			if(cortege != null)
-			{
-				cortege.Change += CortegeChangeHandler;
-			}
-			OnChange(new EventArgs());
-		}
-	}
-
-	private Point SourcePilon{
-		get{
-			return sourcePilon;
-		}
-		set{
-			sourcePilon = value;
-			UpdateHitRegion();
-			OnChange(new EventArgs());
-		}
-	}
-
-	public Point TargetPilon{
-		get{
-			return targetPilon;
-		}
-		set{
-			if(Target == null)
-			{
-				targetPilon = value;
-				UpdateHitRegion();
-				OnChange(new EventArgs());
-			}
-		}
-	}
-
-	public NetElement Target
-	{
-		get
-		{
-			return target;
-		}
-		set
-		{
-			if(target != null)
-			{
-				target.Move -= MoveHandler;
-				target.Resize -= ResizeLinkedElementsHandler;
-			}
-			target = value;
-			if(target != null)
-			{
-				UpdatePosition();
+				target = value;
+				if(target != null)
+				{
+					UpdatePosition();
 					target.Move += MoveHandler;
 					target.Resize += ResizeLinkedElementsHandler;
 				}
@@ -147,11 +131,11 @@
 		}
 	}
 
-	public bool Unfinished{
-		get{
-			return target == null;
+		public bool Unfinished{
+			get{
+				return target == null;
+			}
 		}
-	}
 
 	public override Point Center{
 		get{
@@ -196,7 +180,7 @@
 
 			if( Points.Count == 0 )
 			{
-				dc.DrawLine(ArrowedBlackPen, sourcePilon, targetPilon);
+				dc.DrawLine(PenFactory(), sourcePilon, targetPilon);
 			}
 			else
 			{
@@ -205,7 +189,7 @@
 				{
 					dc.DrawLine(blackPen, (Points[i-1] as Pilon).Location, (Points[i] as Pilon).Location);
 				}
-				dc.DrawLine(ArrowedBlackPen, (Points[Points.Count-1] as Pilon).Location, targetPilon);
+				dc.DrawLine(PenFactory(), (Points[Points.Count-1] as Pilon).Location, targetPilon);
 			}
 			dc.DrawString(Cortege.Text, font1, blackBrush, Center.X, Center.Y-15);
 		}
@@ -241,7 +225,7 @@
 				targetPilon = target.GetPilon((Points[Points.Count-1] as Pilon).Center);
 		}
 
-		private void AddPoint(Pilon p)
+		/*private void AddPoint(Pilon p)
 		{
 			Points.Add(p);
 			p.Move += OneOfPointMoveHandler;
@@ -253,7 +237,7 @@
 			Points.Remove(p);
 			p.Move -= OneOfPointMoveHandler;
 			OnChange(new EventArgs());
-		}
+		}*/
 
 		protected override void UpdateHitRegion()
 		{
@@ -299,14 +283,14 @@
 		public void WriteXml (XmlWriter writer)
 		{
 			int i = 0;
-			writer.WriteAttributeString("id",this.ID);
+			writer.WriteAttributeString("id",this.Id);
 			writer.WriteAttributeString("source", this.Source.Name);
 			writer.WriteAttributeString("target", this.Target.Name);
 			foreach(Pilon p in Points){
 				writer.WriteStartElement("arcpath");
-				writer.WriteAttributeString("id",  String.Format("{0:000}",i));
-				writer.WriteAttributeString("x", p.X.ToString());
-				writer.WriteAttributeString("y", p.Y.ToString());
+				writer.WriteAttributeString("id",  String.Format(CultureInfo.CurrentCulture, "{0:000}", i));
+				writer.WriteAttributeString("x", p.X.ToString(CultureInfo.CurrentCulture));
+				writer.WriteAttributeString("y", p.Y.ToString(CultureInfo.CurrentCulture));
 				writer.WriteAttributeString("curvePoint", "false");
 				writer.WriteEndElement(); // arcpath
 				i++;
@@ -322,9 +306,9 @@
 			reader.Read();
 			reader.MoveToAttribute("id");
 			reader.MoveToAttribute("source");
-			this.Source = parent.GetElementByID(reader.Value);
+			this.Source = parent.GetElementById(reader.Value);
 			reader.MoveToAttribute("target");
-			this.Target = parent.GetElementByID(reader.Value);
+			this.Target = parent.GetElementById(reader.Value);
 			reader.ReadStartElement("arc");
 			while(reader.NodeType != XmlNodeType.EndElement)
 			{
@@ -341,7 +325,6 @@
 					reader.MoveToAttribute("curvePoint");
 					reader.MoveToElement();
 					reader.Skip();
-
 					break;
 				default:
 					reader.Read();
@@ -353,6 +336,18 @@
 		public XmlSchema GetSchema()
 		{
 			return(null);
+		}
+
+		protected virtual Pen PenFactory()
+		{
+			Pen p = new Pen(Color.Black,1);
+			GraphicsPath hPath = new GraphicsPath();
+			hPath.AddLine(new Point(4, -7), new Point(0, 0));
+			hPath.AddLine(new Point(-4, -7), new Point(0, 0));
+			CustomLineCap ArrowCap = new CustomLineCap(null, hPath);
+			ArrowCap.SetStrokeCaps(LineCap.Triangle, LineCap.Triangle);
+			p.CustomEndCap = ArrowCap;
+			return p;
 		}
 	} // Arc
 } // namespace

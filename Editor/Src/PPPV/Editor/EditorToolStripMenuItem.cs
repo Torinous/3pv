@@ -1,49 +1,49 @@
-﻿using System;
-using System.Windows.Forms;
-using System.ComponentModel;
-using System.Runtime.InteropServices;
-
-
-using PPPV.Editor.Commands;
-using PPPV.Utils;
-
-namespace PPPV.Editor
+﻿namespace PPPV.Editor
 {
+	using System;
+	using System.Windows.Forms;
+	using System.ComponentModel;
+
+	using System.Globalization;
+	
+	using PPPV.Editor.Commands;
+	using PPPV.Utils;
+	
   public class EditorToolStripMenuItem : ToolStripMenuItem
   {
-    /*Мега хук чтобы избавиться от строк вида Ctrl-Oemplus*/
-    [DllImport("User32.dll")]
-    static extern int MapVirtualKey(int uCode, int uMapType);
     const int MAPVK_VK_TO_CHAR = 2;
   
     //Данные
-    Command command;
+    Command associatedCommand;
+    
+	public Command AssociatedCommand {
+		get { return associatedCommand; }
+		set { associatedCommand = value; }
+	}
 
     //Конструкторы
-    public EditorToolStripMenuItem(Command c_)
+    public EditorToolStripMenuItem(Command command):base(command.Name, command.Pictogram)
     {
-      command = c_;
-      this.Text = command.Name;
-      this.Image = command.Pictogram;
-      this.ToolTipText = command.Description;
+      AssociatedCommand = command;
+      this.ToolTipText = AssociatedCommand.Description;
       this.Size = new System.Drawing.Size(25,20);
-      this.ShortcutKeys = command.ShortcutKeys;
+      this.ShortcutKeys = AssociatedCommand.ShortcutKeys;
       this.Click += ClickHandler;
       this.SetShortcutString();
     }
 
     public EditorToolStripMenuItem():base()
     {
-      this.Size = new System.Drawing.Size(25,20);
+      //this.Size = new System.Drawing.Size(25,20);
       this.Click += ClickHandler;
     }
     
     protected void ClickHandler(object sender, EventArgs e)
     {
-      if(command != null)
+      if(AssociatedCommand != null)
       {
-        DebugAssistant.LogTrace(command.ToString());
-        command.Execute();
+        DebugAssistant.LogTrace(AssociatedCommand.ToString());
+        AssociatedCommand.Execute();
       }
     }
 
@@ -60,9 +60,9 @@ namespace PPPV.Editor
       if (s.StartsWith("oem", StringComparison.InvariantCultureIgnoreCase))
       {
         //Та самая магия. Получаем значение char по кейкоду
-        char c = (char)MapVirtualKey((int)k, MAPVK_VK_TO_CHAR);
+        char c = (char)NativeMethods.MapVirtualKey((int)k, MAPVK_VK_TO_CHAR);
         if (c != 0)
-          s1 = c.ToString();
+          s1 = c.ToString(CultureInfo.CurrentCulture);
       }
       if (s1 != string.Empty)
       {

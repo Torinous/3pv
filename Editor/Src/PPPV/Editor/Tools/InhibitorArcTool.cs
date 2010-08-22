@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using PPPV.Net;
+using PPPV.Editor.Commands;
 
 namespace PPPV.Editor.Tools
 {
@@ -13,6 +14,7 @@ namespace PPPV.Editor.Tools
 		static string description;
 		static Keys shortcutKeys;
 		static Image pictogram;
+		private InhibitorArc arc;
 	
 		/*Акцессоры доступа*/
 		public override string Name{
@@ -50,6 +52,25 @@ namespace PPPV.Editor.Tools
 				pictogram = value;
 			}
 		}
+		
+		public InhibitorArc Arc{
+			get{
+				return arc;
+			}
+			private set{
+				if(arc != null)
+				{
+					EditorApplication app = EditorApplication.Instance;
+					app.ActiveNet.Paint -=arc.Draw;
+				}
+				arc = value;
+				if(arc != null)
+				{
+					EditorApplication app = EditorApplication.Instance;
+					app.ActiveNet.Paint +=arc.Draw;
+				}
+			}
+		}
 
 		//cons
 		static InhibitorArcTool()
@@ -69,33 +90,25 @@ namespace PPPV.Editor.Tools
 		{
 			if(args.Button == MouseButtons.Left)
 			{
-				Net.NetElement tmp = ((NetCanvas)sender).Net.NetElementUnder(new Point(args.X, args.Y));
-				if(tmp == null)
+				PetriNet pn = (sender as Editor.NetCanvas).Net;
+				NetElement clicked = pn.NetElementUnder(new Point(args.X, args.Y));
+				if(Arc == null)
 				{
-					//((NetCanvas)sender).OnCanvasRegionSelectionStart();
-				}
-				((NetCanvas)sender).Invalidate();
-			}
-			//from selection controller
-			//lastMouseDownPoint = new Point(args.X, args.Y);
-			if(args.Button == MouseButtons.Left)
-			{
-				/*NetElement tmp = ((NetCanvas)sender).Net.NetElementUnder(new Point(arg.X,arg.Y));
-				if(tmp!=null)
-				{
-					if(!selectedObjects.Contains(tmp))
-					{
-						selectedObjects.Clear();
-						selectedObjects.Add(tmp);
-					}
+					if(!(clicked is Arc) && clicked != null)
+						Arc = new InhibitorArc(clicked);
 				}
 				else
 				{
-					selectedObjects.Clear();
-					IsActive = true;
-					selectFrom = new Point(arg.X,arg.Y);
+					if(clicked != null && Arc.Source.GetType() != clicked.GetType())
+					{
+						Arc.Target = clicked;
+						AddNetElementCommand c = new AddNetElementCommand(pn);
+						c.Element = Arc;
+						c.Execute();
+						Arc = null;
+					}
 				}
-				((NetCanvas)sender).Invalidate();*/
+				(sender as Editor.NetCanvas).Invalidate();
 			}
 			base.HandleMouseDown(sender, args);
 		}
