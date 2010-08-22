@@ -26,9 +26,6 @@
          get{
             return listTokens;
          }
-         set{
-            listTokens = value;
-         }
       }
 
       /*Методы*/
@@ -94,7 +91,8 @@
          int index = lbTokens.SelectedIndex;
          try{
             lbTokens.Items.RemoveAt(lbTokens.SelectedIndex);
-         }catch{
+         }catch(NetException)
+         {
          }
          SetCountText(lbTokens.Items.Count);
          if(index <= lbTokens.Items.Count-1)

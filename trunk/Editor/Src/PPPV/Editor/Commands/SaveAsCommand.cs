@@ -1,34 +1,31 @@
-﻿using System;
-using System.Drawing;
-using System.Reflection;
-using System.Windows.Forms;
-
-using PPPV.Net;
-
-namespace PPPV.Editor.Commands
+﻿namespace PPPV.Editor.Commands
 {
-  public class SaveAsCommand : Command
-  {
-    //Данные
+   using System;
+   using System.Drawing;
+   using System.Reflection;
+   using System.Windows.Forms;
 
-    //Конструктор
-    public SaveAsCommand()
-    {
-      Name = "Сохранить как...";
-      Description = "Сохранить сеть в файл с заданным именем";
-      ShortcutKeys = Keys.Control| Keys.Shift | Keys.S;
-      Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Save as.png"), true);
-    }
-    //Методы
-    public override void Execute()
-    {
-      EditorApplication app = EditorApplication.Instance;
-      if(app.ActiveNet != null)
-        app.ActiveNet.SaveNetAs();
-    }
+   using PPPV.Net;
 
-    public override void UnExecute()
-    {
-    }
-  }
+   public class SaveAsCommand : Command
+   {
+      public SaveAsCommand()
+      {
+         Name = "Сохранить как...";
+         Description = "Сохранить сеть в файл с заданным именем";
+         ShortcutKeys = Keys.Control| Keys.Shift | Keys.S;
+         Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Save as.png"), true);
+      }
+
+      public override void Execute()
+      {
+         EditorApplication app = EditorApplication.Instance;
+         if(app.ActiveNet != null)
+            app.ActiveNet.SaveNetAs();
+      }
+
+      public override void Unexecute()
+      {
+      }
+   }
 }

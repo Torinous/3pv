@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Drawing;
 
 using PPPV.Net;
@@ -17,14 +17,14 @@ namespace PPPV.Editor.Commands
       Pictogram = null;
     }
 
-    public AddNetElementCommand(PetriNet n):this()
+    public AddNetElementCommand(PetriNet net):this()
     {
-      Net = n;
+      Net = net;
     }
     
-    public AddNetElementCommand(NetElement _ne):this(_ne.ParentNet)
+    public AddNetElementCommand(NetElement ne):this(ne.ParentNet)
     {
-      Element = _ne;
+      Element = ne;
     }
     
     //Методы
@@ -33,7 +33,7 @@ namespace PPPV.Editor.Commands
       Net.ElementPortal = Element;
     }
 
-    public override void UnExecute()
+    public override void Unexecute()
     {
     }
   }

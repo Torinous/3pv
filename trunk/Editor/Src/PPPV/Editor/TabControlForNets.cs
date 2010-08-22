@@ -12,12 +12,10 @@ namespace PPPV.Editor
     /*Конструкторы*/
     public TabControlForNets()
     {
-      //this.SetStyle( ControlStyles.AllPaintingInWmPaint |  ControlStyles.UserPaint |  ControlStyles.DoubleBuffer, true);
       this.Dock = DockStyle.Fill;
       this.ShowToolTips = true;
       this.SelectedIndex = 0;
       this.TabIndex = 3;
-      //this.DrawMode = TabDrawMode.OwnerDrawFixed;
     }
     
     /*События*/
@@ -40,9 +38,9 @@ namespace PPPV.Editor
       return true;
     }
 
-    public NetCanvas AddNewTab(PetriNetWrapper _net)
+    public NetCanvas AddNewTab(PetriNetWrapper net)
     {
-      TabPageForNet tmpTabPage  = new TabPageForNet(_net);
+      TabPageForNet tmpTabPage  = new TabPageForNet(net);
       this.SuspendLayout();
       this.TabPages.Add(tmpTabPage);
       this.SelectTab(tmpTabPage);
@@ -50,12 +48,12 @@ namespace PPPV.Editor
       this.PerformLayout();
       return tmpTabPage.NetCanvas;
     }
-    
-    public int TabID(PetriNet n)
+
+    public int TabId(PetriNet net)
     {
-      for(int i=0; i<this.TabCount; i++)
+      for(int i = 0; i<this.TabCount; i++)
       {
-        if((this.TabPages[i] as TabPageForNet).Net == n)
+        if((this.TabPages[i] as TabPageForNet).Net == net)
           return i;
       }
       return -1;

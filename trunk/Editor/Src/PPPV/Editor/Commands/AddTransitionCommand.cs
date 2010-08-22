@@ -37,7 +37,7 @@ namespace PPPV.Editor.Commands
       Net.ElementPortal = new Transition(new Point(Position.X, Position.Y));
     }
 
-    public override void UnExecute()
+    public override void Unexecute()
     {
     }
   }

@@ -1,123 +1,105 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-
-using PPPV.Net;
-using PPPV.Utils;
-
-namespace PPPV.Editor
+﻿namespace PPPV.Editor
 {
-  public class TabPageForNet : TabPage
-  {
-    private NetCanvas canvas;
-    private string netName;
-    private bool netSaved;
+   using System;
+   using System.Drawing;
+   using System.Windows.Forms;
 
-    /*Конструктор*/
-    public TabPageForNet(PetriNetWrapper net):base()
-    {
-      //this.SetStyle( ControlStyles.AllPaintingInWmPaint |  ControlStyles.UserPaint |  ControlStyles.DoubleBuffer, true);
-      this.Location = new Point(45, 45);
-      this.Padding  = new Padding(3);
-      this.Size     = new Size(599, 228);
-      this.TabIndex = 0;
-      this.UseVisualStyleBackColor = true;
-      this.netName = net.Id;
-      this.netSaved = net.Saved;
-      this.Text = (String.IsNullOrEmpty(netName)?"~":netName+"   ");
-      InitializeComponent(net);
-      this.AutoScroll = true;
-    }
+   using PPPV.Net;
+   using PPPV.Utils;
 
-    /*Акцессоры доступа*/
-    public NetCanvas NetCanvas
-    {
-      get
-      {
-        return canvas;
-      }
-      private set
-      {
-        if(canvas != null)
-        {
-          canvas.LinkedNetSave   -= LinkedNetSaveHandler;
-          canvas.LinkedNetChange -= LinkedNetChangeHandler;
-          canvas.Resize          -= CanvasResizeHandler;
-        }
-        canvas = value;
-        if(canvas != null)
-        {
-          canvas.LinkedNetSave   += LinkedNetSaveHandler;
-          canvas.LinkedNetChange += LinkedNetChangeHandler;
-          canvas.Resize          += CanvasResizeHandler;
-        }
-      }
-    }
+   public class TabPageForNet : TabPage
+   {
+      private NetCanvas canvas;
+      private string netName;
+      private bool netSaved;
 
-    public bool NetSaved
-    {
-      get
+      public TabPageForNet(PetriNetWrapper net):base( )
       {
-        return netSaved;
+         this.Location = new Point(45, 45);
+         this.Padding  = new Padding(3);
+         this.Size     = new Size(599, 228);
+         this.TabIndex = 0;
+         this.UseVisualStyleBackColor = true;
+         this.netName = net.Id;
+         this.netSaved = net.NetSaved;
+         this.Text = String.IsNullOrEmpty(netName)?"~":netName+"   ";
+         this.InitializeComponent(net);
+         this.AutoScroll = true;
       }
-      private set
-      {
-        netSaved = value;
-      }
-    }
-  
-    public PetriNetWrapper Net
-    {
-      get
-      {
-        return NetCanvas.Net;
-      }
-  
-    }
-  
-    protected override void OnResize(EventArgs e)
-    {
-      AutoScroll = false;
-      base.OnResize(e);
-      AutoScroll = true;
-    }
-    protected override void OnParentChanged(EventArgs e)
-    {
-      if(Parent != null)
-      {
-      }
-      base.OnParentChanged(e);
-    }
 
-    private void LinkedNetSaveHandler(object sender, SaveEventArgs args)
-    {
-      netName = args.NetID;
-      this.ToolTipText = args.FileName;
-      NetSaved = true;
-      this.Text = (String.IsNullOrEmpty(netName)?"~":netName+"   ");
-    }
-
-    private void LinkedNetChangeHandler(object sender, EventArgs args)
-    {
-      if(NetSaved)
+      public NetCanvas NetCanvas
       {
-        NetSaved = false;
-        this.Text = (String.IsNullOrEmpty(netName)?"~":netName+"   ");
+         get { return canvas; }
+         private set
+         {
+            if(canvas != null)
+            {
+               canvas.LinkedNetSave   -= LinkedNetSaveHandler;
+               canvas.LinkedNetChange -= LinkedNetChangeHandler;
+               canvas.Resize          -= CanvasResizeHandler;
+            }
+            canvas = value;
+            if(canvas != null)
+            {
+               canvas.LinkedNetSave   += LinkedNetSaveHandler;
+               canvas.LinkedNetChange += LinkedNetChangeHandler;
+               canvas.Resize          += CanvasResizeHandler;
+            }
+         }
       }
-    }
-    
-    private void CanvasResizeHandler(object sender, EventArgs args)
-    {
-      this.AutoScrollMinSize = NetCanvas.Size;
-    }
-    
 
-    private void InitializeComponent(PetriNetWrapper net)
-    {
-      this.SuspendLayout();
-      this.Controls.Add(NetCanvas = new NetCanvas(net));
-      this.ResumeLayout(false);
-      this.PerformLayout();
-    }
-  }
+      public bool NetSaved {
+         get { return netSaved; }
+         private set { netSaved = value; }
+      }
+
+      public PetriNetWrapper Net {
+         get { return NetCanvas.Net; }
+      }
+
+      protected override void OnResize(EventArgs e)
+      {
+         AutoScroll = false;
+         base.OnResize(e);
+         AutoScroll = true;
+      }
+      protected override void OnParentChanged(EventArgs e)
+      {
+         if(Parent != null)
+         {
+         }
+         base.OnParentChanged(e);
+      }
+
+      private void LinkedNetSaveHandler(object sender, SaveEventArgs args)
+      {
+         netName = args.NetId;
+         this.ToolTipText = args.FileName;
+         NetSaved = true;
+         this.Text = (String.IsNullOrEmpty(netName)?"~":netName+"   ");
+      }
+
+      private void LinkedNetChangeHandler(object sender, EventArgs args)
+      {
+         if(NetSaved)
+         {
+            NetSaved = false;
+            this.Text = (String.IsNullOrEmpty(netName)?"~":netName+"   ");
+         }
+      }
+      
+      private void CanvasResizeHandler(object sender, EventArgs args)
+      {
+         this.AutoScrollMinSize = NetCanvas.Size;
+      }
+      
+
+      private void InitializeComponent(PetriNetWrapper net)
+      {
+         this.SuspendLayout();
+         this.Controls.Add(NetCanvas = new NetCanvas(net));
+         this.ResumeLayout(false);
+         this.PerformLayout();
+      }
+   }
 }

@@ -1,14 +1,14 @@
-﻿using System;
-using System.Drawing;
-using System.Reflection;
-using System.Diagnostics;
-using System.Windows.Forms;
-
-using PPPV.Net;
-using PPPV.Utils;
-
-namespace PPPV.Editor.Commands
+﻿namespace PPPV.Editor.Commands
 {
+   using System;
+   using System.Drawing;
+   using System.Reflection;
+   using System.Diagnostics;
+   using System.Windows.Forms;
+
+   using PPPV.Net;
+   using PPPV.Utils;
+
   public class CopyCommand : Command
   {
     //Данные
@@ -28,7 +28,7 @@ namespace PPPV.Editor.Commands
       
     }
 
-    public override void UnExecute()
+    public override void Unexecute()
     {
       
     }

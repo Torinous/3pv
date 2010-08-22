@@ -141,14 +141,14 @@ public class EditorApplication : ApplicationContext
       }
     }
 
-    public void NewNet(StreamReader netStream, string fileName)
+    public void NewNet(TextReader netStream, string fileName)
     {
       if(netStream != null)
       {
         PetriNetWrapper _net = new PetriNetWrapper();
         XmlSerializer serealizer = new XmlSerializer(_net.GetType());
         _net = (PetriNetWrapper)serealizer.Deserialize(netStream);
-        _net.LinkedFile = fileName;
+        _net.FileOfNetPath = fileName;
         MainFormInst.TabControl.AddNewTab(_net);
       }
       else
@@ -162,7 +162,7 @@ public class EditorApplication : ApplicationContext
     {
       if(this.MainFormInst.TabControl.SelectedIndex != -1)
       {
-        this.MainFormInst.TabControl.CloseTab(MainFormInst.TabControl.TabID(net));
+        this.MainFormInst.TabControl.CloseTab(MainFormInst.TabControl.TabId(net));
       }
     }
   } // class Application

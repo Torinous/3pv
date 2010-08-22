@@ -124,7 +124,7 @@ namespace PPPV.Editor
     public event RegionSelectionEventHandler RegionSelectionEnd;
     public event RegionSelectionEventHandler RegionSelectionUpdate;
   
-    public event SaveEventHandler LinkedNetSave;
+    public event EventHandler<SaveEventArgs> LinkedNetSave;
     public event EventHandler     LinkedNetChange;
     
     protected override void OnLoad( 	EventArgs e)
@@ -228,16 +228,16 @@ namespace PPPV.Editor
       }
     }
 
-    public void OnCanvasMouseDown(System.Windows.Forms.MouseEventArgs _arg)
+    public void OnCanvasMouseDown(System.Windows.Forms.MouseEventArgs arg)
     {
       if(CanvasMouseDown != null)
       {
-        Point[] p = {_arg.Location};
+        Point[] p = {arg.Location};
         Matrix mi = (Matrix)ScaleMatrix.Clone();
         mi.Invert();
         mi.TransformPoints(p);
-        CanvasMouseEventArgs arg = new CanvasMouseEventArgs(_arg, p[0]);
-        CanvasMouseDown(this,arg);
+        CanvasMouseEventArgs canvasArg = new CanvasMouseEventArgs(arg, p[0]);
+        CanvasMouseDown(this, canvasArg);
       }
     }
 
@@ -260,7 +260,7 @@ namespace PPPV.Editor
       if(RegionSelectionStart != null)
       {
         RegionSelectionEventArgs args = new RegionSelectionEventArgs();
-        args.selectionRectangle = SelectedRectangle;
+        args.SelectionRectangle = SelectedRectangle;
         RegionSelectionStart(this,args);
       }
     }
@@ -269,7 +269,7 @@ namespace PPPV.Editor
       if(RegionSelectionEnd != null)
       {
         RegionSelectionEventArgs args = new RegionSelectionEventArgs();
-        args.selectionRectangle = SelectedRectangle;
+        args.SelectionRectangle = SelectedRectangle;
         RegionSelectionEnd(this,args);
       }
     }
@@ -278,7 +278,7 @@ namespace PPPV.Editor
       if(RegionSelectionUpdate != null)
       {
         RegionSelectionEventArgs args = new RegionSelectionEventArgs();
-        args.selectionRectangle = SelectedRectangle;
+        args.SelectionRectangle = SelectedRectangle;
         RegionSelectionUpdate(this,args);
       }
     }

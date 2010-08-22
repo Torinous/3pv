@@ -1,9 +1,8 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-
-namespace PPPV.Net{
+﻿namespace PPPV.Net
+{
+   using System;
+   using System.Drawing;
+   using System.Windows.Forms;
 
    public delegate void ResizeEventHandler(object sender, ResizeEventArgs arg);
-
 }

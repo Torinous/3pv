@@ -1,32 +1,32 @@
-﻿using System;
-using System.Drawing;
-using System.Reflection;
-using System.Windows.Forms;
-
-using PPPV.Net;
-
-namespace PPPV.Editor.Commands
+﻿namespace PPPV.Editor.Commands
 {
-  public class UndoCommand : Command
-  {
-    //Данные
+   using System;
+   using System.Drawing;
+   using System.Reflection;
+   using System.Windows.Forms;
 
-    //Конструктор
-    public UndoCommand()
-    {
-      Name = "Отмена";
-      Description = "Отмена последнего выполненного действия";
-      Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Undo.png"), true);
-    }
-    //Методы
-    public override void Execute()
-    {
+   using PPPV.Net;
 
-    }
+   public class UndoCommand : Command
+   {
+      //Данные
 
-    public override void UnExecute()
-    {
-      
-    }
-  }
+      //Конструктор
+      public UndoCommand()
+      {
+         Name = "Отмена";
+         Description = "Отмена последнего выполненного действия";
+         Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Undo.png"), true);
+      }
+      //Методы
+      public override void Execute()
+      {
+
+      }
+
+      public override void Unexecute()
+      {
+         
+      }
+   }
 }

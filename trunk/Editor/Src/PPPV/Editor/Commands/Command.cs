@@ -75,6 +75,6 @@ namespace PPPV.Editor.Commands
     }
     
     public abstract void Execute();
-    public virtual void UnExecute(){}
+    public virtual void Unexecute(){}
   }
 }

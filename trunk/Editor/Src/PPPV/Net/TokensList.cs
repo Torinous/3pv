@@ -1,31 +1,29 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Xml;
-using System.Xml.Schema;
-using System.Xml.Serialization;
-using System.Windows.Forms;
-
-namespace PPPV.Net 
+﻿namespace PPPV.Net 
 {
+   using System;
+   using System.Collections;
+   using System.Collections.Generic;
+   using System.Xml;
+   using System.Xml.Schema;
+   using System.Xml.Serialization;
+   using System.Windows.Forms;
+
    [Serializable()]
    [XmlRoot("initialMarking")]
    public class TokensList : IXmlSerializable
    {
-		List<Token> list;
-		
-		public List<Token> List {
-			get { return list; }
-		}
+      List<Token> list;
+      
+      public List<Token> List {
+         get { return list; }
+      }
 
       public TokensList(int size)
       {
-      	list = new List<Token>(size);
+         list = new List<Token>(size);
       }
 
       public event EventHandler Change;
-
-      /*Методы*/
 
       protected void OnChange(EventArgs args){
          if(Change != null){

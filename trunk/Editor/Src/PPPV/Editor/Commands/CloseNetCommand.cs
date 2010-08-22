@@ -27,7 +27,7 @@ namespace PPPV.Editor.Commands
       app.CloseNet(app.ActiveNet);
     }
 
-    public override void UnExecute()
+    public override void Unexecute()
     {
     }
   }

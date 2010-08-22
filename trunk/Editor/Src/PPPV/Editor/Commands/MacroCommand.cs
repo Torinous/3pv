@@ -1,44 +1,39 @@
-﻿using System;
-using System.Collections;
-
-
-using PPPV.Net;
-
-namespace PPPV.Editor.Commands
+﻿namespace PPPV.Editor.Commands
 {
-  public class MacroCommand : Command
-  {
-    //Данные
-    private ArrayList commands;
-    
-    
-    //Конструктор
-    public MacroCommand()
-    {
-      commands = new ArrayList(5);
-    }
+   using System;
+   using System.Collections;
 
-    //Методы
-    public void Add(Command c)
-    {
-      commands.Add(c);
-    }
 
-    public void Remove(Command c)
-    {
-      commands.Remove(c);
-    }
+   using PPPV.Net;
+   public class MacroCommand : Command
+   {
+      private ArrayList commands;
 
-    public override void Execute()
-    {
-      foreach(Command c in commands)
-        c.Execute();
-    }
+      public MacroCommand()
+      {
+         commands = new ArrayList(5);
+      }
 
-    public override void UnExecute()
-    {
-      for(int i = commands.Count-1;i>=0;i--)
-        (commands[i] as Command).UnExecute();
-    }
-  }
+      public void Add(Command command)
+      {
+         commands.Add(command);
+      }
+
+      public void Remove(Command command)
+      {
+         commands.Remove(command);
+      }
+
+      public override void Execute()
+      {
+         foreach(Command c in commands)
+            c.Execute();
+      }
+
+      public override void Unexecute()
+      {
+         for(int i = commands.Count-1;i>=0;i--)
+           (commands[i] as Command).Unexecute();
+      }
+   }
 }

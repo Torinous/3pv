@@ -1,7 +1,10 @@
-using System;
-using System.Text.RegularExpressions;
+namespace PPPV.Utils
+{
+   using System;
+   using System.Text.RegularExpressions;
+   using System.Globalization;
+   using System.Diagnostics.CodeAnalysis;
 
-namespace PPPV.Utils {
    /// <summary>Implementation of a command-line parsing class.  Is capable of
    /// having switches registered with it directly or can examine a registered
    /// class for any properties with the appropriate attributes appended to
@@ -12,6 +15,7 @@ namespace PPPV.Utils {
       /// some information about the switch.  The internals/implementation
       /// of this class has privillaged access to the contents of the
       /// SwitchRecord class.</summary>
+      [SuppressMessage("Microsoft.Design", "CA1034:NestedTypesShouldNotBeVisible")]
       public class SwitchInfo 
       {
          #region Private Variables
@@ -43,7 +47,7 @@ namespace PPPV.Utils {
             if ( rec is SwitchRecord )
                m_Switch = rec;
             else
-               throw new ArgumentException();
+               throw new ArgumentException("rec parameter is not of the type SwitchRecord");
          }
       }
 
@@ -56,16 +60,16 @@ namespace PPPV.Utils {
          #region Private Variables
          private string m_name = "";
          private string m_description = "";
-         private object m_value = null;
+         private object m_value;
          private System.Type m_switchType = typeof(bool);
-         private System.Collections.ArrayList m_Aliases = null;
+         private System.Collections.ArrayList m_Aliases;
          private string m_Pattern = "";
 
          // The following advanced functions allow for callbacks to be
          // made to manipulate the associated data type.
-         private System.Reflection.MethodInfo m_SetMethod = null;
-         private System.Reflection.MethodInfo m_GetMethod = null;
-         private object m_PropertyOwner = null;
+         private System.Reflection.MethodInfo m_SetMethod;
+         private System.Reflection.MethodInfo m_GetMethod;
+         private object m_PropertyOwner;
          #endregion
 
          #region Private Utility Functions
@@ -109,7 +113,7 @@ namespace PPPV.Utils {
                strPatternEnd = @")(?::|\s+))(?<value>" + e_str + @")";
             }
             else
-               throw new System.ArgumentException();
+               throw new System.ArgumentException("Wrong Argument");
 
             // Set the internal regular expression pattern.
             m_Pattern = strPatternStart + matchString + strPatternEnd + strCommonSuffix;
@@ -329,7 +333,7 @@ namespace PPPV.Utils {
                      else if ( s.Type == typeof(string) )
                         s.Notify( value );
                      else if ( s.Type == typeof(int) )
-                        s.Notify( int.Parse( value ) );
+                        s.Notify( int.Parse( value, CultureInfo.CurrentCulture ) );
                      else if ( s.Type.IsEnum )
                         s.Notify( System.Enum.Parse(s.Type,value,true) );
                   }
@@ -375,7 +379,7 @@ namespace PPPV.Utils {
          {
             if ( m_switches != null )
                for ( int i=0; i<m_switches.Count; i++ )
-                  if ( string.Compare( (m_switches[i] as SwitchRecord).Name, name, true )==0 )
+                  if ( string.Compare( (m_switches[i] as SwitchRecord).Name, name, true, CultureInfo.CurrentCulture )==0 )
                      return (m_switches[i] as SwitchRecord).Value;
             return null;
          }
@@ -445,7 +449,7 @@ namespace PPPV.Utils {
       {
          if ( m_switches != null )
             for ( int i=0; i<m_switches.Count; i++ )
-               if ( string.Compare( (m_switches[i] as SwitchRecord).Name, name, true )==0 )
+               if ( string.Compare( (m_switches[i] as SwitchRecord).Name, name, true, CultureInfo.CurrentCulture )==0)
                   return (m_switches[i] as SwitchRecord).InternalValue;
          return null;
       }
