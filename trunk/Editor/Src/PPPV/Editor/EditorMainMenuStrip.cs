@@ -1,10 +1,10 @@
 ﻿using System.Windows.Forms;
 using System.Drawing;
 
-using PPPV.Editor.Commands;
-using PPPV.Editor.Tools;
+using Pppv.Editor.Commands;
+using Pppv.Editor.Tools;
 
-namespace PPPV.Editor
+namespace Pppv.Editor
 {
 public class EditorMainMenuStrip : MenuStrip
 	{

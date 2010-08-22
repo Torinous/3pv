@@ -1,11 +1,11 @@
-﻿namespace PPPV.Editor.Commands
+﻿namespace Pppv.Editor.Commands
 {
    using System;
    using System.Drawing;
    using System.Windows.Forms;
 
-   using PPPV.Net;
-   using PPPV.Editor;
+   using Pppv.Net;
+   using Pppv.Editor;
 
    public class ShowContextMenuCommand : Command
    {

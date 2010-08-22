@@ -1,11 +1,11 @@
-﻿namespace PPPV.Editor.Commands
+﻿namespace Pppv.Editor.Commands
 {
    using System;
    using System.Drawing;
    using System.Reflection;
    using System.Windows.Forms;
 
-   using PPPV.Net;
+   using Pppv.Net;
 
    public class SaveCommand : Command
    {
@@ -14,7 +14,7 @@
          Name = "Сохранить";
          Description = "Сохранить сеть в файл";
          ShortcutKeys = Keys.Control | Keys.S;
-         Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Save.png"), true);
+         Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Save.png"), true);
       }
       //Методы
       public override void Execute()

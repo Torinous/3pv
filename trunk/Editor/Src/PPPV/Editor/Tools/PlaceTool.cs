@@ -1,11 +1,11 @@
-﻿namespace PPPV.Editor.Tools
+﻿namespace Pppv.Editor.Tools
 {
    using System.Drawing;
    using System.Reflection;
    using System.Windows.Forms;
 
-   using PPPV.Net;
-   using PPPV.Editor.Commands;
+   using Pppv.Net;
+   using Pppv.Editor.Commands;
 
    public class PlaceTool : Tool
    {
@@ -13,7 +13,7 @@
       static string name = "Позиция";
       static string description = "Инструмент создания позиций сети";
       static Keys shortcutKeys = Keys.Control|Keys.Shift|Keys.P;
-      static Image pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Place.png"), true);
+      static Image pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Place.png"), true);
       
       /*Акцессоры доступа*/
       public override string Name{

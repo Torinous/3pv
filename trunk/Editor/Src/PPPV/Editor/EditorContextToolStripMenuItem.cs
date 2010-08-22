@@ -4,10 +4,10 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 
 
-using PPPV.Editor.Commands;
-using PPPV.Utils;
+using Pppv.Editor.Commands;
+using Pppv.Utils;
 
-namespace PPPV.Editor
+namespace Pppv.Editor
 {
 	public class EditorContextToolStripMenuItem : EditorToolStripMenuItem
 	{

@@ -1,4 +1,4 @@
-﻿namespace PPPV.Editor
+﻿namespace Pppv.Editor
 {
 	using System;
 	using System.Data;
@@ -9,8 +9,8 @@
 	using System.Windows.Forms;
 	using System.Globalization;
 	
-	using PPPV.Net;
-	using PPPV.Utils;
+	using Pppv.Net;
+	using Pppv.Utils;
 	
    public class TokensEditControl : System.Windows.Forms.UserControl
    {

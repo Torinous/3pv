@@ -1,11 +1,11 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-using PPPV.Net;
-using PPPV.Editor;
-using PPPV.Editor.Commands;
+using Pppv.Net;
+using Pppv.Editor;
+using Pppv.Editor.Commands;
 
-namespace PPPV.Editor.Tools
+namespace Pppv.Editor.Tools
 {
    public abstract class Tool
    {

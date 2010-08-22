@@ -1,4 +1,4 @@
-﻿namespace PPPV.Editor.Commands
+﻿namespace Pppv.Editor.Commands
 {
    using System;
    using System.Drawing;
@@ -6,8 +6,8 @@
    using System.Diagnostics;
    using System.Windows.Forms;
 
-   using PPPV.Net;
-   using PPPV.Utils;
+   using Pppv.Net;
+   using Pppv.Utils;
 
    public class PasteCommand : Command
    {
@@ -19,7 +19,7 @@
          Name = "Вставить";
          Description = "Вставить элемент сети из буфера обмена";
          ShortcutKeys = Keys.Control | Keys.P;
-         Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Paste.png"), true);
+         Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Paste.png"), true);
       }
       
       //Методы

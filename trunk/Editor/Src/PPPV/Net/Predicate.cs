@@ -1,4 +1,4 @@
-﻿namespace PPPV.Net
+﻿namespace Pppv.Net
 {
    using System;
    using System.Windows.Forms;
@@ -8,7 +8,7 @@
    using System.Xml.Serialization;
    using System.Globalization;
    
-   using PPPV.Utils;
+   using Pppv.Utils;
 
    [Serializable()]
    [XmlRoot("predicate")]

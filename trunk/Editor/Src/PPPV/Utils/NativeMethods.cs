@@ -7,7 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
-namespace PPPV.Utils
+namespace Pppv.Utils
 {
    using System;
    using System.Runtime.InteropServices;

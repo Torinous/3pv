@@ -7,7 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 
-namespace PPPV.Net
+namespace Pppv.Net
 {
    using System;
    using System.Drawing;

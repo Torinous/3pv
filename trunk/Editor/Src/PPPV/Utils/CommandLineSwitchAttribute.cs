@@ -1,6 +1,6 @@
 using System;
 
-namespace PPPV.Utils {
+namespace Pppv.Utils {
    /// <summary>Implements a basic command-line switch by taking the
    /// switching name and the associated description.</summary>
    /// <remark>Only currently is implemented for properties, so all

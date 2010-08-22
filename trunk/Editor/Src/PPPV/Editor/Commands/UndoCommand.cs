@@ -1,11 +1,11 @@
-﻿namespace PPPV.Editor.Commands
+﻿namespace Pppv.Editor.Commands
 {
    using System;
    using System.Drawing;
    using System.Reflection;
    using System.Windows.Forms;
 
-   using PPPV.Net;
+   using Pppv.Net;
 
    public class UndoCommand : Command
    {
@@ -16,7 +16,7 @@
       {
          Name = "Отмена";
          Description = "Отмена последнего выполненного действия";
-         Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Undo.png"), true);
+         Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Undo.png"), true);
       }
       //Методы
       public override void Execute()

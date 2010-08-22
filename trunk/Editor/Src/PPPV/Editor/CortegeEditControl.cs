@@ -1,4 +1,4 @@
-﻿namespace PPPV.Editor
+﻿namespace Pppv.Editor
 {
 	using System;
 	using System.Data;
@@ -17,10 +17,10 @@
 	using System.Text;
 	using System.Globalization;
 	
-	using PPPV.Utils;
-	using PPPV.Net;
-	using PPPV.Editor.Commands;
-	using PPPV.Editor.Tools;
+	using Pppv.Utils;
+	using Pppv.Net;
+	using Pppv.Editor.Commands;
+	using Pppv.Editor.Tools;
 	
 	public class CortegeEditControl : System.Windows.Forms.UserControl{
 		GroupBox groupBox;

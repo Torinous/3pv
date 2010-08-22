@@ -1,4 +1,4 @@
-﻿namespace PPPV.Editor.Commands
+﻿namespace Pppv.Editor.Commands
 {
    using System;
    using System.Drawing;
@@ -6,8 +6,8 @@
    using System.Diagnostics;
    using System.Windows.Forms;
    
-   using PPPV.Net;
-   using PPPV.Utils;
+   using Pppv.Net;
+   using Pppv.Utils;
 
    public class DeleteCommand : ElementCommand
    {
@@ -16,7 +16,7 @@
          Name = "Удалить";
          Description = "Удалить выделенный элемент сети";
          ShortcutKeys = Keys.Delete;
-         Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Delete.png"), true);
+         Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Delete.png"), true);
       }
 
       public DeleteCommand(PetriNet net, NetElement netElement):this()

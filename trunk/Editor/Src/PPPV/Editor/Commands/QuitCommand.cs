@@ -1,12 +1,12 @@
-﻿namespace PPPV.Editor.Commands
+﻿namespace Pppv.Editor.Commands
 {
    using System;
    using System.Drawing;
    using System.Reflection;
    using System.Diagnostics;
    using System.Windows.Forms;
-   using PPPV.Net;
-   using PPPV.Utils;
+   using Pppv.Net;
+   using Pppv.Utils;
 
    public class QuitCommand : Command
    {
@@ -18,7 +18,7 @@
          Name = "Выход";
          Description = "Завершение работы приложения 3PV:Editor";
          ShortcutKeys = Keys.Control | Keys.Q;
-         Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Exit.png"), true);
+         Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Exit.png"), true);
       }
       
       //Методы

@@ -1,4 +1,4 @@
-﻿namespace PPPV.Editor
+﻿namespace Pppv.Editor
 {
    using System;
    using System.IO;
@@ -8,8 +8,8 @@
    using System.Xml.Schema;
    using System.Xml.Serialization;
 
-   using PPPV.Editor.Tools;
-   using PPPV.Net;
+   using Pppv.Editor.Tools;
+   using Pppv.Net;
 
    [Serializable()]
    [XmlRoot("pnml")]

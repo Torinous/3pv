@@ -1,10 +1,10 @@
-﻿namespace PPPV.Editor.Commands
+﻿namespace Pppv.Editor.Commands
 {
    using System;
    using System.Collections;
 
 
-   using PPPV.Net;
+   using Pppv.Net;
    public class MacroCommand : Command
    {
       private ArrayList commands;

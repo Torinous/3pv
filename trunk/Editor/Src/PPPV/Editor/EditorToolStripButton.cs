@@ -1,9 +1,9 @@
 ﻿using System.Reflection;
 using System.Windows.Forms;
 
-using PPPV.Editor.Commands;
+using Pppv.Editor.Commands;
 
-namespace PPPV.Editor
+namespace Pppv.Editor
 {
 	public class EditorToolStripButton : System.Windows.Forms.ToolStripButton
 	{

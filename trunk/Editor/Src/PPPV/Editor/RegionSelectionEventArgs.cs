@@ -1,4 +1,4 @@
-﻿namespace PPPV.Editor
+﻿namespace Pppv.Editor
 {
    using System;
    using System.Drawing;

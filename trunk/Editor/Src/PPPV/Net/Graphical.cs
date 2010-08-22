@@ -1,4 +1,4 @@
-﻿namespace PPPV.Net
+﻿namespace Pppv.Net
 {
    using System;
    using System.Drawing;
@@ -6,8 +6,8 @@
    using System.Drawing.Drawing2D;
    using System.Xml.Serialization;
 
-   using PPPV.Editor;
-   using PPPV.Utils;
+   using Pppv.Editor;
+   using Pppv.Utils;
 
    [Serializable()]
    public abstract class Graphical

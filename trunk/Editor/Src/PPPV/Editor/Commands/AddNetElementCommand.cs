@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
 
-using PPPV.Net;
+using Pppv.Net;
 
-namespace PPPV.Editor.Commands
+namespace Pppv.Editor.Commands
 {
   public class AddNetElementCommand : ElementCommand
   {
