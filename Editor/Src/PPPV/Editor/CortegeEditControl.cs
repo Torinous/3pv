@@ -4,6 +4,7 @@
 	using System.Data;
 	using System.ComponentModel;
 	using System.Collections;
+	using System.Collections.Generic;
 	using System.Drawing;
 	using System.Windows.Forms;
 	using System.Diagnostics;
@@ -22,15 +23,14 @@
 	using PPPV.Editor.Tools;
 	
 	public class CortegeEditControl : System.Windows.Forms.UserControl{
-		private GroupBox groupBox;
-		private RefreshingListBox lbPredicates;
-		private TextBox tbCurrentPredicate;
-		private Button bAdd;
-		private Button bDelete;
-		private ArrayList listPredicates;
+		GroupBox groupBox;
+		RefreshingListBox lbPredicates;
+		TextBox tbCurrentPredicate;
+		Button bAdd;
+		Button bDelete;
+		PredicateList listPredicates;
 
-		/*Свойства*/
-		public ArrayList ListPredicates{
+		public PredicateList ListPredicates{
 			get{
 				return listPredicates;
 			}
@@ -111,17 +111,19 @@
 				lbPredicates.SelectedIndex = lbPredicates.Items.Count-1;
 		}
 
-		private void FetchFromList(){
+		private void FetchFromList()
+		{
 			lbPredicates.BeginUpdate();
-			foreach( Predicate predicate in listPredicates){
+			foreach( Predicate predicate in listPredicates.List){
 				lbPredicates.Items.Add(predicate);
 			}
 			lbPredicates.EndUpdate();
 			SetCountText(lbPredicates.Items.Count);
 		}
 
-		public void ChangesApproved(){
-			listPredicates.Clear();
+		public void ChangesApproved()
+		{
+			listPredicates.List.Clear();
 			foreach (Predicate predicate in lbPredicates.Items){
 				listPredicates.Add(predicate);
 			}

@@ -8,7 +8,7 @@
     <AssemblyName>Editor</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <SourceAnalysisOverrideSettingsFile>F:\Rep2\Editor\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <SourceAnalysisOverrideSettingsFile>F:\SVN\3pv\Editor\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <RunCodeAnalysis>True</RunCodeAnalysis>
@@ -123,9 +123,7 @@
     <Compile Include="Src\PPPV\Net\InhibitorArc.cs" />
     <Compile Include="Src\PPPV\Net\Graphical.cs" />
     <Compile Include="Src\PPPV\Net\MouseEventArgs.cs" />
-    <Compile Include="Src\PPPV\Net\MouseEventHandler.cs" />
     <Compile Include="Src\PPPV\Net\MoveEventArgs.cs" />
-    <Compile Include="Src\PPPV\Net\MoveEventHandler.cs" />
     <Compile Include="Src\PPPV\Net\NetElement.cs" />
     <Compile Include="Src\PPPV\Net\NetException.cs" />
     <Compile Include="Src\PPPV\Net\PetriNet.cs" />
@@ -137,7 +135,6 @@
     <Compile Include="Src\PPPV\Net\ResizeEventArgs.cs" />
     <Compile Include="Src\PPPV\Net\ResizeEventHandler.cs" />
     <Compile Include="Src\PPPV\Net\SaveEventArgs.cs" />
-    <Compile Include="Src\PPPV\Net\SaveEventHandler.cs" />
     <Compile Include="Src\PPPV\Net\SelectionChangeEventArgs.cs" />
     <Compile Include="Src\PPPV\Net\SelectionChangeEventHandler.cs" />
     <Compile Include="Src\PPPV\Net\Token.cs" />
@@ -145,6 +142,7 @@
     <Compile Include="Src\PPPV\Net\Transition.cs" />
     <Compile Include="Src\PPPV\Utils\CommandLineSwitchAttribute.cs" />
     <Compile Include="Src\PPPV\Utils\DebugAssistant.cs" />
+    <Compile Include="Src\PPPV\Utils\NativeMethods.cs" />
     <Compile Include="Src\PPPV\Utils\Parser.cs" />
     <Compile Include="Src\PPPV\Utils\PreciseTimer.cs" />
     <Compile Include="Src\PPPV\Utils\RefreshingListBox.cs" />

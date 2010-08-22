@@ -1,33 +1,31 @@
 ﻿namespace PPPV.Net
 {
-	using System;
-	using System.Windows.Forms;
-	using System.Collections;
-	using System.Xml;
-	using System.Xml.Schema;
-	using System.Xml.Serialization;
-	using System.Globalization;
-	
-	using PPPV.Utils;
+   using System;
+   using System.Windows.Forms;
+   using System.Collections;
+   using System.Xml;
+   using System.Xml.Schema;
+   using System.Xml.Serialization;
+   using System.Globalization;
+   
+   using PPPV.Utils;
 
    [Serializable()]
    [XmlRoot("predicate")]
    public class Predicate: IXmlSerializable{
       private string text;
 
-      /*Конструктор*/
       public Predicate(){
       }
 
-      public Predicate(string text_){
-         text = Upperfy(text_);
+      public Predicate(string text){
+         this.text = Upperfy(text);
       }
 
       public Predicate(XmlReader reader){
          this.ReadXml(reader);
       }
 
-      /*Акцессоры доступа*/
       public string Text{
          get{
             return text;
@@ -42,7 +40,7 @@
          return Text;
       }
 
-      private string Upperfy(string t){
+      private static string Upperfy(string t){
          string txt;
          if(t.Length >1 )
             txt = t.Substring(0,1).ToUpper(CultureInfo.CurrentCulture) + t.Substring(1);

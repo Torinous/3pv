@@ -24,10 +24,10 @@ namespace PPPV.Editor.Commands
     }
 
     //Конструктор
-    public AddPlaceCommand(PetriNet n, Point p)
+    public AddPlaceCommand(PetriNet net, Point place)
     {
-      Net = n;
-      Position = p;
+      Net = net;
+      Position = place;
       Name = "Добавить Позицию к сети";
       Description = "Команда добавляющая к заданной сети Позицию по заданным координатам";
     }
@@ -37,7 +37,7 @@ namespace PPPV.Editor.Commands
       Net.ElementPortal = new Place(new Point(Position.X, Position.Y));
     }
 
-    public override void UnExecute()
+    public override void Unexecute()
     {
     }
   }

@@ -9,13 +9,13 @@
 
 namespace PPPV.Editor
 {
-	using System;
-	using System.Runtime.InteropServices;
-	
-	internal static class NativeMethods
-	{
-		//Мега хук чтобы избавиться от строк вида Ctrl-Oemplus
-		[DllImport("User32.dll")]
-		internal static extern int MapVirtualKey(int uCode, int uMapType);
-	}
+   using System;
+   using System.Runtime.InteropServices;
+
+   internal static class NativeMethods
+   {
+      //Мега хук чтобы избавиться от строк вида Ctrl-Oemplus
+      [DllImport("User32.dll")]
+      internal static extern int MapVirtualKey(int uCode, int uMapType);
+   }
 }

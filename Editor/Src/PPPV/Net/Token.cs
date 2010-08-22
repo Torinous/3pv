@@ -1,32 +1,32 @@
-﻿using System;
-using System.Windows.Forms;
-using System.Collections;
-using System.Xml;
-using System.Xml.Schema;
-using System.Xml.Serialization;
-
-using PPPV.Utils;
-
-namespace PPPV.Net {
+﻿namespace PPPV.Net 
+{
+   using System;
+   using System.Windows.Forms;
+   using System.Collections;
+   using System.Xml;
+   using System.Xml.Schema;
+   using System.Xml.Serialization;
+   
+   using PPPV.Utils;
 
    [Serializable()]
    [XmlRoot("token")]
    public class Token: IXmlSerializable{
       private string text;
 
-      /*Конструктор*/
       public Token(){
       }
 
-      public Token(string text_){
-         text = text_;
+      public Token(string text)
+      {
+         this.text = text;
       }
       
-      public Token(XmlReader reader){
+      public Token(XmlReader reader)
+      {
          this.ReadXml(reader);
       }
 
-      /*Акцессоры доступа*/
       public string Text{
          get{
             return text;
@@ -56,7 +56,7 @@ namespace PPPV.Net {
             reader.ReadEndElement(); // value
             reader.ReadEndElement(); // token
          }else{
-            throw new Exception("Невозможно десереализовать Token. Не верен тип узла xml.");
+            throw new NetException("Невозможно десереализовать Token. Не верен тип узла xml.");
          }
       }
 

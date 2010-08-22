@@ -1,12 +1,14 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-using System.ComponentModel;
+﻿namespace PPPV.Editor
+{
+   using System;
+   using System.Drawing;
+   using System.Windows.Forms;
+   using System.ComponentModel;
 
-using PPPV.Net;
+   using PPPV.Net;
 
-namespace PPPV.Editor{
-   class PlaceEditForm : Form{
+   class PlaceEditForm : Form
+   {
 
       private Place place;
       private Label lableName;
@@ -15,15 +17,17 @@ namespace PPPV.Editor{
       private Button bOK, bCancel;
       private TokensEditControl tokensEditControl;
 
-      public PlaceEditForm(Place pl){
+      public PlaceEditForm(Place pl)
+      {
          this.place = pl;
          this.Size = new Size(500, 450);
          this.StartPosition = FormStartPosition.CenterScreen;
-         //this.FormBorderStyle = FormBorderStyle.FixedDialog;
          this.Text = "Редактирование места: " + pl.Name;
          InitializeComponent();
       }
-      private void InitializeComponent(){
+
+      private void InitializeComponent()
+      {
          groupBox = new GroupBox();
          groupBox.Location = new System.Drawing.Point(10, 5);
          groupBox.Name = "groupBox";
@@ -32,7 +36,7 @@ namespace PPPV.Editor{
          groupBox.TabStop = false;
          groupBox.Text = "Параметры места:";
          groupBox.Anchor = ((AnchorStyles)((((AnchorStyles.Top | AnchorStyles.Bottom) | AnchorStyles.Left) | AnchorStyles.Right)));
- 
+         
          lableName = new Label();
          lableName.Location = new Point(30, 40);
          lableName.Size = new System.Drawing.Size( 35, 20 );

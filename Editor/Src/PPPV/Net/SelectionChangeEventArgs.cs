@@ -1,16 +1,20 @@
-using System;
-using System.Drawing;
-using System.Windows.Forms;
+﻿namespace PPPV.Net
+{
+   using System;
+   using System.Drawing;
+   using System.Windows.Forms;
 
-namespace PPPV.Net{
+   public class SelectionChangeEventArgs{
+      private bool newState;
 
-  public class SelectionChangeEventArgs{
-      public bool newState;
+      public bool NewState {
+         get { return newState; }
+         set { newState = value; }
+      }
 
-      /*Конструкторы*/
-
-      public SelectionChangeEventArgs(bool state){
-         newState = state;
+      public SelectionChangeEventArgs(bool state)
+      {
+         NewState = state;
       }
    }
 }

@@ -21,6 +21,6 @@ using System.Runtime.InteropServices;
 //      Minor Version
 //      Build Number
 //      Revision
-//
-[assembly: AssemblyVersion("2010.4.0.$WCREV$")]
-[assembly: AssemblyFileVersion("2010.4.0.$WCREV$")]
+
+[assembly: AssemblyVersion("2010.8.0.$WCREV$")]
+[assembly: AssemblyFileVersion("2010.8.0.$WCREV$")]

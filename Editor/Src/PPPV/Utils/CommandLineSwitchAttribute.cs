@@ -6,11 +6,11 @@ namespace PPPV.Utils {
    /// <remark>Only currently is implemented for properties, so all
    /// auto-switching variables should have a get/set method supplied.</remark>
    [AttributeUsage( AttributeTargets.Property )]
-   public class CommandLineSwitchAttribute : System.Attribute
+   public sealed class CommandLineSwitchAttribute : System.Attribute
    {
       #region Private Variables
-      private string m_name = "";
-      private string m_description = "";
+      string m_name = "";
+      string m_description = "";
       #endregion
 
       #region Public Properties
@@ -42,10 +42,10 @@ namespace PPPV.Utils {
    /// defines an alias for it.
    /// </summary>
    [AttributeUsage( AttributeTargets.Property )]
-   public class CommandLineAliasAttribute : System.Attribute
+   public sealed class CommandLineAliasAttribute : System.Attribute
    {
       #region Private Variables
-      protected string m_Alias = "";
+      string m_Alias = "";
       #endregion
 
       #region Public Properties

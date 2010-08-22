@@ -1,29 +1,29 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
+﻿namespace PPPV.Net
+{
+   using System;
+   using System.Drawing;
+   using System.Windows.Forms;
 
-using PPPV.Editor;
+   using PPPV.Editor;
 
-namespace PPPV.Net{
+   public class SaveEventArgs : EventArgs
+   {
+      private string fileName;
+      private string netId;
 
-	public class SaveEventArgs : EventArgs
-	{
-		string fileName;
-		string netID;
+      public string NetId {
+         get { return netId; }
+         set { netId = value; }
+      }
 
-		public string NetID {
-			get { return netID; }
-			set { netID = value; }
-		}
+      public string FileName {
+         get { return fileName; }
+         set { fileName = value; }
+      }
 
-		public string FileName {
-			get { return fileName; }
-			set { fileName = value; }
-		}
-
-		public SaveEventArgs(string fileName_, string netID_){
-			fileName = fileName_;
-			netID = netID_;
-		}
-	}
+      public SaveEventArgs(string fileName, string netId){
+         this.fileName = fileName;
+         this.netId = netId;
+      }
+   }
 }

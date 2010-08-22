@@ -1,101 +1,93 @@
-﻿using System.Drawing;
-using System.Reflection;
-using System.Windows.Forms;
-
-using PPPV.Net;
-using PPPV.Editor.Commands;
-
-namespace PPPV.Editor.Tools
+﻿namespace PPPV.Editor.Tools
 {
-	public class PlaceTool : Tool
-	{
-		/*Данные*/
-		static string name;
-		static string description;
-		static Keys shortcutKeys;
-		static Image pictogram;
-	
-		/*Акцессоры доступа*/
-		public override string Name{
-			get{
-				return name;
-			}
-			set{
-				name = value;
-			}
-		}
+   using System.Drawing;
+   using System.Reflection;
+   using System.Windows.Forms;
 
-		public override string Description{
-			get{
-				return description;
-			}
-			set{
-				description = value;
-			}
-		}
+   using PPPV.Net;
+   using PPPV.Editor.Commands;
 
-		public override Keys ShortcutKeys{
-			get{
-				return shortcutKeys;
-			}
-			set{
-		  	shortcutKeys = value;
-			}
-		}
-	
-		public override Image Pictogram{
-			get{
-				return pictogram;
-			}
-			set{
-				pictogram = value;
-			}
-		}
+   public class PlaceTool : Tool
+   {
+      /*Данные*/
+      static string name = "Позиция";
+      static string description = "Инструмент создания позиций сети";
+      static Keys shortcutKeys = Keys.Control|Keys.Shift|Keys.P;
+      static Image pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Place.png"), true);
+      
+      /*Акцессоры доступа*/
+      public override string Name{
+         get{
+            return name;
+         }
+         set{
+            name = value;
+         }
+      }
 
-		//cons
-		static PlaceTool()
-		{
-			name = "Позиция";
-			description = "Инструмент создания позиций сети";
-			shortcutKeys = Keys.Control|Keys.Shift|Keys.P;
-			pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("PPPV.Resources.Place.png"), true);
-		}
+      public override string Description{
+         get{
+            return description;
+         }
+         set{
+            description = value;
+         }
+      }
 
-		public PlaceTool()
-		{
-		}
+      public override Keys ShortcutKeys{
+         get{
+            return shortcutKeys;
+         }
+         set{
+            shortcutKeys = value;
+         }
+      }
+      
+      public override Image Pictogram{
+         get{
+            return pictogram;
+         }
+         set{
+            pictogram = value;
+         }
+      }
 
-		/*Методы*/
-		public override void HandleMouseDown(object sender, System.Windows.Forms.MouseEventArgs args)
-		{
-			if(args.Button == MouseButtons.Left)
-			{
-				AddNetElementCommand c = new AddNetElementCommand((sender as Editor.NetCanvas).Net);
-				c.Element = new Place(new Point(args.X, args.Y));
-				c.Execute();
-				(sender as Editor.NetCanvas).Invalidate();
-			}
-			base.HandleMouseDown(sender, args);
-		}
+      public PlaceTool()
+      {
+      }
 
-		public override void HandleMouseMove(object sender, System.Windows.Forms.MouseEventArgs args)
-		{
-			base.HandleMouseMove(sender, args);
-		}
-	
-		public override void HandleMouseUp(object sender, System.Windows.Forms.MouseEventArgs args)
-		{
-			base.HandleMouseUp(sender, args);
-		}
-	
-		public override void HandleMouseClick(object sender, System.Windows.Forms.MouseEventArgs args)
-		{
-			base.HandleMouseClick(sender, args);
-		}
+      /*Методы*/
+      public override void HandleMouseDown(object sender, System.Windows.Forms.MouseEventArgs args)
+      {
+         NetCanvas someCanvas = sender as Editor.NetCanvas;
+         if(args.Button == MouseButtons.Left)
+         {
+            AddNetElementCommand c = new AddNetElementCommand(someCanvas.Net);
+            c.Element = new Place(new Point(args.X, args.Y));
+            c.Execute();
+            someCanvas.Invalidate();
+         }
+         base.HandleMouseDown(sender, args);
+      }
 
-		public override void HandleKeyDown( object sender, KeyEventArgs args )
-		{
-			base.HandleKeyDown(sender, args);
-		}
-	}
+      public override void HandleMouseMove(object sender, System.Windows.Forms.MouseEventArgs args)
+      {
+         base.HandleMouseMove(sender, args);
+      }
+      
+      public override void HandleMouseUp(object sender, System.Windows.Forms.MouseEventArgs args)
+      {
+         base.HandleMouseUp(sender, args);
+      }
+      
+      public override void HandleMouseClick(object sender, System.Windows.Forms.MouseEventArgs args)
+      {
+         base.HandleMouseClick(sender, args);
+      }
+
+      protected override void HandleKeyDown( object sender, KeyEventArgs args )
+      {
+         base.HandleKeyDown(sender, args);
+      }
+   }
 }
