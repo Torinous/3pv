@@ -6,5 +6,3 @@
 
    public delegate void SelectionChangeEventHandler(object source, SelectionChangeEventArgs arg);
 }
-
-

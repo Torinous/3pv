@@ -3,37 +3,41 @@
    using System;
    using System.Collections;
 
-
    using Pppv.Net;
+
    public class MacroCommand : Command
    {
       private ArrayList commands;
 
       public MacroCommand()
       {
-         commands = new ArrayList(5);
+         this.commands = new ArrayList(5);
       }
 
       public void Add(Command command)
       {
-         commands.Add(command);
+         this.commands.Add(command);
       }
 
       public void Remove(Command command)
       {
-         commands.Remove(command);
+         this.commands.Remove(command);
       }
 
       public override void Execute()
       {
-         foreach(Command c in commands)
+         foreach (Command c in this.commands)
+         {
             c.Execute();
+         }
       }
 
       public override void Unexecute()
       {
-         for(int i = commands.Count-1;i>=0;i--)
-           (commands[i] as Command).Unexecute();
+         for (int i = this.commands.Count - 1; i >= 0; i--)
+         {
+           (this.commands[i] as Command).Unexecute();
+         }
       }
    }
 }

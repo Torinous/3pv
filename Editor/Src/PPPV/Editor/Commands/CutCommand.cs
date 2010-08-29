@@ -1,9 +1,9 @@
 ﻿namespace Pppv.Editor.Commands
 {
    using System;
+   using System.Diagnostics;
    using System.Drawing;
    using System.Reflection;
-   using System.Diagnostics;
    using System.Windows.Forms;
 
    using Pppv.Net;
@@ -11,23 +11,20 @@
 
    public class CutCommand : Command
    {
-
       public CutCommand()
       {
-         Name = "Вырезать";
-         Description = "Вырезать выделенный элемент сети";
-         ShortcutKeys = Keys.Control | Keys.X;
-         Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Cut.png"), true);
+         this.Name = "Вырезать";
+         this.Description = "Вырезать выделенный элемент сети";
+         this.ShortcutKeys = Keys.Control | Keys.X;
+         this.Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Cut.png"), true);
       }
 
       public override void Execute()
       {
-
       }
 
       public override void Unexecute()
       {
-
       }
    }
 }

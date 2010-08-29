@@ -1,20 +1,29 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-
-namespace Pppv.Editor
+﻿namespace Pppv.Editor
 {
-  public class RemoveTabPageEventArgs
-  {
-		int tabIndex;
+   using System;
+   using System.Drawing;
+   using System.Windows.Forms;
 
-		public int TabIndex{
-			get { return tabIndex; }
-			set { tabIndex = value; }
-		}
+   public class RemoveTabPageEventArgs : EventArgs
+   {
+      private int tabIndex;
+      private bool breakEvent;
 
-      public RemoveTabPageEventArgs(int tabIndex){
-         TabIndex = tabIndex;
+      public RemoveTabPageEventArgs(int tabIndex)
+      {
+         this.TabIndex = tabIndex;
+      }
+
+      public int TabIndex
+      {
+         get { return this.tabIndex; }
+         set { this.tabIndex = value; }
+      }
+
+      public bool BreakEvent
+      {
+         get { return this.breakEvent; }
+         set { this.breakEvent = value; }
       }
    }
 }

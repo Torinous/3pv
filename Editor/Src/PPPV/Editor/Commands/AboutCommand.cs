@@ -1,34 +1,31 @@
-﻿using System;
-using System.Windows.Forms;
-using System.Drawing;
-
-using Pppv.Net;
-
-namespace Pppv.Editor.Commands
+﻿namespace Pppv.Editor.Commands
 {
+   using System;
+   using System.Drawing;
+   using System.Windows.Forms;
+
+   using Pppv.Net;
+
    public class AboutCommand : Command
    {
-      //Данные
       private Control sender;
 
-      //Конструктор
       public AboutCommand(Control sender)
       {
          Name = "О программе";
          Description = "Вызов формы \"О программе\"";
          this.sender = sender;
       }
-      //Методы
+
       public override void Execute()
       {
          Form f = new AboutForm();
-         f.ShowDialog(sender.FindForm());
+         f.ShowDialog(this.sender.FindForm());
          f.Dispose();
       }
 
       public override void Unexecute()
       {
-      
       }
    }
 }

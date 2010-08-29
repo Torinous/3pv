@@ -7,25 +7,25 @@
    public class MoveEventArgs : EventArgs
    {
       private Point from, to;
-      
-      public Point To {
-         get { return to; }
-         set { to = value; }
-      }
-      
-      public Point From {
-         get { return from; }
-         set { from = value; }
-      }
 
       public MoveEventArgs(Point start, Point stop)
       {
-         from = new Point(0,0);
-         to = new Point(0,0);
-         from.X = start.X;
-         from.Y = start.Y;
-         to.X = stop.X;
-         to.Y = stop.Y;
+         this.From = new Point(0, 0);
+         this.To = new Point(0, 0);
+         this.From = start;
+         this.To = stop;
+      }
+      
+      public Point To
+      {
+         get { return this.to; }
+         set { this.to = value; }
+      }
+      
+      public Point From
+      {
+         get { return this.from; }
+         set { this.from = value; }
       }
    }
 }

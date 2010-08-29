@@ -1,44 +1,35 @@
-﻿using System;
-using System.Drawing;
-
-using Pppv.Net;
-
-namespace Pppv.Editor.Commands
+﻿namespace Pppv.Editor.Commands
 {
-  public class AddTransitionCommand : NetCommand
-  {
-    //Данные
-    private Point position;
-    
-    public Point Position
-    {
-      get
-      {
-        return position;
-      }
-      set
-      {
-        position = value;
-      }
-    }
+   using System;
+   using System.Drawing;
 
-    //Конструктор
-    public AddTransitionCommand(PetriNet net, Point position)
-    {
-      Net = net;
-      Position = position;
-      Name = "Добавить Переход к сети";
-      Description = "Команда добавляющая к заданной сети Переход по заданным координатам";
-    }
-    
-    //Методы
-    public override void Execute()
-    {
-      Net.ElementPortal = new Transition(new Point(Position.X, Position.Y));
-    }
+   using Pppv.Net;
 
-    public override void Unexecute()
-    {
-    }
-  }
+   public class AddTransitionCommand : NetCommand
+   {
+      private Point position;
+
+      public AddTransitionCommand(PetriNet net, Point position)
+      {
+         this.Net = net;
+         this.Position = position;
+         this.Name = "Добавить Переход к сети";
+         this.Description = "Команда добавляющая к заданной сети Переход по заданным координатам";
+      }
+
+      public Point Position
+      {
+         get { return this.position; }
+         set { this.position = value; }
+      }
+
+      public override void Execute()
+      {
+         Net.AddElement(new Transition(new Point(this.Position.X, this.Position.Y)));
+      }
+
+      public override void Unexecute()
+      {
+      }
+   }
 }

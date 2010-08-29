@@ -1,91 +1,90 @@
 ﻿namespace Pppv.Editor.Tools
 {
-   using System.Reflection;
    using System.Drawing;
+   using System.Reflection;
    using System.Windows.Forms;
 
+   using Pppv.Editor.Commands;
    using Pppv.Net;
    using Pppv.Utils;
-   using Pppv.Editor.Commands;
 
    public class ArcTool : Tool
    {
       private static string name  = "Дуга";
       private static string description = "Инструмент создание дуг сети";
-      private static Keys shortcutKeys = Keys.Control|Keys.Shift|Keys.A;
+      private static Keys shortcutKeys = Keys.Control | Keys.Shift | Keys.A;
       private static Image pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Arc.png"), true);
       private Arc arc;
-
-      public override string Name{
-         get{ return name; }
-         set{ name = value; }
-      }
-
-      public override string Description{
-         get{
-            return description;
-         }
-         set{
-            description = value;
-         }
-      }
-
-      public override Keys ShortcutKeys{
-         get{
-            return shortcutKeys;
-         }
-         set{
-            shortcutKeys = value;
-         }
-      }
-
-      public override Image Pictogram{
-         get{
-            return pictogram;
-         }
-         set{
-            pictogram = value;
-         }
-      }
-      
-      public Arc Arc{
-         get{
-            return arc;
-         }
-         private set{
-            if(arc != null)
-            {
-               EditorApplication app = EditorApplication.Instance;
-               app.ActiveNet.Paint -=arc.Draw;
-            }
-            arc = value;
-            if(arc != null)
-            {
-               EditorApplication app = EditorApplication.Instance;
-               app.ActiveNet.Paint +=arc.Draw;
-            }
-         }
-      }
 
       public ArcTool()
       {
       }
 
-      public override void HandleMouseDown(object sender, System.Windows.Forms.MouseEventArgs args)
+      public override string Name
       {
-         NetCanvas someCanvas = sender as Editor.NetCanvas;
-         if(args.Button == MouseButtons.Left)
+         get { return name; }
+         set { name = value; }
+      }
+
+      public override string Description
+      {
+         get { return description; }
+         set { description = value; }
+      }
+
+      public override Keys ShortcutKeys
+      {
+         get { return shortcutKeys; }
+         set { shortcutKeys = value; }
+      }
+
+      public override Image Pictogram
+      {
+         get { return pictogram; }
+         set { pictogram = value; }
+      }
+
+      public Arc Arc
+      {
+         get 
+         { 
+            return this.arc; 
+         }
+
+         private set
          {
-            PetriNet pn = someCanvas.Net;
-            NetElement clicked = pn.NetElementUnder(new Point(args.X, args.Y));
-            if(Arc == null)
+            if (this.arc != null)
             {
-               if(!(clicked is Arc) && clicked != null)
+               EditorApplication app = EditorApplication.Instance;
+               app.ActiveNet.Paint -= this.arc.Draw;
+            }
+
+            this.arc = value;
+
+            if (this.arc != null)
+            {
+               EditorApplication app = EditorApplication.Instance;
+               app.ActiveNet.Paint += this.arc.Draw;
+            }
+         }
+      }
+
+      protected override void HandleMouseDown(NetCanvas canvas, System.Windows.Forms.MouseEventArgs args)
+      {
+         if (args.Button == MouseButtons.Left)
+         {
+            PetriNet pn = canvas.Net;
+            NetElement clicked = pn.NetElementUnder(new Point(args.X, args.Y));
+            if (Arc == null)
+            {
+               if (!(clicked is Arc) && clicked != null)
+               {
                   Arc = new Arc(clicked);
+               }
             }
             else
             {
-               if(clicked != null && Arc.Source.GetType() != clicked.GetType())
+               if (clicked != null && Arc.Source.GetType() != clicked.GetType())
                {
                   Arc.Target = clicked;
                   AddNetElementCommand c = new AddNetElementCommand(pn);
@@ -94,38 +93,42 @@
                   Arc = null;
                }
             }
-            someCanvas.Invalidate();
+
+            canvas.Invalidate();
          }
 
-         base.HandleMouseDown(sender, args);
+         base.HandleMouseDown(canvas, args);
       }
 
-      public override void HandleMouseMove(object sender, System.Windows.Forms.MouseEventArgs args)
+      protected override void HandleMouseMove(NetCanvas canvas, System.Windows.Forms.MouseEventArgs args)
       {
-         if(Arc != null)
-            Arc.TargetPilon = new Point(args.X, args.Y);
-         base.HandleMouseMove(sender, args);
-      }
-
-      public override void HandleMouseUp(object sender, System.Windows.Forms.MouseEventArgs args)
-      {
-         base.HandleMouseUp(sender, args);
-      }
-
-      public override void HandleMouseClick(object sender, System.Windows.Forms.MouseEventArgs args)
-      {
-         base.HandleMouseClick(sender, args);
-      }
-
-      protected override void HandleKeyDown( object sender, KeyEventArgs args )
-      {
-         base.HandleKeyDown(sender, args);
-         if(args.KeyCode == Keys.Escape)
+         if (Arc != null)
          {
-            if(Arc.Target == null)
+            Arc.TargetPilon = new Point(args.X, args.Y);
+         }
+
+         base.HandleMouseMove(canvas, args);
+      }
+
+      protected override void HandleMouseUp(NetCanvas canvas, System.Windows.Forms.MouseEventArgs args)
+      {
+         base.HandleMouseUp(canvas, args);
+      }
+
+      protected override void HandleMouseClick(NetCanvas canvas, System.Windows.Forms.MouseEventArgs args)
+      {
+         base.HandleMouseClick(canvas, args);
+      }
+
+      protected override void HandleKeyDown(NetCanvas canvas, KeyEventArgs args)
+      {
+         base.HandleKeyDown(canvas, args);
+         if (args.KeyCode == Keys.Escape)
+         {
+            if (Arc.Target == null)
             {
                Arc = null;
-               (sender as PetriNet).Canvas.Invalidate();//TODO: полный Invalidate это нехорошо!!!
+               canvas.Invalidate(); // TODO: полный Invalidate это нехорошо!!!
             }
          }
       }

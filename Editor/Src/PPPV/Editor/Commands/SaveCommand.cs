@@ -11,17 +11,19 @@
    {
       public SaveCommand()
       {
-         Name = "Сохранить";
-         Description = "Сохранить сеть в файл";
-         ShortcutKeys = Keys.Control | Keys.S;
-         Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Save.png"), true);
+         this.Name = "Сохранить";
+         this.Description = "Сохранить сеть в файл";
+         this.ShortcutKeys = Keys.Control | Keys.S;
+         this.Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Save.png"), true);
       }
-      //Методы
+
       public override void Execute()
       {
          EditorApplication app = EditorApplication.Instance;
-         if(app.ActiveNet != null)
+         if (app.ActiveNet != null)
+         {
             app.ActiveNet.SaveNet();
+         }
       }
 
       public override void Unexecute()

@@ -16,10 +16,10 @@ namespace Pppv.Utils
    {
       [DllImport("kernel32.dll")]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal  extern static bool QueryPerformanceCounter(out long x);
+      internal static extern bool QueryPerformanceCounter(out long x);
 
       [DllImport("kernel32.dll")]
       [return: MarshalAs(UnmanagedType.Bool)]
-      internal extern static bool QueryPerformanceFrequency(out long x);
+      internal static extern bool QueryPerformanceFrequency(out long x);
    }
 }

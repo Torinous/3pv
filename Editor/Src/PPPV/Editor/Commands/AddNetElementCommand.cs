@@ -1,40 +1,36 @@
-﻿using System;
-using System.Drawing;
-
-using Pppv.Net;
-
-namespace Pppv.Editor.Commands
+﻿namespace Pppv.Editor.Commands
 {
-  public class AddNetElementCommand : ElementCommand
-  {
-    //Данные
+   using System;
+   using System.Drawing;
 
-    //Конструктор
-    public AddNetElementCommand()
-    {
-      Name = "Добавить элемент к сети";
-      Description = "Команда добавляющая к заданной сети элемент";
-      Pictogram = null;
-    }
+   using Pppv.Net;
 
-    public AddNetElementCommand(PetriNet net):this()
-    {
-      Net = net;
-    }
-    
-    public AddNetElementCommand(NetElement ne):this(ne.ParentNet)
-    {
-      Element = ne;
-    }
-    
-    //Методы
-    public override void Execute()
-    {
-      Net.ElementPortal = Element;
-    }
+   public class AddNetElementCommand : ElementCommand
+   {
+      public AddNetElementCommand()
+      {
+         Name = "Добавить элемент к сети";
+         Description = "Команда добавляющая к заданной сети элемент";
+         Pictogram = null;
+      }
 
-    public override void Unexecute()
-    {
-    }
-  }
+      public AddNetElementCommand(PetriNet net) : this()
+      {
+         Net = net;
+      }
+      
+      public AddNetElementCommand(NetElement element) : this(element.ParentNet)
+      {
+         Element = element;
+      }
+
+      public override void Execute()
+      {
+         Net.AddElement(Element);
+      }
+
+      public override void Unexecute()
+      {
+      }
+   }
 }

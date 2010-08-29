@@ -4,7 +4,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>PPPV</RootNamespace>
+    <RootNamespace>Pppv</RootNamespace>
     <AssemblyName>Editor</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -109,9 +109,8 @@
     <Compile Include="Src\PPPV\Editor\PetriNetWrapper.cs" />
     <Compile Include="Src\PPPV\Editor\PlaceEditForm.cs" />
     <Compile Include="Src\PPPV\Editor\RegionSelectionEventArgs.cs" />
-    <Compile Include="Src\PPPV\Editor\RegionSelectionEventHandler.cs" />
     <Compile Include="Src\PPPV\Editor\RemoveTabPageEventArgs.cs" />
-    <Compile Include="Src\PPPV\Editor\RemoveTabPageEventHandler.cs" />
+    <Compile Include="Src\PPPV\Editor\SaveNetEventArgs.cs" />
     <Compile Include="Src\PPPV\Editor\SelectedNetObjectsList.cs" />
     <Compile Include="Src\PPPV\Editor\TabControlForNets.cs" />
     <Compile Include="Src\PPPV\Editor\TabPageForNet.cs" />
@@ -129,6 +128,7 @@
     <Compile Include="Src\PPPV\Net\MouseEventArgs.cs" />
     <Compile Include="Src\PPPV\Net\MoveEventArgs.cs" />
     <Compile Include="Src\PPPV\Net\NetElement.cs" />
+    <Compile Include="Src\PPPV\Net\NetElementEnumerator.cs" />
     <Compile Include="Src\PPPV\Net\NetException.cs" />
     <Compile Include="Src\PPPV\Net\PetriNet.cs" />
     <Compile Include="Src\PPPV\Net\PetriNetPrologTranslated.cs" />
@@ -137,20 +137,19 @@
     <Compile Include="Src\PPPV\Net\Predicate.cs" />
     <Compile Include="Src\PPPV\Net\PredicateList.cs" />
     <Compile Include="Src\PPPV\Net\ResizeEventArgs.cs" />
-    <Compile Include="Src\PPPV\Net\ResizeEventHandler.cs" />
-    <Compile Include="Src\PPPV\Net\SaveEventArgs.cs" />
     <Compile Include="Src\PPPV\Net\SelectionChangeEventArgs.cs" />
     <Compile Include="Src\PPPV\Net\SelectionChangeEventHandler.cs" />
     <Compile Include="Src\PPPV\Net\Token.cs" />
     <Compile Include="Src\PPPV\Net\TokensList.cs" />
     <Compile Include="Src\PPPV\Net\Transition.cs" />
+    <Compile Include="Src\PPPV\Utils\CommandLineAliasAttribute.cs" />
     <Compile Include="Src\PPPV\Utils\CommandLineSwitchAttribute.cs" />
     <Compile Include="Src\PPPV\Utils\DebugAssistant.cs" />
     <Compile Include="Src\PPPV\Utils\NativeMethods.cs" />
     <Compile Include="Src\PPPV\Utils\Parser.cs" />
     <Compile Include="Src\PPPV\Utils\PreciseTimer.cs" />
     <Compile Include="Src\PPPV\Utils\RefreshingListBox.cs" />
-    <Compile Include="Src\PPPV\Utils\Singleton.cs" />
+    <Compile Include="Src\PPPV\Utils\RtlAwareMessageBox.cs" />
     <EmbeddedResource Include="Resources\About.png" />
     <EmbeddedResource Include="Resources\Annotation.png" />
     <EmbeddedResource Include="Resources\Arc.png" />

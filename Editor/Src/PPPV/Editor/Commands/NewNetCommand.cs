@@ -9,17 +9,14 @@
 
    public class NewNetCommand : Command
    {
-      //Данные
-
-      //Конструктор
       public NewNetCommand()
       {
-         Name = "Создать";
-         Description = "Создать новую сеть";
-         ShortcutKeys = Keys.Control | Keys.N;
-         Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.New.png"), true);
+         this.Name = "Создать";
+         this.Description = "Создать новую сеть";
+         this.ShortcutKeys = Keys.Control | Keys.N;
+         this.Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.New.png"), true);
       }
-      //Методы
+
       public override void Execute()
       {
          EditorApplication app = EditorApplication.Instance;

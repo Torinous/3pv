@@ -12,130 +12,103 @@
 
    public class MainForm : Form
    {
-      EditorApplication app;
-      EditorMainMenuStrip menuStrip;
+      private EditorApplication app;
+      private EditorMainMenuStrip menuStrip;
 
-      /*Панели инструментов*/
-      EditorToolStrip fileToolStrip;
-      EditorToolStrip toolToolStrip;
-      EditorToolStrip editToolStrip;
-      EditorToolStrip viewToolStrip;
-
-      StatusStrip _statusStrip;
-
-      TabControlForNets _tabControl;
-
-      public TabControlForNets TabControl{
-         get{
-            return _tabControl;
-         }
-      }
-
-      public EditorToolStrip ToolToolStrip{
-         get{
-            return toolToolStrip;
-         }
-      }
-
-      public EditorMainMenuStrip MainEditorMenuStrip{
-         get{
-            return menuStrip;
-         }
-         private set{
-            menuStrip = value;
-         }
-      }
-
-
-      public EditorApplication App{
-         get{
-            return app;
-         }
-      }
-
+      private EditorToolStrip fileToolStrip;
+      private EditorToolStrip toolToolStrip;
+      private EditorToolStrip editToolStrip;
+      private EditorToolStrip viewToolStrip;
+      private StatusStrip statusStrip;
+      private TabControlForNets tabControl;
       private ToolStripContainer toolToolStripContainer;
 
       public MainForm(EditorApplication application)
       {
-         app = application;
+         this.app = application;
          this.KeyPreview = true;
-         this.SetStyle( ControlStyles.AllPaintingInWmPaint |  ControlStyles.UserPaint |  ControlStyles.DoubleBuffer, true);
-         InitializeComponent();
-         //ToolStrip.toolToolStripButtonAdditionalCode.Click += EditAdditionalCode;
+         this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
+         this.InitializeComponent();
+      }
+
+      public TabControlForNets TabControl
+      {
+         get { return this.tabControl; }
+      }
+
+      public EditorToolStrip ToolToolStrip
+      {
+         get { return this.toolToolStrip; }
+      }
+
+      public EditorMainMenuStrip MainEditorMenuStrip
+      {
+         get { return this.menuStrip; }
+         private set { this.menuStrip = value; }
+      }
+
+      public EditorApplication App
+      {
+         get { return this.app; }
       }
 
       private void InitializeComponent()
       {
-         /*Меню*/
          this.MainEditorMenuStrip          = new EditorMainMenuStrip();
 
-         /*Панель инструментов*/
-         this.toolToolStrip          = new EditorToolStrip( new SelectToolCommand(typeof(PointerTool)),
+         this.toolToolStrip          = new EditorToolStrip(
+                                                           new SelectToolCommand(typeof(PointerTool)),
                                                            new SelectToolCommand(typeof(PlaceTool)),
                                                            new SelectToolCommand(typeof(TransitionTool)),
                                                            new SelectToolCommand(typeof(ArcTool)),
                                                            new SelectToolCommand(typeof(InhibitorArcTool)),
-                                                           new SelectToolCommand(typeof(AnnotationTool))
-                                                          );
-         this.fileToolStrip          = new EditorToolStrip( new NewNetCommand(),
+                                                           new SelectToolCommand(typeof(AnnotationTool)));
+         this.fileToolStrip          = new EditorToolStrip(
+                                                           new NewNetCommand(),
                                                            new OpenNetCommand(),
                                                            new CloseNetCommand(),
                                                            new SaveCommand(),
-                                                           new SaveAsCommand()
-                                                          );
-         this.editToolStrip          = new EditorToolStrip( new UndoCommand(),
+                                                           new SaveAsCommand());
+         this.editToolStrip          = new EditorToolStrip(
+                                                           new UndoCommand(),
                                                            new RedoCommand(),
                                                            new CutCommand(),
                                                            new CopyCommand(),
                                                            new PasteCommand(),
-                                                           new DeleteCommand()
-                                                          );
-         this.viewToolStrip          = new EditorToolStrip( new ZoomInCommand(),
-                                                           new ZoomOutCommand()
-                                                          );
-         
-         /*Статус строка*/
-         this._statusStrip       = new StatusStrip();
+                                                           new DeleteCommand());
+         this.viewToolStrip          = new EditorToolStrip(
+                                                           new ZoomInCommand(),
+                                                           new ZoomOutCommand());
 
-         this._tabControl        = new TabControlForNets();
+         this.statusStrip = new StatusStrip();
+
+         this.tabControl = new TabControlForNets();
          this.toolToolStripContainer = new ToolStripContainer();
-         /*System.ComponentModel.ComponentResourceManager resources = new ComponentResourceManager(typeof(MainForm));*/
 
          this.toolToolStripContainer.ContentPanel.SuspendLayout();
          this.toolToolStripContainer.TopToolStripPanel.SuspendLayout();
          this.toolToolStripContainer.SuspendLayout();
-         this._tabControl.SuspendLayout();
+         this.tabControl.SuspendLayout();
          this.toolToolStrip.SuspendLayout();
          this.SuspendLayout();
-         //
-         // _statusStrip
-         //
-         this._statusStrip.Location = new System.Drawing.Point(0, 275);
-         this._statusStrip.Name = this._statusStrip.Text = "_statusStrip";
-         this._statusStrip.Size = new System.Drawing.Size(599, 24);
-         this._statusStrip.TabIndex = 1;
-         //
-         // toolToolStrip
-         //
+
+         this.statusStrip.Location = new System.Drawing.Point(0, 275);
+         this.statusStrip.Name = this.statusStrip.Text = "_statusStrip";
+         this.statusStrip.Size = new System.Drawing.Size(599, 24);
+         this.statusStrip.TabIndex = 1;
+
          this.toolToolStrip.AutoSize = true;
-         //
-         // toolToolStripContainer
-         //
-         this.toolToolStripContainer.Anchor = ( (System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)| System.Windows.Forms.AnchorStyles.Left)| System.Windows.Forms.AnchorStyles.Right)));
+
+         this.toolToolStripContainer.Anchor = (AnchorStyles)(System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right);
          this.toolToolStripContainer.Location = new System.Drawing.Point(0, 24);
          this.toolToolStripContainer.Name = this.toolToolStripContainer.Text = "toolToolStripContainer";
          this.toolToolStripContainer.Size = new System.Drawing.Size(599, 252);
          this.toolToolStripContainer.AutoSize = true;
          this.toolToolStripContainer.TabIndex = 2;
-         //
-         // toolToolStripContainer.ContentPanel
-         //
 
          this.toolToolStripContainer.ContentPanel.Size = new System.Drawing.Size(599, 228);
          this.toolToolStripContainer.TopToolStripPanel.AutoSize = true;
-         //
-         // Form1
-         //
+
          this.ClientSize = new System.Drawing.Size(599, 299);
          this.Name = "MainForm";
          this.Text = "3Pv:Editor " + EditorApplication.AssemblyVersion;
@@ -147,33 +120,34 @@
          this.toolToolStripContainer.ResumeLayout(false);
 
          this.Controls.Add(this.toolToolStripContainer);
-         this.Controls.Add(this._statusStrip);
+         this.Controls.Add(this.statusStrip);
          this.Controls.Add(this.menuStrip);
 
          this.toolToolStripContainer.TopToolStripPanel.Controls.Add(this.viewToolStrip);
          this.toolToolStripContainer.TopToolStripPanel.Controls.Add(this.toolToolStrip);
          this.toolToolStripContainer.TopToolStripPanel.Controls.Add(this.editToolStrip);
          this.toolToolStripContainer.TopToolStripPanel.Controls.Add(this.fileToolStrip);
-         this.toolToolStripContainer.ContentPanel.Controls.Add(this._tabControl);
+         this.toolToolStripContainer.ContentPanel.Controls.Add(this.tabControl);
 
          this.toolToolStripContainer.PerformLayout();
-         this._tabControl.ResumeLayout(false);
-         this._tabControl.PerformLayout();
+         this.tabControl.ResumeLayout(false);
+         this.tabControl.PerformLayout();
          this.toolToolStrip.ResumeLayout(false);
          this.toolToolStrip.PerformLayout();
          this.ResumeLayout(false);
          this.PerformLayout();
       }
 
-      private void EditAdditionalCode(object sender, EventArgs e)
+      /*TODO: Пригодиться при написании команды, потом убъём
+       * private void EditAdditionalCode(object sender, EventArgs e)
       {
          EditorApplication app = EditorApplication.Instance;
-         if(app.ActiveNet != null)
+         if (app.ActiveNet != null)
          {
             Form f = new AdditionalCodeEditForm(app.ActiveNet);
             f.ShowDialog(this);
             f.Dispose();
          }
-      }
-   } // class
-} // namespace
+      }*/
+   }
+}

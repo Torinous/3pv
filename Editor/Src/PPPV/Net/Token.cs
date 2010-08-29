@@ -1,8 +1,8 @@
 ﻿namespace Pppv.Net 
 {
    using System;
-   using System.Windows.Forms;
    using System.Collections;
+   using System.Windows.Forms;
    using System.Xml;
    using System.Xml.Schema;
    using System.Xml.Serialization;
@@ -11,10 +11,12 @@
 
    [Serializable()]
    [XmlRoot("token")]
-   public class Token: IXmlSerializable{
+   public class Token : IXmlSerializable
+   {
       private string text;
 
-      public Token(){
+      public Token()
+      {
       }
 
       public Token(string text)
@@ -27,20 +29,19 @@
          this.ReadXml(reader);
       }
 
-      public string Text{
-         get{
-            return text;
-         }
-         set{
-            text = value;
-         }
+      public string Text
+      {
+         get { return this.text; }
+         set { this.text = value; }
       }
       
-      public override string ToString(){
-         return Text;
+      public override string ToString()
+      {
+         return this.Text;
       }
 
-      public void WriteXml (XmlWriter writer){
+      public void WriteXml(XmlWriter writer)
+      {
          writer.WriteStartElement("token");
          writer.WriteStartElement("value");
          writer.WriteString(this.Text);
@@ -48,21 +49,25 @@
          writer.WriteEndElement(); // token
       }
 
-      public void ReadXml (XmlReader reader){
+      public void ReadXml(XmlReader reader)
+      {
          reader.Read();
-         if(reader.Name == "token" && reader.NodeType == XmlNodeType.Element ){
+         if (reader.Name == "token" && reader.NodeType == XmlNodeType.Element)
+         {
             reader.ReadToDescendant("value");
             this.Text = reader.ReadString();
             reader.ReadEndElement(); // value
             reader.ReadEndElement(); // token
-         }else{
+         }
+         else
+         {
             throw new NetException("Невозможно десереализовать Token. Не верен тип узла xml.");
          }
       }
 
-      public XmlSchema GetSchema(){
-         return(null);
+      public XmlSchema GetSchema()
+      {
+         return null;
       }
-   } // Token
-} // namespace
-
+   }
+}

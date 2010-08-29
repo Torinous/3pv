@@ -3,32 +3,26 @@
    using System;
    using System.Drawing;
    using System.Windows.Forms;
-   
+
    using Pppv.Net;
 
-   public abstract class NetCommand:Command
+   public abstract class NetCommand : Command
    {
-   //Данные
-   private PetriNet net;
-   
-   //Акцессоры
-   public PetriNet Net
-   {
-      get{
-         return net;
-      }
-      set{
-         net = value;
-      }
-    }
+      private PetriNet net;
 
-      protected NetCommand(PetriNetWrapper net):base()
+      protected NetCommand(PetriNetWrapper net) : base()
       {
-         Net = net;
+         this.Net = net;
       }
 
-      protected NetCommand():base()
+      protected NetCommand() : base()
       {
+      }
+
+      public PetriNet Net
+      {
+         get { return this.net; }
+         set { this.net = value; }
       }
    }
 }

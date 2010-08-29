@@ -15,21 +15,20 @@ namespace Pppv.Net
    
    public class InhibitorArc : Arc
    {
-      public InhibitorArc(NetElement startElement):base(startElement)
+      public InhibitorArc(NetElement startElement) : base(startElement)
       {
       }
 
       protected override Pen PenFactory()
       {
-         Pen p = new Pen(Color.Black,1);
-         GraphicsPath hPath = new GraphicsPath();
-         hPath.AddEllipse(-4, -8, 8, 8);
-         GraphicsPath hPath2 = new GraphicsPath();
-         hPath2.AddLine(new Point(0, -8), new Point(0, 0));
-         CustomLineCap ArrowCap = new CustomLineCap(null, hPath);
-         //ArrowCap.SetStrokeCaps(LineCap.Round, LineCap.Round);
-         p.CustomEndCap = ArrowCap;
-         p.CustomStartCap = ArrowCap;
+         Pen p = new Pen(Color.Black, 1);
+         GraphicsPath capPath = new GraphicsPath();
+         capPath.AddEllipse(-4, -8, 8, 8);
+         GraphicsPath capPath2 = new GraphicsPath();
+         capPath2.AddLine(new Point(0, -8), new Point(0, 0));
+         CustomLineCap roundCap = new CustomLineCap(null, capPath);
+         p.CustomEndCap = roundCap;
+         p.CustomStartCap = roundCap;
          return p;
       }
    }
