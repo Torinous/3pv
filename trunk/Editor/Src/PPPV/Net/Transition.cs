@@ -53,7 +53,7 @@
          }
       }
 
-      public override void Draw(object sender, PaintEventArgs e)
+      public override void Draw(PaintEventArgs e)
       {
          Graphics dc = e.Graphics;
          dc.SmoothingMode = SmoothingMode.HighQuality;
@@ -66,6 +66,7 @@
          dc.FillRegion(grayBrush, fillRegion);
          dc.DrawRectangle(blackPen, X, Y, Size.Width, Size.Height);
          dc.DrawString(Name + "\n" + this.guardFunction, font1, blackBrush, X + 20, Y - 17);
+         base.Draw(e);
       }
 
       public override Point GetPilon(Point from)

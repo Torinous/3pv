@@ -3,6 +3,7 @@
    using System;
    using System.Collections;
    using System.Collections.Generic;
+   using System.Collections.ObjectModel;
    using System.Windows.Forms;
    using System.Xml;
    using System.Xml.Schema;
@@ -10,31 +11,23 @@
 
    [Serializable()]
    [XmlRoot("initialMarking")]
-   public class TokensList : IXmlSerializable
+   public class TokensList : Collection<Token>, IXmlSerializable
    {
-      private List<Token> list;
-
-      public TokensList(int size)
+      public TokensList() : base()
       {
-         this.list = new List<Token>(size);
       }
 
       public event EventHandler Change;
 
-      public List<Token> List
+      public new void Add(Token value)
       {
-         get { return this.list; }
-      }
-
-      public void Add(Token value)
-      {
-         this.List.Add(value);
+         this.Add(value);
          this.OnChange(new EventArgs());
       }
 
       public void WriteXml(XmlWriter writer)
       {
-         foreach (Token token in this.list)
+         foreach (Token token in this)
          {
             token.WriteXml(writer);
          }

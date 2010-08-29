@@ -18,7 +18,6 @@
       {
          this.AssociatedCommand = command;
          this.ToolTipText = this.AssociatedCommand.Description;
-         this.Size = new System.Drawing.Size(25, 20);
          this.ShortcutKeys = this.AssociatedCommand.ShortcutKeys;
          this.Click += this.ClickHandler;
          this.SetShortcutString();

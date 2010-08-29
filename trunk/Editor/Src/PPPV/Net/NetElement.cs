@@ -12,11 +12,12 @@
       [NonSerializedAttribute]
       private PetriNet parent;
 
+      [NonSerializedAttribute]
+      private string id;
+
       protected NetElement(Point point) : base(point)
       {
       }
-
-      public override event EventHandler Change;
 
       public PetriNet Parent
       {
@@ -24,7 +25,11 @@
          set { this.parent = value; }
       }
 
-      public virtual string Id { get; protected set; }
+      public string Id
+      {
+         get { return this.id; }
+         protected set { this.id = value; }
+      }
 
       public PetriNet ParentNet
       {
@@ -37,15 +42,13 @@
          {
             if (this.parent != null)
             {
-               this.parent.Paint -= this.Draw;
-               this.parent.Paint -= this.PaintRetranslator;
+               this.parent.Paint -= this.ParentNetDrawHandler;
             }
 
             this.parent = value;
             if (this.parent != null)
             {
-               this.parent.Paint += this.Draw;
-               this.parent.Paint += this.PaintRetranslator;
+               this.parent.Paint += this.ParentNetDrawHandler;
             }
          }
       }
@@ -55,14 +58,9 @@
          this.ParentNet = null;
       }
 
-      protected override void OnChange(EventArgs args)
+      private void ParentNetDrawHandler(object sender, PaintEventArgs e)
       {
-         if (this.Change != null)
-         {
-            this.Change(this, args);
-         }
-
-         base.OnChange(args);
+         this.Draw(e);
       }
    }
 }

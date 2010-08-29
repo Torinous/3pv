@@ -3,6 +3,7 @@
    using System;
    using System.Collections;
    using System.Collections.Generic;
+   using System.Collections.ObjectModel;
    using System.Drawing;
    using System.Drawing.Drawing2D;
    using System.Globalization;
@@ -196,9 +197,9 @@
          return null;
       }
 
-      public List<NetElement> NetElementUnder(Rectangle selectedRectangle)
+      public Collection<NetElement> NetElementUnder(Rectangle selectedRectangle)
       {
-         List<NetElement> selectedObjects = new List<NetElement>(20);
+         Collection<NetElement> selectedObjects = new Collection<NetElement>();
          int i = 0;
          for (i = 0; i < this.Transitions.Count; ++i)
          {
