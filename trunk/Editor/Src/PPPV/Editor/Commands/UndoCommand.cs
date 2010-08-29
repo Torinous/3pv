@@ -9,24 +9,19 @@
 
    public class UndoCommand : Command
    {
-      //Данные
-
-      //Конструктор
       public UndoCommand()
       {
-         Name = "Отмена";
-         Description = "Отмена последнего выполненного действия";
-         Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Undo.png"), true);
+         this.Name = "Отмена";
+         this.Description = "Отмена последнего выполненного действия";
+         this.Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Undo.png"), true);
       }
-      //Методы
+
       public override void Execute()
       {
-
       }
 
       public override void Unexecute()
       {
-         
       }
    }
 }

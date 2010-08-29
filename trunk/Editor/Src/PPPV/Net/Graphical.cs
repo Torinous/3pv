@@ -1,9 +1,10 @@
 ﻿namespace Pppv.Net
 {
    using System;
+   using System.Diagnostics.CodeAnalysis;
    using System.Drawing;
-   using System.Windows.Forms;
    using System.Drawing.Drawing2D;
+   using System.Windows.Forms;
    using System.Xml.Serialization;
 
    using Pppv.Editor;
@@ -15,62 +16,89 @@
       private Point location;
       private Size size;
       [NonSerializedAttribute]
-      private Region _hitRegion; //регион где проверяется клик в объект
+      private Region hitRegion;
       private string name;
 
       protected Graphical(Point place)
       {
-         //location = new Point(0,0);
-         HitRegion = new Region();
-         //Location = new Point(x_-(int)(width_/2), (y_-(int)(height_/2)));
-         Location = place;
+         this.HitRegion = new Region();
+         this.Location = place;
       }
+
+      public virtual event EventHandler<MoveEventArgs> Move;
+
+      public virtual event PaintEventHandler Paint;
+
+      public virtual event EventHandler<ResizeEventArgs> Resize;
+
+      public virtual event EventHandler Change;
 
       public Point Location
       {
          get
          {
-            return location;
+            return this.location;
          }
+
          set
          {
-            if(value.X < 0) value.X = 0;
-            if(value.Y < 0) value.Y = 0;
-            MoveEventArgs args = new MoveEventArgs(location, value);
-            location = value;
-            OnMove(args);
+            if (value.X < 0)
+            {
+               value.X = 0;
+            }
+
+            if (value.Y < 0)
+            {
+               value.Y = 0;
+            }
+
+            MoveEventArgs args = new MoveEventArgs(this.location, value);
+            this.location = value;
+            this.OnMove(args);
          }
       }
 
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "етить")]
       public int X
       {
          get
          {
-            return location.X;
+            return this.location.X;
          }
+
          set
          {
-            Point old = new Point(location.X,location.Y);
-            location.X = value;
-            if(location.X < 0) location.X = 0;
-            MoveEventArgs args = new MoveEventArgs(old, location);
-            OnMove(args);
+            Point old = new Point(this.location.X, this.location.Y);
+            this.location.X = value;
+            if (this.location.X < 0)
+            {
+               this.location.X = 0;
+            }
+
+            MoveEventArgs args = new MoveEventArgs(old, this.location);
+            this.OnMove(args);
          }
       }
 
+      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "етить")]
       public int Y
       {
          get
          {
-            return location.Y;
+            return this.location.Y;
          }
+
          set
          {
-            Point old = new Point(location.X,location.Y);
-            location.Y = value;
-            if(location.Y<0) location.Y =0;
-            MoveEventArgs args = new MoveEventArgs(old,location);
-            OnMove(args);
+            Point old = new Point(this.location.X, this.location.Y);
+            this.location.Y = value;
+            if (this.location.Y < 0)
+            {
+               this.location.Y = 0;
+            }
+
+            MoveEventArgs args = new MoveEventArgs(old, this.location);
+            this.OnMove(args);
          }
       }
 
@@ -78,98 +106,61 @@
       {
          get
          {
-            return name;
+            return this.name;
          }
+
          set
          {
-            name = value;
-            OnChange(new EventArgs());
+            this.name = value;
+            this.OnChange(new EventArgs());
          }
       }
 
       public Region HitRegion
       {
-         get
-         {
-            return _hitRegion;
-         }
-         protected set
-         {
-            _hitRegion = value;
-         }
+         get { return this.hitRegion; }
+         protected set { this.hitRegion = value; }
       }
 
-      /*Центр объекта*/
-      public abstract Point Center
-      {
-         get;
-      }
+      public abstract Point Center { get; }
 
       public virtual Size Size
       {
          get
          {
-            return size;
+            return this.size;
          }
+
          protected set
          {
-            Size oldSize = size;
-            size = value;
-            OnResize(new ResizeEventArgs(oldSize, size));
+            Size oldSize = this.size;
+            this.size = value;
+            this.OnResize(new ResizeEventArgs(oldSize, this.size));
          }
       }
 
-      /*События*/
-      public virtual event EventHandler<MoveEventArgs> Move;
-      public virtual event PaintEventHandler           Paint;
-      public virtual event ResizeEventHandler          Resize;
-
-      public virtual event EventHandler                Change;
-
-      protected virtual void OnChange(EventArgs args)
-      {
-         if(Change != null)
-         {
-            Change(this, args);
-         }
-      }
-
-      /*Методы*/
-      /*Перемещение на*/
       public void MoveBy(Point radiusVector)
       {
          /* Входной параметр это радиус-вектор перемещения */
-         Point old = new Point(location.X,location.Y);
-         Location = new Point(X + radiusVector.X,Y + radiusVector.Y);
+         Point old = new Point(this.location.X, this.location.Y);
+         this.Location = new Point(this.X + radiusVector.X, this.Y + radiusVector.Y);
       }
 
       public void MoveBy()
       {
          /* Входной параметр это радиус-вектор перемещения */
-         Point old = new Point(location.X,location.Y);
-         Location = new Point(X,Y);
-      }
-
-      /* Абстрактые методы класса */
-
-      private void OnPaint(PaintEventArgs e)
-      {
-         if(Paint != null)
-         {
-            Paint(this,e);
-         }
+         Point old = new Point(this.location.X, this.location.Y);
+         this.Location = new Point(this.X, this.Y);
       }
 
       public virtual bool Intersect(Point point)
       {
-         bool isIntersect;
-         isIntersect = HitRegion.IsVisible(point);
-         return isIntersect;
+         return this.HitRegion.IsVisible(point);
       }
 
       public virtual bool Intersect(Rectangle rectangle)
       {
-         return HitRegion.IsVisible(rectangle);
+         return this.HitRegion.IsVisible(rectangle);
       }
 
       public virtual bool Intersect(Region region)
@@ -180,12 +171,24 @@
          return false;
       }
 
-      protected abstract void UpdateHitRegion();
-
       public abstract void Draw(object sender, PaintEventArgs e);
 
       public abstract Point GetPilon(Point from);
-      
+
+      public virtual void PrepareToDeletion()
+      {
+      }
+
+      protected virtual void OnChange(EventArgs args)
+      {
+         if (this.Change != null)
+         {
+            this.Change(this, args);
+         }
+      }
+
+      protected abstract void UpdateHitRegion();
+
       protected virtual Point GetPilon(Point from, NetCanvas onCanvas)
       {
          Graphics g;
@@ -194,25 +197,25 @@
          {
             g = onCanvas.CreateGraphics();
             Region reg = new Region();
-            reg = HitRegion.Clone();
+            reg = this.HitRegion.Clone();
             Pen greenPen = new Pen(Color.Black, 1);
             GraphicsPath gp = new GraphicsPath();
             Rectangle rect = new Rectangle();
 
             /*Если не посчитается, просто вернём центр*/
-            pilon.X = Center.X;
-            pilon.Y = Center.Y;
+            pilon.X = this.Center.X;
+            pilon.Y = this.Center.Y;
 
-            if(from != Center)
+            if (from != this.Center)
             {
-               gp.AddLine(from,Center);
+               gp.AddLine(from, this.Center);
                gp.Widen(greenPen);
                reg.Intersect(gp);
                RectangleF bounds = reg.GetBounds(g);
                rect = Rectangle.Ceiling(bounds);
-               if(from.X <= Center.X)
+               if (from.X <= this.Center.X)
                {
-                  if(from.Y <= Center.Y)
+                  if (from.Y <= this.Center.Y)
                   {
                      pilon.X = rect.Left;
                      pilon.Y = rect.Top;
@@ -225,7 +228,7 @@
                }
                else
                {
-                  if(from.Y <= Center.Y)
+                  if (from.Y <= this.Center.Y)
                   {
                      pilon.X = rect.Right;
                      pilon.Y = rect.Top;
@@ -236,46 +239,52 @@
                      pilon.Y = rect.Bottom;
                   }
                }
+
                g.Dispose();
             }
          }
          else
          {
-            pilon.X = Center.X;
-            pilon.Y = Center.Y;
+            pilon.X = this.Center.X;
+            pilon.Y = this.Center.Y;
          }
-         return pilon;
-      }
 
-      protected void PaintRetranslator(object sender, PaintEventArgs args)
-      {
-         OnPaint(args);
+         return pilon;
       }
 
       protected void OnMove(MoveEventArgs args)
       {
-         UpdateHitRegion();
-         if(Move != null)
+         this.UpdateHitRegion();
+         if (this.Move != null)
          {
-            Move(this,args);
+            this.Move(this, args);
          }
-         OnChange(new EventArgs());
+
+         this.OnChange(new EventArgs());
       }
 
       protected void OnResize(ResizeEventArgs args)
       {
-         UpdateHitRegion();
-         if(Resize != null)
+         this.UpdateHitRegion();
+         if (this.Resize != null)
          {
-            Resize(this,args);
+            this.Resize(this, args);
          }
-         OnChange(new EventArgs());
+
+         this.OnChange(new EventArgs());
       }
 
-      /*Вся внутренняя подготовка перед удалением элемента сети*/
-      public virtual void PrepareToDeletion()
+      protected void PaintRetranslator(object sender, PaintEventArgs args)
       {
-         /*Отпишемся от всех событый*/
+         this.OnPaint(args);
+      }
+
+      private void OnPaint(PaintEventArgs e)
+      {
+         if (this.Paint != null)
+         {
+            this.Paint(this, e);
+         }
       }
    }
 }

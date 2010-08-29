@@ -1,88 +1,91 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-using System.ComponentModel;
+﻿namespace Pppv.Editor
+{
+   using System;
+   using System.ComponentModel;
+   using System.Drawing;
+   using System.Windows.Forms;
 
-using Pppv.Net;
+   using Pppv.Net;
 
-namespace Pppv.Editor{
-   class ArcEditForm : Form{
+   public class ArcEditForm : Form
+   {
       private Arc arc;
       private Label lableName;
-      private TextBox tbID;
+      private TextBox textBoxId;
       private GroupBox groupBox;
       private Button bOK, bCancel;
       private CortegeEditControl cortegeEditControl;
 
-      public ArcEditForm(Arc arc){
+      public ArcEditForm(Arc arc)
+      {
          this.arc = arc;
          this.Size = new Size(500, 450);
          this.StartPosition = FormStartPosition.CenterScreen;
-         //this.FormBorderStyle = FormBorderStyle.FixedDialog;
          this.Text = "Редактирование дуги: " + arc.Name;
-         InitializeComponent();
+         this.InitializeComponent();
       }
-      private void InitializeComponent(){
-         groupBox = new GroupBox();
-         groupBox.Location = new System.Drawing.Point(10, 5);
-         groupBox.Name = "groupBox";
-         groupBox.Size = new System.Drawing.Size( this.Width-25, this.Height-90 );
-         groupBox.TabIndex = 0;
-         groupBox.TabStop = false;
-         groupBox.Text = "Параметры места:";
-         groupBox.Anchor = ((AnchorStyles)((((AnchorStyles.Top | AnchorStyles.Bottom) | AnchorStyles.Left) | AnchorStyles.Right)));
- 
-         lableName = new Label();
-         lableName.Location = new Point(30, 40);
-         lableName.Size = new System.Drawing.Size( 35, 20 );
-         lableName.Text = "Имя:";
 
-         tbID = new TextBox();
-         tbID.Size = new Size(250,25);
-         tbID.Location = new Point(100,40);
-         tbID.ReadOnly = true;
+      private void InitializeComponent()
+      {
+         this.groupBox = new GroupBox();
+         this.groupBox.Location = new System.Drawing.Point(10, 5);
+         this.groupBox.Name = "groupBox";
+         this.groupBox.Size = new System.Drawing.Size(this.Width - 25, this.Height - 90);
+         this.groupBox.TabIndex = 0;
+         this.groupBox.TabStop = false;
+         this.groupBox.Text = "Параметры места:";
+         this.groupBox.Anchor = (AnchorStyles)(AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right);
          
-         tbID.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
+         this.lableName = new Label();
+         this.lableName.Location = new Point(30, 40);
+         this.lableName.Size = new System.Drawing.Size(35, 20);
+         this.lableName.Text = "Имя:";
+
+         this.textBoxId = new TextBox();
+         this.textBoxId.Size = new Size(250, 25);
+         this.textBoxId.Location = new Point(100, 40);
+         this.textBoxId.ReadOnly = true;
+
+         this.textBoxId.Anchor = AnchorStyles.Right | AnchorStyles.Left | AnchorStyles.Top;
          
-         bOK = new Button();
-         bOK.Name = bOK.Text = "Принять";
-         bOK.Location = new Point(this.Width-200,this.Height-75);
-         bOK.DialogResult = DialogResult.OK;
-         bOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-         bOK.Click += OKButtonHandler;
+         this.bOK = new Button();
+         this.bOK.Name = this.bOK.Text = "Принять";
+         this.bOK.Location = new Point(this.Width - 200, this.Height - 75);
+         this.bOK.DialogResult = DialogResult.OK;
+         this.bOK.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+         this.bOK.Click += this.OKButtonHandler;
          
-         bCancel = new Button();
-         bCancel.Name = bCancel.Text = "Отмена";
-         bCancel.Location = new Point(bOK.Right+10, bOK.Top);
-         bCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
-         bCancel.DialogResult = DialogResult.Cancel;
-         
-         cortegeEditControl = new CortegeEditControl(arc.Cortege);
-         cortegeEditControl.Location = new Point( 30, 80);
-         
-         this.AcceptButton = bOK;
-         this.CancelButton = bCancel;
-         
-         /* Предварительное заполнение данных */
-         tbID.Text = arc.Id;
+         this.bCancel = new Button();
+         this.bCancel.Name = this.bCancel.Text = "Отмена";
+         this.bCancel.Location = new Point(this.bOK.Right + 10, this.bOK.Top);
+         this.bCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
+         this.bCancel.DialogResult = DialogResult.Cancel;
+
+         this.cortegeEditControl = new CortegeEditControl(this.arc.Cortege);
+         this.cortegeEditControl.Location = new Point(30, 80);
+
+         this.AcceptButton = this.bOK;
+         this.CancelButton = this.bCancel;
+
+         this.textBoxId.Text = this.arc.Id;
          
          this.SuspendLayout();
          this.groupBox.SuspendLayout();
-         this.groupBox.Controls.Add(lableName);
-         this.groupBox.Controls.Add(tbID);
-         this.groupBox.Controls.Add(cortegeEditControl);
-         this.Controls.Add(groupBox);
-         this.Controls.Add(bOK);
-         this.Controls.Add(bCancel);
+         this.groupBox.Controls.Add(this.lableName);
+         this.groupBox.Controls.Add(this.textBoxId);
+         this.groupBox.Controls.Add(this.cortegeEditControl);
+         this.Controls.Add(this.groupBox);
+         this.Controls.Add(this.bOK);
+         this.Controls.Add(this.bCancel);
          this.groupBox.ResumeLayout(false);
          this.ResumeLayout(false);
          this.groupBox.PerformLayout();
          this.PerformLayout();
       }
 
-      private void OKButtonHandler(object sender, EventArgs e){
-         /*Загрузим изменённые данные*/
-         cortegeEditControl.ChangesApproved();
+      private void OKButtonHandler(object sender, EventArgs e)
+      {
+         this.cortegeEditControl.ChangesApproved();
       }
    }
 }

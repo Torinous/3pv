@@ -4,17 +4,19 @@
    using System.Drawing;
    using System.Windows.Forms;
 
-   public class SelectionChangeEventArgs{
+   public class SelectionChangeEventArgs
+   {
       private bool newState;
-
-      public bool NewState {
-         get { return newState; }
-         set { newState = value; }
-      }
 
       public SelectionChangeEventArgs(bool state)
       {
-         NewState = state;
+         this.NewState = state;
+      }
+
+      public bool NewState
+      {
+         get { return this.newState; }
+         set { this.newState = value; }
       }
    }
 }

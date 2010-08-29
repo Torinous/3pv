@@ -17,12 +17,12 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 [assembly: CLSCompliant(true)]
 
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version
-//      Build Number
-//      Revision
+//// Version information for an assembly consists of the following four values:
+////
+////      Major Version
+////      Minor Version
+////      Build Number
+////      Revision
 
 [assembly: AssemblyVersion("2010.8.0.$WCREV$")]
 [assembly: AssemblyFileVersion("2010.8.0.$WCREV$")]

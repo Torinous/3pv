@@ -4,24 +4,26 @@
    using System.Drawing;
    using System.Windows.Forms;
 
-   public class ResizeEventArgs
+   public class ResizeEventArgs : EventArgs
    {
       private Size oldSize, newSize;
-
-      public Size NewSize {
-         get { return newSize; }
-         set { newSize = value; }
-      }
-      
-      public Size OldSize {
-         get { return oldSize; }
-         set { oldSize = value; }
-      }
 
       public ResizeEventArgs(Size oldSize, Size newSize)
       {
          this.oldSize = oldSize;
          this.newSize = newSize;
+      }
+
+      public Size NewSize
+      {
+         get { return this.newSize; }
+         set { this.newSize = value; }
+      }
+      
+      public Size OldSize
+      {
+         get { return this.oldSize; }
+         set { this.oldSize = value; }
       }
    }
 }

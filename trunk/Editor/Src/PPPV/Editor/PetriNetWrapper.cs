@@ -16,7 +16,7 @@
    public class PetriNetWrapper : PetriNet, IXmlSerializable
    {
       [NonSerializedAttribute]
-      private SelectedNetObjectsList selectedObjects;
+      private NetElementCollection selectedObjects;
       [NonSerializedAttribute]
       private Tool currentTool,
                    pointerTool,
@@ -31,99 +31,120 @@
       [NonSerializedAttribute]
       private bool netSaved;
 
-      public PetriNetWrapper():base()
+      public PetriNetWrapper() : base()
       {
-         selectedObjects  = new SelectedNetObjectsList(20);
-         pointerTool      = new PointerTool();
-         placeTool        = new PlaceTool();
-         transitionTool   = new TransitionTool();
-         arcTool          = new ArcTool();
-         inhibitorArcTool = new InhibitorArcTool();
-         annotationTool   = new AnnotationTool();
-         //Установим стартовый инструмент
-         currentTool      = pointerTool;
-         NetSaved = false;
-         FileOfNetPath = "";
-         Change += ChangeController;
+         this.selectedObjects  = new NetElementCollection();
+         this.pointerTool      = new PointerTool();
+         this.placeTool        = new PlaceTool();
+         this.transitionTool   = new TransitionTool();
+         this.arcTool          = new ArcTool();
+         this.inhibitorArcTool = new InhibitorArcTool();
+         this.annotationTool   = new AnnotationTool();
+         this.currentTool      = this.pointerTool;
+         this.NetSaved = false;
+         this.FileOfNetPath = String.Empty;
+         this.Change += this.ChangeController;
       }
 
-      public Tool CurrentTool{
-         get{
-            return currentTool;
-         }
-         set{
-            currentTool = value;
-         }
-      }
+      public event EventHandler<SaveNetEventArgs> Save;
 
-      public SelectedNetObjectsList SelectedObjects{
-         get{
-            return selectedObjects;
+      public Tool CurrentTool
+      {
+         get
+         { 
+            return this.currentTool;
          }
-      }
 
-      public bool NetSaved{
-         get{
-            return netSaved;
-         }
-         private set{
-            netSaved = value;
-         }
-      }
+         set
+         {
+            if (this.currentTool != null)
+            {
+               this.CurrentTool.EventSourceNet = null;
+            }
 
-      public string FileOfNetPath{
-         get{
-            return fileOfNetPath;
-         }
-         set{
-            fileOfNetPath = value;
+            this.currentTool = value;
+            if (this.currentTool != null)
+            {
+               this.CurrentTool.EventSourceNet = this;
+            }
          }
       }
 
-      /*Событие генерируется при сохранении сети в файл*/
-      public event EventHandler<SaveEventArgs> Save;
+      public NetElementCollection SelectedObjects
+      {
+         get { return this.selectedObjects; }
+      }
+
+      public bool NetSaved
+      {
+         get { return this.netSaved; }
+         private set { this.netSaved = value; }
+      }
+
+      public string FileOfNetPath
+      {
+         get { return this.fileOfNetPath; }
+         set { this.fileOfNetPath = value; }
+      }
 
       public void SelectToolByType(Type toolType)
       {
-         if(toolType == typeof(PointerTool))
-            this.currentTool = pointerTool;
-         else if(toolType == typeof(PlaceTool))
-            currentTool = placeTool;
-         else if(toolType == typeof(TransitionTool))
-            currentTool = transitionTool;
-         else if(toolType == typeof(ArcTool))
-            currentTool = arcTool;
-         else if(toolType == typeof(InhibitorArcTool))
-            currentTool = inhibitorArcTool;
-         else if(toolType == typeof(AnnotationTool))
-            currentTool = annotationTool;
+         if (toolType == typeof(PointerTool))
+         {
+            this.currentTool = this.pointerTool;
+         }
+         else if (toolType == typeof(PlaceTool))
+         {
+            this.currentTool = this.placeTool;
+         }
+         else if (toolType == typeof(TransitionTool))
+         {
+            this.currentTool = this.transitionTool;
+         }
+         else if (toolType == typeof(ArcTool))
+         {
+            this.currentTool = this.arcTool;
+         }
+         else if (toolType == typeof(InhibitorArcTool))
+         {
+            this.currentTool = this.inhibitorArcTool;
+         }
+         else if (toolType == typeof(AnnotationTool))
+         {
+            this.currentTool = this.annotationTool;
+         }
          else
-            throw new Exception("Not appropriate tool type!");
+         {
+            throw new EditorException("Not appropriate tool type!");
+         }
       }
 
       public bool SaveNet()
       {
          bool result = false;
          StreamWriter stream;
-         if(!String.IsNullOrEmpty(FileOfNetPath))
+         if (!String.IsNullOrEmpty(this.FileOfNetPath))
          {
-            if (File.Exists(FileOfNetPath))
+            if (File.Exists(this.FileOfNetPath))
             {
-               File.Delete(FileOfNetPath);
+               File.Delete(this.FileOfNetPath);
             }
-            stream = new StreamWriter(FileOfNetPath, false, Encoding.GetEncoding(1251));
-            if(stream != null)
+
+            stream = new StreamWriter(this.FileOfNetPath, false, Encoding.GetEncoding(1251));
+            if (stream != null)
             {
                XmlSerializer serealizer = new XmlSerializer(this.GetType());
                serealizer.Serialize(stream, this);
                stream.Close();
+               this.OnSave(new SaveNetEventArgs(this));
                result = true;
             }
          }
          else
          {
-            result = SaveNetAs();
+            result = this.SaveNetAs();
          }
+
          return result;
       }
 
@@ -131,105 +152,100 @@
       {
          bool result = false;
          StreamWriter stream;
-         string fileName = "";
+         string fileName = String.Empty;
          SaveFileDialog saveFileDialog1 = new SaveFileDialog();
          saveFileDialog1.Filter = "pnml files (*.pnml)|*.pnml|All files (*.*)|*.*";
-         saveFileDialog1.FilterIndex = 1 ;
-         saveFileDialog1.RestoreDirectory = true ;
+         saveFileDialog1.FilterIndex = 1;
+         saveFileDialog1.RestoreDirectory = true;
 
-         if(saveFileDialog1.ShowDialog() == DialogResult.OK)
+         if (saveFileDialog1.ShowDialog() == DialogResult.OK)
          {
             stream = new StreamWriter(saveFileDialog1.FileName, false, Encoding.GetEncoding(1251));
-            if(stream != null)
+            if (stream != null)
             {
-               FileOfNetPath = fileName = saveFileDialog1.FileName;
-               if(this.Id=="")
-                  this.Id = fileName.Substring(fileName.LastIndexOf("\\")+1);
+               this.FileOfNetPath = fileName = saveFileDialog1.FileName;
+               if (String.IsNullOrEmpty(this.Id))
+               {
+                  this.Id = fileName.Substring(fileName.LastIndexOf("\\", StringComparison.Ordinal) + 1);
+               }
 
                XmlSerializer serializer = new XmlSerializer(this.GetType());
                serializer.Serialize(stream, this);
                stream.Close();
+               this.OnSave(new SaveNetEventArgs(this));
                result = true;
             }
          }
+
          return result;
       }
 
-      private void OnSave(SaveEventArgs args)
+      public void WriteXml(XmlWriter writer)
       {
-         NetSaved = true;
-         FileOfNetPath = args.FileName;
-         if (Save != null)
-         {
-            Save(this, args);
-         }
-      }
-
-      public void WriteXml (XmlWriter writer)
-      {
-         //writer.WriteStartElement("pnml");
          writer.WriteStartElement("net");
          writer.WriteAttributeString("id", Id);
          writer.WriteAttributeString("type", NetType);
-         foreach(Place place in Places)
+         foreach (Place place in this.Places)
          {
             writer.WriteStartElement("place");
             place.WriteXml(writer);
             writer.WriteEndElement(); // place
          }
-         foreach(Transition transition in Transitions)
+
+         foreach (Transition transition in this.Transitions)
          {
             writer.WriteStartElement("transition");
             transition.WriteXml(writer);
             writer.WriteEndElement(); // transition
          }
-         foreach(Arc arc in Arcs)
+
+         foreach (Arc arc in this.Arcs)
          {
             writer.WriteStartElement("arc");
             arc.WriteXml(writer);
             writer.WriteEndElement(); // arc
          }
+
          writer.WriteStartElement("additionalCode");
          writer.WriteString(this.AdditionalCode);
          writer.WriteEndElement(); // additionalCode
          writer.WriteEndElement(); // net
-         //writer.WriteEndElement(); // pnml
       }
 
-      public void ReadXml (XmlReader reader)
+      public void ReadXml(XmlReader reader)
       {
          XmlReader subTreeReader;
          reader.ReadStartElement("pnml");
          this.Id = reader.GetAttribute("id");
          this.NetType = reader.GetAttribute("type");
 
-         if(!reader.IsEmptyElement)
+         if (!reader.IsEmptyElement)
          {
             reader.ReadStartElement("net");
-            while(reader.NodeType != XmlNodeType.EndElement)
+            while (reader.NodeType != XmlNodeType.EndElement)
             {
-               switch(reader.Name)
+               switch (reader.Name)
                {
                   case "place":
                      subTreeReader = reader.ReadSubtree();
-                     ElementPortal = new Place(subTreeReader);
+                     this.AddElement(new Place(subTreeReader));
                      subTreeReader.Close();
                      reader.Skip();
                      break;
                   case "transition":
                      subTreeReader = reader.ReadSubtree();
-                     ElementPortal = new Transition(subTreeReader);
+                     this.AddElement(new Transition(subTreeReader));
                      subTreeReader.Close();
                      reader.Skip();
                      break;
                   case "arc":
                      subTreeReader = reader.ReadSubtree();
-                     ElementPortal = new Arc(subTreeReader, this);
+                     this.AddElement(new Arc(subTreeReader, this));
                      subTreeReader.Close();
                      reader.Skip();
                      break;
                   case "additionalCode":
-                     if(!reader.IsEmptyElement)
+                     if (!reader.IsEmptyElement)
                      {
                         reader.ReadStartElement("additionalCode");
                         /*Причину Replace см. Issue 27*/
@@ -240,12 +256,14 @@
                      {
                         reader.Skip();
                      }
+
                      break;
                   default:
                      reader.Read();
                      break;
                }
             }
+
             reader.ReadEndElement();
             reader.ReadEndElement();
          }
@@ -254,17 +272,27 @@
             reader.Skip();
             reader.ReadEndElement();
          }
-         NetSaved = true;
+
+         this.NetSaved = true;
       }
 
       public XmlSchema GetSchema()
       {
-         return(null);
+         return null;
       }
       
       private void ChangeController(object sender, System.EventArgs args)
       {
-         NetSaved = false;
+         this.NetSaved = false;
+      }
+
+      private void OnSave(SaveNetEventArgs args)
+      {
+         this.NetSaved = true;
+         if (this.Save != null)
+         {
+            this.Save(this, args);
+         }
       }
    }
 }

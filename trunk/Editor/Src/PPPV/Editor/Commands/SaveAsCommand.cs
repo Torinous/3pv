@@ -11,17 +11,19 @@
    {
       public SaveAsCommand()
       {
-         Name = "Сохранить как...";
-         Description = "Сохранить сеть в файл с заданным именем";
-         ShortcutKeys = Keys.Control| Keys.Shift | Keys.S;
-         Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Save as.png"), true);
+         this.Name = "Сохранить как...";
+         this.Description = "Сохранить сеть в файл с заданным именем";
+         this.ShortcutKeys = Keys.Control | Keys.Shift | Keys.S;
+         this.Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Save as.png"), true);
       }
 
       public override void Execute()
       {
          EditorApplication app = EditorApplication.Instance;
-         if(app.ActiveNet != null)
+         if (app.ActiveNet != null)
+         {
             app.ActiveNet.SaveNetAs();
+         }
       }
 
       public override void Unexecute()

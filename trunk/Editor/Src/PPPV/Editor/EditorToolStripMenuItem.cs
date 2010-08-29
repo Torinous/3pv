@@ -1,77 +1,76 @@
 ﻿namespace Pppv.Editor
 {
-	using System;
-	using System.Windows.Forms;
-	using System.ComponentModel;
+   using System;
+   using System.ComponentModel;
+   using System.Globalization;
+   using System.Windows.Forms;
 
-	using System.Globalization;
-	
-	using Pppv.Editor.Commands;
-	using Pppv.Utils;
-	
-  public class EditorToolStripMenuItem : ToolStripMenuItem
-  {
-    const int MAPVK_VK_TO_CHAR = 2;
-  
-    //Данные
-    Command associatedCommand;
-    
-	public Command AssociatedCommand {
-		get { return associatedCommand; }
-		set { associatedCommand = value; }
-	}
+   using Pppv.Editor.Commands;
+   using Pppv.Utils;
 
-    //Конструкторы
-    public EditorToolStripMenuItem(Command command):base(command.Name, command.Pictogram)
-    {
-      AssociatedCommand = command;
-      this.ToolTipText = AssociatedCommand.Description;
-      this.Size = new System.Drawing.Size(25,20);
-      this.ShortcutKeys = AssociatedCommand.ShortcutKeys;
-      this.Click += ClickHandler;
-      this.SetShortcutString();
-    }
+   public class EditorToolStripMenuItem : ToolStripMenuItem
+   {
+      private const int MapVkVkToChar = 2;
 
-    public EditorToolStripMenuItem():base()
-    {
-      //this.Size = new System.Drawing.Size(25,20);
-      this.Click += ClickHandler;
-    }
-    
-    protected void ClickHandler(object sender, EventArgs e)
-    {
-      if(AssociatedCommand != null)
+      private Command associatedCommand;
+
+      public EditorToolStripMenuItem(Command command) : base(command.Name, command.Pictogram)
       {
-        DebugAssistant.LogTrace(AssociatedCommand.ToString());
-        AssociatedCommand.Execute();
+         this.AssociatedCommand = command;
+         this.ToolTipText = this.AssociatedCommand.Description;
+         this.Size = new System.Drawing.Size(25, 20);
+         this.ShortcutKeys = this.AssociatedCommand.ShortcutKeys;
+         this.Click += this.ClickHandler;
+         this.SetShortcutString();
       }
-    }
 
-    protected void SetShortcutString()
-    {
-      // testToolStripMenuItem имеет хоткей вида Ctrl+Oem5, я хочу сделать из него Ctrl+\
+      public EditorToolStripMenuItem() : base()
+      {
+         this.Click += this.ClickHandler;
+      }
 
-      //Получаем только код клавиши, без модификаторов.
-      Keys k = this.ShortcutKeys & Keys.KeyCode;
-      //Конвертим его в строку, тут будет строка "Oem5"
-      string s = TypeDescriptor.GetConverter(typeof (Keys)).ConvertToString(k);
-      string s1 = string.Empty;
-      //Проверяем, что у нас oem`ное значение enum Keys
-      if (s.StartsWith("oem", StringComparison.InvariantCultureIgnoreCase))
+      public Command AssociatedCommand
       {
-        //Та самая магия. Получаем значение char по кейкоду
-        char c = (char)NativeMethods.MapVirtualKey((int)k, MAPVK_VK_TO_CHAR);
-        if (c != 0)
-          s1 = c.ToString(CultureInfo.CurrentCulture);
+         get { return this.associatedCommand; }
+         set { this.associatedCommand = value; }
       }
-      if (s1 != string.Empty)
+
+      protected void SetShortcutString()
       {
-        //Получаем полный текст хоткея
-        string t = TypeDescriptor.GetConverter(typeof(Keys)).ConvertToString(this.ShortcutKeys);
-        t = t.Replace(s, s1);
-        this.ShortcutKeyDisplayString = t;
+         // testToolStripMenuItem имеет хоткей вида Ctrl+Oem5, я хочу сделать из него Ctrl+\
+
+         ////Получаем только код клавиши, без модификаторов.
+         Keys k = this.ShortcutKeys & Keys.KeyCode;
+         ////Конвертим его в строку, тут будет строка "Oem5"
+         string s = TypeDescriptor.GetConverter(typeof(Keys)).ConvertToString(k);
+         string s1 = string.Empty;
+         ////Проверяем, что у нас oem`ное значение enum Keys
+         if (s.StartsWith("oem", StringComparison.OrdinalIgnoreCase))
+         {
+            ////Та самая магия. Получаем значение char по кейкоду
+            char c = (char)NativeMethods.MapVirtualKey((int)k, MapVkVkToChar);
+            if (c != 0)
+            {
+               s1 = c.ToString(CultureInfo.CurrentCulture);
+            }
+         }
+
+         if (!String.IsNullOrEmpty(s1))
+         {
+            ////Получаем полный текст хоткея
+            string t = TypeDescriptor.GetConverter(typeof(Keys)).ConvertToString(this.ShortcutKeys);
+            t = t.Replace(s, s1);
+            this.ShortcutKeyDisplayString = t;
+         }
       }
-    }
-  }
+
+      private void ClickHandler(object sender, EventArgs e)
+      {
+         if (this.AssociatedCommand != null)
+         {
+            DebugAssistant.LogTrace(this.AssociatedCommand.ToString());
+            this.AssociatedCommand.Execute();
+         }
+      }
+   }
 }
-

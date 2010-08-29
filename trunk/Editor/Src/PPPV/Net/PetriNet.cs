@@ -1,17 +1,17 @@
 ﻿namespace Pppv.Net
 {
    using System;
-   using System.Text;
-   using System.IO;
-   using System.Drawing;
-   using System.Windows.Forms;
    using System.Collections;
    using System.Collections.Generic;
+   using System.Drawing;
    using System.Drawing.Drawing2D;
+   using System.Globalization;
+   using System.IO;
+   using System.Text;
+   using System.Windows.Forms;
    using System.Xml;
    using System.Xml.Schema;
    using System.Xml.Serialization;
-   using System.Globalization;
 
    using Pppv.Editor;
    using Pppv.Utils;
@@ -21,246 +21,178 @@
       private int width, height;
       private string id;
       private string type;
-      /*Элементы сети*/
+
       private ArrayList places;
       private ArrayList transitions;
       private ArrayList arcs;
       private string additionalCode;
 
-      //private ArrayList currentSelectedObjects;
-
       private Editor.NetCanvas canvas;
 
-      /*Конструктор*/
       public PetriNet()
       {
-         Id = "";
-         NetType = "PPr/T net";
-         places = new ArrayList(30);
-         Transitions = new ArrayList(30);
-         Arcs = new ArrayList(60);
-         Change += CalculateSize;
+         this.Id = String.Empty;
+         this.NetType = "PPr/T net";
+         this.places = new ArrayList(30);
+         this.transitions = new ArrayList(30);
+         this.arcs = new ArrayList(60);
+         this.Change += this.CalculateSize;
       }
 
-      /*Свойства*/
+      public event PaintEventHandler Paint;
+
+      public event EventHandler Change;
+
       public int Width
       {
-         get
-         {
-            return width;
-         }
-         set
-         {
-            width = value;
-         }
+         get { return this.width; }
+         set { this.width = value; }
       }
-      
+
       public int Height
       {
-         get
-         {
-            return height;
-         }
-         set
-         {
-            height = value;
-         }
+         get { return this.height; }
+         set { this.height = value; }
       }
-      
+
       public string Id
       {
-         get
-         {
-            return id;
-         }
-         protected set
-         {
-            id = value;
-         }
+         get { return this.id; }
+         protected set { this.id = value; }
       }
 
       public string NetType
       {
-         get
-         {
-            return type;
-         }
-         protected set
-         {
-            type = value;
-         }
+         get { return this.type; }
+         protected set { this.type = value; }
       }
 
       public Editor.NetCanvas Canvas
       {
          get
          {
-            return canvas;
+            return this.canvas;
          }
+
          set
          {
-            if(canvas != null)
+            if (this.canvas != null)
             {
-               //canvas.Paint                  -= CanvasPaintHandler;
-               canvas.Paint                  -= CanvasPaintRetranslator;
+               // this.canvas.Paint -= this.CanvasPaintHandler;
+               this.canvas.Paint -= this.CanvasPaintRetranslator;
             }
 
-            canvas = value;
+            this.canvas = value;
 
-            if(canvas != null)
+            if (this.canvas != null)
             {
-               //canvas.Paint                  += CanvasPaintHandler;
-               canvas.Paint                  += CanvasPaintRetranslator;
+               // this.canvas.Paint += this.CanvasPaintHandler;
+               this.canvas.Paint += this.CanvasPaintRetranslator;
             }
          }
       }
 
       public ArrayList Places
       {
-         get
-         {
-            return places;
-         }
+         get { return this.places; }
       }
 
       public ArrayList Transitions
       {
-         get
-         {
-            return transitions;
-         }
-         private set
-         {
-            transitions = value;
-         }
+         get { return this.transitions; }
       }
-      
+
       public ArrayList Arcs
       {
-         get
-         {
-            return arcs;
-         }
-         private set
-         {
-            arcs = value;
-         }
-      }
-
-      /*Специальное свойство для добавления элементов в сеть*/
-      public NetElement ElementPortal
-      {
-         set
-         {
-            if(value is Place)
-            {
-               Places.Add(value);
-            }
-            if(value is Transition)
-            {
-               Transitions.Add(value);
-            }
-            if(value is Arc)
-            {
-               Arcs.Add(value);
-            }
-            value.ParentNet = this;
-            value.Change += NetElementChangeHandler;
-            OnChange(new EventArgs());
-         }
-      }
-
-      /*Специальное свойство для удаления элементов из сети*/
-      public NetElement ElementNullPortal
-      {
-         set
-         {
-            value.PrepareToDeletion();
-            if(value is Place)
-            {
-               Places.Remove(value);
-            }
-            if(value is Transition)
-            {
-               Transitions.Remove(value);
-            }
-            if(value is Arc)
-            {
-               Arcs.Remove(value);
-            }
-            value.Change -= NetElementChangeHandler;
-            OnChange(new EventArgs());
-         }
+         get { return this.arcs; }
       }
 
       public string AdditionalCode
       {
          get
          {
-            return additionalCode;
+            return this.additionalCode;
          }
+
          set
          {
-            additionalCode = value;
-            OnChange(new EventArgs());
+            this.additionalCode = value;
+            this.OnChange(new EventArgs());
          }
       }
 
-      /*События*/
-      public event PaintEventHandler Paint;
-
-      public event EventHandler Change;
-      
-      
-      private void CanvasPaintRetranslator(object sender, PaintEventArgs args)
+      public void AddElement(NetElement element)
       {
-         OnPaint(args);
-      }
-
-      private void OnChange(EventArgs args)
-      {
-         if(Change != null)
+         if (element is Place)
          {
-            Change(this,args);
+            this.Places.Add(element);
          }
+
+         if (element is Transition)
+         {
+            this.Transitions.Add(element);
+         }
+
+         if (element is Arc)
+         {
+            this.Arcs.Add(element);
+         }
+
+         element.ParentNet = this;
+         element.Change += this.NetElementChangeHandler;
+         this.OnChange(new EventArgs());
       }
 
-      private void OnPaint(PaintEventArgs e)
+      public void DeleteElement(NetElement element)
       {
-         if(Paint != null)
+         element.PrepareToDeletion();
+         if (element is Place)
          {
-            using(PreciseTimer pr = new PreciseTimer("PetriNet.Draw"))
-            {
-               Paint(this,e);
-            }
+            this.Places.Remove(element);
          }
+
+         if (element is Transition)
+         {
+            this.Transitions.Remove(element);
+         }
+
+         if (element is Arc)
+         {
+            this.Arcs.Remove(element);
+         }
+
+         element.Change -= this.NetElementChangeHandler;
+         this.OnChange(new EventArgs());
       }
 
       public NetElement NetElementUnder(Point testPoint)
       {
          int i = 0;
-         for(i=0;i<Transitions.Count;++i)
+         for (i = 0; i < this.Transitions.Count; ++i)
          {
-            if(((Graphical)Transitions[i]).Intersect(testPoint))
+            if (((Graphical)this.Transitions[i]).Intersect(testPoint))
             {
-               return (NetElement)Transitions[i];
+               return (NetElement)this.Transitions[i];
             }
          }
-         for(i=0;i<Places.Count;++i)
+
+         for (i = 0; i < this.Places.Count; ++i)
          {
             DebugAssistant.LogTrace(testPoint.ToString());
-            if(((Graphical)Places[i]).Intersect(testPoint))
+            if (((Graphical)this.Places[i]).Intersect(testPoint))
             {
-               return (NetElement)Places[i];
+               return (NetElement)this.Places[i];
             }
          }
-         for(i=0;i<Arcs.Count;++i)
+
+         for (i = 0; i < this.Arcs.Count; ++i)
          {
-            if(((Graphical)Arcs[i]).Intersect(testPoint))
+            if (((Graphical)this.Arcs[i]).Intersect(testPoint))
             {
-               return (NetElement)Arcs[i];
+               return (NetElement)this.Arcs[i];
             }
          }
+
          return null;
       }
 
@@ -268,103 +200,143 @@
       {
          List<NetElement> selectedObjects = new List<NetElement>(20);
          int i = 0;
-         for(i=0;i<Transitions.Count;++i)
+         for (i = 0; i < this.Transitions.Count; ++i)
          {
-            if(((NetElement)Transitions[i]).Intersect(selectedRectangle))
+            if (((NetElement)this.Transitions[i]).Intersect(selectedRectangle))
             {
-               selectedObjects.Add((NetElement)Transitions[i]);
+               selectedObjects.Add((NetElement)this.Transitions[i]);
             }
          }
-         for(i=0;i<Places.Count;++i)
+
+         for (i = 0; i < this.Places.Count; ++i)
          {
-            if(((NetElement)Places[i]).Intersect(selectedRectangle))
+            if (((NetElement)this.Places[i]).Intersect(selectedRectangle))
             {
-               selectedObjects.Add((NetElement)Places[i]);
+               selectedObjects.Add((NetElement)this.Places[i]);
             }
          }
-         for(i=0;i<Arcs.Count;++i)
+
+         for (i = 0; i < this.Arcs.Count; ++i)
          {
-            if(((NetElement)Arcs[i]).Intersect(selectedRectangle))
+            if (((NetElement)this.Arcs[i]).Intersect(selectedRectangle))
             {
-               selectedObjects.Add((NetElement)Arcs[i]);
+               selectedObjects.Add((NetElement)this.Arcs[i]);
             }
          }
+
          return selectedObjects;
       }
 
       public bool HaveArcBetween(NetElement fromElement, NetElement toElement)
       {
-         for(int i=0;i<Arcs.Count;++i)
+         for (int i = 0; i < this.Arcs.Count; ++i)
          {
-            if((Arcs[i] as Arc).Source == fromElement && (Arcs[i] as Arc).Target == toElement)
+            if ((this.Arcs[i] as Arc).Source == fromElement && (this.Arcs[i] as Arc).Target == toElement)
             {
                return true;
             }
          }
-         return false;
-      }
 
-      private void NetElementChangeHandler(object sender, System.EventArgs args)
-      {
-         OnChange(new EventArgs());
+         return false;
       }
 
       public NetElement GetElementById(string searchingId)
       {
-         if(String.IsNullOrEmpty(searchingId))
-            return null;
-         foreach(Place place in Places){
-            if(place.Id == searchingId)
-               return place;
-         }
-         foreach(Transition transition in Transitions)
+         if (String.IsNullOrEmpty(searchingId))
          {
-            if(transition.Id == searchingId)
+            return null;
+         }
+
+         foreach (Place place in this.Places)
+         {
+            if (place.Id == searchingId)
+            {
+               return place;
+            }
+         }
+
+         foreach (Transition transition in this.Transitions)
+         {
+            if (transition.Id == searchingId)
+            {
                return transition;
+            }
          }
-         foreach(Arc arc in Arcs){
-            if(arc.Id == searchingId)
+
+         foreach (Arc arc in this.Arcs)
+         {
+            if (arc.Id == searchingId)
+            {
                return arc;
+            }
          }
+
          return null;
+      }
+
+      private void NetElementChangeHandler(object sender, System.EventArgs args)
+      {
+         this.OnChange(new EventArgs());
+      }
+
+      private void CanvasPaintRetranslator(object sender, PaintEventArgs args)
+      {
+         this.OnPaint(args);
+      }
+
+      private void OnChange(EventArgs args)
+      {
+         if (this.Change != null)
+         {
+            this.Change(this, args);
+         }
+      }
+
+      private void OnPaint(PaintEventArgs e)
+      {
+         if (this.Paint != null)
+         {
+            using (PreciseTimer pr = new PreciseTimer("PetriNet.Draw"))
+            {
+               this.Paint(this, e);
+            }
+         }
       }
 
       private void CalculateSize(object sender, System.EventArgs args)
       {
-         Width = Height = 0;
+         this.Width = this.Height = 0;
          int testX = 0,
          testY = 0;
-         foreach(Place place in Places)
+         foreach (Place place in this.Places)
          {
             testX = place.X + place.Size.Width;
             testY = place.Y + place.Size.Height;
-            if(testX > Width)
-               Width = testX;
-            if(testY > Height)
-               Height = testY;
+            if (testX > this.Width)
+            {
+               this.Width = testX;
+            }
+
+            if (testY > this.Height)
+            {
+               this.Height = testY;
+            }
          }
-         foreach(Transition transition in Transitions)
+
+         foreach (Transition transition in this.Transitions)
          {
             testX = transition.X + transition.Size.Width;
             testY = transition.Y + transition.Size.Height;
-            if(testX > Width)
-               Width = testX;
-            if(testY > Height)
-               Height = testY;
+            if (testX > this.Width)
+            {
+               this.Width = testX;
+            }
+
+            if (testY > this.Height)
+            {
+               this.Height = testY;
+            }
          }
       }
-
-      /*Это видимо нужно чтобы наследники могли реализовать IXmlSerializable*/
-      /*public virtual void WriteXml (XmlWriter writer)
-      {}
-
-      public virtual void ReadXml (XmlReader reader)
-      {}
-
-      public virtual XmlSchema GetSchema()
-      {
-         return null;
-      }*/
-
-   } // PetriNet
-} // namespace
+   }
+}

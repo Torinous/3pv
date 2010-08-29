@@ -1,80 +1,58 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-
-using Pppv.Net;
-
-namespace Pppv.Editor.Commands
+﻿namespace Pppv.Editor.Commands
 {
-  public abstract class Command
-  {
-    string name;
-    string description;
-    Keys shortcutKeys;
-    Image pictogram;
-    bool isHistorical;
-    
-		public bool IsHistorical {
-			get { return isHistorical; }
-			set { isHistorical = value; }
-		}
+   using System;
+   using System.Drawing;
+   using System.Windows.Forms;
 
-    public string Name
-    {
-      get
-      {
-        return name;
-      }
-      set
-      {
-        name = value;
-      }
-    }
-    
-    public string Description
-    {
-      get
-      {
-        return description;
-      }
-      set
-      {
-        description = value;
-      }
-    }
+   using Pppv.Net;
 
-    public Keys ShortcutKeys
-    {
-      get
-      {
-        return shortcutKeys;
-      }
-      protected set
-      {
-        shortcutKeys = value;
-      }
-    }
+   public abstract class Command
+   {
+      private string name;
+      private string description;
+      private Keys shortcutKeys;
+      private Image pictogram;
+      private bool isHistorical;
 
-    public Image Pictogram
-    {
-      get
+      protected Command()
       {
-        return pictogram;
+         this.Name = String.Empty;
+         this.Description = String.Empty;
+         this.Pictogram = null;
       }
-      protected set
+
+      public bool IsHistorical
       {
-        pictogram = value;
+         get { return this.isHistorical; }
+         set { this.isHistorical = value; }
       }
-    }
-    
-    protected Command()
-    {
-      Name = "";
-      Description = "";
-      Pictogram = null;
-    }
-    
-    public abstract void Execute();
-    public virtual void Unexecute(){}
-  }
+
+      public string Name
+      {
+         get { return this.name; }
+         set { this.name = value; }
+      }
+
+      public string Description
+      {
+         get { return this.description; }
+         set { this.description = value; }
+      }
+
+      public Keys ShortcutKeys
+      {
+         get { return this.shortcutKeys; }
+         protected set { this.shortcutKeys = value; }
+      }
+
+      public Image Pictogram
+      {
+         get { return this.pictogram; }
+         protected set { this.pictogram = value; }
+      }
+
+      public abstract void Execute();
+
+      public abstract void Unexecute();
+   }
 }

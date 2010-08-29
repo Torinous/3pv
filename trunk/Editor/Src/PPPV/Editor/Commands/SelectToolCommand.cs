@@ -2,53 +2,59 @@
 {
    using System;
    using System.Drawing;
+   using System.Globalization;
    using System.Reflection;
    using System.Windows.Forms;
-   using System.Globalization;
 
+   using Pppv.Editor.Tools;
    using Pppv.Net;
    using Pppv.Utils;
-   using Pppv.Editor.Tools;
 
    public class SelectToolCommand : NetCommand
    {
       private Type toolType;
 
-      public Type ToolType
-      {
-         get
-         {
-            return toolType;
-         }
-      }
-      //Конструктор
       public SelectToolCommand(Type type)
       {
-         toolType = type;
+         this.toolType = type;
          FieldInfo[] fields;
 
-         fields = type.GetFields( BindingFlags.Static | BindingFlags.NonPublic );
-         foreach(FieldInfo f in fields)
+         fields = type.GetFields(BindingFlags.Static | BindingFlags.NonPublic);
+         foreach (FieldInfo f in fields)
          {
             DebugAssistant.LogTrace(String.Format(CultureInfo.CurrentCulture, "{0}", f.Name));
-            if(f.Name == "name")
+            if (f.Name == "name")
+            {
                Name = f.GetValue(null) as string;
-            if(f.Name == "description")
+            }
+
+            if (f.Name == "description")
+            {
                Description = f.GetValue(null) as string;
-            if(f.Name == "shortcutKeys")
+            }
+
+            if (f.Name == "shortcutKeys")
+            {
                ShortcutKeys = (Keys)f.GetValue(null);
-            if(f.Name == "pictogram")
+            }
+
+            if (f.Name == "pictogram")
+            {
                Pictogram = (Image)f.GetValue(null);
+            }
          }
+      }
+
+      public Type ToolType
+      {
+         get { return this.toolType; }
       }
 
       public override void Execute()
       {
          EditorApplication app = EditorApplication.Instance;
-         //Установим инструмент для текущей сети
-         app.ActiveNet.SelectToolByType(ToolType);
-         //Отметим его на панели инструментов
-         app.MainFormInst.ToolToolStrip.CheckTool(ToolType);
+         app.ActiveNet.SelectToolByType(this.ToolType);
+         app.MainFormInst.ToolToolStrip.CheckTool(this.ToolType);
       }
 
       public override void Unexecute()

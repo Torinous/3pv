@@ -2,63 +2,67 @@
 {
    using System;
    using System.Drawing;
-   using System.Windows.Forms;
    using System.Drawing.Drawing2D;
+   using System.Windows.Forms;
    using System.Xml.Serialization;
 
    [Serializable()]
    public abstract class NetElement : Graphical
    {
+      [NonSerializedAttribute]
       private PetriNet parent;
 
-      public PetriNet Parent {
-         get { return parent; }
-         set { parent = value; }
-      }
-
-      protected NetElement(Point point):base(point)
+      protected NetElement(Point point) : base(point)
       {
       }
 
-      public virtual string Id{
-         get;
-         protected set;
-      }
-
-      public PetriNet ParentNet{
-         get{
-            return parent;
-         }
-         set{
-            if(parent != null)
-            {
-               parent.Paint                 -= this.Draw;
-               parent.Paint                 -= this.PaintRetranslator;
-            }
-            parent = value;
-            if(parent != null)
-            {
-               parent.Paint                 += this.Draw;
-               parent.Paint                 += this.PaintRetranslator;
-            }
-         }
-      }
-
-      /*События*/
       public override event EventHandler Change;
 
-      protected override void OnChange(EventArgs args){
-         if(Change != null)
+      public PetriNet Parent
+      {
+         get { return this.parent; }
+         set { this.parent = value; }
+      }
+
+      public virtual string Id { get; protected set; }
+
+      public PetriNet ParentNet
+      {
+         get
          {
-            Change(this, args);
+            return this.parent;
          }
-         base.OnChange(args);
+
+         set
+         {
+            if (this.parent != null)
+            {
+               this.parent.Paint -= this.Draw;
+               this.parent.Paint -= this.PaintRetranslator;
+            }
+
+            this.parent = value;
+            if (this.parent != null)
+            {
+               this.parent.Paint += this.Draw;
+               this.parent.Paint += this.PaintRetranslator;
+            }
+         }
       }
 
       public override void PrepareToDeletion()
       {
-         ParentNet = null;
+         this.ParentNet = null;
+      }
+
+      protected override void OnChange(EventArgs args)
+      {
+         if (this.Change != null)
+         {
+            this.Change(this, args);
+         }
+
+         base.OnChange(args);
       }
    }
 }
-

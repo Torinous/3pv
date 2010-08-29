@@ -13,7 +13,7 @@
       private string netName;
       private bool netSaved;
 
-      public TabPageForNet(PetriNetWrapper net):base( )
+      public TabPageForNet(PetriNetWrapper net) : base()
       {
          this.Location = new Point(45, 45);
          this.Padding  = new Padding(3);
@@ -22,69 +22,78 @@
          this.UseVisualStyleBackColor = true;
          this.netName = net.Id;
          this.netSaved = net.NetSaved;
-         this.Text = String.IsNullOrEmpty(netName)?"~":netName+"   ";
+         this.Text = String.IsNullOrEmpty(this.netName) ? "~" : this.netName + "   ";
          this.InitializeComponent(net);
          this.AutoScroll = true;
       }
 
       public NetCanvas NetCanvas
       {
-         get { return canvas; }
+         get
+         {
+            return this.canvas;
+         }
+
          private set
          {
-            if(canvas != null)
+            if (this.canvas != null)
             {
-               canvas.LinkedNetSave   -= LinkedNetSaveHandler;
-               canvas.LinkedNetChange -= LinkedNetChangeHandler;
-               canvas.Resize          -= CanvasResizeHandler;
+               this.canvas.LinkedNetSave   -= this.LinkedNetSaveHandler;
+               this.canvas.LinkedNetChange -= this.LinkedNetChangeHandler;
+               this.canvas.Resize          -= this.CanvasResizeHandler;
             }
-            canvas = value;
-            if(canvas != null)
+
+            this.canvas = value;
+            if (this.canvas != null)
             {
-               canvas.LinkedNetSave   += LinkedNetSaveHandler;
-               canvas.LinkedNetChange += LinkedNetChangeHandler;
-               canvas.Resize          += CanvasResizeHandler;
+               this.canvas.LinkedNetSave   += this.LinkedNetSaveHandler;
+               this.canvas.LinkedNetChange += this.LinkedNetChangeHandler;
+               this.canvas.Resize          += this.CanvasResizeHandler;
             }
          }
       }
 
-      public bool NetSaved {
-         get { return netSaved; }
-         private set { netSaved = value; }
+      public bool NetSaved
+      {
+         get { return this.netSaved; }
+         private set { this.netSaved = value; }
       }
 
-      public PetriNetWrapper Net {
+      public PetriNetWrapper Net
+      {
          get { return NetCanvas.Net; }
       }
 
       protected override void OnResize(EventArgs e)
       {
-         AutoScroll = false;
+         this.AutoScroll = false;
          base.OnResize(e);
-         AutoScroll = true;
+         this.AutoScroll = true;
       }
+
       protected override void OnParentChanged(EventArgs e)
       {
-         if(Parent != null)
+         if (this.Parent != null)
          {
          }
+
          base.OnParentChanged(e);
       }
 
-      private void LinkedNetSaveHandler(object sender, SaveEventArgs args)
+      private void LinkedNetSaveHandler(object sender, SaveNetEventArgs args)
       {
-         netName = args.NetId;
-         this.ToolTipText = args.FileName;
-         NetSaved = true;
-         this.Text = (String.IsNullOrEmpty(netName)?"~":netName+"   ");
+         this.netName = args.NetId;
+         this.ToolTipText = args.FilePath;
+         this.NetSaved = true;
+         this.Text = String.IsNullOrEmpty(this.netName) ? "~" : this.netName + "   ";
       }
 
       private void LinkedNetChangeHandler(object sender, EventArgs args)
       {
-         if(NetSaved)
+         if (this.NetSaved)
          {
-            NetSaved = false;
-            this.Text = (String.IsNullOrEmpty(netName)?"~":netName+"   ");
+            this.NetSaved = false;
+            this.Text = String.IsNullOrEmpty(this.netName) ? "~" : this.netName + "   ";
          }
       }
       
@@ -92,7 +101,6 @@
       {
          this.AutoScrollMinSize = NetCanvas.Size;
       }
-      
 
       private void InitializeComponent(PetriNetWrapper net)
       {

@@ -8,11 +8,17 @@
 
    public class MouseEventArgs : System.Windows.Forms.MouseEventArgs
    {
-      public bool alreadyPerform;
+      private bool alreadyPerform;
 
-      public MouseEventArgs(CanvasMouseEventArgs arg):base(arg.Button,arg.Clicks,arg.X,arg.Y,arg.Delta)
+      public MouseEventArgs(CanvasMouseEventArgs arg) : base(arg.Button, arg.Clicks, arg.X, arg.Y, arg.Delta)
       {
-         alreadyPerform = false;
+         this.AlreadyPerform = false;
+      }
+
+      public bool AlreadyPerform 
+      {
+         get { return this.alreadyPerform; }
+         set { this.alreadyPerform = value; }
       }
    }
 }

@@ -1,135 +1,133 @@
 ﻿namespace Pppv.Editor.Tools
 {
-   using System.Reflection;
    using System.Drawing;
+   using System.Reflection;
    using System.Windows.Forms;
 
-   using Pppv.Net;
    using Pppv.Editor.Commands;
+   using Pppv.Net;
 
    public class InhibitorArcTool : Tool
    {
       private static string name  = "Ингибиторная дуга";
       private static string description = "Инструмент создание ингибиторных дуг сети";
-      private static Keys shortcutKeys = Keys.Control|Keys.Shift|Keys.I;
+      private static Keys shortcutKeys = Keys.Control | Keys.Shift | Keys.I;
       private static Image pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Inhibitor Arc.png"), true);
       private InhibitorArc arc;
-
-      public override string Name{
-         get{
-            return name;
-         }
-         set{
-            name = value;
-         }
-      }
-
-      public override string Description{
-         get{
-            return description;
-         }
-         set{
-            description = value;
-         }
-      }
-
-      public override Keys ShortcutKeys{
-         get{
-            return shortcutKeys;
-         }
-         set{
-            shortcutKeys = value;
-         }
-      }
-
-      public override Image Pictogram{
-         get{
-            return pictogram;
-         }
-         set{
-            pictogram = value;
-         }
-      }
-      
-      public InhibitorArc Arc{
-         get{
-            return arc;
-         }
-         private set{
-            if(arc != null)
-            {
-               EditorApplication app = EditorApplication.Instance;
-               app.ActiveNet.Paint -=arc.Draw;
-            }
-            arc = value;
-            if(arc != null)
-            {
-               EditorApplication app = EditorApplication.Instance;
-               app.ActiveNet.Paint +=arc.Draw;
-            }
-         }
-      }
 
       public InhibitorArcTool()
       {
       }
 
-      public override void HandleMouseDown(object sender, System.Windows.Forms.MouseEventArgs args)
+      public override string Name
       {
-         NetCanvas someCanvas = sender as Editor.NetCanvas;
-         if(args.Button == MouseButtons.Left)
+         get { return name; }
+         set { name = value; }
+      }
+
+      public override string Description
+      {
+         get { return description; }
+         set { description = value; }
+      }
+
+      public override Keys ShortcutKeys
+      {
+         get { return shortcutKeys; }
+         set { shortcutKeys = value; }
+      }
+
+      public override Image Pictogram
+      {
+         get { return pictogram; }
+         set { pictogram = value; }
+      }
+      
+      public InhibitorArc Arc
+      {
+         get 
+         { 
+            return this.arc;
+         }
+
+         private set
          {
-            PetriNet pn = someCanvas.Net;
-            NetElement clicked = pn.NetElementUnder(new Point(args.X, args.Y));
-            if(Arc == null)
+            if (this.arc != null)
             {
-               if(!(clicked is Arc) && clicked != null)
-                  Arc = new InhibitorArc(clicked);
+               EditorApplication app = EditorApplication.Instance;
+               app.ActiveNet.Paint -= this.arc.Draw;
+            }
+
+            this.arc = value;
+
+            if (this.arc != null)
+            {
+               EditorApplication app = EditorApplication.Instance;
+               app.ActiveNet.Paint += this.arc.Draw;
+            }
+         }
+      }
+
+      protected override void HandleMouseDown(NetCanvas canvas, System.Windows.Forms.MouseEventArgs args)
+      {
+         if (args.Button == MouseButtons.Left)
+         {
+            PetriNet pn = canvas.Net;
+            NetElement clicked = pn.NetElementUnder(new Point(args.X, args.Y));
+            if (this.Arc == null)
+            {
+               if (!(clicked is Arc) && clicked != null)
+               {
+                  this.Arc = new InhibitorArc(clicked);
+               }
             }
             else
             {
-               if(clicked != null && Arc.Source.GetType() != clicked.GetType())
+               if (clicked != null && this.Arc.Source.GetType() != clicked.GetType())
                {
-                  Arc.Target = clicked;
+                  this.Arc.Target = clicked;
                   AddNetElementCommand c = new AddNetElementCommand(pn);
-                  c.Element = Arc;
+                  c.Element = this.Arc;
                   c.Execute();
-                  Arc = null;
+                  this.Arc = null;
                }
             }
-            someCanvas.Invalidate();
+
+            canvas.Invalidate();
          }
-         base.HandleMouseDown(sender, args);
+
+         base.HandleMouseDown(canvas, args);
       }
 
-      public override void HandleMouseMove(object sender, System.Windows.Forms.MouseEventArgs args)
+      protected override void HandleMouseMove(NetCanvas canvas, System.Windows.Forms.MouseEventArgs args)
       {
-         NetCanvas someCanvas = sender as Editor.NetCanvas;
-         if(args.Button == MouseButtons.Left)
+         if (args.Button == MouseButtons.Left)
          {
-            PetriNet pn = someCanvas.Net;
-            NetElement clicked = pn.NetElementUnder(new Point(args.X,args.Y));
+            PetriNet pn = canvas.Net;
+            NetElement clicked = pn.NetElementUnder(new Point(args.X, args.Y));
             clicked = (clicked is Arc) ? null : clicked;
-            //if(clicked != null && !pn.HaveUnfinishedArcs())
-            //pn.AddArc(clicked);
-            someCanvas.Invalidate();
+
+            // if(clicked != null && !pn.HaveUnfinishedArcs())
+            // pn.AddArc(clicked);
+            canvas.Invalidate();
          }
-         base.HandleMouseMove(sender, args);
+
+         base.HandleMouseMove(canvas, args);
       }
 
-      public override void HandleMouseUp(object sender, System.Windows.Forms.MouseEventArgs args)
+      protected override void HandleMouseUp(NetCanvas canvas, System.Windows.Forms.MouseEventArgs args)
       {
-         base.HandleMouseUp(sender, args);
+         base.HandleMouseUp(canvas, args);
       }
 
-      public override void HandleMouseClick(object sender, System.Windows.Forms.MouseEventArgs args)
+      protected override void HandleMouseClick(NetCanvas canvas, System.Windows.Forms.MouseEventArgs args)
       {
-         base.HandleMouseClick(sender, args);
+         base.HandleMouseClick(canvas, args);
       }
 
-      protected override void HandleKeyDown( object sender, KeyEventArgs arg )
+      protected override void HandleKeyDown(NetCanvas canvas, KeyEventArgs args)
       {
-         base.HandleKeyDown(sender, arg);
+         base.HandleKeyDown(canvas, args);
       }
    }
 }

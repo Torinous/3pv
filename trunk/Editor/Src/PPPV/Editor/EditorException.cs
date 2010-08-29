@@ -9,26 +9,26 @@
 
 namespace Pppv.Editor
 {
-	using System;
-	using System.Runtime.Serialization;
+   using System;
+   using System.Runtime.Serialization;
 
-	[Serializable]
-	public class EditorException : Exception
-	{
-		public EditorException():base()
-		{
-		}
+   [Serializable]
+   public class EditorException : Exception
+   {
+      public EditorException() : base()
+      {
+      }
 
-		public EditorException(string message):base(message)
-		{
-		}
+      public EditorException(string message) : base(message)
+      {
+      }
 
-		public EditorException(string message, Exception exception):base(message, exception)
-		{
-		}
+      public EditorException(string message, Exception exception) : base(message, exception)
+      {
+      }
 
-		protected EditorException(SerializationInfo info, StreamingContext context):base(info, context)
-		{
-		}
-	}
+      protected EditorException(SerializationInfo info, StreamingContext context) : base(info, context)
+      {
+      }
+   }
 }

@@ -19,19 +19,6 @@
          NativeMethods.QueryPerformanceCounter(out ctr1);
       }
 
-      public void Dispose()
-      {
-         NativeMethods.QueryPerformanceCounter(out ctr2);
-         if(timerTable.ContainsKey(this.id))
-         {
-            timerTable[id] = ((double)timerTable[id] + (ctr2 - ctr1)*1000.0/freq)/2.0;
-         }
-         else
-         {
-            timerTable.Add(this.id, (ctr2 - ctr1)*1000.0/freq);
-         }
-      }
-
       public static void ShowTimeTable()
       {
          System.Diagnostics.Debug.WriteLine("TimerTable:\n");
@@ -39,6 +26,19 @@
          foreach (string str in c)
          {
             System.Diagnostics.Debug.WriteLine(String.Format(CultureInfo.CurrentCulture, "{0}: {1,10:N5} ms", str, timerTable[str]));
+         }
+      }
+
+      public void Dispose()
+      {
+         NativeMethods.QueryPerformanceCounter(out ctr2);
+         if (timerTable.ContainsKey(this.id))
+         {
+            timerTable[this.id] = ((double)timerTable[this.id] + (((ctr2 - ctr1) * 1000.0) / freq)) / 2.0;
+         }
+         else
+         {
+            timerTable.Add(this.id, (ctr2 - ctr1) * 1000.0 / freq);
          }
       }
    }

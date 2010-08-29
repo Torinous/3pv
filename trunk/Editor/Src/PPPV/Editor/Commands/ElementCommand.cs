@@ -5,23 +5,23 @@
    using System.Windows.Forms;
 
    using Pppv.Net;
-   public abstract class ElementCommand: NetCommand
+   
+   public abstract class ElementCommand : NetCommand
    {
-      private NetElement ne;
-    
-      public NetElement Element {
-        get{ return ne; }
-        set{ ne = value; }
+      private NetElement element;
+
+      protected ElementCommand() : base()
+      {
       }
 
-      protected ElementCommand():base()
+      protected ElementCommand(NetElement ne) : base(ne.ParentNet as PetriNetWrapper)
       {
-
       }
 
-      protected ElementCommand(NetElement ne):base(ne.ParentNet as PetriNetWrapper)
+      public NetElement Element
       {
-
+        get { return this.element; }
+        set { this.element = value; }
       }
    }
 }
