@@ -31,7 +31,7 @@
 
       public virtual event EventHandler<ResizeEventArgs> Resize;
 
-      public virtual event EventHandler Change;
+      public event EventHandler Change;
 
       public Point Location
       {
@@ -40,21 +40,9 @@
             return this.location;
          }
 
-         set
+         private set
          {
-            if (value.X < 0)
-            {
-               value.X = 0;
-            }
-
-            if (value.Y < 0)
-            {
-               value.Y = 0;
-            }
-
-            MoveEventArgs args = new MoveEventArgs(this.location, value);
             this.location = value;
-            this.OnMove(args);
          }
       }
 
@@ -124,7 +112,7 @@
 
       public abstract Point Center { get; }
 
-      public virtual Size Size
+      public Size Size
       {
          get
          {
@@ -141,16 +129,8 @@
 
       public void MoveBy(Point radiusVector)
       {
-         /* Входной параметр это радиус-вектор перемещения */
          Point old = new Point(this.location.X, this.location.Y);
          this.Location = new Point(this.X + radiusVector.X, this.Y + radiusVector.Y);
-      }
-
-      public void MoveBy()
-      {
-         /* Входной параметр это радиус-вектор перемещения */
-         Point old = new Point(this.location.X, this.location.Y);
-         this.Location = new Point(this.X, this.Y);
       }
 
       public virtual bool Intersect(Point point)
@@ -171,7 +151,10 @@
          return false;
       }
 
-      public abstract void Draw(object sender, PaintEventArgs e);
+      public virtual void Draw(PaintEventArgs e)
+      {
+         this.OnPaint(e);
+      }
 
       public abstract Point GetPilon(Point from);
 
@@ -179,7 +162,7 @@
       {
       }
 
-      protected virtual void OnChange(EventArgs args)
+      protected void OnChange(EventArgs args)
       {
          if (this.Change != null)
          {
@@ -272,11 +255,6 @@
          }
 
          this.OnChange(new EventArgs());
-      }
-
-      protected void PaintRetranslator(object sender, PaintEventArgs args)
-      {
-         this.OnPaint(args);
       }
 
       private void OnPaint(PaintEventArgs e)

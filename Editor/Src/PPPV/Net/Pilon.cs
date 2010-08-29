@@ -19,7 +19,7 @@
          }
       }
 
-      public override void Draw(object sender, PaintEventArgs e)
+      public override void Draw(PaintEventArgs e)
       {
          Graphics dc = e.Graphics;
          dc.SmoothingMode = SmoothingMode.HighQuality;

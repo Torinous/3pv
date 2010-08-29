@@ -24,7 +24,8 @@
          id++;
          Name = Id = "P" + id;
          Size = new Size(50, 50);
-         this.tokens = new TokensList(10);
+         this.tokens = new TokensList();
+         this.tokens.Change += this.TokensListChangeHandler;
       }
 
       public Place(XmlReader reader) : this(new Point(0, 0))
@@ -38,22 +39,6 @@
          {
             return this.tokens;
          }
-
-         private set
-         {
-            if (this.tokens != null)
-            {
-               this.tokens.Change -= this.TokensListChangeHandler;
-            }
-            
-            this.tokens = value;
-            if (this.tokens != null)
-            {
-               this.tokens.Change += this.TokensListChangeHandler;
-            }
-
-            OnChange(new EventArgs());
-         }
       }
 
       public override Point Center
@@ -64,7 +49,7 @@
          }
       }
 
-      public override void Draw(object sender, PaintEventArgs e)
+      public override void Draw(PaintEventArgs e)
       {
          Graphics dc = e.Graphics;
          dc.SmoothingMode = SmoothingMode.HighQuality;
@@ -79,7 +64,8 @@
          dc.FillRegion(grayBrush, fillRegion);
          dc.DrawEllipse(blackPen, X, Y, Size.Width, Size.Height);
          dc.DrawString(Name, font1, blackBrush, X + ((int)Size.Width / 2) + 5, Y - 5);
-         dc.DrawString(this.Tokens.List.Count.ToString(CultureInfo.CurrentCulture), font1, blackBrush, X + ((int)Size.Width / 2) - 10, Y + ((int)Size.Height / 2) - 10);
+         dc.DrawString(this.Tokens.Count.ToString(CultureInfo.CurrentCulture), font1, blackBrush, X + ((int)Size.Width / 2) - 10, Y + ((int)Size.Height / 2) - 10);
+         base.Draw(e);
       }
 
       public override Point GetPilon(Point from)

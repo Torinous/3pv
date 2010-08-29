@@ -3,6 +3,7 @@
    using System;
    using System.Collections;
    using System.Collections.Generic;
+   using System.Collections.ObjectModel;
    using System.ComponentModel;
    using System.Data;
    using System.Drawing;
@@ -19,9 +20,9 @@
       private TextBox textBoxCurrentToken;
       private Button buttonAdd;
       private Button buttonDelete;
-      private List<Token> listTokens;
+      private Collection<Token> listTokens;
 
-      public TokensEditControl(List<Token> listTokens)
+      public TokensEditControl(Collection<Token> listTokens)
       {
          this.listTokens = listTokens;
          this.Size = new System.Drawing.Size(400, 260);
@@ -29,10 +30,10 @@
          this.FetchFromList();
       }
 
-      public List<Token> ListTokens
+      /*public List<Token> ListTokens
       {
          get { return this.listTokens; }
-      }
+      }*/
 
       public void ChangesApproved()
       {

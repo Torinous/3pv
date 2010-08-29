@@ -56,7 +56,7 @@
             if (this.arc != null)
             {
                EditorApplication app = EditorApplication.Instance;
-               app.ActiveNet.Paint -= this.arc.Draw;
+               this.arc.ParentNet = app.ActiveNet;
             }
 
             this.arc = value;
@@ -64,7 +64,7 @@
             if (this.arc != null)
             {
                EditorApplication app = EditorApplication.Instance;
-               app.ActiveNet.Paint += this.arc.Draw;
+               this.arc.ParentNet = null;
             }
          }
       }

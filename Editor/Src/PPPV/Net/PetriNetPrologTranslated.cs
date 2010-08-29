@@ -69,7 +69,7 @@
          StringBuilder text = new StringBuilder(400);
          foreach (Place pl in this.Places)
          {
-            foreach (Token token in pl.Tokens.List)
+            foreach (Token token in pl.Tokens)
             {
                text.AppendFormat("{0}({1}),", pl.Name.ToLower(CultureInfo.InvariantCulture), token.Text);
             }

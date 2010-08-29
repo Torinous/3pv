@@ -60,7 +60,7 @@
          this.bCancel.Anchor = AnchorStyles.Right | AnchorStyles.Bottom;
          this.bCancel.DialogResult = DialogResult.Cancel;
 
-         this.tokensEditControl = new TokensEditControl(this.place.Tokens.List);
+         this.tokensEditControl = new TokensEditControl(this.place.Tokens);
          this.tokensEditControl.Location = new Point(30, 80);
 
          this.AcceptButton = this.bOK;

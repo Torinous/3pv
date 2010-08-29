@@ -39,25 +39,6 @@
          this.ReadXml(reader);
       }
 
-      public override string Id
-      {
-         get
-         {
-            string source = String.Empty, target = String.Empty;
-            if (this.Source != null)
-            {
-               source = this.Source.Id;
-            }
-
-            if (this.Target != null)
-            {
-               target = this.Target.Id;
-            }
-
-            return source + " to " + target;
-         }
-      }
-
       public ArrayList Points
       {
          get { return this.points; }
@@ -90,7 +71,7 @@
       {
          get
          {
-            return this.target; 
+            return this.target;
          }
 
          set
@@ -110,6 +91,7 @@
                this.target.Resize += this.ResizeLinkedElementsHandler;
             }
 
+            this.Id = this.MakeId();
             OnChange(new EventArgs());
          }
       }
@@ -138,6 +120,7 @@
                this.source.Resize += this.ResizeLinkedElementsHandler;
             }
 
+            this.Id = this.MakeId();
             OnChange(new EventArgs());
          }
       }
@@ -173,20 +156,12 @@
          }
       }
 
-      public override Size Size
-      {
-         get
-         {
-            return new Size(Math.Abs(this.sourcePilon.X - this.targetPilon.X), Math.Abs(this.sourcePilon.Y - this.targetPilon.Y));
-         }
-      }
-
       private Point SourcePilon
       {
          get { return this.sourcePilon; }
       }
 
-      public override void Draw(object sender, PaintEventArgs e)
+      public override void Draw(PaintEventArgs e)
       {
          Graphics dc = e.Graphics;
          dc.SmoothingMode = SmoothingMode.HighQuality;
@@ -211,6 +186,7 @@
          }
 
          dc.DrawString(this.Cortege.Text, font1, blackBrush, this.Center.X, this.Center.Y - 15);
+         base.Draw(e);
       }
 
       /*Чисто фиктивно, просто чтобы реализовать абстрактный член*/
@@ -343,7 +319,7 @@
 
       private void UpdatePosition()
       {
-         this.UpdateHitRegion();
+         // this.UpdateHitRegion();
          if (this.Points.Count == 0)
          {
             this.sourcePilon = this.source.GetPilon(this.target.Center);
@@ -380,6 +356,22 @@
       private void CortegeChangeHandler(object sender, EventArgs args)
       {
          OnChange(args);
+      }
+
+      private string MakeId()
+      {
+         string source = String.Empty, target = String.Empty;
+         if (this.Source != null)
+         {
+            source = this.Source.Id;
+         }
+
+         if (this.Target != null)
+         {
+            target = this.Target.Id;
+         }
+
+         return source + " to " + target;
       }
    }
 }
