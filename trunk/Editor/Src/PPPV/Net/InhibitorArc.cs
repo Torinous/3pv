@@ -12,14 +12,28 @@ namespace Pppv.Net
    using System;
    using System.Drawing;
    using System.Drawing.Drawing2D;
-   
+   using System.Xml;
+   using System.Xml.Schema;
+   using System.Xml.Serialization;
+
    public class InhibitorArc : Arc
    {
       public InhibitorArc(NetElement startElement) : base(startElement)
       {
       }
 
-      protected override Pen PenFactory()
+      public InhibitorArc(XmlReader reader, PetriNet net) : this((NetElement)null)
+      {
+         ParentNet = net;
+         this.ReadXml(reader);
+      }
+
+      public override string ArcType
+      {
+         get { return "inhibitorArc"; }
+      }
+
+      protected override Pen PenFactory(PenCapPlace penCapPlace)
       {
          Pen p = new Pen(Color.Black, 1);
          GraphicsPath capPath = new GraphicsPath();
@@ -27,9 +41,28 @@ namespace Pppv.Net
          GraphicsPath capPath2 = new GraphicsPath();
          capPath2.AddLine(new Point(0, -8), new Point(0, 0));
          CustomLineCap roundCap = new CustomLineCap(null, capPath);
-         p.CustomEndCap = roundCap;
-         p.CustomStartCap = roundCap;
+         if (penCapPlace == PenCapPlace.End)
+         {
+            p.CustomEndCap = roundCap;
+         }
+         else
+         {
+            p.CustomStartCap = roundCap;
+         }
+
          return p;
+      }
+
+      protected override PenCapPlace DeterminePenCapPlace()
+      {
+         if (Source is Transition)
+         {
+            return PenCapPlace.Start;
+         }
+         else
+         {
+            return PenCapPlace.End;
+         }
       }
    }
 }

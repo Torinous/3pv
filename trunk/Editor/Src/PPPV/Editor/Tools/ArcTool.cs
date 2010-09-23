@@ -46,27 +46,8 @@
 
       public Arc Arc
       {
-         get 
-         { 
-            return this.arc; 
-         }
-
-         private set
-         {
-            if (this.arc != null)
-            {
-               EditorApplication app = EditorApplication.Instance;
-               this.arc.ParentNet = app.ActiveNet;
-            }
-
-            this.arc = value;
-
-            if (this.arc != null)
-            {
-               EditorApplication app = EditorApplication.Instance;
-               this.arc.ParentNet = null;
-            }
-         }
+         get { return this.arc; }
+         private set { this.arc = value; }
       }
 
       protected override void HandleMouseDown(NetCanvas canvas, System.Windows.Forms.MouseEventArgs args)
@@ -79,7 +60,7 @@
             {
                if (!(clicked is Arc) && clicked != null)
                {
-                  Arc = new Arc(clicked);
+                  Arc = this.ArcFabric(clicked);
                }
             }
             else
@@ -90,7 +71,8 @@
                   AddNetElementCommand c = new AddNetElementCommand(pn);
                   c.Element = Arc;
                   c.Execute();
-                  Arc = null;
+                  this.Arc.UpdateConnectPoints();
+                  this.Arc = null;
                }
             }
 
@@ -102,9 +84,10 @@
 
       protected override void HandleMouseMove(NetCanvas canvas, System.Windows.Forms.MouseEventArgs args)
       {
-         if (Arc != null)
+         if (this.Arc != null)
          {
-            Arc.TargetPilon = new Point(args.X, args.Y);
+            this.Arc.UpdateConnectPoints();
+            this.Arc.ParentNet.Canvas.Invalidate();
          }
 
          base.HandleMouseMove(canvas, args);
@@ -122,15 +105,28 @@
 
       protected override void HandleKeyDown(NetCanvas canvas, KeyEventArgs args)
       {
-         base.HandleKeyDown(canvas, args);
          if (args.KeyCode == Keys.Escape)
          {
-            if (Arc.Target == null)
+            if (Arc != null && Arc.Target == null)
             {
-               Arc = null;
+               this.ClearTemporaryArc();
                canvas.Invalidate(); // TODO: полный Invalidate это нехорошо!!!
             }
          }
+
+         base.HandleKeyDown(canvas, args);
+      }
+
+      protected virtual Arc ArcFabric(NetElement clicked)
+      {
+         return new Arc(clicked);
+      }
+
+      protected void ClearTemporaryArc()
+      {
+         Arc.Source = null;
+         Arc.ParentNet = null;
+         Arc = null;
       }
    }
 }

@@ -13,18 +13,17 @@
       private string netName;
       private bool netSaved;
 
-      public TabPageForNet(PetriNetWrapper net) : base()
+      public TabPageForNet() : base()
       {
          this.Location = new Point(45, 45);
          this.Padding  = new Padding(3);
-         this.Size     = new Size(599, 228);
+         this.Dock = DockStyle.Fill;
          this.TabIndex = 0;
          this.UseVisualStyleBackColor = true;
-         this.netName = net.Id;
-         this.netSaved = net.NetSaved;
          this.Text = String.IsNullOrEmpty(this.netName) ? "~" : this.netName + "   ";
-         this.InitializeComponent(net);
+         this.InitializeComponent();
          this.AutoScroll = true;
+         this.Enter += this.EnterHandler;
       }
 
       public NetCanvas NetCanvas
@@ -64,6 +63,11 @@
          get { return NetCanvas.Net; }
       }
 
+      public void PutNetOnTabPage(PetriNetWrapper net)
+      {
+         NetCanvas.PutNetOnCanvas(net);
+      }
+      
       protected override void OnResize(EventArgs e)
       {
          this.AutoScroll = false;
@@ -102,12 +106,21 @@
          this.AutoScrollMinSize = NetCanvas.Size;
       }
 
-      private void InitializeComponent(PetriNetWrapper net)
+      private void InitializeComponent()
       {
          this.SuspendLayout();
-         this.Controls.Add(NetCanvas = new NetCanvas(net));
+         this.Controls.Add(NetCanvas = new NetCanvas());
          this.ResumeLayout(false);
          this.PerformLayout();
+      }
+
+      private void EnterHandler(object sender, System.EventArgs e)
+      {
+         if (this.Net != null)
+         {
+            this.Net.SetSelected();
+            DebugAssistant.LogTrace("tabEntered");
+         }
       }
    }
 }

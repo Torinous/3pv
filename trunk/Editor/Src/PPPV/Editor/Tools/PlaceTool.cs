@@ -49,7 +49,6 @@
             AddNetElementCommand c = new AddNetElementCommand(canvas.Net);
             c.Element = new Place(new Point(args.X, args.Y));
             c.Execute();
-            canvas.Invalidate();
          }
 
          base.HandleMouseDown(canvas, args);

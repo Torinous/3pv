@@ -17,11 +17,11 @@
          }
       }
 
-      public void CheckTool(Type type)
+      public void CheckToolByType(Type type)
       {
          foreach (EditorToolStripButton b in Items)
          {
-            if ((b.Command as SelectToolCommand).ToolType.GetType() == type)
+            if ((b.Command as SelectToolCommand).ToolType == type)
             {
                b.Checked = true;
             }
@@ -29,6 +29,14 @@
             {
                b.Checked = false;
             }
+         }
+      }
+
+      public void UncheckTool()
+      {
+         foreach (EditorToolStripButton b in Items)
+         {
+            b.Checked = false;
          }
       }
    }

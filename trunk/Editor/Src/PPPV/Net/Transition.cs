@@ -15,17 +15,16 @@
    [XmlRoot("transition")]
    public class Transition : NetElement, IXmlSerializable
    {
-      private static int number;
       private string guardFunction;
 
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "Не смертельно")]
       public Transition(Point point) : base(point)
       {
-         number++;
-         Name = Id = "T" + number;
-         Size = new Size(20, 50);
-         this.guardFunction = String.Empty;
+         this.Size = new Size(20, 50);
+         this.UpdateHitRegion();
       }
 
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "Не смертельно")]
       public Transition(XmlReader reader) : this(new Point(0, 0))
       {
          this.ReadXml(reader);
@@ -69,9 +68,9 @@
          base.Draw(e);
       }
 
-      public override Point GetPilon(Point from)
+      public override Point GetConnectPoint(Point from)
       {
-         return this.GetPilon(from, this.ParentNet.Canvas);
+         return this.GetConnectPoint(from, this.ParentNet.Canvas);
       }
 
       public void WriteXml(XmlWriter writer)
@@ -111,11 +110,13 @@
                case "graphics":
                   reader.ReadStartElement("graphics");
                   {
+                     int tmpX, tmpY;
                      reader.ReadToDescendant("position");
                      reader.MoveToAttribute("x");
-                     this.X = (int)reader.ReadContentAsDouble();
+                     tmpX = (int)reader.ReadContentAsDouble();
                      reader.MoveToAttribute("y");
-                     this.Y = (int)reader.ReadContentAsDouble();
+                     tmpY = (int)reader.ReadContentAsDouble();
+                     this.MoveBy(new Point(tmpX, tmpY));
                      reader.MoveToElement();
                      reader.Skip();
                   }
@@ -153,6 +154,18 @@
       public XmlSchema GetSchema()
       {
          return null;
+      }
+
+      public override void SetId(int number)
+      {
+         if (String.IsNullOrEmpty(this.Id))
+         {
+            this.Id = "T" + number;
+            if (String.IsNullOrEmpty(this.Name))
+            {
+               this.Name = this.Id;
+            }
+         }
       }
 
       protected override void UpdateHitRegion()

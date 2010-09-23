@@ -133,6 +133,7 @@
          canvas.Paint -= this.DrawSelectionRegion;
          this.isActive = false;
          base.HandleMouseUp(canvas, args);
+         canvas.Invalidate();
       }
 
       protected override void HandleMouseClick(NetCanvas canvas, System.Windows.Forms.MouseEventArgs args)

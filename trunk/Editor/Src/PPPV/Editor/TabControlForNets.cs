@@ -27,22 +27,35 @@
          }
       }
 
-      public NetCanvas AddNewTab(PetriNetWrapper net)
+      public TabPageForNet AddNewTab()
       {
-         TabPageForNet tmpTabPage  = new TabPageForNet(net);
+         TabPageForNet tmpTabPage  = new TabPageForNet();
          this.SuspendLayout();
          this.TabPages.Add(tmpTabPage);
          this.SelectTab(tmpTabPage);
          this.ResumeLayout(false);
          this.PerformLayout();
-         return tmpTabPage.NetCanvas;
+         return tmpTabPage;
       }
 
-      public int TabId(PetriNet net)
+      public int TabIdForNet(PetriNet net)
       {
          for (int i = 0; i < this.TabCount; i++)
          {
             if ((this.TabPages[i] as TabPageForNet).Net == net)
+            {
+               return i;
+            }
+         }
+
+         return -1;
+      }
+
+      public int GetIdForTabPage(TabPage tabPage)
+      {
+         for (int i = 0; i < this.TabCount; i++)
+         {
+            if (this.TabPages[i] == tabPage)
             {
                return i;
             }

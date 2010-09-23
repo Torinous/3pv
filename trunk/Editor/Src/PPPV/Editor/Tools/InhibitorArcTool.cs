@@ -7,13 +7,12 @@
    using Pppv.Editor.Commands;
    using Pppv.Net;
 
-   public class InhibitorArcTool : Tool
+   public class InhibitorArcTool : ArcTool
    {
       private static string name  = "Ингибиторная дуга";
       private static string description = "Инструмент создание ингибиторных дуг сети";
       private static Keys shortcutKeys = Keys.Control | Keys.Shift | Keys.I;
       private static Image pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Inhibitor Arc.png"), true);
-      private InhibitorArc arc;
 
       public InhibitorArcTool()
       {
@@ -42,92 +41,10 @@
          get { return pictogram; }
          set { pictogram = value; }
       }
-      
-      public InhibitorArc Arc
+
+      protected override Arc ArcFabric(NetElement clicked)
       {
-         get 
-         { 
-            return this.arc;
-         }
-
-         private set
-         {
-            if (this.arc != null)
-            {
-               EditorApplication app = EditorApplication.Instance;
-               this.arc.ParentNet = app.ActiveNet;
-            }
-
-            this.arc = value;
-
-            if (this.arc != null)
-            {
-               EditorApplication app = EditorApplication.Instance;
-               this.arc.ParentNet = null;
-            }
-         }
-      }
-
-      protected override void HandleMouseDown(NetCanvas canvas, System.Windows.Forms.MouseEventArgs args)
-      {
-         if (args.Button == MouseButtons.Left)
-         {
-            PetriNet pn = canvas.Net;
-            NetElement clicked = pn.NetElementUnder(new Point(args.X, args.Y));
-            if (this.Arc == null)
-            {
-               if (!(clicked is Arc) && clicked != null)
-               {
-                  this.Arc = new InhibitorArc(clicked);
-               }
-            }
-            else
-            {
-               if (clicked != null && this.Arc.Source.GetType() != clicked.GetType())
-               {
-                  this.Arc.Target = clicked;
-                  AddNetElementCommand c = new AddNetElementCommand(pn);
-                  c.Element = this.Arc;
-                  c.Execute();
-                  this.Arc = null;
-               }
-            }
-
-            canvas.Invalidate();
-         }
-
-         base.HandleMouseDown(canvas, args);
-      }
-
-      protected override void HandleMouseMove(NetCanvas canvas, System.Windows.Forms.MouseEventArgs args)
-      {
-         if (args.Button == MouseButtons.Left)
-         {
-            PetriNet pn = canvas.Net;
-            NetElement clicked = pn.NetElementUnder(new Point(args.X, args.Y));
-            clicked = (clicked is Arc) ? null : clicked;
-
-            // if(clicked != null && !pn.HaveUnfinishedArcs())
-            // pn.AddArc(clicked);
-            canvas.Invalidate();
-         }
-
-         base.HandleMouseMove(canvas, args);
-      }
-
-      protected override void HandleMouseUp(NetCanvas canvas, System.Windows.Forms.MouseEventArgs args)
-      {
-         base.HandleMouseUp(canvas, args);
-      }
-
-      protected override void HandleMouseClick(NetCanvas canvas, System.Windows.Forms.MouseEventArgs args)
-      {
-         base.HandleMouseClick(canvas, args);
-      }
-
-      protected override void HandleKeyDown(NetCanvas canvas, KeyEventArgs args)
-      {
-         base.HandleKeyDown(canvas, args);
+         return new InhibitorArc(clicked);
       }
    }
 }

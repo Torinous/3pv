@@ -20,7 +20,7 @@
       public override void Execute()
       {
          EditorApplication app = EditorApplication.Instance;
-         app.NewNet(null, null);
+         app.NewNet();
       }
 
       public override void Unexecute()
