@@ -31,7 +31,7 @@
             StreamReader stream;
             EditorApplication app = EditorApplication.Instance;
             stream = new StreamReader(openFileDialog.FileName, Encoding.GetEncoding(1251));
-            app.NewNet(stream, openFileDialog.FileName);
+            app.LoadNet(stream, openFileDialog.FileName);
             stream.Close();
          }
       }

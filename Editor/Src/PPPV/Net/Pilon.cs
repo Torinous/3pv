@@ -34,9 +34,13 @@
       }
 
       /*Чисто фиктивно, просто чтобы реализовать абстрактный член*/
-      public override Point GetPilon(Point from)
+      public override Point GetConnectPoint(Point from)
       {
          return this.Center;
+      }
+
+      public override void SetId(int number)
+      {
       }
 
       protected override void UpdateHitRegion()

@@ -20,23 +20,16 @@
 
       public NetCanvas()
       {
-         this.Anchor = (AnchorStyles)(AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right);
+         this.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
          this.Name = "NetCanvas";
          this.gridStep = 30;
          this.BackColor = Color.FromArgb(0, 50, 50, 50);
          this.BorderStyle = BorderStyle.FixedSingle;
-
          this.ScaleMatrix = new Matrix();
          this.ScaleAmount = 1.0F;
          this.ScaleMatrix.Scale(this.ScaleAmount, this.ScaleAmount);
          this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
          this.ParentChanged    += this.ParentChangedHandler;
-      }
-
-      public NetCanvas(PetriNetWrapper net) : this()
-      {
-         this.Net = net;
-         this.Net.Canvas = this;
       }
 
       public event EventHandler<CanvasMouseEventArgs> CanvasMouseClick;
@@ -154,10 +147,16 @@
          base.Refresh();
       }
 
+      public void PutNetOnCanvas(PetriNetWrapper net)
+      {
+         this.Net = net;
+         this.Net.Canvas = this;
+         this.SetSize();
+      }
+
       protected override void OnLoad(EventArgs e)
       {
          base.OnLoad(e);
-         (Parent as TabPageForNet).Resize += this.ParentResizeHandler;
          this.SetSize();
       }
 
@@ -227,34 +226,47 @@
       protected override void OnParentChanged(EventArgs e)
       {
          base.OnParentChanged(e);
+         if (this.Parent != null)
+         {
+            this.Parent.Resize += this.ParentResizeHandler;
+         }
+
+         this.SetSize();
       }
 
       protected void SetSize()
       {
-         int w_ = 0, h_ = 0;
-         Point[] p = { new Point(this.net.Width, this.net.Height) };
+         int width = 0, height = 0;
+         Point[] p = { new Point(0, 0) };
+         
+         if (this.Net != null)
+         {
+            p[0].X = this.Net.Width;
+            p[0].Y = this.Net.Height;
+         }
+
          Matrix mi = (Matrix)this.ScaleMatrix.Clone();
          mi.TransformPoints(p);
-         
+
          if (p[0].X >= Parent.ClientRectangle.Width)
          {
-            w_ = p[0].X;
+            width = p[0].X;
          }
          else
          {
-            w_ = Parent.ClientRectangle.Width;
+            width = Parent.ClientRectangle.Width;
          }
          
          if (p[0].Y >= Parent.ClientRectangle.Height)
          {
-            h_ = p[0].Y;
+            height = p[0].Y;
          }
          else
          {
-            h_ = Parent.ClientRectangle.Height;
+            height = Parent.ClientRectangle.Height;
          }
 
-         this.Size = new Size(w_, h_);
+         this.Size = new Size(width, height);
       }
 
       private void ParentChangedHandler(object sender, EventArgs arg)

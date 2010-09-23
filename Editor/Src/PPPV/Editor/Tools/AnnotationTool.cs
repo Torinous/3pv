@@ -46,8 +46,6 @@
       {
          if (args.Button == MouseButtons.Left)
          {
-            Command c = new AddTransitionCommand(canvas.Net, new Point(args.X, args.Y));
-            c.Execute();
          }
 
          base.HandleMouseDown(canvas, args);

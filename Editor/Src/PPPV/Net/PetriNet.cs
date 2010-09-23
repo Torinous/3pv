@@ -44,6 +44,8 @@
 
       public event EventHandler Change;
 
+      public event EventHandler CanvasChange;
+
       public int Width
       {
          get { return this.width; }
@@ -84,6 +86,7 @@
             }
 
             this.canvas = value;
+            this.OnCanvasChange(new EventArgs());
 
             if (this.canvas != null)
             {
@@ -126,16 +129,19 @@
       {
          if (element is Place)
          {
+            element.SetId(this.Places.Count);
             this.Places.Add(element);
          }
 
          if (element is Transition)
          {
+            element.SetId(this.Transitions.Count);
             this.Transitions.Add(element);
          }
 
          if (element is Arc)
          {
+            element.SetId(this.Arcs.Count);
             this.Arcs.Add(element);
          }
 
@@ -290,6 +296,14 @@
          if (this.Change != null)
          {
             this.Change(this, args);
+         }
+      }
+
+      private void OnCanvasChange(EventArgs args)
+      {
+         if (this.CanvasChange != null)
+         {
+            this.CanvasChange(this, args);
          }
       }
 

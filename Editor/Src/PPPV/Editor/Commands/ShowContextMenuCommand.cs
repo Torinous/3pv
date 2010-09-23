@@ -39,13 +39,13 @@
 
       public override void Execute()
       {
-         PetriNet n = this.Canvas.Net;
-         NetElement contextMenuTarget = n.NetElementUnder(this.Position);
+         PetriNet currentNet = this.Canvas.Net;
+         NetElement contextMenuTarget = currentNet.NetElementUnder(this.Position);
          ContextMenuStrip contextMenuStrip = new ContextMenuStrip();
-         EditorContextToolStripMenuItem item = new EditorContextToolStripMenuItem(new EditNetElementCommand(n, contextMenuTarget));
+         EditorContextToolStripMenuItem item = new EditorContextToolStripMenuItem(new EditNetElementCommand(currentNet, contextMenuTarget));
          contextMenuStrip.Items.Add(item);
          item.CheckEnabled();
-         item = new EditorContextToolStripMenuItem(new DeleteCommand(n, contextMenuTarget));
+         item = new EditorContextToolStripMenuItem(new DeleteCommand(currentNet, contextMenuTarget));
          contextMenuStrip.Items.Add(item);
          item.CheckEnabled();
          contextMenuStrip.Show(this.Canvas.PointToScreen(this.Position));

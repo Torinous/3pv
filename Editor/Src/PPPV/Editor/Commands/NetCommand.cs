@@ -10,7 +10,7 @@
    {
       private PetriNet net;
 
-      protected NetCommand(PetriNetWrapper net) : base()
+      protected NetCommand(PetriNet net) : base()
       {
          this.Net = net;
       }

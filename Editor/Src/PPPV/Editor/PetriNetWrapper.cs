@@ -16,7 +16,7 @@
    public class PetriNetWrapper : PetriNet, IXmlSerializable
    {
       [NonSerializedAttribute]
-      private NetElementCollection selectedObjects;
+      private SelectedNetObjectList selectedObjects;
       [NonSerializedAttribute]
       private Tool currentTool,
                    pointerTool,
@@ -33,14 +33,13 @@
 
       public PetriNetWrapper() : base()
       {
-         this.selectedObjects  = new NetElementCollection();
+         this.selectedObjects  = new SelectedNetObjectList();
          this.pointerTool      = new PointerTool();
          this.placeTool        = new PlaceTool();
          this.transitionTool   = new TransitionTool();
          this.arcTool          = new ArcTool();
          this.inhibitorArcTool = new InhibitorArcTool();
          this.annotationTool   = new AnnotationTool();
-         this.currentTool      = this.pointerTool;
          this.NetSaved = false;
          this.FileOfNetPath = String.Empty;
          this.Change += this.ChangeController;
@@ -70,7 +69,7 @@
          }
       }
 
-      public NetElementCollection SelectedObjects
+      public SelectedNetObjectList SelectedObjects
       {
          get { return this.selectedObjects; }
       }
@@ -91,27 +90,27 @@
       {
          if (toolType == typeof(PointerTool))
          {
-            this.currentTool = this.pointerTool;
+            this.CurrentTool = this.pointerTool;
          }
          else if (toolType == typeof(PlaceTool))
          {
-            this.currentTool = this.placeTool;
+            this.CurrentTool = this.placeTool;
          }
          else if (toolType == typeof(TransitionTool))
          {
-            this.currentTool = this.transitionTool;
+            this.CurrentTool = this.transitionTool;
          }
          else if (toolType == typeof(ArcTool))
          {
-            this.currentTool = this.arcTool;
+            this.CurrentTool = this.arcTool;
          }
          else if (toolType == typeof(InhibitorArcTool))
          {
-            this.currentTool = this.inhibitorArcTool;
+            this.CurrentTool = this.inhibitorArcTool;
          }
          else if (toolType == typeof(AnnotationTool))
          {
-            this.currentTool = this.annotationTool;
+            this.CurrentTool = this.annotationTool;
          }
          else
          {
@@ -201,7 +200,7 @@
 
          foreach (Arc arc in this.Arcs)
          {
-            writer.WriteStartElement("arc");
+            writer.WriteStartElement(arc.ArcType);
             arc.WriteXml(writer);
             writer.WriteEndElement(); // arc
          }
@@ -244,6 +243,12 @@
                      subTreeReader.Close();
                      reader.Skip();
                      break;
+                  case "inhibitorArc":
+                     subTreeReader = reader.ReadSubtree();
+                     this.AddElement(new InhibitorArc(subTreeReader, this));
+                     subTreeReader.Close();
+                     reader.Skip();
+                     break;
                   case "additionalCode":
                      if (!reader.IsEmptyElement)
                      {
@@ -280,7 +285,20 @@
       {
          return null;
       }
-      
+
+      public void SetSelected()
+      {
+         EditorApplication app = EditorApplication.Instance;
+         if (this.CurrentTool != null)
+         {
+            app.MainFormInst.ToolToolStrip.CheckToolByType(this.CurrentTool.GetType());
+         }
+         else
+         {
+            app.MainFormInst.ToolToolStrip.UncheckTool();
+         }
+      }
+
       private void ChangeController(object sender, System.EventArgs args)
       {
          this.NetSaved = false;

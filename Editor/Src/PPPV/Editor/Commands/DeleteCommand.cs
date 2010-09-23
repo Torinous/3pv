@@ -27,18 +27,37 @@
 
       public override void Execute()
       {
-         EditorApplication ap = EditorApplication.Instance;
-         PetriNetWrapper pn = ap.ActiveNet;
-         foreach (NetElement ne in pn.SelectedObjects)
-         {
-            pn.DeleteElement(ne);
-         }
-
-         pn.SelectedObjects.Clear();
+         EditorApplication application = EditorApplication.Instance;
+         this.CheckNetAndDeleteCurrentAndSelectedElements(application.ActiveNet);
+         Net.Canvas.Invalidate();
       }
 
       public override void Unexecute()
       {
+      }
+
+      private void CheckNetAndDeleteCurrentAndSelectedElements(PetriNetWrapper currentNet)
+      {
+         if (currentNet != null)
+         {
+            this.DeleteCurrentAndSelectedElements(currentNet);
+         }
+         else
+         {
+            throw new ArgumentNullException("currentNet", "Parameter currentNet is null in DeleteCommand");
+         }
+      }
+
+      private void DeleteCurrentAndSelectedElements(PetriNetWrapper net)
+      {
+         net.DeleteElement(this.Element);
+
+         foreach (NetElement ne in net.SelectedObjects)
+         {
+            net.DeleteElement(ne);
+         }
+
+         net.SelectedObjects.Clear();
       }
    }
 }

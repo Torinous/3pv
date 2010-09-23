@@ -53,8 +53,11 @@
       public override void Execute()
       {
          EditorApplication app = EditorApplication.Instance;
-         app.ActiveNet.SelectToolByType(this.ToolType);
-         app.MainFormInst.ToolToolStrip.CheckTool(this.ToolType);
+         if (app.ActiveNet != null)
+         {
+            app.ActiveNet.SelectToolByType(this.ToolType);
+            app.MainFormInst.ToolToolStrip.CheckToolByType(this.ToolType);
+         }
       }
 
       public override void Unexecute()

@@ -11,16 +11,26 @@
    using Pppv.Editor.Tools;
    using Pppv.Net;
 
-   public class NetElementCollection : Collection<NetElement>
+   public class SelectedNetObjectList : Collection<NetElement>
    {
-      public NetElementCollection() : base()
+      public SelectedNetObjectList() : base()
       {
       }
 
       public new void Add(NetElement value)
       {
          value.Paint += this.DrawSelectionMarker;
-         this.Add(value);
+         base.Add(value);
+      }
+
+      public new void Clear()
+      {
+         foreach (NetElement element in this)
+         {
+            element.Paint -= this.DrawSelectionMarker;
+         }
+
+         base.Clear();
       }
 
       public void AddRange(IEnumerable<NetElement> collection)
@@ -28,7 +38,7 @@
          foreach (NetElement element in collection)
          {
             element.Paint += this.DrawSelectionMarker;
-            this.Add(element);
+            base.Add(element);
          }
       }
 
@@ -38,6 +48,6 @@
          dc.SmoothingMode = SmoothingMode.HighQuality;
          SolidBrush b = new SolidBrush(Color.FromArgb(125, 245, 0, 0));
          dc.FillRegion(b, ((NetElement)sender).HitRegion);
-      }
+       }
    }
 }

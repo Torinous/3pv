@@ -97,7 +97,14 @@
          this.mainFormInst.Close();
       }
 
-      public void NewNet(TextReader netStream, string fileName)
+      public void NewNet()
+      {
+         PetriNetWrapper net = new PetriNetWrapper();
+         TabPageForNet addedTabPage = this.MainFormInst.TabControl.AddNewTab();
+         addedTabPage.PutNetOnTabPage(net);
+      }
+
+      public void LoadNet(TextReader netStream, string fileName)
       {
          if (netStream != null)
          {
@@ -105,12 +112,8 @@
             XmlSerializer serealizer = new XmlSerializer(net.GetType());
             net = (PetriNetWrapper)serealizer.Deserialize(netStream);
             net.FileOfNetPath = fileName;
-            this.MainFormInst.TabControl.AddNewTab(net);
-         }
-         else
-         {
-            PetriNetWrapper net = new PetriNetWrapper();
-            this.MainFormInst.TabControl.AddNewTab(net);
+            TabPageForNet addedTabPage = this.MainFormInst.TabControl.AddNewTab();
+            addedTabPage.PutNetOnTabPage(net);
          }
       }
 
@@ -118,7 +121,7 @@
       {
          if (this.MainFormInst.TabControl.SelectedIndex != -1)
          {
-            this.MainFormInst.TabControl.CloseTab(this.MainFormInst.TabControl.TabId(net));
+            this.MainFormInst.TabControl.CloseTab(this.MainFormInst.TabControl.TabIdForNet(net));
          }
       }
 
@@ -141,9 +144,6 @@
          ExitThread();
       }
 
-      /// <summary>
-      /// Handles any thread exceptions
-      /// </summary>
       private class ThreadExceptionHandler
       {
          public void ApplicationThreadException(object sender, ThreadExceptionEventArgs e)
@@ -151,5 +151,5 @@
             RtlAwareMessageBox.Show((Control)sender, e.Exception.Message, "An exception occurred:", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, (MessageBoxOptions)0);
          }
       }
-   } // class Application
-} // namespace
+   }
+}

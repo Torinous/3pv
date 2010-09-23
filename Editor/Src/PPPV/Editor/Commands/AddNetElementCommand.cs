@@ -27,6 +27,7 @@
       public override void Execute()
       {
          Net.AddElement(Element);
+         Net.Canvas.Invalidate();
       }
 
       public override void Unexecute()

@@ -16,18 +16,18 @@
    [XmlRoot("place")]
    public class Place : NetElement, IXmlSerializable
    {
-      private static int id;
       private TokensList tokens;
 
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "Не смертельно")]
       public Place(Point point) : base(point)
       {
-         id++;
-         Name = Id = "P" + id;
-         Size = new Size(50, 50);
+         this.Size = new Size(50, 50);
          this.tokens = new TokensList();
          this.tokens.Change += this.TokensListChangeHandler;
+         this.UpdateHitRegion();
       }
 
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "Не смертельно")]
       public Place(XmlReader reader) : this(new Point(0, 0))
       {
          this.ReadXml(reader);
@@ -68,9 +68,9 @@
          base.Draw(e);
       }
 
-      public override Point GetPilon(Point from)
+      public override Point GetConnectPoint(Point from)
       {
-         return this.GetPilon(from, this.ParentNet.Canvas);
+         return this.GetConnectPoint(from, this.ParentNet.Canvas);
       }
 
       public void WriteXml(XmlWriter writer)
@@ -107,11 +107,13 @@
                   reader.ReadStartElement("graphics");
                   /* Обработаем position*/
                   {
+                     int tmpX, tmpY;
                      reader.ReadToDescendant("position");
                      reader.MoveToAttribute("x");
-                     this.X = (int)reader.ReadContentAsDouble();
+                     tmpX = (int)reader.ReadContentAsDouble();
                      reader.MoveToAttribute("y");
-                     this.Y = (int)reader.ReadContentAsDouble();
+                     tmpY = (int)reader.ReadContentAsDouble();
+                     this.MoveBy(new Point(tmpX, tmpY));
                      reader.MoveToElement();
                      reader.Skip();
                   }
@@ -139,6 +141,18 @@
       public XmlSchema GetSchema()
       {
          return null;
+      }
+
+      public override void SetId(int number)
+      {
+         if (String.IsNullOrEmpty(this.Id))
+         {
+            this.Id = "P" + number;
+            if (String.IsNullOrEmpty(this.Name))
+            {
+               this.Name = this.Id;
+            }
+         }
       }
 
       protected override void UpdateHitRegion()

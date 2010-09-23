@@ -17,8 +17,8 @@
       private Size size;
       [NonSerializedAttribute]
       private Region hitRegion;
-      private string name;
 
+      [SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "Не смертельно")]
       protected Graphical(Point place)
       {
          this.HitRegion = new Region();
@@ -43,6 +43,7 @@
          private set
          {
             this.location = value;
+            this.UpdateHitRegion();
          }
       }
 
@@ -90,20 +91,6 @@
          }
       }
 
-      public string Name
-      {
-         get
-         {
-            return this.name;
-         }
-
-         set
-         {
-            this.name = value;
-            this.OnChange(new EventArgs());
-         }
-      }
-
       public Region HitRegion
       {
          get { return this.hitRegion; }
@@ -131,6 +118,8 @@
       {
          Point old = new Point(this.location.X, this.location.Y);
          this.Location = new Point(this.X + radiusVector.X, this.Y + radiusVector.Y);
+         this.OnMove(new MoveEventArgs(old, this.Location));
+         this.OnChange(new EventArgs());
       }
 
       public virtual bool Intersect(Point point)
@@ -156,11 +145,7 @@
          this.OnPaint(e);
       }
 
-      public abstract Point GetPilon(Point from);
-
-      public virtual void PrepareToDeletion()
-      {
-      }
+      public abstract Point GetConnectPoint(Point from);
 
       protected void OnChange(EventArgs args)
       {
@@ -172,7 +157,7 @@
 
       protected abstract void UpdateHitRegion();
 
-      protected virtual Point GetPilon(Point from, NetCanvas onCanvas)
+      protected virtual Point GetConnectPoint(Point from, NetCanvas onCanvas)
       {
          Graphics g;
          Point pilon = new Point();
@@ -237,18 +222,14 @@
 
       protected void OnMove(MoveEventArgs args)
       {
-         this.UpdateHitRegion();
          if (this.Move != null)
          {
             this.Move(this, args);
          }
-
-         this.OnChange(new EventArgs());
       }
 
       protected void OnResize(ResizeEventArgs args)
       {
-         this.UpdateHitRegion();
          if (this.Resize != null)
          {
             this.Resize(this, args);

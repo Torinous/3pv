@@ -4,7 +4,7 @@
    using System.Drawing;
    using System.Windows.Forms;
 
-   public class SelectionChangeEventArgs
+   public class SelectionChangeEventArgs : EventArgs
    {
       private bool newState;
 
