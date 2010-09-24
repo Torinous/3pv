@@ -27,6 +27,10 @@
          this.UpdateHitRegion();
       }
 
+      public Place() : this(new Point(0, 0))
+      {
+      }
+
       [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "Не смертельно")]
       public Place(XmlReader reader) : this(new Point(0, 0))
       {

@@ -328,24 +328,27 @@
       {
          using (PreciseTimer pr = new PreciseTimer("Arc.UpdateRegion"))
          {
-            if (!this.Unfinished)
-            {
-               HitRegion.MakeEmpty();
-               GraphicsPath tmpPath = new GraphicsPath();
+            HitRegion.MakeEmpty();
+            GraphicsPath tmpPath = new GraphicsPath();
 
-               Point lastPoint = this.SourceConnectPoint;
+            Point lastPoint = this.SourceConnectPoint;
+            if (this.Points != null)
+            {
                foreach (Pilon p in this.Points)
                {
                   tmpPath.AddLine(lastPoint.X, lastPoint.Y, p.X, p.Y);
                   lastPoint = p.Location;
                }
+            }
 
+            if (lastPoint != this.TargetConnectPoint)
+            {
                tmpPath.AddLine(lastPoint.X, lastPoint.Y, this.TargetConnectPoint.X, this.TargetConnectPoint.Y);
 
                tmpPath.Widen(new Pen(Color.Red, 4));
-
-               HitRegion.Union(tmpPath);
             }
+
+            HitRegion.Union(tmpPath);
          }
       }
 

@@ -110,7 +110,7 @@
             if (Arc != null && Arc.Target == null)
             {
                this.ClearTemporaryArc();
-               canvas.Invalidate(); // TODO: полный Invalidate это нехорошо!!!
+               canvas.Invalidate();
             }
          }
 

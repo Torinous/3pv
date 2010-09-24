@@ -9,9 +9,8 @@
 
    public class EditNetElementCommand : ElementCommand
    {
-      public EditNetElementCommand(PetriNet net, NetElement netElement)
+      public EditNetElementCommand(NetElement netElement)
       {
-         this.Net = net;
          this.Element = netElement;
          this.Name = "Редактаровать элемент сети";
          this.Description = "Команда редактирования свойств елемента сети";
