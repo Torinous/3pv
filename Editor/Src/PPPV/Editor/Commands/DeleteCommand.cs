@@ -14,50 +14,48 @@
       public DeleteCommand()
       {
          this.Name = "Удалить";
-         this.Description = "Удалить выделенный элемент сети";
+         this.Description = "Удалить элемент сети";
          this.ShortcutKeys = Keys.Delete;
          this.Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Delete.png"), true);
       }
 
-      public DeleteCommand(PetriNet net, NetElement netElement) : this()
+      public DeleteCommand(NetElement netElement) : this()
       {
-         this.Net = net;
          this.Element = netElement;
       }
 
       public override void Execute()
       {
-         EditorApplication application = EditorApplication.Instance;
-         this.CheckNetAndDeleteCurrentAndSelectedElements(application.ActiveNet);
-         Net.Canvas.Invalidate();
+         if (Element != null)
+         {
+            this.DeleteCurrentElement();
+         }
+         else
+         {
+            throw new EditorException("Не определён целевой элемент для команды DeleteCommand");
+         }
       }
 
       public override void Unexecute()
       {
       }
 
-      private void CheckNetAndDeleteCurrentAndSelectedElements(PetriNetWrapper currentNet)
+      private void DeleteCurrentElement()
       {
-         if (currentNet != null)
-         {
-            this.DeleteCurrentAndSelectedElements(currentNet);
-         }
-         else
-         {
-            throw new ArgumentNullException("currentNet", "Parameter currentNet is null in DeleteCommand");
-         }
+         this.CheckAndDeleteCurrentElement();
       }
 
-      private void DeleteCurrentAndSelectedElements(PetriNetWrapper net)
+      private void CheckAndDeleteCurrentElement()
       {
-         net.DeleteElement(this.Element);
-
-         foreach (NetElement ne in net.SelectedObjects)
+         if (this.Element != null)
          {
-            net.DeleteElement(ne);
+            PetriNet net = this.Element.ParentNet;
+            net.DeleteElement(this.Element);
+            if (net.Canvas != null)
+            {
+               net.Canvas.Invalidate();
+            }
          }
-
-         net.SelectedObjects.Clear();
       }
    }
 }

@@ -70,7 +70,7 @@
          /*Контекстное меню по умолчанию показывают все инструменты*/
          if (args.Button == MouseButtons.Right)
          {
-            ShowContextMenuCommand c = new ShowContextMenuCommand(canvas, args.Location);
+            ShowContextMenuCommand c = new ShowContextMenuCommand(args.Location);
             c.Execute();
          }
       }

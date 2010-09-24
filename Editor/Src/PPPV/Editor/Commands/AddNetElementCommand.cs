@@ -18,16 +18,33 @@
       {
          Net = net;
       }
-      
-      public AddNetElementCommand(NetElement element) : this(element.ParentNet)
+
+      public AddNetElementCommand(NetElement element) : this()
       {
          Element = element;
       }
 
+      public AddNetElementCommand(PetriNet net, NetElement element) : this()
+      {
+         Element = element;
+         Net = net;
+      }
+
       public override void Execute()
       {
-         Net.AddElement(Element);
-         Net.Canvas.Invalidate();
+         try
+         {
+            Net.AddElement(Element);
+
+            if (Net.Canvas != null)
+            {
+               Net.Canvas.Invalidate();
+            }
+         }
+         catch (Exception e)
+         {
+            throw new EditorException("Внутреннее исключение в команде AddNetElementCommand", e);
+         }
       }
 
       public override void Unexecute()
