@@ -8,7 +8,10 @@
 namespace Pppv.Net.Tests
 {
    using System;
+   using System.Drawing;
+   using System.Drawing.Drawing2D;
    using NUnit.Framework;
+   using NUnit.Framework.Constraints;
 
    [TestFixture]
    public class PlaceTests
@@ -16,9 +19,26 @@ namespace Pppv.Net.Tests
       [Test]
       [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "В тестах не важно")]
       [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Pppv.Net.Place", Justification = "В тестах не важно")]
-      public void TestOfEmptyConstructor()
+      public void TestOfConstractions()
       {
-         new Place();
+         Place place = new Place();
+         Assert.That(place.X, Is.EqualTo(0), "Неверны кординаты Места");
+         Assert.That(place.Y, Is.EqualTo(0), "Неверны кординаты Места");
+         place = new Place(new Point(0, 0));
+         Assert.That(place.X, Is.EqualTo(0), "Неверны кординаты Места");
+         Assert.That(place.Y, Is.EqualTo(0), "Неверны кординаты Места");
+         place = new Place(new Point(10, 10));
+         Assert.That(place.X, Is.EqualTo(10), "Неверны кординаты Места");
+         Assert.That(place.Y, Is.EqualTo(10), "Неверны кординаты Места");
+         place = new Place(new Point(-10, -10));
+         Assert.That(place.X, Is.EqualTo(-10), "Неверны кординаты Места");
+         Assert.That(place.Y, Is.EqualTo(-10), "Неверны кординаты Места");
+         place = new Place(new Point(-10, 10));
+         Assert.That(place.X, Is.EqualTo(-10), "Неверны кординаты Места");
+         Assert.That(place.Y, Is.EqualTo(10), "Неверны кординаты Места");
+         place = new Place(new Point(10, -10));
+         Assert.That(place.X, Is.EqualTo(10), "Неверны кординаты Места");
+         Assert.That(place.Y, Is.EqualTo(-10), "Неверны кординаты Места");
       }
    }
 }

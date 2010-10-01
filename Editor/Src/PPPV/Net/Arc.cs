@@ -16,24 +16,20 @@
    public class Arc : NetElement, IXmlSerializable
    {
       private NetElement source, target;
-      private Point sourceConnectPoint, targetConnectPoint;
+      private ArcType arcType;
       private PredicateList cortege;
       private ArrayList points;
 
-      public Arc() : base(new Point(0, 0))
+      public Arc(ArcType type) : base(new Point(0, 0))
       {
+         this.ArcType = type;
          this.points = new ArrayList(20);
          this.cortege = new PredicateList();
-         this.cortege.Change += this.CortegeChangeHandler;
       }
       
-      public Arc(NetElement startElement) : this()
+      public Arc(NetElement startElement, ArcType type) : this(type)
       {
          this.Source = startElement;
-         if (this.source != null)
-         {
-            this.targetConnectPoint = this.source.Center;
-         }
 
          if (startElement != null)
          {
@@ -41,13 +37,18 @@
          }
       }
 
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "Не смертельно")]
-      public Arc(XmlReader reader, PetriNet net) : this((NetElement)null)
+      public Arc(XmlReader reader, PetriNet net) : this((NetElement)null, ArcType.BaseArc)
       {
          ParentNet = net;
          this.ReadXml(reader);
       }
 
+      public ArcType ArcType
+      {
+         get { return this.arcType; }
+         set { this.arcType = value; }
+      }
+      
       public ArrayList Points
       {
          get { return this.points; }
@@ -67,23 +68,8 @@
 
          set
          {
-            if (this.target != null)
-            {
-               this.target.Move -= this.MoveHandler;
-               this.target.Resize -= this.ResizeLinkedElementsHandler;
-            }
-
             this.target = value;
-
-            if (this.target != null)
-            {
-               // this.UpdatePosition();
-               this.target.Move += this.MoveHandler;
-               this.target.Resize += this.ResizeLinkedElementsHandler;
-            }
-
             this.Id = this.MakeId();
-            OnChange(new EventArgs());
          }
       }
 
@@ -96,23 +82,8 @@
 
          set
          {
-            if (this.source != null)
-            {
-               this.source.Move -= this.MoveHandler;
-               this.source.Resize -= this.ResizeLinkedElementsHandler;
-            }
-
             this.source = value;
-
-            if (this.source != null)
-            {
-               this.sourceConnectPoint = this.source.Center;
-               this.source.Move += this.MoveHandler;
-               this.source.Resize += this.ResizeLinkedElementsHandler;
-            }
-
             this.Id = this.MakeId();
-            OnChange(new EventArgs());
          }
       }
 
@@ -121,81 +92,19 @@
          get { return this.Target == null; }
       }
 
-      public override Point Center
+      public string ArcTypeName
       {
          get
          {
-            if (this.Points.Count == 0)
+            if (this.ArcType == ArcType.BaseArc)
             {
-               return new Point((this.sourceConnectPoint.X + this.targetConnectPoint.X) / 2, (this.sourceConnectPoint.Y + this.targetConnectPoint.Y) / 2);
+               return "arc";
             }
             else
             {
-               if (this.Points.Count % 2 == 1)
-               {
-                  Pilon p1 = (Pilon)this.Points[((this.Points.Count + 1) / 2) - 1];
-                  return new Point(p1.X, p1.Y);
-               }
-               else
-               {
-                  Pilon p1, p2;
-                  p1 = (Pilon)this.Points[(this.Points.Count / 2) - 1];
-                  p2 = (Pilon)this.Points[((this.Points.Count / 2) + 1) - 1];
-                  return new Point((p1.X + p2.X) / 2, (p1.Y + p2.Y) / 2);
-               }
+               return "inhibitorArc";
             }
          }
-      }
-
-      public virtual string ArcType
-      {
-         get { return "arc"; }
-      }
-
-      private Point SourceConnectPoint
-      {
-         get { return this.sourceConnectPoint; }
-         set { this.sourceConnectPoint = value; }
-      }
-
-      private Point TargetConnectPoint
-      {
-         get { return this.targetConnectPoint; }
-         set { this.targetConnectPoint = value; }
-      }
-
-      public override void Draw(PaintEventArgs e)
-      {
-         Graphics dc = e.Graphics;
-         dc.SmoothingMode = SmoothingMode.HighQuality;
-
-         Pen blackPen = new Pen(Color.FromArgb(255, 0, 0, 0));
-         SolidBrush blackBrush = new SolidBrush(Color.FromArgb(200, 0, 0, 0));
-         Font font1 = new Font(new FontFamily("Arial"), 16, FontStyle.Regular, GraphicsUnit.Pixel);
-
-         if (this.Points.Count == 0)
-         {
-            dc.DrawLine(this.PenFactory(this.DeterminePenCapPlace()), this.SourceConnectPoint, this.TargetConnectPoint);
-         }
-         else
-         {
-            dc.DrawLine(blackPen, this.sourceConnectPoint, (this.Points[0] as Pilon).Location);
-            for (int i = 1; i < this.Points.Count; ++i)
-            {
-               dc.DrawLine(blackPen, (this.Points[i - 1] as Pilon).Location, (this.Points[i] as Pilon).Location);
-            }
-
-            dc.DrawLine(this.PenFactory(this.DeterminePenCapPlace()), (this.Points[this.Points.Count - 1] as Pilon).Location, this.targetConnectPoint);
-         }
-
-         dc.DrawString(this.Cortege.Text, font1, blackBrush, this.Center.X, this.Center.Y - 15);
-         base.Draw(e);
-      }
-
-      /*Чисто фиктивно, просто чтобы реализовать абстрактный член*/
-      public override Point GetConnectPoint(Point from)
-      {
-         return this.Center;
       }
 
       public override void PrepareToDeletion()
@@ -236,7 +145,7 @@
          this.Source = Parent.GetElementById(reader.Value);
          reader.MoveToAttribute("target");
          this.Target = Parent.GetElementById(reader.Value);
-         reader.ReadStartElement(this.ArcType);
+         reader.ReadStartElement(this.ArcTypeName);
          while (reader.NodeType != XmlNodeType.EndElement)
          {
             switch (reader.Name)
@@ -273,123 +182,6 @@
          }
       }
 
-      public void UpdateConnectPoints()
-      {
-         Point mousePositionOnCanvas = this.ParentNet.Canvas.PointToClient(System.Windows.Forms.Control.MousePosition);
-         
-         if (this.Points.Count == 0)
-         {
-            if (this.Target != null)
-            {
-               this.SourceConnectPoint = this.source.GetConnectPoint(this.target.Center);
-            }
-            else
-            {
-               this.SourceConnectPoint = this.source.GetConnectPoint(mousePositionOnCanvas);
-            }
-         }
-         else
-         {
-            this.SourceConnectPoint = this.source.GetConnectPoint((this.Points[0] as Pilon).Center);
-         }
-
-         if (this.Points.Count == 0)
-         {
-            if (this.Target != null)
-            {
-               this.TargetConnectPoint = this.target.GetConnectPoint(this.source.Center);
-            }
-            else
-            {
-               this.TargetConnectPoint = mousePositionOnCanvas;
-            }
-         }
-         else
-         {
-            this.TargetConnectPoint = this.target.GetConnectPoint((this.Points[this.Points.Count - 1] as Pilon).Center);
-         }
-
-         this.UpdateHitRegion();
-      }
-
-      protected virtual Pen PenFactory(PenCapPlace penCapPlace)
-      {
-         Pen p = new Pen(Color.Black, 1);
-         GraphicsPath capPath = new GraphicsPath();
-         capPath.AddLine(new Point(4, -7), new Point(0, 0));
-         capPath.AddLine(new Point(-4, -7), new Point(0, 0));
-         CustomLineCap arrowCap = new CustomLineCap(null, capPath);
-         arrowCap.SetStrokeCaps(LineCap.Triangle, LineCap.Triangle);
-         p.CustomEndCap = arrowCap;
-         return p;
-      }
-
-      protected override void UpdateHitRegion()
-      {
-         using (PreciseTimer pr = new PreciseTimer("Arc.UpdateRegion"))
-         {
-            HitRegion.MakeEmpty();
-            GraphicsPath tmpPath = new GraphicsPath();
-
-            Point lastPoint = this.SourceConnectPoint;
-            if (this.Points != null)
-            {
-               foreach (Pilon p in this.Points)
-               {
-                  tmpPath.AddLine(lastPoint.X, lastPoint.Y, p.X, p.Y);
-                  lastPoint = p.Location;
-               }
-            }
-
-            if (lastPoint != this.TargetConnectPoint)
-            {
-               tmpPath.AddLine(lastPoint.X, lastPoint.Y, this.TargetConnectPoint.X, this.TargetConnectPoint.Y);
-
-               tmpPath.Widen(new Pen(Color.Red, 4));
-            }
-
-            HitRegion.Union(tmpPath);
-         }
-      }
-
-      protected virtual PenCapPlace DeterminePenCapPlace()
-      {
-         return PenCapPlace.End;
-      }
-
-      protected override void OnParentNetChange(ParentNetChangeEventArgs e)
-      {
-         if (e.OldParentNet != null)
-         {
-            e.OldParentNet.CanvasChange -= this.NetCanvasChangeHandler;
-         }
-
-         if (e.NewParentNet != null)
-         {
-            e.NewParentNet.CanvasChange += this.NetCanvasChangeHandler;
-         }
-
-         base.OnParentNetChange(e);
-      }
-
-      private void MoveHandler(object sender, MoveEventArgs args)
-      {
-         this.UpdateConnectPoints();
-         OnChange(new EventArgs());
-      }
-
-      /*private void OneOfPointMoveHandler(object sender, MoveEventArgs args)
-      {
-         this.UpdatePosition();
-         OnChange(new EventArgs());
-      }*/
-
-      private void ResizeLinkedElementsHandler(object sender, ResizeEventArgs args)
-      {
-         this.UpdateConnectPoints();
-         OnChange(new EventArgs());
-      }
-
       /*private void AddPoint(Pilon p)
       {
          Points.Add(p);
@@ -403,11 +195,6 @@
          p.Move -= OneOfPointMoveHandler;
          OnChange(new EventArgs());
       }*/
-
-      private void CortegeChangeHandler(object sender, EventArgs args)
-      {
-         OnChange(args);
-      }
 
       private string MakeId()
       {
@@ -423,11 +210,6 @@
          }
 
          return source + " to " + target;
-      }
-
-      private void NetCanvasChangeHandler(object sender, EventArgs args)
-      {
-         this.UpdateConnectPoints();
       }
    }
 }

@@ -14,7 +14,7 @@
       private static Keys shortcutKeys = Keys.Control | Keys.Shift | Keys.P;
       private static Image pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Place.png"), true);
 
-      public PlaceTool()
+      public PlaceTool(PetriNetGraphical net) : base(net)
       {
       }
 

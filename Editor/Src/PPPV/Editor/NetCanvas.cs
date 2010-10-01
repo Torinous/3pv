@@ -13,7 +13,7 @@
 
    public class NetCanvas : UserControl
    {
-      private PetriNetWrapper net;
+      private PetriNetGraphical net;
       private int gridStep;
       private Matrix scaleMatrix;
       private float scaleAmount;
@@ -65,7 +65,7 @@
          }
       }
 
-      public PetriNetWrapper Net
+      public PetriNetGraphical Net
       {
          get
          {
@@ -147,7 +147,7 @@
          base.Refresh();
       }
 
-      public void PutNetOnCanvas(PetriNetWrapper net)
+      public void PutNetOnCanvas(PetriNetGraphical net)
       {
          this.Net = net;
          this.Net.Canvas = this;

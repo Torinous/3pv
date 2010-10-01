@@ -5,6 +5,7 @@
    using System.Windows.Forms;
 
    using Pppv.Editor.Commands;
+   using Pppv.Editor.Shapes;
    using Pppv.Net;
    using Pppv.Utils;
 
@@ -14,9 +15,9 @@
       private static string description = "Инструмент создание дуг сети";
       private static Keys shortcutKeys = Keys.Control | Keys.Shift | Keys.A;
       private static Image pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Arc.png"), true);
-      private Arc arc;
+      private ArcShape arc;
 
-      public ArcTool()
+      public ArcTool(PetriNetGraphical net) : base(net)
       {
       }
 
@@ -44,7 +45,7 @@
          set { pictogram = value; }
       }
 
-      public Arc Arc
+      public ArcShape Arc
       {
          get { return this.arc; }
          private set { this.arc = value; }
@@ -54,24 +55,24 @@
       {
          if (args.Button == MouseButtons.Left)
          {
-            PetriNet pn = canvas.Net;
-            NetElement clicked = pn.NetElementUnder(new Point(args.X, args.Y));
-            if (Arc == null)
+            IShape clicked = EventSourceNet.GetElementUnder(new Point(args.X, args.Y));
+            if (this.Arc == null)
             {
                if (!(clicked is Arc) && clicked != null)
                {
-                  Arc = this.ArcFabric(clicked);
+                  this.Arc = this.ArcFabric(clicked.BaseElement);
+                  EventSourceNet.Paint += this.Arc.ParentNetDrawHandler;
                }
             }
             else
             {
-               if (clicked != null && Arc.Source.GetType() != clicked.GetType())
+               if (clicked != null && this.Arc.Source.GetType() != clicked.GetType())
                {
-                  Arc.Target = clicked;
-                  AddNetElementCommand c = new AddNetElementCommand(pn);
-                  c.Element = Arc;
+                  this.Arc.Target = clicked.BaseElement;
+                  AddNetElementCommand c = new AddNetElementCommand(EventSourceNet);
+                  c.Element = this.Arc.BaseElement;
                   c.Execute();
-                  this.Arc.UpdateConnectPoints();
+                  EventSourceNet.Paint -= this.Arc.ParentNetDrawHandler;
                   this.Arc = null;
                }
             }
@@ -86,8 +87,7 @@
       {
          if (this.Arc != null)
          {
-            this.Arc.UpdateConnectPoints();
-            this.Arc.ParentNet.Canvas.Invalidate();
+            EventSourceNet.Canvas.Invalidate();
          }
 
          base.HandleMouseMove(canvas, args);
@@ -107,7 +107,7 @@
       {
          if (args.KeyCode == Keys.Escape)
          {
-            if (Arc != null && Arc.Target == null)
+            if (this.Arc != null && this.Arc.Target == null)
             {
                this.ClearTemporaryArc();
                canvas.Invalidate();
@@ -117,16 +117,16 @@
          base.HandleKeyDown(canvas, args);
       }
 
-      protected virtual Arc ArcFabric(NetElement clicked)
+      protected virtual ArcShape ArcFabric(NetElement clicked)
       {
-         return new Arc(clicked);
+         return (ArcShape)EventSourceNet.CreateShapeForNetElement(new Arc(clicked, ArcType.BaseArc));
       }
 
       protected void ClearTemporaryArc()
       {
-         Arc.Source = null;
-         Arc.ParentNet = null;
-         Arc = null;
+         this.Arc.Source = null;
+         EventSourceNet.Paint -= this.Arc.ParentNetDrawHandler;
+         this.Arc = null;
       }
    }
 }

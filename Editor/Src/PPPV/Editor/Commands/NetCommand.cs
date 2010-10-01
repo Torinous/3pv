@@ -8,9 +8,9 @@
 
    public abstract class NetCommand : Command
    {
-      private PetriNet net;
+      private PetriNetGraphical net;
 
-      protected NetCommand(PetriNet net) : base()
+      protected NetCommand(PetriNetGraphical net) : base()
       {
          this.Net = net;
       }
@@ -19,7 +19,7 @@
       {
       }
 
-      public PetriNet Net
+      public PetriNetGraphical Net
       {
          get { return this.net; }
          set { this.net = value; }

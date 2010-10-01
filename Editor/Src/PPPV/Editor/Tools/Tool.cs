@@ -9,40 +9,17 @@
 
    public abstract class Tool
    {
-      private PetriNetWrapper eventSourceNet;
+      private PetriNetGraphical eventSourceNet;
 
-      protected Tool()
+      protected Tool(PetriNetGraphical net)
       {
+         this.EventSourceNet = net;
       }
 
-      public PetriNetWrapper EventSourceNet
+      public PetriNetGraphical EventSourceNet
       {
-         get
-         {
-            return this.eventSourceNet;
-         }
-
-         set
-         {
-            if (this.eventSourceNet != null)
-            {
-               this.eventSourceNet.Canvas.CanvasMouseClick -= this.CanvasMouseClickHandler;
-               this.eventSourceNet.Canvas.CanvasMouseMove -= this.CanvasMouseMoveHandler;
-               this.eventSourceNet.Canvas.CanvasMouseDown -= this.CanvasMouseDownHandler;
-               this.eventSourceNet.Canvas.CanvasMouseUp -= this.CanvasMouseUpHandler;
-               this.eventSourceNet.Canvas.KeyDown -= this.CanvasKeyDownHandler;
-            }
-
-            this.eventSourceNet = value;
-            if (this.eventSourceNet != null)
-            {
-               this.eventSourceNet.Canvas.CanvasMouseClick += this.CanvasMouseClickHandler;
-               this.eventSourceNet.Canvas.CanvasMouseMove += this.CanvasMouseMoveHandler;
-               this.eventSourceNet.Canvas.CanvasMouseDown += this.CanvasMouseDownHandler;
-               this.eventSourceNet.Canvas.CanvasMouseUp += this.CanvasMouseUpHandler;
-               this.eventSourceNet.Canvas.KeyDown += this.CanvasKeyDownHandler;
-            }
-         }
+         get { return this.eventSourceNet; }
+         set { this.eventSourceNet = value; }
       }
 
       public virtual string Name { get; set; }
@@ -52,6 +29,24 @@
       public virtual Keys ShortcutKeys { get; set; }
 
       public virtual Image Pictogram { get; set; }
+
+      public void ConnectEvents()
+      {
+         this.EventSourceNet.Canvas.CanvasMouseClick += this.CanvasMouseClickHandler;
+         this.EventSourceNet.Canvas.CanvasMouseMove += this.CanvasMouseMoveHandler;
+         this.EventSourceNet.Canvas.CanvasMouseDown += this.CanvasMouseDownHandler;
+         this.EventSourceNet.Canvas.CanvasMouseUp += this.CanvasMouseUpHandler;
+         this.EventSourceNet.Canvas.KeyDown += this.CanvasKeyDownHandler;
+      }
+      
+      public void DisconnectEvents()
+      {
+         this.EventSourceNet.Canvas.CanvasMouseClick -= this.CanvasMouseClickHandler;
+         this.EventSourceNet.Canvas.CanvasMouseMove -= this.CanvasMouseMoveHandler;
+         this.EventSourceNet.Canvas.CanvasMouseDown -= this.CanvasMouseDownHandler;
+         this.EventSourceNet.Canvas.CanvasMouseUp -= this.CanvasMouseUpHandler;
+         this.EventSourceNet.Canvas.KeyDown -= this.CanvasKeyDownHandler;
+      }
 
       protected virtual void HandleMouseDown(NetCanvas canvas, System.Windows.Forms.MouseEventArgs args)
       {
@@ -71,6 +66,7 @@
          if (args.Button == MouseButtons.Right)
          {
             ShowContextMenuCommand c = new ShowContextMenuCommand(args.Location);
+            c.Net = canvas.Net;
             c.Execute();
          }
       }

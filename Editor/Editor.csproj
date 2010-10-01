@@ -49,13 +49,7 @@
   <ItemGroup>
     <Reference Include="Accessibility" />
     <Reference Include="nunit.framework">
-      <HintPath>C:\Program Files %28x86%29\NUnit 2.5.4\bin\net-2.0\framework\nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.mocks">
-      <HintPath>C:\Program Files %28x86%29\NUnit 2.5.4\bin\net-2.0\framework\nunit.mocks.dll</HintPath>
-    </Reference>
-    <Reference Include="pnunit.framework">
-      <HintPath>C:\Program Files %28x86%29\NUnit 2.5.4\bin\net-2.0\framework\pnunit.framework.dll</HintPath>
+      <HintPath>C:\Program Files %28x86%29\SharpDevelop\3.0\bin\Tools\NUnit\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -118,12 +112,20 @@
     <Compile Include="Src\PPPV\Editor\EditorMainMenuStrip.cs" />
     <Compile Include="Src\PPPV\Editor\NativeMethods.cs" />
     <Compile Include="Src\PPPV\Editor\NetCanvas.cs" />
-    <Compile Include="Src\PPPV\Editor\PetriNetWrapper.cs" />
+    <Compile Include="Src\PPPV\Editor\PetriNetGraphical.cs" />
     <Compile Include="Src\PPPV\Editor\PlaceEditForm.cs" />
     <Compile Include="Src\PPPV\Editor\RegionSelectionEventArgs.cs" />
     <Compile Include="Src\PPPV\Editor\RemoveTabPageEventArgs.cs" />
     <Compile Include="Src\PPPV\Editor\SaveNetEventArgs.cs" />
     <Compile Include="Src\PPPV\Editor\SelectedNetObjectsList.cs" />
+    <Compile Include="Src\PPPV\Editor\ShapeCollection.cs" />
+    <Compile Include="Src\PPPV\Editor\Shapes\ArcShape.cs" />
+    <Compile Include="Src\PPPV\Editor\Shapes\IShape.cs" />
+    <Compile Include="Src\PPPV\Editor\Shapes\MoveEventArgs.cs" />
+    <Compile Include="Src\PPPV\Editor\Shapes\PlaceShape.cs" />
+    <Compile Include="Src\PPPV\Editor\Shapes\ResizeEventArgs.cs" />
+    <Compile Include="Src\PPPV\Editor\Shapes\Tests\ShapeTests.cs" />
+    <Compile Include="Src\PPPV\Editor\Shapes\TransitionShape.cs" />
     <Compile Include="Src\PPPV\Editor\TabControlForNets.cs" />
     <Compile Include="Src\PPPV\Editor\TabPageForNet.cs" />
     <Compile Include="Src\PPPV\Editor\TokensEditControl.cs" />
@@ -135,10 +137,8 @@
     <Compile Include="Src\PPPV\Editor\Tools\Tool.cs" />
     <Compile Include="Src\PPPV\Editor\Tools\TransitionTool.cs" />
     <Compile Include="Src\PPPV\Net\Arc.cs" />
-    <Compile Include="Src\PPPV\Net\InhibitorArc.cs" />
-    <Compile Include="Src\PPPV\Net\Graphical.cs" />
+    <Compile Include="Src\PPPV\Net\ArcType.cs" />
     <Compile Include="Src\PPPV\Net\MouseEventArgs.cs" />
-    <Compile Include="Src\PPPV\Net\MoveEventArgs.cs" />
     <Compile Include="Src\PPPV\Net\NetElement.cs" />
     <Compile Include="Src\PPPV\Net\NetElementEnumerator.cs" />
     <Compile Include="Src\PPPV\Net\NetException.cs" />
@@ -150,11 +150,13 @@
     <Compile Include="Src\PPPV\Net\Place.cs" />
     <Compile Include="Src\PPPV\Net\Predicate.cs" />
     <Compile Include="Src\PPPV\Net\PredicateList.cs" />
-    <Compile Include="Src\PPPV\Net\ResizeEventArgs.cs" />
     <Compile Include="Src\PPPV\Net\SelectionChangeEventArgs.cs" />
     <Compile Include="Src\PPPV\Net\Tests\ArcTests.cs" />
     <Compile Include="Src\PPPV\Net\Tests\PetriNetTests.cs" />
     <Compile Include="Src\PPPV\Net\Tests\PlaceTests.cs" />
+    <Compile Include="Src\PPPV\Net\Tests\TokenListTests.cs" />
+    <Compile Include="Src\PPPV\Net\Tests\TokenTests.cs" />
+    <Compile Include="Src\PPPV\Net\Tests\TransitionTests.cs" />
     <Compile Include="Src\PPPV\Net\Token.cs" />
     <Compile Include="Src\PPPV\Net\TokensList.cs" />
     <Compile Include="Src\PPPV\Net\Transition.cs" />
@@ -200,6 +202,8 @@
     <Folder Include="Src\PPPV\Editor" />
     <Folder Include="Src\PPPV\Editor\Commands" />
     <Folder Include="Src\PPPV\Editor\Commands\Tests" />
+    <Folder Include="Src\PPPV\Editor\Shapes" />
+    <Folder Include="Src\PPPV\Editor\Shapes\Tests" />
     <Folder Include="Src\PPPV\Editor\Tools" />
     <Folder Include="Src\PPPV\Net" />
     <Folder Include="Src\PPPV\Net\Tests" />

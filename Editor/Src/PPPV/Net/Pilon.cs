@@ -8,10 +8,10 @@
    {
       public Pilon(Point point) : base(point)
       {
-         Size = new Size(7, 7);
+         // Size = new Size(7, 7);
       }
 
-      public override Point Center
+      public Point Center
       {
          get
          {
@@ -19,7 +19,7 @@
          }
       }
 
-      public override void Draw(PaintEventArgs e)
+      public void Draw(PaintEventArgs e)
       {
          Graphics dc = e.Graphics;
          dc.SmoothingMode = SmoothingMode.HighQuality;
@@ -34,7 +34,8 @@
       }
 
       /*Чисто фиктивно, просто чтобы реализовать абстрактный член*/
-      public override Point GetConnectPoint(Point from)
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "from", Justification = "Ну, не нужно")]
+      public Point GetConnectPoint(Point from)
       {
          return this.Center;
       }
@@ -43,11 +44,11 @@
       {
       }
 
-      protected override void UpdateHitRegion()
+      /*protected void UpdateHitRegion()
       {
          HitRegion.MakeEmpty();
          HitRegion.Union(new Rectangle(X - 2, Y - 2, 7, 7));
-      }
+      }*/
 
       /*protected override void MoveHandler(object sender, MoveEventArgs args)
       {

@@ -14,7 +14,7 @@
       private static Keys shortcutKeys = Keys.Control | Keys.Shift | Keys.O;
       private static Image pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Annotation.png"), true);
 
-      public AnnotationTool()
+      public AnnotationTool(PetriNetGraphical net) : base(net)
       {
       }
 

@@ -14,7 +14,7 @@
       private static Keys shortcutKeys = Keys.Control | Keys.Shift | Keys.T;
       private static Image pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Transition.png"), true);
 
-      public TransitionTool()
+      public TransitionTool(PetriNetGraphical net) : base(net)
       {
       }
 

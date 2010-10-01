@@ -5,11 +5,12 @@
    using System.Reflection;
    using System.Windows.Forms;
 
+   using Pppv.Editor.Shapes;
    using Pppv.Net;
 
    public class EditNetElementCommand : ElementCommand
    {
-      public EditNetElementCommand(NetElement netElement)
+      public EditNetElementCommand(IShape netElement)
       {
          this.Element = netElement;
          this.Name = "Редактаровать элемент сети";
@@ -19,23 +20,23 @@
       public override void Execute()
       {
          EditorApplication a = EditorApplication.Instance;
-         if (Element is Arc)
+         if (Element is ArcShape)
          {
-            Form f = new ArcEditForm((Arc)Element);
+            Form f = new ArcEditForm((ArcShape)Element);
             f.ShowDialog(a.MainFormInst);
             f.Dispose();
          }
 
-         if (Element is Transition)
+         if (Element is TransitionShape)
          {
-            Form f = new GuardEditForm((Transition)Element);
+            Form f = new GuardEditForm((TransitionShape)Element);
             f.ShowDialog(a.MainFormInst);
             f.Dispose();
          }
 
-         if (Element is Place)
+         if (Element is PlaceShape)
          {
-            Form f = new PlaceEditForm((Place)Element);
+            Form f = new PlaceEditForm((PlaceShape)Element);
             f.ShowDialog(a.MainFormInst);
             f.Dispose();
          }

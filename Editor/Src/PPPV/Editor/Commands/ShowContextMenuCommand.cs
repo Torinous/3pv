@@ -5,14 +5,15 @@
    using System.Windows.Forms;
 
    using Pppv.Editor;
+   using Pppv.Editor.Shapes;
    using Pppv.Net;
 
    public class ShowContextMenuCommand : Command
    {
       private Point position;
-      private PetriNetWrapper net;
+      private PetriNetGraphical net;
       private ContextMenuStrip contextMenuStrip;
-      private NetElement contextMenuTarget;
+      private IShape contextMenuTarget;
 
       public ShowContextMenuCommand()
       {
@@ -32,7 +33,7 @@
          set { this.position = value; }
       }
 
-      public PetriNetWrapper Net
+      public PetriNetGraphical Net
       {
          get { return this.net; }
          set { this.net = value; }
@@ -44,7 +45,7 @@
          set { this.contextMenuStrip = value; }
       }
 
-      public NetElement ContextMenuTarget
+      public IShape ContextMenuTarget
       {
          get { return this.contextMenuTarget; }
          set { this.contextMenuTarget = value; }
@@ -53,11 +54,11 @@
       public override void Execute()
       {
          EditorApplication application = EditorApplication.Instance;
-         PetriNetWrapper currentNet = application.ActiveNet;
+         PetriNetGraphical currentNet = application.ActiveNet;
 
          if (currentNet != null)
          {
-            this.ContextMenuTarget = currentNet.NetElementUnder(this.Position);
+            this.ContextMenuTarget = currentNet.GetElementUnder(this.Position);
             this.ContextMenuStripFactory().Show(currentNet.Canvas.PointToScreen(this.Position));
          }
       }

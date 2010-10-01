@@ -20,8 +20,6 @@
          this.list = new Collection<Predicate>();
       }
 
-      public event EventHandler Change;
-
       public Collection<Predicate> List
       {
          get { return this.list; }
@@ -49,13 +47,11 @@
       public void Add(Predicate value)
       {
          this.list.Add(value);
-         this.OnChange(new EventArgs());
       }
       
       public void Remove(Predicate value)
       {
          this.list.Remove(value);
-         this.OnChange(new EventArgs());
       }
 
       public void WriteXml(XmlWriter writer)
@@ -99,14 +95,6 @@
       public XmlSchema GetSchema()
       {
          return null;
-      }
-
-      protected void OnChange(EventArgs args)
-      {
-         if (this.Change != null)
-         {
-            this.Change(this, args);
-         }
       }
    }
 }

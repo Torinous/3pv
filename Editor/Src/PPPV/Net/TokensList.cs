@@ -17,12 +17,9 @@
       {
       }
 
-      public event EventHandler Change;
-
       public new void Add(Token value)
       {
-         this.Add(value);
-         this.OnChange(new EventArgs());
+         base.Add(value);
       }
 
       public void WriteXml(XmlWriter writer)
@@ -66,14 +63,6 @@
       public XmlSchema GetSchema()
       {
          return null;
-      }
-
-      protected void OnChange(EventArgs args)
-      {
-         if (this.Change != null)
-         {
-            this.Change(this, args);
-         }
       }
    }
 }
