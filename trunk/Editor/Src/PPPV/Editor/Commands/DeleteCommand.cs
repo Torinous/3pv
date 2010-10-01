@@ -6,6 +6,7 @@
    using System.Reflection;
    using System.Windows.Forms;
 
+   using Pppv.Editor.Shapes;
    using Pppv.Net;
    using Pppv.Utils;
 
@@ -19,7 +20,7 @@
          this.Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Delete.png"), true);
       }
 
-      public DeleteCommand(NetElement netElement) : this()
+      public DeleteCommand(IShape netElement) : this()
       {
          this.Element = netElement;
       }
@@ -49,7 +50,7 @@
       {
          if (this.Element != null)
          {
-            PetriNet net = this.Element.ParentNet;
+            PetriNetGraphical net = this.Element.ParentNet;
             net.DeleteElement(this.Element);
             if (net.Canvas != null)
             {

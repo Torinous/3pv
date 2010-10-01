@@ -23,7 +23,7 @@
       {
          this.text = text;
       }
-      
+
       public Token(XmlReader reader)
       {
          this.ReadXml(reader);
@@ -34,7 +34,7 @@
          get { return this.text; }
          set { this.text = value; }
       }
-      
+
       public override string ToString()
       {
          return this.Text;

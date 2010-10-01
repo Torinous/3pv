@@ -13,12 +13,13 @@ namespace Pppv.Editor.Commands
    using System.Reflection;
    using System.Windows.Forms;
 
+   using Pppv.Editor.Shapes;
    using Pppv.Net;
    using Pppv.Utils;
 
    public class DeleteSelectedCommand : Command
    {
-      private PetriNetWrapper net;
+      private PetriNetGraphical net;
 
       public DeleteSelectedCommand()
       {
@@ -28,12 +29,12 @@ namespace Pppv.Editor.Commands
          this.Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Delete.png"), true);
       }
 
-      public DeleteSelectedCommand(PetriNetWrapper petriNet) : this()
+      public DeleteSelectedCommand(PetriNetGraphical petriNet) : this()
       {
          this.net = petriNet;
       }
 
-      public PetriNetWrapper Net
+      public PetriNetGraphical Net
       {
          get { return this.net; }
          set { this.net = value; }
@@ -60,7 +61,7 @@ namespace Pppv.Editor.Commands
          if (this.Net.SelectedObjects.Count > 0)
          {
             MacroCommand mc = new MacroCommand();
-            foreach (NetElement netElement in this.Net.SelectedObjects)
+            foreach (IShape netElement in this.Net.SelectedObjects)
             {
                mc.Add(new DeleteCommand(netElement));
             }

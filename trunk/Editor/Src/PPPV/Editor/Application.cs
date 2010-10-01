@@ -59,7 +59,7 @@
          }
       }
 
-      public PetriNetWrapper ActiveNet
+      public PetriNetGraphical ActiveNet
       {
          get
          {
@@ -99,7 +99,7 @@
 
       public void NewNet()
       {
-         PetriNetWrapper net = new PetriNetWrapper();
+         PetriNetGraphical net = new PetriNetGraphical();
          TabPageForNet addedTabPage = this.MainFormInst.TabControl.AddNewTab();
          addedTabPage.PutNetOnTabPage(net);
       }
@@ -108,12 +108,13 @@
       {
          if (netStream != null)
          {
-            PetriNetWrapper net = new PetriNetWrapper();
+            PetriNet net = new PetriNet();
             XmlSerializer serealizer = new XmlSerializer(net.GetType());
-            net = (PetriNetWrapper)serealizer.Deserialize(netStream);
-            net.FileOfNetPath = fileName;
+            net = (PetriNet)serealizer.Deserialize(netStream);
+            PetriNetGraphical gnet = new PetriNetGraphical(net);
+            gnet.FileOfNetPath = fileName;
             TabPageForNet addedTabPage = this.MainFormInst.TabControl.AddNewTab();
-            addedTabPage.PutNetOnTabPage(net);
+            addedTabPage.PutNetOnTabPage(gnet);
          }
       }
 

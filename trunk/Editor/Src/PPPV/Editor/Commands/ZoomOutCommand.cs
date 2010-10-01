@@ -21,7 +21,7 @@
 
       public override void Execute()
       {
-         PetriNet p = EditorApplication.Instance.ActiveNet;
+         PetriNetGraphical p = EditorApplication.Instance.ActiveNet;
          if (p != null)
          {
             if (p.Canvas.ScaleAmount > 0.11F)

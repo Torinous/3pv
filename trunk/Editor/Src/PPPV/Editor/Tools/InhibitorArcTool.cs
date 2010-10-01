@@ -5,6 +5,7 @@
    using System.Windows.Forms;
 
    using Pppv.Editor.Commands;
+   using Pppv.Editor.Shapes;
    using Pppv.Net;
 
    public class InhibitorArcTool : ArcTool
@@ -14,7 +15,7 @@
       private static Keys shortcutKeys = Keys.Control | Keys.Shift | Keys.I;
       private static Image pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Inhibitor Arc.png"), true);
 
-      public InhibitorArcTool()
+      public InhibitorArcTool(PetriNetGraphical net) : base(net)
       {
       }
 
@@ -42,9 +43,9 @@
          set { pictogram = value; }
       }
 
-      protected override Arc ArcFabric(NetElement clicked)
+      protected override ArcShape ArcFabric(NetElement clicked)
       {
-         return new InhibitorArc(clicked);
+         return (ArcShape)this.EventSourceNet.CreateShapeForNetElement(new Arc(clicked, ArcType.InhibitorArc));
       }
    }
 }

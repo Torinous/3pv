@@ -7,6 +7,7 @@
    using System.Reflection;
    using System.Windows.Forms;
 
+   using Pppv.Editor.Shapes;
    using Pppv.Net;
 
    public class PointerTool : Tool
@@ -21,7 +22,7 @@
       private Rectangle selectedRectangle;
       private Point selectFrom;
 
-      public PointerTool()
+      public PointerTool(PetriNetGraphical net) : base(net)
       {
          this.SelectedRectangle = new Rectangle(new Point(0, 0), new Size(0, 0));
       }
@@ -58,22 +59,22 @@
 
       protected override void HandleMouseDown(NetCanvas canvas, System.Windows.Forms.MouseEventArgs args)
       {
-         PetriNetWrapper pnw = canvas.Net;
+         PetriNetGraphical net = canvas.Net;
          this.lastMouseDownPoint = new Point(args.X, args.Y);
          if (args.Button == MouseButtons.Left)
          {
-            NetElement tmp = pnw.NetElementUnder(new Point(args.X, args.Y));
+            IShape tmp = net.GetElementUnder(new Point(args.X, args.Y));
             if (tmp != null)
             {
-               if (!pnw.SelectedObjects.Contains(tmp))
+               if (!net.SelectedObjects.Contains(tmp))
                {
-                  pnw.SelectedObjects.Clear();
-                  pnw.SelectedObjects.Add(tmp);
+                  net.SelectedObjects.Clear();
+                  net.SelectedObjects.Add(tmp);
                }
             }
             else
             {
-               pnw.SelectedObjects.Clear();
+               net.SelectedObjects.Clear();
                this.isActive = true;
                this.selectFrom = new Point(args.X, args.Y);
             }
@@ -87,7 +88,7 @@
 
       protected override void HandleMouseMove(NetCanvas canvas, System.Windows.Forms.MouseEventArgs args)
       {
-         PetriNetWrapper pnw = canvas.Net;
+         PetriNetGraphical pnw = canvas.Net;
          if (args.Button == MouseButtons.Left)
          {
             if (this.isActive)
@@ -106,7 +107,7 @@
                this.selectedRectangle.Location = startPoint;
                this.selectedRectangle.Size = new Size(Math.Abs(args.X - this.selectFrom.X), System.Math.Abs(args.Y - this.selectFrom.Y));
                pnw.SelectedObjects.Clear();
-               pnw.SelectedObjects.AddRange(canvas.Net.NetElementUnder(this.SelectedRectangle));
+               pnw.SelectedObjects.AddRange(canvas.Net.GetElementUnder(this.SelectedRectangle));
                canvas.Invalidate();
             }
             else
@@ -115,7 +116,7 @@
 
                for (int i = 0; i < pnw.SelectedObjects.Count; ++i)
                {
-                  ((NetElement)pnw.SelectedObjects[i]).MoveBy(delta);
+                  pnw.SelectedObjects[i].MoveBy(delta);
                }
 
                canvas.Invalidate();

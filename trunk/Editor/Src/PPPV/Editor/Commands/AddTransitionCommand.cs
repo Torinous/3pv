@@ -9,7 +9,7 @@
    {
       private Point position;
 
-      public AddTransitionCommand(PetriNet net, Point position)
+      public AddTransitionCommand(PetriNetGraphical net, Point position)
       {
          this.Net = net;
          this.Position = position;

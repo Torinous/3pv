@@ -8,16 +8,17 @@
    using System.Drawing.Drawing2D;
    using System.Windows.Forms;
 
+   using Pppv.Editor.Shapes;
    using Pppv.Editor.Tools;
    using Pppv.Net;
 
-   public class SelectedNetObjectList : Collection<NetElement>
+   public class SelectedNetObjectList : Collection<IShape>
    {
       public SelectedNetObjectList() : base()
       {
       }
 
-      public new void Add(NetElement value)
+      public new void Add(IShape value)
       {
          value.Paint += this.DrawSelectionMarker;
          base.Add(value);
@@ -25,20 +26,20 @@
 
       public new void Clear()
       {
-         foreach (NetElement element in this)
+         foreach (IShape shape in this)
          {
-            element.Paint -= this.DrawSelectionMarker;
+            shape.Paint -= this.DrawSelectionMarker;
          }
 
          base.Clear();
       }
 
-      public void AddRange(IEnumerable<NetElement> collection)
+      public void AddRange(IEnumerable<IShape> collection)
       {
-         foreach (NetElement element in collection)
+         foreach (IShape shape in collection)
          {
-            element.Paint += this.DrawSelectionMarker;
-            base.Add(element);
+            shape.Paint += this.DrawSelectionMarker;
+            base.Add(shape);
          }
       }
 
@@ -47,7 +48,7 @@
          Graphics dc = e.Graphics;
          dc.SmoothingMode = SmoothingMode.HighQuality;
          SolidBrush b = new SolidBrush(Color.FromArgb(125, 245, 0, 0));
-         dc.FillRegion(b, ((NetElement)sender).HitRegion);
+         dc.FillRegion(b, ((IShape)sender).HitRegion);
        }
    }
 }

@@ -58,12 +58,12 @@
          private set { this.netSaved = value; }
       }
 
-      public PetriNetWrapper Net
+      public PetriNetGraphical Net
       {
          get { return NetCanvas.Net; }
       }
 
-      public void PutNetOnTabPage(PetriNetWrapper net)
+      public void PutNetOnTabPage(PetriNetGraphical net)
       {
          NetCanvas.PutNetOnCanvas(net);
       }

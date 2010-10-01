@@ -18,7 +18,8 @@ namespace Pppv.Net.Tests
       [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Pppv.Net.Arc", Justification = "В тестах не важно")]
       public void TestOfEmptyConstructor()
       {
-         new Arc();
+         new Arc(ArcType.BaseArc);
+         new Arc(ArcType.InhibitorArc);
       }
    }
 }

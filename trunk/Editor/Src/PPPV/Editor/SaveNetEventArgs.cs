@@ -18,7 +18,7 @@ namespace Pppv.Net
       private string filePath;
       private string netId;
 
-      public SaveNetEventArgs(PetriNetWrapper net)
+      public SaveNetEventArgs(PetriNetGraphical net)
       {
          this.filePath = net.FileOfNetPath;
          this.netId = net.Id;

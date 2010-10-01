@@ -1,4 +1,11 @@
-﻿namespace Pppv.Net
+﻿/*
+ * Created by SharpDevelop.
+ * User: Torinous
+ * Date: 24.09.2010
+ * Time: 21:37
+ */
+
+namespace Pppv.Editor.Shapes
 {
    using System;
    using System.Drawing;

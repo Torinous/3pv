@@ -5,8 +5,10 @@
 
    using Pppv.Net;
 
-   public class AddNetElementCommand : ElementCommand
+   public class AddNetElementCommand : NetCommand
    {
+      private NetElement element;
+
       public AddNetElementCommand()
       {
          Name = "Добавить элемент к сети";
@@ -14,27 +16,33 @@
          Pictogram = null;
       }
 
-      public AddNetElementCommand(PetriNet net) : this()
+      public AddNetElementCommand(PetriNetGraphical net) : this()
       {
          Net = net;
       }
 
       public AddNetElementCommand(NetElement element) : this()
       {
-         Element = element;
+         this.Element = element;
       }
 
-      public AddNetElementCommand(PetriNet net, NetElement element) : this()
+      public AddNetElementCommand(PetriNetGraphical net, NetElement element) : this()
       {
-         Element = element;
+         this.Element = element;
          Net = net;
+      }
+
+      public NetElement Element
+      {
+         get { return this.element; }
+         set { this.element = value; }
       }
 
       public override void Execute()
       {
          try
          {
-            Net.AddElement(Element);
+            Net.AddElement(this.Element);
 
             if (Net.Canvas != null)
             {

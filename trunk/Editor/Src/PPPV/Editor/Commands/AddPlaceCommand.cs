@@ -10,7 +10,7 @@
    {
       private Point position;
 
-      public AddPlaceCommand(PetriNet net, Point place)
+      public AddPlaceCommand(PetriNetGraphical net, Point place)
       {
          this.Net = net;
          this.Position = place;
