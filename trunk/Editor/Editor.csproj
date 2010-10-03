@@ -97,7 +97,6 @@
     <Compile Include="Src\PPPV\Editor\Commands\SaveCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\SelectToolCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\ShowContextMenuCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\Tests\CommandTests.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\UndoCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\ZoomInCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\ZoomOutCommand.cs" />
@@ -125,7 +124,6 @@
     <Compile Include="Src\PPPV\Editor\Shapes\PlaceShape.cs" />
     <Compile Include="Src\PPPV\Editor\Shapes\ResizeEventArgs.cs" />
     <Compile Include="Src\PPPV\Editor\Shapes\Shape.cs" />
-    <Compile Include="Src\PPPV\Editor\Shapes\Tests\ShapeTests.cs" />
     <Compile Include="Src\PPPV\Editor\Shapes\TransitionShape.cs" />
     <Compile Include="Src\PPPV\Editor\TabControlForNets.cs" />
     <Compile Include="Src\PPPV\Editor\TabPageForNet.cs" />
@@ -155,12 +153,6 @@
     <Compile Include="Src\PPPV\Net\Predicate.cs" />
     <Compile Include="Src\PPPV\Net\PredicateList.cs" />
     <Compile Include="Src\PPPV\Net\SelectionChangeEventArgs.cs" />
-    <Compile Include="Src\PPPV\Net\Tests\ArcTests.cs" />
-    <Compile Include="Src\PPPV\Net\Tests\PetriNetTests.cs" />
-    <Compile Include="Src\PPPV\Net\Tests\PlaceTests.cs" />
-    <Compile Include="Src\PPPV\Net\Tests\TokenListTests.cs" />
-    <Compile Include="Src\PPPV\Net\Tests\TokenTests.cs" />
-    <Compile Include="Src\PPPV\Net\Tests\TransitionTests.cs" />
     <Compile Include="Src\PPPV\Net\Token.cs" />
     <Compile Include="Src\PPPV\Net\TokensList.cs" />
     <Compile Include="Src\PPPV\Net\Transition.cs" />
@@ -205,12 +197,9 @@
     <Folder Include="Src\PPPV" />
     <Folder Include="Src\PPPV\Editor" />
     <Folder Include="Src\PPPV\Editor\Commands" />
-    <Folder Include="Src\PPPV\Editor\Commands\Tests" />
     <Folder Include="Src\PPPV\Editor\Shapes" />
-    <Folder Include="Src\PPPV\Editor\Shapes\Tests" />
     <Folder Include="Src\PPPV\Editor\Tools" />
     <Folder Include="Src\PPPV\Net" />
-    <Folder Include="Src\PPPV\Net\Tests" />
     <Folder Include="Src\PPPV\Utils" />
   </ItemGroup>
   <PropertyGroup>

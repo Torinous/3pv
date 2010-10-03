@@ -5,7 +5,7 @@
  * Time: 20:08
  */
 
-namespace Pppv.Net.Tests
+namespace Pppv.Net
 {
    using System;
    using NUnit.Framework;

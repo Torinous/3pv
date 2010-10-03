@@ -5,7 +5,7 @@
  * Time: 2:41
  */
 
-namespace Pppv.Editor.Commands.Tests
+namespace Pppv.Editor.Commands
 {
    using System;
    using NUnit.Framework;
