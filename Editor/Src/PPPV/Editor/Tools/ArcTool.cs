@@ -68,7 +68,7 @@
             {
                if (clicked != null && this.Arc.Source.GetType() != clicked.GetType())
                {
-                  this.Arc.Target = clicked.BaseElement;
+                  this.Arc.TargetId = clicked.BaseElement.Id;
                   AddNetElementCommand c = new AddNetElementCommand(EventSourceNet);
                   c.Element = this.Arc.BaseElement;
                   c.Execute();
@@ -117,14 +117,14 @@
          base.HandleKeyDown(canvas, args);
       }
 
-      protected virtual ArcShape ArcFabric(NetElement clicked)
+      protected virtual ArcShape ArcFabric(INetElement clicked)
       {
          return (ArcShape)EventSourceNet.CreateShapeForNetElement(new Arc(clicked, ArcType.BaseArc));
       }
 
       protected void ClearTemporaryArc()
       {
-         this.Arc.Source = null;
+         this.Arc.SourceId = string.Empty;
          EventSourceNet.Paint -= this.Arc.ParentNetDrawHandler;
          this.Arc = null;
       }

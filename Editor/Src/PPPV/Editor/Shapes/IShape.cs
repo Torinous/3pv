@@ -40,9 +40,9 @@ namespace Pppv.Editor.Shapes
 
       Size Size { get; set; }
 
-      PetriNetGraphical ParentNet { get; set; }
+      PetriNetGraphical ParentNetGraphical { get; set; }
 
-      NetElement BaseElement { get; }
+      INetElement BaseElement { get; }
 
       void MoveBy(Point radiusVector);
 
@@ -54,12 +54,10 @@ namespace Pppv.Editor.Shapes
 
       void Draw(PaintEventArgs e);
 
+      void ParentNetDrawHandler(object sender, PaintEventArgs e);
+
       Point GetConnectPoint(Point from);
 
       void UpdateHitRegion();
-
-      Point GetConnectPoint(Point from, NetCanvas onCanvas);
-
-      void ParentNetDrawHandler(object sender, PaintEventArgs e);
    }
 }

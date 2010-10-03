@@ -186,17 +186,17 @@
          }
       }
 
-      public new void AddElement(NetElement element)
+      public new void AddElement(INetElement element)
       {
          this.baseNet.AddElement(element);
          this.Shapes.Add(this.CreateShapeForNetElement(element));
          this.OnChange(new EventArgs());
       }
 
-      public new void DeleteElement(NetElement element)
+      public new void DeleteElement(INetElement element)
       {
          this.baseNet.DeleteElement(element);
-         this.Shapes.Remove(this.GetShapeForElement(element));
+         this.Shapes.Remove(this.FindShapeForElement(element));
          this.OnChange(new EventArgs());
       }
 
@@ -287,7 +287,7 @@
             if (stream != null)
             {
                XmlSerializer serealizer = new XmlSerializer(this.GetType());
-               serealizer.Serialize(stream, this);
+               serealizer.Serialize(stream, this.baseNet);
                stream.Close();
                this.OnSave(new SaveNetEventArgs(this));
                result = true;
@@ -346,7 +346,7 @@
          }
       }
 
-      public IShape GetShapeForElement(NetElement element)
+      public IShape FindShapeForElement(INetElement element)
       {
          foreach (IShape shape in this.Shapes)
          {
@@ -359,19 +359,19 @@
          return null;
       }
 
-      public IShape CreateShapeForNetElement(NetElement baseElement)
+      public IShape CreateShapeForNetElement(INetElement baseElement)
       {
-         if (baseElement is Arc)
+         if (baseElement is IArc)
          {
             return this.CreateShapeForArc(baseElement);
          }
 
-         if (baseElement is Transition)
+         if (baseElement is ITransition)
          {
             return this.CreateShapeForTransition(baseElement);
          }
 
-         if (baseElement is Place)
+         if (baseElement is IPlace)
          {
             return this.CreateShapeForPlace(baseElement);
          }
@@ -379,19 +379,19 @@
          return null;
       }
 
-      public IShape CreateShapeForArc(NetElement baseElement)
+      public IShape CreateShapeForArc(INetElement baseElement)
       {
-         return new ArcShape((Arc)baseElement, this);
+         return new ArcShape((IArc)baseElement, this);
       }
 
-      public IShape CreateShapeForPlace(NetElement baseElement)
+      public IShape CreateShapeForPlace(INetElement baseElement)
       {
-         return new PlaceShape((Place)baseElement, this);
+         return new PlaceShape((IPlace)baseElement, this);
       }
 
-      public IShape CreateShapeForTransition(NetElement baseElement)
+      public IShape CreateShapeForTransition(INetElement baseElement)
       {
-         return new TransitionShape((Transition)baseElement, this);
+         return new TransitionShape((ITransition)baseElement, this);
       }
 
       private void CanvasPaintRetranslator(object sender, PaintEventArgs args)

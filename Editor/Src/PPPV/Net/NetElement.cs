@@ -5,21 +5,23 @@
    using System.Drawing;
    using System.Drawing.Drawing2D;
    using System.Windows.Forms;
+   using System.Xml;
+   using System.Xml.Schema;
    using System.Xml.Serialization;
 
    [Serializable()]
-   public abstract class NetElement
+   public abstract class NetElement : INetElement
    {
-      [NonSerializedAttribute]
+      [NonSerializedAttribute()]
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "Для декартовых координат подходит и так")]
       private int x, y;
 
-      [NonSerializedAttribute]
+      [NonSerializedAttribute()]
       private PetriNet parent;
 
-      [NonSerializedAttribute]
+      [NonSerializedAttribute()]
       private string id;
-      [NonSerializedAttribute]
+      [NonSerializedAttribute()]
       private string name;
 
       protected NetElement(Point point)
@@ -28,15 +30,13 @@
          this.Y = point.Y;
       }
 
-      public event EventHandler<ParentNetChangeEventArgs> ParentNetChange;
-
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Y", Justification = "Для декартовых координат сойдёт")]
       public int Y
       {
          get { return this.y; }
          set { this.y = value; }
       }
-         
+
       [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "X", Justification = "Для декартовых координат сойдёт")]
       public int X
       {
@@ -61,34 +61,19 @@
          get { return this.name; }
          set { this.name = value; }
       }
-      
+
       public PetriNet ParentNet
       {
-         get
-         {
-            return this.parent;
-         }
-
-         set
-         {
-            this.OnParentNetChange(new ParentNetChangeEventArgs(this.parent, value));
-            this.parent = value;
-         }
+         get { return this.parent; }
+         set { this.parent = value; }
       }
+      
+      public abstract void WriteXml(XmlWriter writer);
 
-      public virtual void PrepareToDeletion()
-      {
-         this.ParentNet = null;
-      }
+      public abstract void ReadXml(XmlReader reader);
+
+      public abstract XmlSchema GetSchema();
 
       public abstract void SetId(int number);
-
-      protected virtual void OnParentNetChange(ParentNetChangeEventArgs e)
-      {
-         if (this.ParentNetChange != null)
-         {
-            this.ParentNetChange(this, e);
-         }
-      }
    }
 }

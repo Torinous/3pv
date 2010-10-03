@@ -13,7 +13,7 @@
 
    [Serializable()]
    [XmlRoot("transition")]
-   public class Transition : NetElement, IXmlSerializable
+   public class Transition : NetElement, ITransition
    {
       private string guardFunction;
 
@@ -21,6 +21,7 @@
       {
       }
 
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "Не смертельно")]
       public Transition(XmlReader reader) : this(new Point(0, 0))
       {
          this.ReadXml(reader);
@@ -32,18 +33,11 @@
 
       public string GuardFunction
       {
-         get
-         {
-            return this.guardFunction;
-         }
-
-         set
-         {
-            this.guardFunction = value;
-         }
+         get { return this.guardFunction; }
+         set { this.guardFunction = value; }
       }
 
-      public void WriteXml(XmlWriter writer)
+      public override void WriteXml(XmlWriter writer)
       {
          writer.WriteAttributeString("id", this.Name);
 
@@ -53,13 +47,11 @@
          writer.WriteAttributeString("y", this.Y.ToString(CultureInfo.CurrentCulture) + ".0");
          writer.WriteEndElement(); // position
          writer.WriteEndElement(); // graphics
-
          writer.WriteStartElement("name");
          writer.WriteStartElement("value");
          writer.WriteString(this.Name);
          writer.WriteEndElement(); // value
          writer.WriteEndElement(); // name
-
          writer.WriteStartElement("guard");
          writer.WriteStartElement("value");
          writer.WriteString(this.guardFunction);
@@ -67,7 +59,7 @@
          writer.WriteEndElement(); // guard
       }
 
-      public void ReadXml(XmlReader reader)
+      public override void ReadXml(XmlReader reader)
       {
          reader.Read();
          reader.MoveToAttribute("id");
@@ -119,7 +111,7 @@
          }
       }
 
-      public XmlSchema GetSchema()
+      public override XmlSchema GetSchema()
       {
          return null;
       }

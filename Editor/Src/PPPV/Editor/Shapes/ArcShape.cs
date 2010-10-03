@@ -8,6 +8,7 @@
 namespace Pppv.Editor.Shapes
 {
    using System;
+   using System.Collections;
    using System.Drawing;
    using System.Drawing.Drawing2D;
    using System.Windows.Forms;
@@ -15,76 +16,66 @@ namespace Pppv.Editor.Shapes
    using Pppv.Net;
    using Pppv.Utils;
 
-   public class ArcShape : Arc, IShape
+   public class ArcShape : Shape, IArc
    {
-      private Point location;
-      private Size size;
-      private Region hitRegion;
-      private Arc baseArc;
       private Point sourceConnectPoint, targetConnectPoint;
-      private PetriNetGraphical parentNet;
 
-      public ArcShape(Arc arc, PetriNetGraphical parentNet) : base(ArcType.BaseArc)
+      public ArcShape(IArc arc, PetriNetGraphical parentNet)
       {
-         this.baseArc = arc;
+         this.BaseElement = arc;
          this.HitRegion = new Region();
-         this.ParentNet = parentNet;
+         this.ParentNetGraphical = parentNet;
       }
 
-      public event EventHandler<MoveEventArgs> Move;
-
-      public event PaintEventHandler Paint;
-
-      public event EventHandler Change;
-
-      public Point Location
+      public ArcType ArcType
       {
-         get { return this.location; }
-         set { this.location = value; }
+         get { return (this.BaseElement as IArc).ArcType; }
+         set { (this.BaseElement as IArc).ArcType = value; }
       }
 
-      public Size Size
+      public string ArcTypeName
       {
-         get { return this.size; }
-         set { this.size = value; }
+         get { return (this.BaseElement as IArc).ArcTypeName; }
       }
 
-      public Region HitRegion
+      public bool Unfinished
       {
-         get { return this.hitRegion; }
-         set { this.hitRegion = value; }
+         get { return (this.BaseElement as IArc).Unfinished; }
       }
 
-      public NetElement BaseElement
+      public string SourceId
       {
-         get { return this.baseArc; }
+         get { return (this.BaseElement as IArc).SourceId; }
+         set { (this.BaseElement as IArc).SourceId = value; }
       }
 
-      public new PetriNetGraphical ParentNet
+      public string TargetId
       {
-         get { return this.parentNet; }
-         set { this.parentNet = value; }
+         get { return (this.BaseElement as IArc).TargetId; }
+         set { (this.BaseElement as IArc).TargetId = value; }
       }
 
-      public new NetElement Target
+      public IShape Target
       {
-         get { return this.baseArc.Target; }
-         set { this.baseArc.Target = value; }
+         get { return this.ParentNetGraphical.FindShapeForElement(this.ParentNet.GetElementById(this.TargetId)); }
       }
 
-      public new NetElement Source
+      public IShape Source
       {
-         get { return this.baseArc.Source; }
-         set { this.baseArc.Source = value; }
+         get { return this.ParentNetGraphical.FindShapeForElement(this.ParentNet.GetElementById(this.SourceId)); }
       }
 
-      public new ArcType ArcType
+      public PredicateList Cortege
       {
-         get { return this.baseArc.ArcType; }
-         set { this.baseArc.ArcType = value; }
+         get { return (this.BaseElement as IArc).Cortege; }
       }
 
-      public Point Center
+      public ArrayList Points
+      {
+         get { return (this.BaseElement as IArc).Points; }
+      }
+
+      /*public Point Center
       {
          get
          {
@@ -108,7 +99,7 @@ namespace Pppv.Editor.Shapes
                }
             }
          }
-      }
+      }*/
 
       private Point SourceConnectPoint
       {
@@ -122,39 +113,7 @@ namespace Pppv.Editor.Shapes
          set { this.targetConnectPoint = value; }
       }
 
-      public void MoveBy(Point radiusVector)
-      {
-         Point old = new Point(this.location.X, this.location.Y);
-         this.Location = new Point(this.X + radiusVector.X, this.Y + radiusVector.Y);
-         this.OnMove(new MoveEventArgs(old, this.Location));
-         this.OnChange(new EventArgs());
-      }
-
-      public bool Intersect(Point point)
-      {
-         return this.HitRegion.IsVisible(point);
-      }
-
-      public bool Intersect(Rectangle rectangle)
-      {
-         return this.HitRegion.IsVisible(rectangle);
-      }
-
-      public bool Intersect(Region region)
-      {
-         /*Region tmp = new Region(HitRegion);
-         tmp.Intersect(_region);
-         return tmp.IsEmpty;*/
-         return false;
-      }
-
-      /*Чисто фиктивно, просто чтобы реализовать абстрактный член*/
-      public Point GetConnectPoint(Point from)
-      {
-         return this.Center;
-      }
-
-      public void Draw(PaintEventArgs e)
+      public override void Draw(PaintEventArgs e)
       {
          Graphics dc = e.Graphics;
          dc.SmoothingMode = SmoothingMode.HighQuality;
@@ -183,105 +142,42 @@ namespace Pppv.Editor.Shapes
          this.OnPaint(new PaintEventArgs(e.Graphics, e.ClipRectangle));
       }
 
-      public Point GetConnectPoint(Point from, NetCanvas onCanvas)
-      {
-         Graphics g;
-         Point pilon = new Point();
-         if (onCanvas != null)
-         {
-            g = onCanvas.CreateGraphics();
-            Region reg = new Region();
-            reg = this.HitRegion.Clone();
-            Pen greenPen = new Pen(Color.Black, 1);
-            GraphicsPath gp = new GraphicsPath();
-            Rectangle rect = new Rectangle();
-
-            /*Если не посчитается, просто вернём центр*/
-            pilon.X = this.Center.X;
-            pilon.Y = this.Center.Y;
-
-            if (from != this.Center)
-            {
-               gp.AddLine(from, this.Center);
-               gp.Widen(greenPen);
-               reg.Intersect(gp);
-               RectangleF bounds = reg.GetBounds(g);
-               rect = Rectangle.Ceiling(bounds);
-               if (from.X <= this.Center.X)
-               {
-                  if (from.Y <= this.Center.Y)
-                  {
-                     pilon.X = rect.Left;
-                     pilon.Y = rect.Top;
-                  }
-                  else
-                  {
-                     pilon.X = rect.Left;
-                     pilon.Y = rect.Bottom;
-                  }
-               }
-               else
-               {
-                  if (from.Y <= this.Center.Y)
-                  {
-                     pilon.X = rect.Right;
-                     pilon.Y = rect.Top;
-                  }
-                  else
-                  {
-                     pilon.X = rect.Right;
-                     pilon.Y = rect.Bottom;
-                  }
-               }
-
-               g.Dispose();
-            }
-         }
-         else
-         {
-            pilon.X = this.Center.X;
-            pilon.Y = this.Center.Y;
-         }
-
-         return pilon;
-      }
-
       public void UpdateConnectPoints()
       {
-         Point mousePositionOnCanvas = this.ParentNet.Canvas.PointToClient(System.Windows.Forms.Control.MousePosition);
-         IShape sourceShape = this.ParentNet.GetShapeForElement(this.Source);
-         IShape targetShape = this.ParentNet.GetShapeForElement(this.Target);
+         Point mousePositionOnCanvas = this.ParentNetGraphical.Canvas.PointToClient(System.Windows.Forms.Control.MousePosition);
+         IShape sourceShape = this.ParentNetGraphical.FindShapeForElement(this.ParentNet.GetElementById(this.SourceId));
+         IShape targetShape = this.ParentNetGraphical.FindShapeForElement(this.ParentNet.GetElementById(this.TargetId));
          
          if (this.Points.Count == 0)
          {
-            if (this.Target != null)
+            if (String.IsNullOrEmpty(this.TargetId))
             {
-               this.SourceConnectPoint = sourceShape.GetConnectPoint(targetShape.Center);
+               this.SourceConnectPoint = sourceShape.GetConnectPoint(mousePositionOnCanvas);
             }
             else
             {
-               this.SourceConnectPoint = sourceShape.GetConnectPoint(mousePositionOnCanvas);
+               this.SourceConnectPoint = sourceShape.GetConnectPoint(targetShape.Center);
             }
          }
          else
          {
-            this.SourceConnectPoint = sourceShape.GetConnectPoint((this.Points[0] as Pilon).Center);
+            // this.SourceConnectPoint = sourceShape.GetConnectPoint((this.Points[0] as Pilon).Center);
          }
 
          if (this.Points.Count == 0)
          {
-            if (this.Target != null)
+            if (String.IsNullOrEmpty(this.TargetId))
             {
-               this.TargetConnectPoint = targetShape.GetConnectPoint(sourceShape.Center);
+               this.TargetConnectPoint = mousePositionOnCanvas;
             }
             else
             {
-               this.TargetConnectPoint = mousePositionOnCanvas;
+               this.TargetConnectPoint = targetShape.GetConnectPoint(sourceShape.Center);
             }
          }
          else
          {
-            this.TargetConnectPoint = targetShape.GetConnectPoint((this.Points[this.Points.Count - 1] as Pilon).Center);
+            // this.TargetConnectPoint = targetShape.GetConnectPoint((this.Points[this.Points.Count - 1] as Pilon).Center);
          }
 
          this.UpdateHitRegion();
@@ -302,7 +198,7 @@ namespace Pppv.Editor.Shapes
          base.OnParentNetChange(e);
       }*/
 
-      public void UpdateHitRegion()
+      public override void UpdateHitRegion()
       {
          using (PreciseTimer pr = new PreciseTimer("Arc.UpdateRegion"))
          {
@@ -330,11 +226,6 @@ namespace Pppv.Editor.Shapes
          }
       }
 
-      public void ParentNetDrawHandler(object sender, PaintEventArgs e)
-      {
-         this.Draw(e);
-      }
-
       protected static CustomLineCap ArrowCapFabric()
       {
          GraphicsPath capPath = new GraphicsPath();
@@ -357,33 +248,6 @@ namespace Pppv.Editor.Shapes
       protected static PositionOnArc DeterminePenCapPlaceForBaseArc()
       {
          return PositionOnArc.End;
-      }
-
-      protected void OnPaint(PaintEventArgs e)
-      {
-         if (this.Paint != null)
-         {
-            this.Paint(this, e);
-         }
-      }
-
-      protected void OnMove(MoveEventArgs args)
-      {
-         this.UpdateHitRegion();
-         if (this.Move != null)
-         {
-            this.Move(this, args);
-         }
-
-         this.OnChange(new EventArgs());
-      }
-
-      protected void OnChange(EventArgs args)
-      {
-         if (this.Change != null)
-         {
-            this.Change(this, args);
-         }
       }
 
       protected Pen PenFactory(PositionOnArc penCapPlace)
@@ -425,7 +289,7 @@ namespace Pppv.Editor.Shapes
 
       protected PositionOnArc DeterminePenCapPlaceForInhibitorArc()
       {
-         if (this.Source is Transition)
+         if (this.Source is ITransition)
          {
             return PositionOnArc.Start;
          }

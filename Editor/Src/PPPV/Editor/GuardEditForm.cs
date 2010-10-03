@@ -9,11 +9,11 @@
 
    public class GuardEditForm : Form
    {
-      private Transition transition;
+      private ITransition transition;
       private TextBox textBoxGuard;
       private Button bOK, bCancel;
 
-      public GuardEditForm(Transition transition)
+      public GuardEditForm(ITransition transition)
       {
          this.transition = transition;
          this.Size = new Size(300, 110);

@@ -35,14 +35,14 @@ namespace Pppv.Editor
       public new void Add(IShape value)
       {
          base.Add(value);
-         value.ParentNet = this.parentNet;
+         value.ParentNetGraphical = this.parentNet;
          this.ParentNet.Paint += value.ParentNetDrawHandler;
       }
 
       public new void Remove(IShape value)
       {
          base.Remove(value);
-         value.ParentNet = null;
+         value.ParentNetGraphical = null;
          this.ParentNet.Paint -= value.ParentNetDrawHandler;
       }
 
@@ -50,7 +50,7 @@ namespace Pppv.Editor
       {
          foreach (IShape shape in this)
          {
-            shape.ParentNet = null;
+            shape.ParentNetGraphical = null;
             this.ParentNet.Paint -= shape.ParentNetDrawHandler;
          }
 
@@ -62,7 +62,7 @@ namespace Pppv.Editor
          foreach (IShape shape in collection)
          {
             base.Add(shape);
-            shape.ParentNet = this.parentNet;
+            shape.ParentNetGraphical = this.parentNet;
             this.ParentNet.Paint += shape.ParentNetDrawHandler;
          }
       }

@@ -6,17 +6,18 @@
    using System.Windows.Forms;
 
    using Pppv.Editor.Shapes;
+   using Pppv.Net;
 
    public class PlaceEditForm : Form
    {
-      private PlaceShape place;
+      private IPlace place;
       private Label lableName;
       private TextBox textBoxName;
       private GroupBox groupBox;
       private Button bOK, bCancel;
       private TokensEditControl tokensEditControl;
 
-      public PlaceEditForm(PlaceShape pl)
+      public PlaceEditForm(IPlace pl)
       {
          this.place = pl;
          this.Size = new Size(500, 450);

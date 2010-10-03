@@ -20,6 +20,11 @@
          this.list = new Collection<Predicate>();
       }
 
+      public PredicateList(XmlReader reader) : this()
+      {
+         this.ReadXml(reader);
+      }
+
       public Collection<Predicate> List
       {
          get { return this.list; }

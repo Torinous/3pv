@@ -69,7 +69,7 @@
          set { this.additionalCode = value; }
       }
 
-      public void AddElement(NetElement element)
+      public void AddElement(INetElement element)
       {
          if (element is Place)
          {
@@ -92,9 +92,9 @@
          element.ParentNet = this;
       }
 
-      public void DeleteElement(NetElement element)
+      public void DeleteElement(INetElement element)
       {
-         element.PrepareToDeletion();
+         element.ParentNet = null;
          if (element is Place)
          {
             this.Places.Remove(element);
@@ -111,11 +111,11 @@
          }
       }
 
-      public bool HaveArcBetween(NetElement fromElement, NetElement toElement)
+      public bool HaveArcBetween(INetElement fromElement, INetElement toElement)
       {
          for (int i = 0; i < this.Arcs.Count; ++i)
          {
-            if ((this.Arcs[i] as Arc).Source == fromElement && (this.Arcs[i] as Arc).Target == toElement)
+            if ((this.Arcs[i] as Arc).SourceId == fromElement.Id && (this.Arcs[i] as Arc).TargetId == toElement.Id)
             {
                return true;
             }
@@ -218,13 +218,13 @@
                      break;
                   case "arc":
                      subTreeReader = reader.ReadSubtree();
-                     this.AddElement(new Arc(subTreeReader, this));
+                     this.AddElement(new Arc(subTreeReader, ArcType.BaseArc));
                      subTreeReader.Close();
                      reader.Skip();
                      break;
                   case "inhibitorArc":
                      subTreeReader = reader.ReadSubtree();
-                     this.AddElement(new Arc(subTreeReader, this));
+                     this.AddElement(new Arc(subTreeReader, ArcType.InhibitorArc));
                      subTreeReader.Close();
                      reader.Skip();
                      break;

@@ -22,26 +22,26 @@
          EditorApplication a = EditorApplication.Instance;
          if (Element is ArcShape)
          {
-            Form f = new ArcEditForm((ArcShape)Element);
+            Form f = new ArcEditForm((IArc)Element);
             f.ShowDialog(a.MainFormInst);
             f.Dispose();
          }
 
          if (Element is TransitionShape)
          {
-            Form f = new GuardEditForm((TransitionShape)Element);
+            Form f = new GuardEditForm((ITransition)Element);
             f.ShowDialog(a.MainFormInst);
             f.Dispose();
          }
 
          if (Element is PlaceShape)
          {
-            Form f = new PlaceEditForm((PlaceShape)Element);
+            Form f = new PlaceEditForm((IPlace)Element);
             f.ShowDialog(a.MainFormInst);
             f.Dispose();
          }
 
-         Element.ParentNet.Canvas.Invalidate();
+         Element.ParentNetGraphical.Canvas.Invalidate();
       }
 
       public override void Unexecute()
