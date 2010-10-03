@@ -124,6 +124,7 @@
     <Compile Include="Src\PPPV\Editor\Shapes\MoveEventArgs.cs" />
     <Compile Include="Src\PPPV\Editor\Shapes\PlaceShape.cs" />
     <Compile Include="Src\PPPV\Editor\Shapes\ResizeEventArgs.cs" />
+    <Compile Include="Src\PPPV\Editor\Shapes\Shape.cs" />
     <Compile Include="Src\PPPV\Editor\Shapes\Tests\ShapeTests.cs" />
     <Compile Include="Src\PPPV\Editor\Shapes\TransitionShape.cs" />
     <Compile Include="Src\PPPV\Editor\TabControlForNets.cs" />
@@ -138,6 +139,10 @@
     <Compile Include="Src\PPPV\Editor\Tools\TransitionTool.cs" />
     <Compile Include="Src\PPPV\Net\Arc.cs" />
     <Compile Include="Src\PPPV\Net\ArcType.cs" />
+    <Compile Include="Src\PPPV\Net\IArc.cs" />
+    <Compile Include="Src\PPPV\Net\INetElement.cs" />
+    <Compile Include="Src\PPPV\Net\IPlace.cs" />
+    <Compile Include="Src\PPPV\Net\ITransition.cs" />
     <Compile Include="Src\PPPV\Net\MouseEventArgs.cs" />
     <Compile Include="Src\PPPV\Net\NetElement.cs" />
     <Compile Include="Src\PPPV\Net\NetElementEnumerator.cs" />
@@ -146,7 +151,6 @@
     <Compile Include="Src\PPPV\Net\PenCapPlace.cs" />
     <Compile Include="Src\PPPV\Net\PetriNet.cs" />
     <Compile Include="Src\PPPV\Net\PetriNetPrologTranslated.cs" />
-    <Compile Include="Src\PPPV\Net\Pilon.cs" />
     <Compile Include="Src\PPPV\Net\Place.cs" />
     <Compile Include="Src\PPPV\Net\Predicate.cs" />
     <Compile Include="Src\PPPV\Net\PredicateList.cs" />

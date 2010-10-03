@@ -112,16 +112,16 @@
       }
 
       [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase", Justification = "Синтасис Prolog обязывает")]
-      public string Precondition(Transition inTransition)
+      public string Precondition(INetElement inTransition)
       {
          StringBuilder text = new StringBuilder(100);
          foreach (Arc arc in this.Arcs)
          {
-            if (arc.Target == inTransition)
+            if (arc.TargetId == inTransition.Id)
             {
                foreach (Place place in this.Places)
                {
-                  if (place == arc.Source)
+                  if (place.Id == arc.SourceId)
                   {
                      foreach (Predicate predicate in arc.Cortege.List)
                      {
@@ -143,16 +143,16 @@
       }
 
       [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase", Justification = "Синтасис Prolog обязывает")]
-      public string Postcondition(Transition transition)
+      public string Postcondition(INetElement transition)
       {
          StringBuilder text = new StringBuilder(100);
          foreach (Arc arc in this.Arcs)
          {
-            if (arc.Source == transition)
+            if (arc.SourceId == transition.Id)
             {
                foreach (Place place in this.Places)
                {
-                  if (place == arc.Target)
+                  if (place.Id == arc.TargetId)
                   {
                      foreach (Predicate predicate in arc.Cortege.List)
                      {

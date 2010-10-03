@@ -50,7 +50,7 @@
       {
          if (this.Element != null)
          {
-            PetriNetGraphical net = this.Element.ParentNet;
+            PetriNetGraphical net = this.Element.ParentNetGraphical;
             net.DeleteElement(this.Element);
             if (net.Canvas != null)
             {

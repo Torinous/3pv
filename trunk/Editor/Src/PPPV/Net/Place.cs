@@ -14,7 +14,7 @@
 
    [Serializable()]
    [XmlRoot("place")]
-   public class Place : NetElement, IXmlSerializable
+   public class Place : NetElement, IPlace
    {
       private TokensList tokens;
 
@@ -27,6 +27,7 @@
       {
       }
 
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "Не смертельно")]
       public Place(XmlReader reader) : this(new Point(0, 0))
       {
          this.ReadXml(reader);
@@ -37,7 +38,7 @@
          get { return this.tokens; }
       }
 
-      public void WriteXml(XmlWriter writer)
+      public override void WriteXml(XmlWriter writer)
       {
          writer.WriteAttributeString("id", this.Name);
          writer.WriteStartElement("graphics");
@@ -56,7 +57,7 @@
          writer.WriteEndElement(); // initialMarking
       }
 
-      public void ReadXml(XmlReader reader)
+      public override void ReadXml(XmlReader reader)
       {
          XmlReader subTreeReader;
          reader.Read();
@@ -100,7 +101,7 @@
          }
       }
 
-      public XmlSchema GetSchema()
+      public override XmlSchema GetSchema()
       {
          return null;
       }

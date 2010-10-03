@@ -43,7 +43,7 @@
          set { pictogram = value; }
       }
 
-      protected override ArcShape ArcFabric(NetElement clicked)
+      protected override ArcShape ArcFabric(INetElement clicked)
       {
          return (ArcShape)this.EventSourceNet.CreateShapeForNetElement(new Arc(clicked, ArcType.InhibitorArc));
       }

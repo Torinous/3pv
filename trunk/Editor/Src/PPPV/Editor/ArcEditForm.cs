@@ -9,14 +9,14 @@
 
    public class ArcEditForm : Form
    {
-      private Arc arc;
+      private IArc arc;
       private Label lableName;
       private TextBox textBoxId;
       private GroupBox groupBox;
       private Button bOK, bCancel;
       private CortegeEditControl cortegeEditControl;
 
-      public ArcEditForm(Arc arc)
+      public ArcEditForm(IArc arc)
       {
          this.arc = arc;
          this.Size = new Size(500, 450);

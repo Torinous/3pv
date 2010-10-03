@@ -7,7 +7,7 @@
 
    public class AddNetElementCommand : NetCommand
    {
-      private NetElement element;
+      private INetElement element;
 
       public AddNetElementCommand()
       {
@@ -32,7 +32,7 @@
          Net = net;
       }
 
-      public NetElement Element
+      public INetElement Element
       {
          get { return this.element; }
          set { this.element = value; }

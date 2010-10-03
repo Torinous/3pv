@@ -13,9 +13,9 @@
    using Pppv.Editor;
    using Pppv.Utils;
 
-   public class Arc : NetElement, IXmlSerializable
+   public class Arc : NetElement, IArc
    {
-      private NetElement source, target;
+      private string sourceId, targetId;
       private ArcType arcType;
       private PredicateList cortege;
       private ArrayList points;
@@ -26,20 +26,23 @@
          this.points = new ArrayList(20);
          this.cortege = new PredicateList();
       }
-      
-      public Arc(NetElement startElement, ArcType type) : this(type)
-      {
-         this.Source = startElement;
 
-         if (startElement != null)
-         {
-            this.ParentNet = startElement.ParentNet;
-         }
+      public Arc() : this(ArcType.BaseArc)
+      {
       }
 
-      public Arc(XmlReader reader, PetriNet net) : this((NetElement)null, ArcType.BaseArc)
+      public Arc(string startElementId, ArcType type) : this(type)
       {
-         ParentNet = net;
+         this.SourceId = startElementId;
+      }
+
+      public Arc(INetElement startElement, ArcType type) : this(startElement.Id, type)
+      {
+      }
+
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "Не смертельно")]
+      public Arc(XmlReader reader, ArcType type) : this(type)
+      {
          this.ReadXml(reader);
       }
 
@@ -48,7 +51,7 @@
          get { return this.arcType; }
          set { this.arcType = value; }
       }
-      
+
       public ArrayList Points
       {
          get { return this.points; }
@@ -57,39 +60,40 @@
       public PredicateList Cortege
       {
          get { return this.cortege; }
+         protected set { this.cortege = value; }
       }
 
-      public NetElement Target
+      public string TargetId
       {
          get
          {
-            return this.target;
+            return this.targetId;
          }
 
          set
          {
-            this.target = value;
+            this.targetId = value;
             this.Id = this.MakeId();
          }
       }
 
-      public NetElement Source
+      public string SourceId
       {
          get
          {
-            return this.source;
+            return this.sourceId;
          }
 
          set
          {
-            this.source = value;
+            this.sourceId = value;
             this.Id = this.MakeId();
          }
       }
 
       public bool Unfinished
       {
-         get { return this.Target == null; }
+         get { return String.IsNullOrEmpty(this.TargetId); }
       }
 
       public string ArcTypeName
@@ -107,44 +111,36 @@
          }
       }
 
-      public override void PrepareToDeletion()
+      public override void WriteXml(XmlWriter writer)
       {
-         this.Source = null;
-         this.Target = null;
-         base.PrepareToDeletion();
-      }
-
-      public void WriteXml(XmlWriter writer)
-      {
-         int i = 0;
          writer.WriteAttributeString("id", this.Id);
-         writer.WriteAttributeString("source", this.Source.Name);
-         writer.WriteAttributeString("target", this.Target.Name);
-         foreach (Pilon p in this.Points)
-         {
+         writer.WriteAttributeString("source", this.SourceId);
+         writer.WriteAttributeString("target", this.TargetId);
+         /*foreach (Pilon p in this.Points) {
             writer.WriteStartElement("arcpath");
-            writer.WriteAttributeString("id",  String.Format(CultureInfo.CurrentCulture, "{0:000}", i));
+            writer.WriteAttributeString("id", String.Format(CultureInfo.CurrentCulture, "{0:000}", i));
             writer.WriteAttributeString("x", p.X.ToString(CultureInfo.CurrentCulture));
             writer.WriteAttributeString("y", p.Y.ToString(CultureInfo.CurrentCulture));
             writer.WriteAttributeString("curvePoint", "false");
-            writer.WriteEndElement(); // arcpath
+            writer.WriteEndElement();
+            // arcpath
             i++;
-         }
+         }*/
 
          writer.WriteStartElement("cortege");
          this.cortege.WriteXml(writer);
          writer.WriteEndElement(); // cortege
       }
 
-      public void ReadXml(XmlReader reader)
+      public override void ReadXml(XmlReader reader)
       {
          XmlReader subTreeReader;
          reader.Read();
          reader.MoveToAttribute("id");
          reader.MoveToAttribute("source");
-         this.Source = Parent.GetElementById(reader.Value);
+         this.SourceId = reader.Value;
          reader.MoveToAttribute("target");
-         this.Target = Parent.GetElementById(reader.Value);
+         this.TargetId = reader.Value;
          reader.ReadStartElement(this.ArcTypeName);
          while (reader.NodeType != XmlNodeType.EndElement)
          {
@@ -152,16 +148,16 @@
             {
                case "cortege":
                   subTreeReader = reader.ReadSubtree();
-                  this.Cortege.ReadXml(subTreeReader);
+                  this.Cortege = new PredicateList(subTreeReader);
                   subTreeReader.Close();
                   reader.Skip();
                   break;
-               case "arcpath":
+               /*case "arcpath":
                   this.Points.Add(new Pilon(new Point(int.Parse(reader.GetAttribute("x"), CultureInfo.InvariantCulture), int.Parse(reader.GetAttribute("y"), CultureInfo.InvariantCulture))));
                   reader.MoveToAttribute("curvePoint");
                   reader.MoveToElement();
                   reader.Skip();
-                  break;
+                  break;*/
                default:
                   reader.Read();
                   break;
@@ -169,7 +165,7 @@
          }
       }
 
-      public XmlSchema GetSchema()
+      public override XmlSchema GetSchema()
       {
          return null;
       }
@@ -198,18 +194,7 @@
 
       private string MakeId()
       {
-         string source = String.Empty, target = String.Empty;
-         if (this.Source != null)
-         {
-            source = this.Source.Id;
-         }
-
-         if (this.Target != null)
-         {
-            target = this.Target.Id;
-         }
-
-         return source + " to " + target;
+         return this.SourceId + " to " + this.TargetId;
       }
    }
 }
