@@ -5,7 +5,7 @@
  * Time: 2:48
  */
 
-namespace Pppv.Net.Tests
+namespace Pppv.Net
 {
    using System;
    using System.Drawing;

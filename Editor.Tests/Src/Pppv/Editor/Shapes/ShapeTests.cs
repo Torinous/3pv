@@ -5,7 +5,7 @@
  * Time: 15:46
  */
 
-namespace Pppv.Editor.Shapes.Tests
+namespace Pppv.Editor.Shapes
 {
    using System;
    using System.Drawing;
