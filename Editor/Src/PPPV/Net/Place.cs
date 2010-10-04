@@ -27,20 +27,15 @@
       {
       }
 
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "Не смертельно")]
-      public Place(XmlReader reader) : this(new Point(0, 0))
-      {
-         this.ReadXml(reader);
-      }
-
       public TokensList Tokens
       {
          get { return this.tokens; }
+         private set { this.tokens = value; }
       }
 
       public override void WriteXml(XmlWriter writer)
       {
-         writer.WriteAttributeString("id", this.Name);
+         writer.WriteAttributeString("id", this.Id);
          writer.WriteStartElement("graphics");
          writer.WriteStartElement("position");
          writer.WriteAttributeString("x", this.X.ToString(CultureInfo.CurrentCulture) + ".0");
@@ -52,15 +47,13 @@
          writer.WriteString(this.Name);
          writer.WriteEndElement(); // value
          writer.WriteEndElement(); // name
-         writer.WriteStartElement("initialMarking");
-         this.Tokens.WriteXml(writer);
-         writer.WriteEndElement(); // initialMarking
+         XmlSerializer serealizer = new XmlSerializer(this.Tokens.GetType());
+         serealizer.Serialize(writer, this.Tokens);
       }
 
       public override void ReadXml(XmlReader reader)
       {
          XmlReader subTreeReader;
-         reader.Read();
          reader.MoveToAttribute("id");
          this.Id = reader.Value;
          reader.ReadStartElement("place");
@@ -91,7 +84,9 @@
                   break;
                case "initialMarking":
                   subTreeReader = reader.ReadSubtree();
-                  this.Tokens.ReadXml(subTreeReader);
+                  this.Tokens = new TokensList();
+                  XmlSerializer serealizer = new XmlSerializer(typeof(TokensList));
+                  this.Tokens = serealizer.Deserialize(subTreeReader) as TokensList;
                   subTreeReader.Close();
                   reader.Skip();
                   break;

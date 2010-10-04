@@ -61,7 +61,8 @@
                if (!(clicked is Arc) && clicked != null)
                {
                   this.Arc = this.ArcFabric(clicked.BaseElement);
-                  EventSourceNet.Paint += this.Arc.ParentNetDrawHandler;
+                  this.Arc.BaseElement.ParentNet = this.EventSourceNet.BaseNet;
+                  this.EventSourceNet.Paint += this.Arc.ParentNetDrawHandler;
                }
             }
             else
@@ -119,7 +120,7 @@
 
       protected virtual ArcShape ArcFabric(INetElement clicked)
       {
-         return (ArcShape)EventSourceNet.CreateShapeForNetElement(new Arc(clicked, ArcType.BaseArc));
+         return (ArcShape)EventSourceNet.CreateShapeForNetElement(new Arc(clicked, ArcType.NormalArc));
       }
 
       protected void ClearTemporaryArc()

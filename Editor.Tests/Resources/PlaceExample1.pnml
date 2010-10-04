@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<place id="P0">
+  <graphics>
+    <position x="111.0" y="73.0" />
+  </graphics>
+  <name>
+    <value>sdsfda</value>
+  </name>
+  <initialMarking>
+    <token>
+      <value>1</value>
+    </token>
+    <token>
+      <value>2</value>
+    </token>
+    <token>
+      <value>3</value>
+    </token>
+    <token>
+      <value>4</value>
+    </token>
+  </initialMarking>
+</place>

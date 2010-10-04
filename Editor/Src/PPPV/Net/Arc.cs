@@ -13,21 +13,23 @@
    using Pppv.Editor;
    using Pppv.Utils;
 
+   [Serializable()]
+   [XmlRoot("arc")]
    public class Arc : NetElement, IArc
    {
       private string sourceId, targetId;
       private ArcType arcType;
-      private PredicateList cortege;
+      private PredicatesList cortege;
       private ArrayList points;
 
       public Arc(ArcType type) : base(new Point(0, 0))
       {
          this.ArcType = type;
          this.points = new ArrayList(20);
-         this.cortege = new PredicateList();
+         this.cortege = new PredicatesList();
       }
 
-      public Arc() : this(ArcType.BaseArc)
+      public Arc() : this(ArcType.NormalArc)
       {
       }
 
@@ -38,12 +40,6 @@
 
       public Arc(INetElement startElement, ArcType type) : this(startElement.Id, type)
       {
-      }
-
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "Не смертельно")]
-      public Arc(XmlReader reader, ArcType type) : this(type)
-      {
-         this.ReadXml(reader);
       }
 
       public ArcType ArcType
@@ -57,7 +53,7 @@
          get { return this.points; }
       }
 
-      public PredicateList Cortege
+      public PredicatesList Cortege
       {
          get { return this.cortege; }
          protected set { this.cortege = value; }
@@ -100,13 +96,13 @@
       {
          get
          {
-            if (this.ArcType == ArcType.BaseArc)
+            if (this.ArcType == ArcType.NormalArc)
             {
-               return "arc";
+               return "normal";
             }
             else
             {
-               return "inhibitorArc";
+               return "inhibitor";
             }
          }
       }
@@ -127,28 +123,32 @@
             i++;
          }*/
 
-         writer.WriteStartElement("cortege");
-         this.cortege.WriteXml(writer);
-         writer.WriteEndElement(); // cortege
+         XmlSerializer cortegeSerealizer = new XmlSerializer(typeof(PredicatesList));
+         cortegeSerealizer.Serialize(writer, this.Cortege);
+
+         writer.WriteStartElement("type");
+         writer.WriteAttributeString("value", this.ArcTypeName);
+         writer.WriteEndElement(); // type
       }
 
       public override void ReadXml(XmlReader reader)
       {
          XmlReader subTreeReader;
-         reader.Read();
          reader.MoveToAttribute("id");
          reader.MoveToAttribute("source");
          this.SourceId = reader.Value;
          reader.MoveToAttribute("target");
          this.TargetId = reader.Value;
-         reader.ReadStartElement(this.ArcTypeName);
+         reader.ReadStartElement("arc");
          while (reader.NodeType != XmlNodeType.EndElement)
          {
             switch (reader.Name)
             {
                case "cortege":
                   subTreeReader = reader.ReadSubtree();
-                  this.Cortege = new PredicateList(subTreeReader);
+                  XmlSerializer serealizer = new XmlSerializer(typeof(PredicatesList));
+                  this.Cortege = new PredicatesList();
+                  this.Cortege = serealizer.Deserialize(subTreeReader) as PredicatesList;
                   subTreeReader.Close();
                   reader.Skip();
                   break;
@@ -158,6 +158,19 @@
                   reader.MoveToElement();
                   reader.Skip();
                   break;*/
+                case "type":
+                  reader.MoveToAttribute("value");
+                  if (reader.Value == "normal")
+                  {
+                     this.ArcType = ArcType.NormalArc;
+                  }
+                  else
+                  {
+                     this.ArcType = ArcType.InhibitorArc;
+                  }
+                  reader.MoveToElement();
+                  reader.Skip();
+                  break;
                default:
                   reader.Read();
                   break;

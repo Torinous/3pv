@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<pnml>
+  <net id="full.pnml" type="PPr/T net">
+    <place id="P0">
+      <graphics>
+        <position x="141.0" y="40.0" />
+      </graphics>
+      <name>
+        <value>place</value>
+      </name>
+      <initialMarking>
+        <token>
+          <value>Z</value>
+        </token>
+        <token>
+          <value>Y</value>
+        </token>
+        <token>
+          <value>X</value>
+        </token>
+      </initialMarking>
+    </place>
+    <place id="P1">
+      <graphics>
+        <position x="152.0" y="176.0" />
+      </graphics>
+      <name>
+        <value>place_anti</value>
+      </name>
+      <initialMarking>
+        <token>
+          <value>1</value>
+        </token>
+        <token>
+          <value>2</value>
+        </token>
+        <token>
+          <value>3</value>
+        </token>
+      </initialMarking>
+    </place>
+    <place id="P2">
+      <graphics>
+        <position x="500.0" y="97.0" />
+      </graphics>
+      <name>
+        <value>exit</value>
+      </name>
+      <initialMarking />
+    </place>
+    <transition id="T0">
+      <graphics>
+        <position x="342.0" y="100.0" />
+      </graphics>
+      <name>
+        <value>T0</value>
+      </name>
+      <guard>
+        <value />
+      </guard>
+    </transition>
+    <arc id="P0 to T0" source="P0" target="T0">
+      <cortege>
+        <predicate>
+          <value>Char</value>
+        </predicate>
+      </cortege>
+      <type value="normal" />
+    </arc>
+    <arc id="T0 to P2" source="T0" target="P2">
+      <cortege>
+        <predicate>
+          <value>Char</value>
+        </predicate>
+      </cortege>
+      <type value="normal" />
+    </arc>
+    <arc id="P1 to T0" source="P1" target="T0">
+      <cortege>
+        <predicate>
+          <value>X</value>
+        </predicate>
+      </cortege>
+      <type value="inhibitor" />
+    </arc>
+    <additionalCode />
+  </net>
+</pnml>

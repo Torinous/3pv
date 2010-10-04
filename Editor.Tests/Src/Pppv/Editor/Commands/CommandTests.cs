@@ -10,8 +10,6 @@ namespace Pppv.Editor.Commands
    using System;
    using NUnit.Framework;
 
-   using Pppv.Editor.Commands;
-
    [TestFixture]
    public class CommonCommandsTests
    {

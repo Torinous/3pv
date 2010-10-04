@@ -4,7 +4,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>Library</OutputType>
-    <RootNamespace>Editor.Tests</RootNamespace>
+    <RootNamespace>Pppv</RootNamespace>
     <AssemblyName>Editor.Tests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -61,17 +61,34 @@
     <Compile Include="Src\Pppv\Net\ArcTests.cs" />
     <Compile Include="Src\Pppv\Net\PetriNetTests.cs" />
     <Compile Include="Src\Pppv\Net\PlaceTests.cs" />
+    <Compile Include="Src\Pppv\Net\PredicatesListTests.cs" />
+    <Compile Include="Src\Pppv\Net\PredicateTests.cs" />
     <Compile Include="Src\Pppv\Net\TokenListTests.cs" />
     <Compile Include="Src\Pppv\Net\TokenTests.cs" />
     <Compile Include="Src\Pppv\Net\TransitionTests.cs" />
+    <Compile Include="Src\Pppv\Utils\SerealizationTestHelper.cs" />
+    <EmbeddedResource Include="Resources\TokensListExample1.pnml" />
+    <EmbeddedResource Include="Resources\TokenExample1.pnml" />
+    <EmbeddedResource Include="Resources\TokensListExample2.pnml" />
+    <EmbeddedResource Include="Resources\PredicateExample1.pnml" />
+    <EmbeddedResource Include="Resources\PredicateExample2.pnml" />
+    <EmbeddedResource Include="Resources\PredicateExample3.pnml" />
+    <EmbeddedResource Include="Resources\PredicatesListExample1.pnml" />
+    <EmbeddedResource Include="Resources\PredicatesListExample2.pnml" />
+    <EmbeddedResource Include="Resources\TransitionExample1.pnml" />
+    <EmbeddedResource Include="Resources\PlaceExample1.pnml" />
+    <EmbeddedResource Include="Resources\ArcExample1.pnml" />
+    <EmbeddedResource Include="Resources\PetriNetExample1.pnml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Resources" />
     <Folder Include="Src" />
     <Folder Include="Src\Pppv" />
     <Folder Include="Src\Pppv\Editor" />
     <Folder Include="Src\Pppv\Editor\Commands" />
     <Folder Include="Src\Pppv\Editor\Shapes" />
     <Folder Include="Src\Pppv\Net" />
+    <Folder Include="Src\Pppv\Utils" />
     <ProjectReference Include="..\Editor\Editor.csproj">
       <Project>{8C38059E-436D-468D-A131-040EF303CBF1}</Project>
       <Name>Editor</Name>

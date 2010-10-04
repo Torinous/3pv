@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<transition id="T0">
+  <graphics>
+    <position x="224.0" y="86.0" />
+  </graphics>
+  <name>
+    <value>T0</value>
+  </name>
+  <guard>
+    <value />
+  </guard>
+</transition>

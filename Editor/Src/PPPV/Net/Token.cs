@@ -2,11 +2,12 @@
 {
    using System;
    using System.Collections;
+   using System.Globalization;
    using System.Windows.Forms;
    using System.Xml;
    using System.Xml.Schema;
    using System.Xml.Serialization;
-   
+
    using Pppv.Utils;
 
    [Serializable()]
@@ -24,11 +25,6 @@
          this.text = text;
       }
 
-      public Token(XmlReader reader)
-      {
-         this.ReadXml(reader);
-      }
-
       public string Text
       {
          get { return this.text; }
@@ -42,26 +38,32 @@
 
       public void WriteXml(XmlWriter writer)
       {
-         writer.WriteStartElement("token");
          writer.WriteStartElement("value");
          writer.WriteString(this.Text);
          writer.WriteEndElement(); // value
-         writer.WriteEndElement(); // token
       }
 
       public void ReadXml(XmlReader reader)
       {
-         reader.Read();
-         if (reader.Name == "token" && reader.NodeType == XmlNodeType.Element)
+         if (reader.Name == "token")
          {
-            reader.ReadToDescendant("value");
-            this.Text = reader.ReadString();
-            reader.ReadEndElement(); // value
-            reader.ReadEndElement(); // token
+            if (!reader.IsEmptyElement)
+            {
+               reader.Read();
+               if (reader.Name == "value")
+               {
+                  this.Text = reader.ReadString();
+                  reader.ReadEndElement(); // token
+               }
+               else
+               {
+                  throw new NetException(String.Format(CultureInfo.InvariantCulture, "Невозможно десереализовать элемент token. Получен узел {0}, ожидался value", reader.Name));
+               }
+            }
          }
          else
          {
-            throw new NetException("Невозможно десереализовать Token. Не верен тип узла xml.");
+            throw new NetException(String.Format(CultureInfo.InvariantCulture, "Невозможно десереализовать элемент token. Получен узел {0}", reader.Name));
          }
       }
 

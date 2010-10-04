@@ -12,6 +12,7 @@ namespace Pppv.Net
    using NUnit.Framework.Constraints;
 
    using Pppv.Net;
+   using Pppv.Utils;
 
    [TestFixture]
    public class TokenTests
@@ -33,6 +34,15 @@ namespace Pppv.Net
       {
          Token token = new Token(TokenString);
          Assert.That(token.Text, Is.EqualTo(TokenString), "Хранимое значение в Token изменилось");
+      }
+
+      [Test]
+      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "В тестах не важно")]
+      public void TestOfSerealizationWithData()
+      {
+         Token token = new Token();
+         SerealizationTestHelper serealizationHelper = new SerealizationTestHelper(token, "Pppv.Resources.TokenExample1.pnml");
+         serealizationHelper.Perform();
       }
    }
 }
