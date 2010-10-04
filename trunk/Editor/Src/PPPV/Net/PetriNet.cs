@@ -160,28 +160,25 @@
 
       public void WriteXml(XmlWriter writer)
       {
+         XmlSerializer placeSerealizer = new XmlSerializer(typeof(Place));
+         XmlSerializer transitionSerealizer = new XmlSerializer(typeof(Transition));
+         XmlSerializer arcSerealizer = new XmlSerializer(typeof(Arc));
          writer.WriteStartElement("net");
          writer.WriteAttributeString("id", this.Id);
          writer.WriteAttributeString("type", this.NetType);
          foreach (Place place in this.Places)
          {
-            writer.WriteStartElement("place");
-            place.WriteXml(writer);
-            writer.WriteEndElement(); // place
+            placeSerealizer.Serialize(writer, place);
          }
 
          foreach (Transition transition in this.Transitions)
          {
-            writer.WriteStartElement("transition");
-            transition.WriteXml(writer);
-            writer.WriteEndElement(); // transition
+            transitionSerealizer.Serialize(writer, transition);
          }
 
          foreach (Arc arc in this.Arcs)
          {
-            writer.WriteStartElement(arc.ArcTypeName);
-            arc.WriteXml(writer);
-            writer.WriteEndElement(); // arc
+            arcSerealizer.Serialize(writer, arc);
          }
 
          writer.WriteStartElement("additionalCode");
@@ -206,25 +203,28 @@
                {
                   case "place":
                      subTreeReader = reader.ReadSubtree();
-                     this.AddElement(new Place(subTreeReader));
+                     Place place = new Place();
+                     XmlSerializer placeSerealizer = new XmlSerializer(place.GetType());
+                     place = placeSerealizer.Deserialize(subTreeReader) as Place;
+                     this.AddElement(place);
                      subTreeReader.Close();
                      reader.Skip();
                      break;
                   case "transition":
                      subTreeReader = reader.ReadSubtree();
-                     this.AddElement(new Transition(subTreeReader));
+                     Transition transition = new Transition();
+                     XmlSerializer transitionSerealizer = new XmlSerializer(transition.GetType());
+                     transition = transitionSerealizer.Deserialize(subTreeReader) as Transition;
+                     this.AddElement(transition);
                      subTreeReader.Close();
                      reader.Skip();
                      break;
                   case "arc":
                      subTreeReader = reader.ReadSubtree();
-                     this.AddElement(new Arc(subTreeReader, ArcType.BaseArc));
-                     subTreeReader.Close();
-                     reader.Skip();
-                     break;
-                  case "inhibitorArc":
-                     subTreeReader = reader.ReadSubtree();
-                     this.AddElement(new Arc(subTreeReader, ArcType.InhibitorArc));
+                     Arc arc = new Arc();
+                     XmlSerializer arcSerealizer = new XmlSerializer(typeof(Arc));
+                     arc = arcSerealizer.Deserialize(subTreeReader) as Arc;
+                     this.AddElement(arc);
                      subTreeReader.Close();
                      reader.Skip();
                      break;

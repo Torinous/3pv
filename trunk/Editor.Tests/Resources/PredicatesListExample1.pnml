@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<cortege>
+  <predicate>
+    <value>1</value>
+  </predicate>
+  <predicate>
+    <value>2</value>
+  </predicate>
+  <predicate>
+    <value>3</value>
+  </predicate>
+</cortege>

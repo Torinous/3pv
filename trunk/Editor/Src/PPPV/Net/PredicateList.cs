@@ -4,6 +4,7 @@
    using System.Collections;
    using System.Collections.Generic;
    using System.Collections.ObjectModel;
+   using System.Globalization;
    using System.Windows.Forms;
    using System.Xml;
    using System.Xml.Schema;
@@ -11,18 +12,13 @@
 
    [Serializable()]
    [XmlRoot("cortege")]
-   public class PredicateList : IXmlSerializable
+   public class PredicatesList : IXmlSerializable
    {
       private Collection<Predicate> list;
 
-      public PredicateList()
+      public PredicatesList()
       {
          this.list = new Collection<Predicate>();
-      }
-
-      public PredicateList(XmlReader reader) : this()
-      {
-         this.ReadXml(reader);
       }
 
       public Collection<Predicate> List
@@ -63,37 +59,36 @@
       {
          foreach (Predicate predicate in this.List)
          {
-            predicate.WriteXml(writer);
+            XmlSerializer serealizer = new XmlSerializer(predicate.GetType());
+            serealizer.Serialize(writer, predicate);
          }
       }
 
       public void ReadXml(XmlReader reader)
       {
          XmlReader subTreeReader;
-         reader.Read();
-         if (reader.Name == "cortege" && reader.NodeType == XmlNodeType.Element)
+         if (reader.Name == "cortege")
          {
             if (!reader.IsEmptyElement)
             {
-               reader.ReadToDescendant("predicate");
+               reader.Read();
                while (reader.Name == "predicate" && reader.NodeType == XmlNodeType.Element)
                {
                   subTreeReader = reader.ReadSubtree();
-                  this.Add(new Predicate(subTreeReader));
+                  Predicate predicate = new Predicate();
+                  XmlSerializer serealizer = new XmlSerializer(typeof(Predicate));
+                  predicate = serealizer.Deserialize(subTreeReader) as Predicate;
+                  this.Add(predicate);
                   subTreeReader.Close();
                   reader.Skip();
                }
 
-               reader.ReadEndElement(); // initialMarking
-            }
-            else
-            {
-               reader.Skip(); // initialMarking
+               reader.ReadEndElement(); // cortege
             }
          }
          else
          {
-            throw new NetException("Невозможно десереализовать PredicateList. Не верен тип узла xml.");
+            throw new NetException(String.Format(CultureInfo.InvariantCulture, "Невозможно десереализовать элемент cortege. Получен узел {0}", reader.Name));
          }
       }
 

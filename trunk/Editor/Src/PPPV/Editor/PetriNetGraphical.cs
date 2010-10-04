@@ -32,7 +32,6 @@
       private int width, height;
       private string fileOfNetPath;
       private bool netSaved;
-
       private PetriNet baseNet;
       private Editor.NetCanvas canvas;
       private ShapeCollection shapes;
@@ -186,6 +185,11 @@
          }
       }
 
+      public PetriNet BaseNet
+      {
+         get { return this.baseNet; }
+      }
+
       public new void AddElement(INetElement element)
       {
          this.baseNet.AddElement(element);
@@ -286,7 +290,7 @@
             stream = new StreamWriter(this.FileOfNetPath, false, Encoding.GetEncoding(1251));
             if (stream != null)
             {
-               XmlSerializer serealizer = new XmlSerializer(this.GetType());
+               XmlSerializer serealizer = new XmlSerializer(this.baseNet.GetType());
                serealizer.Serialize(stream, this.baseNet);
                stream.Close();
                this.OnSave(new SaveNetEventArgs(this));

@@ -25,11 +25,6 @@
          this.text = Upperfy(text);
       }
 
-      public Predicate(XmlReader reader)
-      {
-         this.ReadXml(reader);
-      }
-
       public string Text
       {
          get { return this.text; }
@@ -43,26 +38,32 @@
 
       public void WriteXml(XmlWriter writer)
       {
-         writer.WriteStartElement("predicate");
          writer.WriteStartElement("value");
          writer.WriteString(this.Text);
          writer.WriteEndElement(); // value
-         writer.WriteEndElement(); // token
       }
 
       public void ReadXml(XmlReader reader)
       {
-         reader.Read();
-         if (reader.Name == "predicate" && reader.NodeType == XmlNodeType.Element)
+         if (reader.Name == "predicate")
          {
-            reader.ReadToDescendant("value");
-            this.Text = reader.ReadString();
-            reader.ReadEndElement(); // value
-            reader.ReadEndElement(); // token
+            if (!reader.IsEmptyElement)
+            {
+               reader.Read();
+               if (reader.Name == "value")
+               {
+                  this.Text = reader.ReadString();
+                  reader.ReadEndElement(); // predicate
+               }
+               else
+               {
+                  throw new NetException(String.Format(CultureInfo.InvariantCulture, "Невозможно десереализовать элемент predicate. Получен узел {0}, ожидался value", reader.Name));
+               }
+            }
          }
          else
          {
-            throw new NetException("Невозможно десереализовать Predicate. Не верен тип узла xml.");
+            throw new NetException(String.Format(CultureInfo.InvariantCulture, "Невозможно десереализовать элемент predicate. Получен узел {0}", reader.Name));
          }
       }
 

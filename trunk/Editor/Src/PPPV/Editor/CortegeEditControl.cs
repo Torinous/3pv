@@ -29,9 +29,9 @@
       private TextBox textBoxCurrentPredicate;
       private Button buttonAdd;
       private Button buttonDelete;
-      private PredicateList listPredicates;
+      private PredicatesList listPredicates;
 
-      public CortegeEditControl(PredicateList listPredicates)
+      public CortegeEditControl(PredicatesList listPredicates)
       {
          this.listPredicates = listPredicates;
          this.Size = new System.Drawing.Size(400, 260);
@@ -39,7 +39,7 @@
          this.FetchFromList();
       }
 
-      public PredicateList ListPredicates
+      public PredicatesList ListPredicates
       {
          get { return this.listPredicates; }
       }

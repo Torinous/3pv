@@ -20,7 +20,7 @@
 
       ArrayList Points { get; }
 
-      PredicateList Cortege { get; }
+      PredicatesList Cortege { get; }
 
       string TargetId { get; set; }
 

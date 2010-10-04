@@ -65,7 +65,7 @@ namespace Pppv.Editor.Shapes
          get { return this.ParentNetGraphical.FindShapeForElement(this.ParentNet.GetElementById(this.SourceId)); }
       }
 
-      public PredicateList Cortege
+      public PredicatesList Cortege
       {
          get { return (this.BaseElement as IArc).Cortege; }
       }
@@ -145,9 +145,9 @@ namespace Pppv.Editor.Shapes
       public void UpdateConnectPoints()
       {
          Point mousePositionOnCanvas = this.ParentNetGraphical.Canvas.PointToClient(System.Windows.Forms.Control.MousePosition);
-         IShape sourceShape = this.ParentNetGraphical.FindShapeForElement(this.ParentNet.GetElementById(this.SourceId));
-         IShape targetShape = this.ParentNetGraphical.FindShapeForElement(this.ParentNet.GetElementById(this.TargetId));
-         
+         IShape sourceShape = this.Source;
+         IShape targetShape = this.Target;
+
          if (this.Points.Count == 0)
          {
             if (String.IsNullOrEmpty(this.TargetId))
@@ -253,7 +253,7 @@ namespace Pppv.Editor.Shapes
       protected Pen PenFactory(PositionOnArc penCapPlace)
       {
          Pen p = new Pen(Color.Black, 1);
-         if (this.ArcType == ArcType.BaseArc)
+         if (this.ArcType == ArcType.NormalArc)
          {
             CustomLineCap arrowCap = ArrowCapFabric();
             arrowCap.SetStrokeCaps(LineCap.Triangle, LineCap.Triangle);
@@ -277,7 +277,7 @@ namespace Pppv.Editor.Shapes
 
       protected PositionOnArc DeterminePenCapPlace()
       {
-         if (this.ArcType == ArcType.BaseArc)
+         if (this.ArcType == ArcType.NormalArc)
          {
             return DeterminePenCapPlaceForBaseArc();
          }

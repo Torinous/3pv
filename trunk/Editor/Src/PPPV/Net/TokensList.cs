@@ -4,6 +4,7 @@
    using System.Collections;
    using System.Collections.Generic;
    using System.Collections.ObjectModel;
+   using System.Globalization;
    using System.Windows.Forms;
    using System.Xml;
    using System.Xml.Schema;
@@ -26,37 +27,36 @@
       {
          foreach (Token token in this)
          {
-            token.WriteXml(writer);
+            XmlSerializer serealizer = new XmlSerializer(token.GetType());
+            serealizer.Serialize(writer, token);
          }
       }
 
       public void ReadXml(XmlReader reader)
       {
          XmlReader subTreeReader;
-         reader.Read();
-         if (reader.Name == "initialMarking" && reader.NodeType == XmlNodeType.Element)
+         if (reader.Name == "initialMarking")
          {
             if (!reader.IsEmptyElement)
             {
-               reader.ReadToDescendant("token");
+               reader.Read();
                while (reader.Name == "token" && reader.NodeType == XmlNodeType.Element)
                {
                   subTreeReader = reader.ReadSubtree();
-                  this.Add(new Token(subTreeReader));
+                  Token token = new Token();
+                  XmlSerializer serealizer = new XmlSerializer(token.GetType());
+                  token = (Token)serealizer.Deserialize(subTreeReader);
+                  this.Add(token);
                   subTreeReader.Close();
                   reader.Skip();
                }
-
+   
                reader.ReadEndElement(); // initialMarking
-            }
-            else
-            {
-               reader.Skip(); // initialMarking
             }
          }
          else
          {
-            throw new NetException("Невозможно десереализовать TokensList. Не верен тип узла xml.");
+            throw new NetException(String.Format(CultureInfo.InvariantCulture, "Невозможно десереализовать элемент initialMarking. Получен узел {0}", reader.Name));
          }
       }
 

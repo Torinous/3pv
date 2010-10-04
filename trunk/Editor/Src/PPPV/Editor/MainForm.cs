@@ -138,7 +138,7 @@
          this.PerformLayout();
       }
 
-      /*TODO: Пригодиться при написании команды, потом убъём
+      /*TODO: Пригодится при написании команды, потом убъём
        * private void EditAdditionalCode(object sender, EventArgs e)
       {
          EditorApplication app = EditorApplication.Instance;

@@ -21,12 +21,6 @@
       {
       }
 
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "Не смертельно")]
-      public Transition(XmlReader reader) : this(new Point(0, 0))
-      {
-         this.ReadXml(reader);
-      }
-
       public Transition() : this(new Point(0, 0))
       {
       }
@@ -61,9 +55,8 @@
 
       public override void ReadXml(XmlReader reader)
       {
-         reader.Read();
          reader.MoveToAttribute("id");
-         Id = reader.Value;
+         this.Id = reader.Value;
          reader.ReadStartElement("transition");
          while (reader.NodeType != XmlNodeType.EndElement)
          {
