@@ -70,6 +70,5 @@ namespace Pppv.Net
          SerealizationTestHelper serealizationHelper = new SerealizationTestHelper(petriNet, "Pppv.Resources.PetriNetExample1.pnml");
          serealizationHelper.Perform();
       }
-
    }
 }

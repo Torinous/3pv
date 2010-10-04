@@ -22,22 +22,22 @@ namespace Pppv.Utils
       private object target;
       private string sourceResourcePath;
 
-      public string SourceResourcePath
-      {
-         get { return sourceResourcePath; }
-         set { sourceResourcePath = value; }
-      }
-
-      public object Target
-      {
-         get { return target; }
-         set { target = value; }
-      }
-
       public SerealizationTestHelper(object target, string sourceResourcePath)
       {
          this.Target = target;
          this.SourceResourcePath = sourceResourcePath;
+      }
+
+      public string SourceResourcePath
+      {
+         get { return this.sourceResourcePath; }
+         set { this.sourceResourcePath = value; }
+      }
+
+      public object Target
+      {
+         get { return this.target; }
+         set { this.target = value; }
       }
 
       public void Perform()
@@ -46,13 +46,14 @@ namespace Pppv.Utils
          this.Target = serealizer.Deserialize(Assembly.GetExecutingAssembly().GetManifestResourceStream(this.SourceResourcePath));
          string tmpFile = Path.GetTempFileName();
          StreamWriter tmpFilestream = new StreamWriter(tmpFile, false, Encoding.GetEncoding(1251));
-         serealizer.Serialize(tmpFilestream, Target);
+         serealizer.Serialize(tmpFilestream, this.Target);
          tmpFilestream.Close();
          Console.WriteLine("\t" + tmpFile);
-         //TODO:Файлы потом нужно удалять, пока полезно для дебага
+
+         // TODO:Файлы потом нужно удалять, пока полезно для дебага
          Stream streamResult = new FileStream(tmpFile, FileMode.Open);
          Stream streamEtalon = Assembly.GetExecutingAssembly().GetManifestResourceStream(this.SourceResourcePath);
-         Assert.That( streamResult, Is.EqualTo(streamEtalon), "Данные десереализации не равны исходным данным сереализации");
+         Assert.That(streamResult, Is.EqualTo(streamEtalon), "Данные десереализации не равны исходным данным сереализации");
       }
    }
 }
