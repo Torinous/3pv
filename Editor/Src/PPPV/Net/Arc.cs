@@ -168,6 +168,7 @@
                   {
                      this.ArcType = ArcType.InhibitorArc;
                   }
+
                   reader.MoveToElement();
                   reader.Skip();
                   break;

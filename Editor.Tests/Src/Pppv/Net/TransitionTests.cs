@@ -19,8 +19,6 @@ namespace Pppv.Net
    public class TransitionTests
    {
       [Test]
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "В тестах не важно")]
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Pppv.Net.Transition", Justification = "В тестах не важно")]
       public void TestOfConstractions()
       {
          Transition transition = new Transition();
@@ -44,8 +42,6 @@ namespace Pppv.Net
       }
 
       [Test]
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "В тестах не важно")]
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Pppv.Net.Transition", Justification = "В тестах не важно")]
       public void TestOfSerealizationWithoutData()
       {
          Transition transition = new Transition();

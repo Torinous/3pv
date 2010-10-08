@@ -10,7 +10,7 @@
    using Pppv.Net;
    using Pppv.Utils;
 
-   public class SelectToolCommand : NetCommand
+   public class SelectToolCommand : InterfaceCommand
    {
       private Type toolType;
 
@@ -52,16 +52,24 @@
 
       public override void Execute()
       {
-         EditorApplication app = EditorApplication.Instance;
-         if (app.ActiveNet != null)
+         MainForm mainForm = MainForm.Instance;
+         if (mainForm != null)
          {
-            app.ActiveNet.SelectToolByType(this.ToolType);
-            app.MainFormInst.ToolToolStrip.CheckToolByType(this.ToolType);
+            if (mainForm.ActiveNet != null)
+            {
+               mainForm.ActiveNet.SelectToolByType(this.ToolType);
+               mainForm.ToolToolStrip.CheckToolByType(this.ToolType);
+            }
          }
       }
 
       public override void Unexecute()
       {
+      }
+
+      public override bool CheckEnabled()
+      {
+         return CheckFormAndActiveNet();
       }
    }
 }

@@ -5,16 +5,21 @@
    using System.ComponentModel;
    using System.Data;
    using System.Drawing;
+   using System.IO;
+   using System.Text;
    using System.Windows.Forms;
+   using System.Xml;
+   using System.Xml.Schema;
+   using System.Xml.Serialization;
 
    using Pppv.Editor.Commands;
    using Pppv.Editor.Tools;
+   using Pppv.Net;
 
    public class MainForm : Form
    {
-      private EditorApplication app;
+      private static MainForm instance;
       private EditorMainMenuStrip menuStrip;
-
       private EditorToolStrip fileToolStrip;
       private EditorToolStrip toolToolStrip;
       private EditorToolStrip editToolStrip;
@@ -23,12 +28,20 @@
       private TabControlForNets tabControl;
       private ToolStripContainer toolToolStripContainer;
 
-      public MainForm(EditorApplication application)
+      public MainForm()
       {
-         this.app = application;
          this.KeyPreview = true;
          this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
          this.InitializeComponent();
+         this.TabControl.SelectedIndexChanged += this.TabIndexChangeHandler;
+         instance = this;
+      }
+
+      public event EventHandler<EventArgs> ActiveNetChange;
+
+      public static MainForm Instance
+      {
+         get { return instance; }
       }
 
       public TabControlForNets TabControl
@@ -47,38 +60,95 @@
          private set { this.menuStrip = value; }
       }
 
-      public EditorApplication App
+      public PetriNetGraphical ActiveNet
       {
-         get { return this.app; }
+         get
+         {
+            if (this.TabControl.SelectedIndex != -1)
+            {
+               return (this.TabControl.TabPages[this.TabControl.SelectedIndex] as TabPageForNet).Net;
+            }
+            else
+            {
+               return null;
+            }
+         }
+      }
+
+      public void CloseNet(PetriNet net)
+      {
+         if (this.TabControl.SelectedIndex != -1)
+         {
+            this.TabControl.CloseTab(this.TabControl.TabIdForNet(net));
+            this.OnActiveNetChange(new EventArgs());
+         }
+      }
+
+      public void Quit()
+      {
+         this.Close();
+      }
+
+      public void NewNet()
+      {
+         PetriNetGraphical net = new PetriNetGraphical();
+         TabPageForNet addedTabPage = this.TabControl.AddNewTab();
+         addedTabPage.PutNetOnTabPage(net);
+         this.OnActiveNetChange(new EventArgs());
+      }
+
+      public void LoadNet(TextReader netStream, string fileName)
+      {
+         if (netStream != null)
+         {
+            PetriNet net = new PetriNet();
+            XmlSerializer serealizer = new XmlSerializer(net.GetType());
+            net = (PetriNet)serealizer.Deserialize(netStream);
+            PetriNetGraphical gnet = new PetriNetGraphical(net);
+            gnet.FileOfNetPath = fileName;
+            TabPageForNet addedTabPage = this.TabControl.AddNewTab();
+            addedTabPage.PutNetOnTabPage(gnet);
+         }
+      }
+
+      protected virtual void OnActiveNetChange(EventArgs e)
+      {
+         if (this.ActiveNetChange != null)
+         {
+            this.ActiveNetChange(this, e);
+         }
       }
 
       private void InitializeComponent()
       {
-         this.MainEditorMenuStrip          = new EditorMainMenuStrip();
+         this.MainEditorMenuStrip = new EditorMainMenuStrip();
 
-         this.toolToolStrip          = new EditorToolStrip(
-                                                           new SelectToolCommand(typeof(PointerTool)),
-                                                           new SelectToolCommand(typeof(PlaceTool)),
-                                                           new SelectToolCommand(typeof(TransitionTool)),
-                                                           new SelectToolCommand(typeof(ArcTool)),
-                                                           new SelectToolCommand(typeof(InhibitorArcTool)),
-                                                           new SelectToolCommand(typeof(AnnotationTool)));
-         this.fileToolStrip          = new EditorToolStrip(
-                                                           new NewNetCommand(),
-                                                           new OpenNetCommand(),
-                                                           new CloseNetCommand(),
-                                                           new SaveCommand(),
-                                                           new SaveAsCommand());
-         this.editToolStrip          = new EditorToolStrip(
-                                                           new UndoCommand(),
-                                                           new RedoCommand(),
-                                                           new CutCommand(),
-                                                           new CopyCommand(),
-                                                           new PasteCommand(),
-                                                           new DeleteCommand());
-         this.viewToolStrip          = new EditorToolStrip(
-                                                           new ZoomInCommand(),
-                                                           new ZoomOutCommand());
+         this.toolToolStrip = new EditorToolStrip();
+         this.toolToolStrip.AddCommand(new SelectToolCommand(typeof(PointerTool)));
+         this.toolToolStrip.AddCommand(new SelectToolCommand(typeof(PlaceTool)));
+         this.toolToolStrip.AddCommand(new SelectToolCommand(typeof(TransitionTool)));
+         this.toolToolStrip.AddCommand(new SelectToolCommand(typeof(ArcTool)));
+         this.toolToolStrip.AddCommand(new SelectToolCommand(typeof(InhibitorArcTool)));
+         this.toolToolStrip.AddCommand(new SelectToolCommand(typeof(AnnotationTool)));
+
+         this.fileToolStrip = new EditorToolStrip();
+         this.fileToolStrip.AddCommand(new NewNetCommand());
+         this.fileToolStrip.AddCommand(new OpenNetCommand());
+         this.fileToolStrip.AddCommand(new CloseNetCommand());
+         this.fileToolStrip.AddCommand(new SaveCommand());
+         this.fileToolStrip.AddCommand(new SaveAsCommand());
+
+         this.editToolStrip = new EditorToolStrip();
+         this.editToolStrip.AddCommand(new UndoCommand());
+         this.editToolStrip.AddCommand(new RedoCommand());
+         this.editToolStrip.AddCommand(new CutCommand());
+         this.editToolStrip.AddCommand(new CopyCommand());
+         this.editToolStrip.AddCommand(new PasteCommand());
+         this.editToolStrip.AddCommand(new DeleteSelectedCommand());
+
+         this.viewToolStrip = new EditorToolStrip();
+         this.viewToolStrip.AddCommand(new ZoomInCommand());
+         this.viewToolStrip.AddCommand(new ZoomOutCommand());
 
          this.statusStrip = new StatusStrip();
 
@@ -121,7 +191,7 @@
 
          this.Controls.Add(this.toolToolStripContainer);
          this.Controls.Add(this.statusStrip);
-         this.Controls.Add(this.menuStrip);
+         this.Controls.Add(this.MainEditorMenuStrip);
 
          this.toolToolStripContainer.TopToolStripPanel.Controls.Add(this.viewToolStrip);
          this.toolToolStripContainer.TopToolStripPanel.Controls.Add(this.toolToolStrip);
@@ -136,6 +206,11 @@
          this.toolToolStrip.PerformLayout();
          this.ResumeLayout(false);
          this.PerformLayout();
+      }
+
+      private void TabIndexChangeHandler(object sender, EventArgs e)
+      {
+         this.OnActiveNetChange(new EventArgs());
       }
 
       /*TODO: Пригодится при написании команды, потом убъём

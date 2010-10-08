@@ -62,7 +62,7 @@
                {
                   this.Arc = this.ArcFabric(clicked.BaseElement);
                   this.Arc.BaseElement.ParentNet = this.EventSourceNet.BaseNet;
-                  this.EventSourceNet.Paint += this.Arc.ParentNetDrawHandler;
+                  this.EventSourceNet.Paint += this.Arc.DrawHandler;
                }
             }
             else
@@ -73,7 +73,7 @@
                   AddNetElementCommand c = new AddNetElementCommand(EventSourceNet);
                   c.Element = this.Arc.BaseElement;
                   c.Execute();
-                  EventSourceNet.Paint -= this.Arc.ParentNetDrawHandler;
+                  EventSourceNet.Paint -= this.Arc.DrawHandler;
                   this.Arc = null;
                }
             }
@@ -126,7 +126,7 @@
       protected void ClearTemporaryArc()
       {
          this.Arc.SourceId = string.Empty;
-         EventSourceNet.Paint -= this.Arc.ParentNetDrawHandler;
+         EventSourceNet.Paint -= this.Arc.DrawHandler;
          this.Arc = null;
       }
    }

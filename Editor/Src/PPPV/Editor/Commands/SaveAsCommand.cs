@@ -7,7 +7,7 @@
 
    using Pppv.Net;
 
-   public class SaveAsCommand : Command
+   public class SaveAsCommand : InterfaceCommand
    {
       public SaveAsCommand()
       {
@@ -19,15 +19,20 @@
 
       public override void Execute()
       {
-         EditorApplication app = EditorApplication.Instance;
-         if (app.ActiveNet != null)
+         MainForm mainForm = MainForm.Instance;
+         if (mainForm.ActiveNet != null)
          {
-            app.ActiveNet.SaveNetAs();
+            mainForm.ActiveNet.SaveNetAs();
          }
       }
 
       public override void Unexecute()
       {
+      }
+
+      public override bool CheckEnabled()
+      {
+         return CheckFormAndActiveNet();
       }
    }
 }

@@ -9,7 +9,7 @@
    using Pppv.Net;
    using Pppv.Utils;
 
-   public class CutCommand : Command
+   public class CutCommand : InterfaceCommand
    {
       public CutCommand()
       {
@@ -25,6 +25,11 @@
 
       public override void Unexecute()
       {
+      }
+
+      public override bool CheckEnabled()
+      {
+         return CheckFormAndActiveNet();
       }
    }
 }

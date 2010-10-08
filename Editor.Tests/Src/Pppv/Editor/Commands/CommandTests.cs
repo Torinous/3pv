@@ -11,11 +11,10 @@ namespace Pppv.Editor.Commands
    using NUnit.Framework;
 
    [TestFixture]
-   public class CommonCommandsTests
+   public class NullCommandTests
    {
       [Test]
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "В тестах не важно")]
-      public void NullCommandTest()
+      public void TestOfEmptyConstructor()
       {
          Command c = new NullCommand();
          c.Execute();

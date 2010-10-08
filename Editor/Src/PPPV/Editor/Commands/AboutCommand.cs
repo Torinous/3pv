@@ -6,7 +6,7 @@
 
    using Pppv.Net;
 
-   public class AboutCommand : Command
+   public class AboutCommand : InterfaceCommand
    {
       private Control sender;
 

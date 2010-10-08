@@ -6,7 +6,7 @@
 
    using Pppv.Net;
 
-   public class AddPlaceCommand : NetCommand
+   public class AddPlaceCommand : NetInterfaceCommand
    {
       private Point position;
 

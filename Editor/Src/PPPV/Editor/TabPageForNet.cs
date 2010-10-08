@@ -10,7 +10,6 @@
    public class TabPageForNet : TabPage
    {
       private NetCanvas canvas;
-      private string netName;
       private bool netSaved;
 
       public TabPageForNet() : base()
@@ -20,7 +19,7 @@
          this.Dock = DockStyle.Fill;
          this.TabIndex = 0;
          this.UseVisualStyleBackColor = true;
-         this.Text = String.IsNullOrEmpty(this.netName) ? "~" : this.netName + "   ";
+         this.UpdateFileNameText(false);
          this.InitializeComponent();
          this.AutoScroll = true;
          this.Enter += this.EnterHandler;
@@ -65,7 +64,8 @@
 
       public void PutNetOnTabPage(PetriNetGraphical net)
       {
-         NetCanvas.PutNetOnCanvas(net);
+         this.NetCanvas.PutNetOnCanvas(net);
+         this.UpdateFileNameText(false);
       }
       
       protected override void OnResize(EventArgs e)
@@ -86,19 +86,15 @@
 
       private void LinkedNetSaveHandler(object sender, SaveNetEventArgs args)
       {
-         this.netName = args.NetId;
          this.ToolTipText = args.FilePath;
          this.NetSaved = true;
-         this.Text = String.IsNullOrEmpty(this.netName) ? "~" : this.netName + "   ";
+         this.UpdateFileNameText(false);
       }
 
       private void LinkedNetChangeHandler(object sender, EventArgs args)
       {
-         if (this.NetSaved)
-         {
-            this.NetSaved = false;
-            this.Text = String.IsNullOrEmpty(this.netName) ? "~" : this.netName + "   ";
-         }
+         this.NetSaved = false;
+         this.UpdateFileNameText(true);
       }
       
       private void CanvasResizeHandler(object sender, EventArgs args)
@@ -120,6 +116,24 @@
          {
             this.Net.SetSelected();
             DebugAssistant.LogTrace("tabEntered");
+         }
+      }
+
+      private void UpdateFileNameText(bool changedMark)
+      {
+         if (this.NetCanvas != null)
+         {
+            if (this.NetCanvas.Net != null)
+            {
+               if (String.IsNullOrEmpty(this.NetCanvas.Net.FileName))
+               {
+                  this.Text = "~";
+               }
+               else
+               {
+                  this.Text = this.NetCanvas.Net.FileName + (changedMark ? "*" : "   ");
+               }
+            }
          }
       }
    }

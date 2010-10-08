@@ -12,9 +12,9 @@
    {
       private const int MapVkVkToChar = 2;
 
-      private Command associatedCommand;
+      private IInterfaceCommand associatedCommand;
 
-      public EditorToolStripMenuItem(Command command) : base(command.Name, command.Pictogram)
+      public EditorToolStripMenuItem(InterfaceCommand command) : base(command.Name, command.Pictogram)
       {
          this.AssociatedCommand = command;
          this.ToolTipText = this.AssociatedCommand.Description;
@@ -28,10 +28,18 @@
          this.Click += this.ClickHandler;
       }
 
-      public Command AssociatedCommand
+      public IInterfaceCommand AssociatedCommand
       {
-         get { return this.associatedCommand; }
-         set { this.associatedCommand = value; }
+         get
+         {
+            return this.associatedCommand;
+         }
+
+         set
+         {
+            this.associatedCommand = value;
+            this.AssociatedCommand.ParentItem = this as ToolStripItem;
+         }
       }
 
       protected void SetShortcutString()

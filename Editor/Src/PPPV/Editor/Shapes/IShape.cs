@@ -54,7 +54,7 @@ namespace Pppv.Editor.Shapes
 
       void Draw(PaintEventArgs e);
 
-      void ParentNetDrawHandler(object sender, PaintEventArgs e);
+      void DrawHandler(object sender, PaintEventArgs e);
 
       Point GetConnectPoint(Point from);
 

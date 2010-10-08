@@ -7,7 +7,7 @@
 
    using Pppv.Net;
 
-   public class UndoCommand : Command
+   public class UndoCommand : InterfaceCommand
    {
       public UndoCommand()
       {
@@ -22,6 +22,11 @@
 
       public override void Unexecute()
       {
+      }
+
+      public override bool CheckEnabled()
+      {
+         return CheckFormAndActiveNet();
       }
    }
 }

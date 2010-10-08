@@ -20,16 +20,12 @@ namespace Pppv.Net
       private const string TokenString = "tokenString_tttt";
 
       [Test]
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "В тестах не важно")]
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "token", Justification = "В тестах не важно")]
       public void TestOfConstraction()
       {
          Token token = new Token();
       }
 
       [Test]
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "В тестах не важно")]
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "token", Justification = "В тестах не важно")]
       public void TestHoldingTest()
       {
          Token token = new Token(TokenString);
@@ -37,7 +33,6 @@ namespace Pppv.Net
       }
 
       [Test]
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "В тестах не важно")]
       public void TestOfSerealizationWithData()
       {
          Token token = new Token();

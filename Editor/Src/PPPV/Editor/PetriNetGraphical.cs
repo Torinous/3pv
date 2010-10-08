@@ -50,6 +50,7 @@
          this.FileOfNetPath = String.Empty;
          this.Change += this.ChangeController;
          this.shapes = new ShapeCollection(this);
+         this.Shapes.Change += this.ShapesChangeHandler;
          this.CreateShapesForBaseNet();
       }
 
@@ -188,6 +189,11 @@
       public PetriNet BaseNet
       {
          get { return this.baseNet; }
+      }
+
+      public string FileName
+      {
+         get { return this.FileOfNetPath.Substring(this.FileOfNetPath.LastIndexOf("\\", StringComparison.Ordinal) + 1); }
       }
 
       public new void AddElement(INetElement element)
@@ -339,14 +345,14 @@
 
       public void SetSelected()
       {
-         EditorApplication app = EditorApplication.Instance;
+         MainForm mainForm = Application.OpenForms[0] as MainForm;
          if (this.CurrentTool != null)
          {
-            app.MainFormInst.ToolToolStrip.CheckToolByType(this.CurrentTool.GetType());
+            mainForm.ToolToolStrip.CheckToolByType(this.CurrentTool.GetType());
          }
          else
          {
-            app.MainFormInst.ToolToolStrip.UncheckTool();
+            mainForm.ToolToolStrip.UncheckTool();
          }
       }
 
@@ -458,10 +464,10 @@
          }
       }
 
-      /*private void NetElementChangeHandler(object sender, System.EventArgs args)
+      private void ShapesChangeHandler(object sender, System.EventArgs args)
       {
          this.OnChange(new EventArgs());
-      }*/
+      }
 
       private void OnChange(EventArgs args)
       {

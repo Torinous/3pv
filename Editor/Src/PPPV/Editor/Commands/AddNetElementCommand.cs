@@ -12,13 +12,11 @@
       public AddNetElementCommand()
       {
          Name = "Добавить элемент к сети";
-         Description = "Команда добавляющая к заданной сети элемент";
-         Pictogram = null;
       }
 
       public AddNetElementCommand(PetriNetGraphical net) : this()
       {
-         Net = net;
+         this.Net = net;
       }
 
       public AddNetElementCommand(NetElement element) : this()

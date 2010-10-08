@@ -7,7 +7,7 @@
 
    using Pppv.Net;
 
-   public class RedoCommand : Command
+   public class RedoCommand : InterfaceCommand
    {
       public RedoCommand()
       {
@@ -22,6 +22,11 @@
 
       public override void Unexecute()
       {
+      }
+
+      public override bool CheckEnabled()
+      {
+         return CheckFormAndActiveNet();
       }
    }
 }

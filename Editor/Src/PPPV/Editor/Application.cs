@@ -9,9 +9,6 @@
    using System.Text;
    using System.Threading;
    using System.Windows.Forms;
-   using System.Xml;
-   using System.Xml.Schema;
-   using System.Xml.Serialization;
 
    using Pppv.Editor.Commands;
    using Pppv.Editor.Tools;
@@ -20,7 +17,6 @@
 
    public class EditorApplication : ApplicationContext
    {
-      private static EditorApplication instance;
       private Editor.MainForm mainFormInst;
 
       private EditorApplication()
@@ -38,39 +34,11 @@
          }
       }
 
-      public static EditorApplication Instance
-      {
-         get
-         {
-            if (instance == null)
-            {
-               instance = new EditorApplication();
-            }
-
-            return instance;
-         }
-      }
-      
       public MainForm MainFormInst
       {
          get
          {
             return this.mainFormInst;
-         }
-      }
-
-      public PetriNetGraphical ActiveNet
-      {
-         get
-         {
-            if (this.MainFormInst.TabControl.SelectedIndex != -1)
-            {
-               return (this.MainFormInst.TabControl.TabPages[this.MainFormInst.TabControl.SelectedIndex] as TabPageForNet).Net;
-            }
-            else
-            {
-               return null;
-            }
          }
       }
 
@@ -85,58 +53,23 @@
          System.Diagnostics.Debug.AutoFlush = true;
       }
 
-      public void Run()
+      /*public void Run()
       {
-         /*TODO: Тут бы надо завернуть в Try и написать хорошую форму для показа Exceptions*/
+         //TODO: Тут бы надо завернуть в Try и написать хорошую форму для показа Exceptions
          System.Windows.Forms.Application.Run(this.mainFormInst);
          PreciseTimer.ShowTimeTable();
-      }
-
-      public void Quit()
-      {
-         this.mainFormInst.Close();
-      }
-
-      public void NewNet()
-      {
-         PetriNetGraphical net = new PetriNetGraphical();
-         TabPageForNet addedTabPage = this.MainFormInst.TabControl.AddNewTab();
-         addedTabPage.PutNetOnTabPage(net);
-      }
-
-      public void LoadNet(TextReader netStream, string fileName)
-      {
-         if (netStream != null)
-         {
-            PetriNet net = new PetriNet();
-            XmlSerializer serealizer = new XmlSerializer(net.GetType());
-            net = (PetriNet)serealizer.Deserialize(netStream);
-            PetriNetGraphical gnet = new PetriNetGraphical(net);
-            gnet.FileOfNetPath = fileName;
-            TabPageForNet addedTabPage = this.MainFormInst.TabControl.AddNewTab();
-            addedTabPage.PutNetOnTabPage(gnet);
-         }
-      }
-
-      public void CloseNet(PetriNet net)
-      {
-         if (this.MainFormInst.TabControl.SelectedIndex != -1)
-         {
-            this.MainFormInst.TabControl.CloseTab(this.MainFormInst.TabControl.TabIdForNet(net));
-         }
-      }
+      }*/
 
       [STAThread]
       private static void Main()
       {
-         EditorApplication context = EditorApplication.Instance;
          Application.ThreadException += new ThreadExceptionEventHandler(new ThreadExceptionHandler().ApplicationThreadException);
-         Application.Run(context);
+         Application.Run(new EditorApplication());
       }
 
       private void InitializeComponent()
       {
-         this.mainFormInst = new Editor.MainForm(this);
+         this.mainFormInst = new Editor.MainForm();
          this.mainFormInst.Closed += this.MainFormCloseHandler;
       }
 
@@ -149,7 +82,7 @@
       {
          public void ApplicationThreadException(object sender, ThreadExceptionEventArgs e)
          {
-            RtlAwareMessageBox.Show((Control)sender, e.Exception.Message, "An exception occurred:", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, (MessageBoxOptions)0);
+            RtlAwareMessageBox.Show(null, e.Exception.Message, "An exception occurred:", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, (MessageBoxOptions)0);
          }
       }
    }

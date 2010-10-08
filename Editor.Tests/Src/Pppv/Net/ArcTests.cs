@@ -16,8 +16,6 @@ namespace Pppv.Net
    public class ArcTests
    {
       [Test]
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "В тестах не важно")]
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Pppv.Net.Arc", Justification = "В тестах не важно")]
       public void TestOfEmptyConstructor()
       {
          new Arc(ArcType.NormalArc);
@@ -25,8 +23,6 @@ namespace Pppv.Net
       }
 
       [Test]
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "В тестах не важно")]
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Pppv.Net.Arc", Justification = "В тестах не важно")]
       public void TestOfSerealizationWithoutData()
       {
          Arc arc = new Arc();

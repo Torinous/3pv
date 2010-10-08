@@ -16,7 +16,7 @@ namespace Pppv.Editor
          this.ShortcutKeyDisplayString = null;
       }
 
-      public EditorContextToolStripMenuItem(Command command) : base(command)
+      public EditorContextToolStripMenuItem(InterfaceCommand command) : base(command)
       {
       }
 
