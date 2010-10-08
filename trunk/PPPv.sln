@@ -1,23 +1,27 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-# SharpDevelop 3.2.0.5777
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+# SharpDevelop 4.0.0.6721
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Editor", "Editor", "{1026F6CC-BCBC-4FAE-AEDF-AEE523087320}"
 	ProjectSection(SolutionItems) = postProject
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Editor.Tests", "Editor.Tests\Editor.Tests.csproj", "{E40986A1-BA7E-41D1-87D1-F6C654E86EE9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Editor", "Editor\Editor.csproj", "{8C38059E-436D-468D-A131-040EF303CBF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Editor.Tests", "Editor.Tests\Editor.Tests.csproj", "{E40986A1-BA7E-41D1-87D1-F6C654E86EE9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Translator", "Translator", "{17F42716-9D7E-48EF-A28D-B992BB095EF5}"
 	ProjectSection(SolutionItems) = postProject
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translator", "Translator\Translator.csproj", "{28483E02-4EEE-4E3A-BE97-C4D9703143AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{8C38059E-436D-468D-A131-040EF303CBF1}.Debug|Any CPU.Build.0 = Debug|x86
@@ -28,9 +32,26 @@ Global
 		{E40986A1-BA7E-41D1-87D1-F6C654E86EE9}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{E40986A1-BA7E-41D1-87D1-F6C654E86EE9}.Release|Any CPU.Build.0 = Release|x86
 		{E40986A1-BA7E-41D1-87D1-F6C654E86EE9}.Release|Any CPU.ActiveCfg = Release|x86
+		{E40986A1-BA7E-41D1-87D1-F6C654E86EE9}.Debug|x86.Build.0 = Debug|x86
+		{E40986A1-BA7E-41D1-87D1-F6C654E86EE9}.Debug|x86.ActiveCfg = Debug|x86
+		{E40986A1-BA7E-41D1-87D1-F6C654E86EE9}.Release|x86.Build.0 = Release|x86
+		{E40986A1-BA7E-41D1-87D1-F6C654E86EE9}.Release|x86.ActiveCfg = Release|x86
+		{8C38059E-436D-468D-A131-040EF303CBF1}.Debug|x86.Build.0 = Debug|x86
+		{8C38059E-436D-468D-A131-040EF303CBF1}.Debug|x86.ActiveCfg = Debug|x86
+		{8C38059E-436D-468D-A131-040EF303CBF1}.Release|x86.Build.0 = Release|x86
+		{8C38059E-436D-468D-A131-040EF303CBF1}.Release|x86.ActiveCfg = Release|x86
+		{28483E02-4EEE-4E3A-BE97-C4D9703143AA}.Debug|Any CPU.Build.0 = Debug|x86
+		{28483E02-4EEE-4E3A-BE97-C4D9703143AA}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{28483E02-4EEE-4E3A-BE97-C4D9703143AA}.Debug|x86.Build.0 = Debug|x86
+		{28483E02-4EEE-4E3A-BE97-C4D9703143AA}.Debug|x86.ActiveCfg = Debug|x86
+		{28483E02-4EEE-4E3A-BE97-C4D9703143AA}.Release|Any CPU.Build.0 = Release|x86
+		{28483E02-4EEE-4E3A-BE97-C4D9703143AA}.Release|Any CPU.ActiveCfg = Release|x86
+		{28483E02-4EEE-4E3A-BE97-C4D9703143AA}.Release|x86.Build.0 = Release|x86
+		{28483E02-4EEE-4E3A-BE97-C4D9703143AA}.Release|x86.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{8C38059E-436D-468D-A131-040EF303CBF1} = {1026F6CC-BCBC-4FAE-AEDF-AEE523087320}
 		{E40986A1-BA7E-41D1-87D1-F6C654E86EE9} = {1026F6CC-BCBC-4FAE-AEDF-AEE523087320}
+		{8C38059E-436D-468D-A131-040EF303CBF1} = {1026F6CC-BCBC-4FAE-AEDF-AEE523087320}
+		{28483E02-4EEE-4E3A-BE97-C4D9703143AA} = {17F42716-9D7E-48EF-A28D-B992BB095EF5}
 	EndGlobalSection
 EndGlobal
