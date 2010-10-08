@@ -9,7 +9,7 @@
    using Pppv.Net;
    using Pppv.Utils;
 
-   public class ZoomOutCommand : Command
+   public class ZoomOutCommand : InterfaceCommand
    {
       public ZoomOutCommand()
       {
@@ -21,7 +21,7 @@
 
       public override void Execute()
       {
-         PetriNetGraphical p = EditorApplication.Instance.ActiveNet;
+         PetriNetGraphical p = (Application.OpenForms[0] as MainForm).ActiveNet;
          if (p != null)
          {
             if (p.Canvas.ScaleAmount > 0.11F)
@@ -35,6 +35,11 @@
 
       public override void Unexecute()
       {
+      }
+
+      public override bool CheckEnabled()
+      {
+         return CheckFormAndActiveNet();
       }
    }
 }

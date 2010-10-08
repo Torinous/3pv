@@ -9,7 +9,7 @@
    using Pppv.Net;
    using Pppv.Utils;
 
-   public class QuitCommand : Command
+   public class QuitCommand : InterfaceCommand
    {
       public QuitCommand()
       {
@@ -21,7 +21,8 @@
 
       public override void Execute()
       {
-         EditorApplication.Instance.Quit();
+         MainForm mainForm = MainForm.Instance;
+         mainForm.Quit();
       }
 
       public override void Unexecute()

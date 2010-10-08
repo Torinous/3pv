@@ -18,16 +18,12 @@ namespace Pppv.Net
       private const int NetElementCount = 500;
 
       [Test]
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "В тестах не важно")]
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Pppv.Net.PetriNet", Justification = "В тестах не важно")]
       public void TestOfEmptyConstructor()
       {
          new PetriNet();
       }
 
       [Test]
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "В тестах не важно")]
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Pppv.Net.PetriNet", Justification = "В тестах не важно")]
       public void TestOfManyDeletion()
       {
          PetriNet net = new PetriNet();
@@ -62,8 +58,6 @@ namespace Pppv.Net
       }
 
       [Test]
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "В тестах не важно")]
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Pppv.Net.PetriNet", Justification = "В тестах не важно")]
       public void TestOfSerealizationWithData()
       {
          PetriNet petriNet = new PetriNet();

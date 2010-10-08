@@ -5,7 +5,7 @@
 
    using Pppv.Net;
 
-   public class NullCommand : Command
+   public class NullCommand : InterfaceCommand
    {
       public NullCommand()
       {

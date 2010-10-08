@@ -17,6 +17,8 @@
          this.TabIndex = 3;
       }
 
+      public event EventHandler<EventArgs> AddTabPage;
+
       public event EventHandler<RemoveTabPageEventArgs> RemoveTabPage;
 
       public void CloseTab(int indexOfTab)
@@ -33,8 +35,10 @@
          this.SuspendLayout();
          this.TabPages.Add(tmpTabPage);
          this.SelectTab(tmpTabPage);
+         this.OnSelectedIndexChanged(new EventArgs()); // Делаем за Microsoft их работу
          this.ResumeLayout(false);
          this.PerformLayout();
+         this.OnAddTabPage(new EventArgs());
          return tmpTabPage;
       }
 
@@ -64,7 +68,15 @@
          return -1;
       }
 
-      private bool OnRemoveTabPage(RemoveTabPageEventArgs args)
+      protected virtual void OnAddTabPage(EventArgs e)
+      {
+         if (this.AddTabPage != null)
+         {
+            this.AddTabPage(this, e);
+         }
+      }
+
+      protected virtual bool OnRemoveTabPage(RemoveTabPageEventArgs args)
       {
          if (this.RemoveTabPage != null)
          {

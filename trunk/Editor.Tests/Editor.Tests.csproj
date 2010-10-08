@@ -14,6 +14,7 @@
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <RunCodeAnalysis>True</RunCodeAnalysis>
     <AssemblyOriginatorKeyFile>Editor.Tests.snk</AssemblyOriginatorKeyFile>
+    <CodeAnalysisRules>-Microsoft.Performance#CA1804;-Microsoft.Performance#CA1822;-Microsoft.Usage#CA1806</CodeAnalysisRules>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -56,14 +57,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Src\Pppv\Editor\Commands\AddNetElementCommandTests.cs" />
     <Compile Include="Src\Pppv\Editor\Commands\CommandTests.cs" />
+    <Compile Include="Src\Pppv\Editor\Commands\DeleteCommandTests.cs" />
+    <Compile Include="Src\Pppv\Editor\Commands\MacroCommandTests.cs" />
     <Compile Include="Src\Pppv\Editor\Shapes\ShapeTests.cs" />
     <Compile Include="Src\Pppv\Net\ArcTests.cs" />
     <Compile Include="Src\Pppv\Net\PetriNetTests.cs" />
     <Compile Include="Src\Pppv\Net\PlaceTests.cs" />
     <Compile Include="Src\Pppv\Net\PredicatesListTests.cs" />
     <Compile Include="Src\Pppv\Net\PredicateTests.cs" />
-    <Compile Include="Src\Pppv\Net\TokenListTests.cs" />
+    <Compile Include="Src\Pppv\Net\TokensListTests.cs" />
     <Compile Include="Src\Pppv\Net\TokenTests.cs" />
     <Compile Include="Src\Pppv\Net\TransitionTests.cs" />
     <Compile Include="Src\Pppv\Utils\SerealizationTestHelper.cs" />

@@ -9,7 +9,7 @@
 
    using Pppv.Net;
 
-   public class OpenNetCommand : Command
+   public class OpenNetCommand : InterfaceCommand
    {
       public OpenNetCommand()
       {
@@ -28,16 +28,21 @@
 
          if (openFileDialog.ShowDialog() == DialogResult.OK)
          {
+            MainForm mainForm = MainForm.Instance;
             StreamReader stream;
-            EditorApplication app = EditorApplication.Instance;
             stream = new StreamReader(openFileDialog.FileName, Encoding.GetEncoding(1251));
-            app.LoadNet(stream, openFileDialog.FileName);
+            mainForm.LoadNet(stream, openFileDialog.FileName);
             stream.Close();
          }
       }
 
       public override void Unexecute()
       {
+      }
+
+      public override bool CheckEnabled()
+      {
+         return true;
       }
    }
 }

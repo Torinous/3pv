@@ -8,7 +8,7 @@
    using Pppv.Editor.Shapes;
    using Pppv.Net;
 
-   public class EditNetElementCommand : ElementCommand
+   public class EditNetElementCommand : ElementInterfaceCommand
    {
       public EditNetElementCommand(IShape netElement)
       {
@@ -19,25 +19,26 @@
 
       public override void Execute()
       {
-         EditorApplication a = EditorApplication.Instance;
+         MainForm mainForm = this.Element.ParentNetGraphical.Canvas.FindForm() as MainForm;
+
          if (Element is ArcShape)
          {
             Form f = new ArcEditForm((IArc)Element);
-            f.ShowDialog(a.MainFormInst);
+            f.ShowDialog(mainForm);
             f.Dispose();
          }
 
          if (Element is TransitionShape)
          {
             Form f = new GuardEditForm((ITransition)Element);
-            f.ShowDialog(a.MainFormInst);
+            f.ShowDialog(mainForm);
             f.Dispose();
          }
 
          if (Element is PlaceShape)
          {
             Form f = new PlaceEditForm((IPlace)Element);
-            f.ShowDialog(a.MainFormInst);
+            f.ShowDialog(mainForm);
             f.Dispose();
          }
 

@@ -164,7 +164,7 @@ namespace Pppv.Editor.Shapes
          this.BaseElement.SetId(number);
       }
 
-      public void ParentNetDrawHandler(object sender, PaintEventArgs e)
+      public void DrawHandler(object sender, PaintEventArgs e)
       {
          this.Draw(e);
       }

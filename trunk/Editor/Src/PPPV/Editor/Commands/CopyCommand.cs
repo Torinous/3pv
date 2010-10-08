@@ -9,7 +9,7 @@
    using Pppv.Net;
    using Pppv.Utils;
 
-   public class CopyCommand : Command
+   public class CopyCommand : InterfaceCommand
    {
       public CopyCommand()
       {
@@ -25,6 +25,11 @@
 
       public override void Unexecute()
       {
+      }
+
+      public override bool CheckEnabled()
+      {
+         return CheckFormAndActiveNet();
       }
    }
 }

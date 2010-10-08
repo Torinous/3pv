@@ -10,7 +10,7 @@
    using Pppv.Net;
    using Pppv.Utils;
 
-   public class DeleteCommand : ElementCommand
+   public class DeleteCommand : ElementInterfaceCommand
    {
       public DeleteCommand()
       {
@@ -27,14 +27,7 @@
 
       public override void Execute()
       {
-         if (Element != null)
-         {
-            this.DeleteCurrentElement();
-         }
-         else
-         {
-            throw new EditorException("Не определён целевой элемент для команды DeleteCommand");
-         }
+         this.DeleteCurrentElement();
       }
 
       public override void Unexecute()

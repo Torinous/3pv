@@ -9,7 +9,7 @@
    using Pppv.Net;
    using Pppv.Utils;
 
-   public class PasteCommand : Command
+   public class PasteCommand : InterfaceCommand
    {
       public PasteCommand()
       {
@@ -25,6 +25,11 @@
 
       public override void Unexecute()
       {
+      }
+
+      public override bool CheckEnabled()
+      {
+         return CheckFormAndActiveNet();
       }
    }
 }

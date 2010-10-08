@@ -8,10 +8,10 @@
    using Pppv.Editor.Shapes;
    using Pppv.Net;
 
-   public class ShowContextMenuCommand : Command
+   public class ShowContextMenuCommand : NetInterfaceCommand
    {
       private Point position;
-      private PetriNetGraphical net;
+
       private ContextMenuStrip contextMenuStrip;
       private IShape contextMenuTarget;
 
@@ -33,12 +33,6 @@
          set { this.position = value; }
       }
 
-      public PetriNetGraphical Net
-      {
-         get { return this.net; }
-         set { this.net = value; }
-      }
-
       public ContextMenuStrip ContextMenuStrip
       {
          get { return this.contextMenuStrip; }
@@ -53,8 +47,7 @@
 
       public override void Execute()
       {
-         EditorApplication application = EditorApplication.Instance;
-         PetriNetGraphical currentNet = application.ActiveNet;
+         PetriNetGraphical currentNet = MainForm.Instance.ActiveNet;
 
          if (currentNet != null)
          {

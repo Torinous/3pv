@@ -7,7 +7,7 @@
 
    using Pppv.Net;
 
-   public class NewNetCommand : Command
+   public class NewNetCommand : InterfaceCommand
    {
       public NewNetCommand()
       {
@@ -19,12 +19,17 @@
 
       public override void Execute()
       {
-         EditorApplication app = EditorApplication.Instance;
-         app.NewNet();
+         MainForm mainForm = MainForm.Instance;
+         mainForm.NewNet();
       }
 
       public override void Unexecute()
       {
+      }
+
+      public override bool CheckEnabled()
+      {
+         return true;
       }
    }
 }

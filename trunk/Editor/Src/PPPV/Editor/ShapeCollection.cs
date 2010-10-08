@@ -25,25 +25,30 @@ namespace Pppv.Editor
       public ShapeCollection(PetriNetGraphical net) : base()
       {
          this.parentNet = net;
+         this.ParentNet.Paint += this.ParentNetPaintHandler;
       }
+
+      public event EventHandler Change;
+
+      public event PaintEventHandler Paint;
 
       public PetriNetGraphical ParentNet
       {
          get { return this.parentNet; }
       }
 
-      public new void Add(IShape value)
+      public new void Add(IShape shape)
       {
-         base.Add(value);
-         value.ParentNetGraphical = this.parentNet;
-         this.ParentNet.Paint += value.ParentNetDrawHandler;
+         base.Add(shape);
+         shape.ParentNetGraphical = this.parentNet;
+         this.LinkEvents(shape);
       }
 
-      public new void Remove(IShape value)
+      public new void Remove(IShape shape)
       {
-         base.Remove(value);
-         value.ParentNetGraphical = null;
-         this.ParentNet.Paint -= value.ParentNetDrawHandler;
+         base.Remove(shape);
+         shape.ParentNetGraphical = null;
+         this.UnlinkEvents(shape);
       }
 
       public new void Clear()
@@ -51,7 +56,7 @@ namespace Pppv.Editor
          foreach (IShape shape in this)
          {
             shape.ParentNetGraphical = null;
-            this.ParentNet.Paint -= shape.ParentNetDrawHandler;
+            this.UnlinkEvents(shape);
          }
 
          base.Clear();
@@ -63,8 +68,46 @@ namespace Pppv.Editor
          {
             base.Add(shape);
             shape.ParentNetGraphical = this.parentNet;
-            this.ParentNet.Paint += shape.ParentNetDrawHandler;
+            this.LinkEvents(shape);
          }
+      }
+
+      private void ShapeChangeHandler(object sender, System.EventArgs args)
+      {
+         this.OnChange(new EventArgs());
+      }
+
+      private void ParentNetPaintHandler(object sender, PaintEventArgs args)
+      {
+         this.OnPaint(args);
+      }
+
+      private void OnChange(EventArgs args)
+      {
+         if (this.Change != null)
+         {
+            this.Change(this, args);
+         }
+      }
+
+      private void OnPaint(PaintEventArgs e)
+      {
+         if (this.Paint != null)
+         {
+            this.Paint(this, e);
+         }
+      }
+
+      private void LinkEvents(IShape shape)
+      {
+         this.Paint += shape.DrawHandler;
+         shape.Change += this.ShapeChangeHandler;
+      }
+
+      private void UnlinkEvents(IShape shape)
+      {
+         this.Paint -= shape.DrawHandler;
+         shape.Change -= this.ShapeChangeHandler;
       }
    }
 }

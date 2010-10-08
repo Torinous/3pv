@@ -78,11 +78,16 @@
     <Compile Include="Src\PPPV\Editor\Commands\CopyCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\CutCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\DeleteCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\DeleteSelected.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\DeleteSelectedCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\EditNetElementCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\ElementCommand.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\ElementInterfaceCommand.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\ICommand.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\IInterfaceCommand.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\InterfaceCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\MacroCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\NetCommand.cs" />
+    <Compile Include="Src\PPPV\Editor\Commands\NetInterfaceCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\NewNetCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\NullCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\OpenNetCommand.cs" />
@@ -186,6 +191,9 @@
     <EmbeddedResource Include="Resources\Zoom.png" />
     <None Include="app.manifest" />
     <None Include="Properties\AssemblyInfo.in" />
+    <Content Include="Editor.cd" />
+    <Content Include="Editor.cd" />
+    <Content Include="Editor.cd" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources" />

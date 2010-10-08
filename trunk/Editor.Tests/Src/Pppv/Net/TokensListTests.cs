@@ -21,15 +21,12 @@ namespace Pppv.Net
       private const int TokenCount = 3;
 
       [Test]
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "В тестах не важно")]
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "tokenList", Justification = "В тестах не важно")]
       public void TestOfCreation()
       {
          TokensList tokenList = new TokensList();
       }
 
       [Test]
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "В тестах не важно")]
       public void TestOfAddingRemoving()
       {
          TokensList tokensList = new TokensList();
@@ -50,7 +47,6 @@ namespace Pppv.Net
       }
 
       [Test]
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "В тестах не важно")]
       public void TestOfSerealizationWithData()
       {
          TokensList tokensList = new TokensList();
@@ -59,7 +55,6 @@ namespace Pppv.Net
       }
 
       [Test]
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "В тестах не важно")]
       public void TestOfSerealizationWithoutData()
       {
          TokensList tokensList = new TokensList();

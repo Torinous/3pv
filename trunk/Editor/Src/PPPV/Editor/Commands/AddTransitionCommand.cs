@@ -5,7 +5,7 @@
 
    using Pppv.Net;
 
-   public class AddTransitionCommand : NetCommand
+   public class AddTransitionCommand : NetInterfaceCommand
    {
       private Point position;
 

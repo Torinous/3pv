@@ -17,10 +17,8 @@ namespace Pppv.Editor.Commands
    using Pppv.Net;
    using Pppv.Utils;
 
-   public class DeleteSelectedCommand : Command
+   public class DeleteSelectedCommand : NetInterfaceCommand
    {
-      private PetriNetGraphical net;
-
       public DeleteSelectedCommand()
       {
          this.Name = "Удалить выделенное";
@@ -31,29 +29,34 @@ namespace Pppv.Editor.Commands
 
       public DeleteSelectedCommand(PetriNetGraphical petriNet) : this()
       {
-         this.net = petriNet;
-      }
-
-      public PetriNetGraphical Net
-      {
-         get { return this.net; }
-         set { this.net = value; }
+         this.Net = petriNet;
       }
 
       public override void Execute()
       {
+         this.DetermineTargetNetIfNeed();
          if (this.Net != null)
          {
             this.DetermineAndDeleteElements();
-         }
-         else
-         {
-            throw new EditorException("Не определена целевая сеть для команды DeleteSelected");
          }
       }
 
       public override void Unexecute()
       {
+      }
+
+      public override bool CheckEnabled()
+      {
+         return CheckFormAndActiveNet();
+      }
+
+      private void DetermineTargetNetIfNeed()
+      {
+         MainForm mainForm = MainForm.Instance;
+         if (this.Net == null)
+         {
+            this.Net = mainForm.ActiveNet;
+         }
       }
 
       private void DetermineAndDeleteElements()

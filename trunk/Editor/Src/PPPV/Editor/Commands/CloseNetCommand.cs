@@ -7,7 +7,7 @@
 
    using Pppv.Net;
 
-   public class CloseNetCommand : Command
+   public class CloseNetCommand : InterfaceCommand
    {
       public CloseNetCommand()
       {
@@ -19,12 +19,20 @@
 
       public override void Execute()
       {
-         EditorApplication app = EditorApplication.Instance;
-         app.CloseNet(app.ActiveNet);
+         MainForm mainForm = MainForm.Instance;
+         if (mainForm != null)
+         {
+            mainForm.CloseNet(mainForm.ActiveNet);
+         }
       }
 
       public override void Unexecute()
       {
+      }
+
+      public override bool CheckEnabled()
+      {
+         return CheckFormAndActiveNet();
       }
    }
 }

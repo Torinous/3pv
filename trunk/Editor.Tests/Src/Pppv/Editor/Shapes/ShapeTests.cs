@@ -25,8 +25,6 @@ namespace Pppv.Editor.Shapes
       private const string DecoratorAndDecoratedIsNotEqual = "Данные декоратора и декорируемого объекта не одинаковы";
 
       [Test]
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "В тестах не важно")]
-      [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "placeShape", Justification = "В тестах не важно")]
       public void TestOfEqualutyOfPlaceAndPlaceShape()
       {
          Place place = new Place(new Point(XFixed, yFixed));
