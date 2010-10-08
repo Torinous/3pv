@@ -1,60 +1,67 @@
 ﻿namespace Pppv.Translator
 {
    using System;
-   using System.Text;
+   using System.Collections.Generic;
+   using System.Configuration;
+   using System.Diagnostics;
    using System.IO;
+   using System.Reflection;
+   using System.Resources;
+   using System.Text;
    using System.Xml;
    using System.Xml.Serialization;
-   using System.Resources;
-   using System.Reflection;
-   using System.Diagnostics;
-   using System.Configuration;
-   using System.Collections.Generic;
 
-   using Pppv.Utils;
    using Pppv.Net;
+   using Pppv.Utils;
 
-   class PNML2PrologConverter
+   public class TranslatorToProlog
    {
       #region Private Variables
       private string inputFileName = "none";
       private string outputFileName = "none";
-      private bool HelpReq;
+      private bool helpReq;
       private bool addKernel = true;
       private PetriNetPrologTranslated net;
       private Encoding enc1251;
       #endregion
 
+      public TranslatorToProlog()
+      {
+         this.enc1251 = Encoding.GetEncoding(1251);
+      }
+
       #region Properties and Command Line Switches
       [CommandLineSwitch("O", "Target for output.")]
       [CommandLineAlias("o")]
-      public string outputTarget {
-         get {return outputFileName;}
-         set {outputFileName = value;}
+      public string OutputTarget
+      {
+         get { return this.outputFileName; }
+         set { this.outputFileName = value; }
       }
       
       [CommandLineSwitch("help", "Show some help.")]
       [CommandLineAlias("h")]
-      public bool HelpRequest{
-         get { return HelpReq; }
-         set { HelpReq = value; }
+      public bool HelpRequest
+      {
+         get { return this.helpReq; }
+         set { this.helpReq = value; }
       }
 
       [CommandLineSwitch("AddKernel", "Add verification Kernel code.")]
       [CommandLineAlias("ak")]
-      public bool AddKernel{
-         get { return addKernel; }
-         set { addKernel = value; }
+      public bool AddKernel
+      {
+         get { return this.addKernel; }
+         set { this.addKernel = value; }
       }
       #endregion
 
-      #region Constructor and Destructor
-      public PNML2PrologConverter(){
-         enc1251 = Encoding.GetEncoding(1251);
+      private static int Main()
+      {
+         (new TranslatorToProlog()).Run();
+         return 0;
       }
-      #endregion
 
-      #region Private Utility Functions
       private int Run()
       {
          Debug.WriteLine(System.Environment.CommandLine);
@@ -63,13 +70,13 @@
          {
             cmdParser.Parse();
          }
-         catch(Exception ex)
+         catch (Exception ex)
          {
             Console.WriteLine(ex.Message);
-            return 1;
+            throw;
          }
 
-         if (HelpReq)
+         if (this.HelpRequest)
          {
             Console.WriteLine("pnml2prolog v. " + Assembly.GetExecutingAssembly().GetName().Version.ToString());
             return 0;
@@ -77,7 +84,7 @@
 
          if (cmdParser.Parameters.Length == 1)
          {
-            inputFileName = cmdParser.Parameters[0];
+            this.inputFileName = cmdParser.Parameters[0];
          }
          else
          {
@@ -89,13 +96,13 @@
          }
 
          XmlSerializer serializer = new XmlSerializer(typeof(PetriNet));
-         if (inputFileName == "none")
+         if (this.inputFileName == "none")
          {
             try
             {
-               net = (PetriNetPrologTranslated)serializer.Deserialize(Console.In);
+               this.net = (PetriNetPrologTranslated)serializer.Deserialize(Console.In);
             }
-            catch (Exception ex)
+            catch (XmlException ex)
             {
                Console.WriteLine(ex.Message);
                return 1;
@@ -105,53 +112,55 @@
          {
             try
             {
-               net = (PetriNetPrologTranslated)serializer.Deserialize(File.OpenText(inputFileName));
+               this.net = (PetriNetPrologTranslated)serializer.Deserialize(File.OpenText(this.inputFileName));
             }
-            catch (Exception ex)
+            catch (XmlException ex)
             {
                Console.WriteLine(ex.Message);
                return 1;
             }
          }
 
-         if (outputFileName == "none")
+         if (this.outputFileName == "none")
          {
             try
             {
-               Console.WriteLine(net.ToProlog());
+               Console.WriteLine(this.net.ToProlog());
             }
             catch (Exception e)
             {
                Console.WriteLine(e.Message);
-               return 1;
+               throw;
             }
 
-            if(AddKernel)
+            if (this.AddKernel)
             {
-               Console.WriteLine(KernelCode());
+               Console.WriteLine(this.KernelCode());
             }
          }
          else
          {
-            StreamWriter TargetText = new StreamWriter(outputFileName, false, enc1251);
+            StreamWriter targetText = new StreamWriter(this.outputFileName, false, this.enc1251);
             try
             {
-               TargetText.WriteLine(net.ToProlog());
+               targetText.WriteLine(this.net.ToProlog());
             }
             catch (Exception e)
             {
                Console.WriteLine(e.Message);
-               return 1;
+               throw;
             }
-            if(AddKernel)
+
+            if (this.AddKernel)
             {
-               TargetText.WriteLine(KernelCode());
+               targetText.WriteLine(this.KernelCode());
             }
-            TargetText.Close();
+
+            targetText.Close();
          }
+
          return 0;
       }
-      #endregion
 
       private string KernelCode()
       {
@@ -174,13 +183,6 @@
          code.AppendLine(stR.ReadToEnd());
          code.AppendLine();
          return code.ToString();
-      }
-
-      //точка входа
-      static int Main(string[] args)
-      {
-         (new PNML2PrologConverter()).Run();
-         return 0;
       }
    }
 }

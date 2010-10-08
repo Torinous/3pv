@@ -7,7 +7,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Pppv</RootNamespace>
     <AssemblyName>Editor</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <SourceAnalysisOverrideSettingsFile>F:\SVN\3pv\Editor\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
@@ -193,7 +193,6 @@
     <None Include="app.config" />
     <None Include="app.manifest" />
     <None Include="Properties\AssemblyInfo.in" />
-    <Content Include="Editor.cd" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources" />
