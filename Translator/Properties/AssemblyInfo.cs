@@ -12,11 +12,12 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Translator")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Translator")]
-[assembly: AssemblyCopyright("Copyright 2010")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany("Антонов Дмитрий Александрович AKA Torinous")]
+[assembly: AssemblyProduct("3Pv")]
+[assembly: AssemblyCopyright("Copyright © vv 2008")]
+[assembly: AssemblyTrademark("Антонов Дмитрий Александрович AKA Torinous")]
 [assembly: AssemblyCulture("")]
+[assembly: CLSCompliant(true)]
 
 // This sets the default COM visibility of types in the assembly to invisible.
 // If you need to expose a type to COM, use [ComVisible(true)] on that type.

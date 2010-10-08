@@ -1,19 +1,19 @@
-﻿using System;
-using System.Text;
-using System.IO;
-using System.Xml;
-using System.Xml.Serialization;
-using System.Resources;
-using System.Reflection;
-using System.Diagnostics;
-using System.Configuration;
-using System.Collections.Generic;
-
-using PPPV.Utils;
-using PPPV.Net;
-
-namespace PPPV.pnml2prolog
+﻿namespace Pppv.Translator
 {
+   using System;
+   using System.Text;
+   using System.IO;
+   using System.Xml;
+   using System.Xml.Serialization;
+   using System.Resources;
+   using System.Reflection;
+   using System.Diagnostics;
+   using System.Configuration;
+   using System.Collections.Generic;
+
+   using Pppv.Utils;
+   using Pppv.Net;
+
    class PNML2PrologConverter
    {
       #region Private Variables
