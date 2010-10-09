@@ -316,17 +316,18 @@
          bool result = false;
          StreamWriter stream;
          string fileName = String.Empty;
-         SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-         saveFileDialog1.Filter = "pnml files (*.pnml)|*.pnml|All files (*.*)|*.*";
-         saveFileDialog1.FilterIndex = 1;
-         saveFileDialog1.RestoreDirectory = true;
+         SaveFileDialog saveFileDialog = new SaveFileDialog();
+         saveFileDialog.Filter = "pnml files (*.pnml)|*.pnml|All files (*.*)|*.*";
+         saveFileDialog.FilterIndex = 1;
+         saveFileDialog.RestoreDirectory = true;
+         saveFileDialog.InitialDirectory = Environment.CurrentDirectory;
 
-         if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+         if (saveFileDialog.ShowDialog() == DialogResult.OK)
          {
-            stream = new StreamWriter(saveFileDialog1.FileName, false, Encoding.GetEncoding(1251));
+            stream = new StreamWriter(saveFileDialog.FileName, false, Encoding.GetEncoding(1251));
             if (stream != null)
             {
-               this.FileOfNetPath = fileName = saveFileDialog1.FileName;
+               this.FileOfNetPath = fileName = saveFileDialog.FileName;
                if (String.IsNullOrEmpty(this.Id))
                {
                   this.Id = fileName.Substring(fileName.LastIndexOf("\\", StringComparison.Ordinal) + 1);

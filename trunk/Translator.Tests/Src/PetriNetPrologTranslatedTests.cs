@@ -6,18 +6,22 @@
  *
  *
  */
-namespace Translator.Tests
+namespace Pppv.Translator.Tests
 {
    using System;
    using NUnit.Framework;
+
+   using Pppv.Net;
 
    [TestFixture]
    public class PetriNetPrologTranslatedTests
    {
       [Test]
-      public void TestMethod()
+      public void TestSerialization()
       {
-         // TODO: Add your test.
+         /*PetriNetPrologTranslated net = new PetriNetPrologTranslated();
+         SerealizationTestHelper serealizationHelper = new SerealizationTestHelper(net, "Pppv.Resources.ArcExample1.pnml");
+         serealizationHelper.Perform();*/
       }
    }
 }
