@@ -23,6 +23,7 @@
     <RunSourceAnalysis>False</RunSourceAnalysis>
     <TargetFrameworkProfile />
     <PreBuildEvent>SubWCRev.exe ../../Properties ../../Properties/AssemblyInfo.in ../../Properties/AssemblyInfo.cs</PreBuildEvent>
+    <PostBuildEvent>xcopy .\*  ..\..\..\Range  /y</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
     <PlatformTarget>x86</PlatformTarget>
