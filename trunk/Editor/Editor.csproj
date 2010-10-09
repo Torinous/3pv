@@ -162,7 +162,6 @@
     <Compile Include="Src\PPPV\Utils\CommandLineSwitchAttribute.cs" />
     <Compile Include="Src\PPPV\Utils\DebugAssistant.cs" />
     <Compile Include="Src\PPPV\Utils\NativeMethods.cs" />
-    <Compile Include="Src\PPPV\Utils\Parser.cs" />
     <Compile Include="Src\PPPV\Utils\PreciseTimer.cs" />
     <Compile Include="Src\PPPV\Utils\RefreshingListBox.cs" />
     <Compile Include="Src\PPPV\Utils\RtlAwareMessageBox.cs" />
