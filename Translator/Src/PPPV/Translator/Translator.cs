@@ -16,142 +16,106 @@
 
    public class TranslatorToProlog
    {
-      #region Private Variables
-      private string inputFileName = "none";
-      private string outputFileName = "none";
-      private bool helpReq;
-      private bool addKernel = true;
       private PetriNetPrologTranslated net;
-      private Encoding enc1251;
-      #endregion
+      private Encoding encoding;
+      private CommandLineArguments arguments;
 
       public TranslatorToProlog()
       {
-         this.enc1251 = Encoding.GetEncoding(1251);
+         this.encoding = Encoding.GetEncoding(1251);
+         arguments = new CommandLineArguments(Environment.GetCommandLineArgs());
       }
 
-      #region Properties and Command Line Switches
-      [CommandLineSwitch("O", "Target for output.")]
-      [CommandLineAlias("o")]
-      public string OutputTarget
+      #region Properties
+      public CommandLineArguments Arguments
       {
-         get { return this.outputFileName; }
-         set { this.outputFileName = value; }
-      }
-      
-      [CommandLineSwitch("help", "Show some help.")]
-      [CommandLineAlias("h")]
-      public bool HelpRequest
-      {
-         get { return this.helpReq; }
-         set { this.helpReq = value; }
+         get { return this.arguments; }
+         set { this.arguments = value; }
       }
 
-      [CommandLineSwitch("AddKernel", "Add verification Kernel code.")]
-      [CommandLineAlias("ak")]
-      public bool AddKernel
+      public PetriNetPrologTranslated Net
       {
-         get { return this.addKernel; }
-         set { this.addKernel = value; }
+         get { return this.net; }
+         set { this.net = value; }
+      }
+
+      public Encoding Encoding
+      {
+         get { return this.encoding; }
+         set { this.encoding = value; }
+      }
+
+      public string InputFileName
+      {
+         get { return arguments["input"]; }
+      }
+
+      public string OutputFileName
+      {
+         get { return arguments["output"]; }
+      }
+
+      public bool NeedHelp
+      {
+         get { return Arguments["h"] == "true" || Arguments["help"] == "true"; }
+      }
+
+      public bool NeedKernelCode
+      {
+         get { return arguments["addkernel"] == "true" || arguments["addkernel"] == null; }
       }
       #endregion
 
       private static int Main()
       {
-         (new TranslatorToProlog()).Run();
+         try
+         {
+            (new TranslatorToProlog()).Run();
+         }
+         catch (Exception e)
+         {
+            Console.WriteLine(e.Message);
+            return 1;
+         }
          return 0;
       }
 
       private int Run()
       {
-         Debug.WriteLine(System.Environment.CommandLine);
-         Parser cmdParser = new Parser(System.Environment.CommandLine, this);
-         try
-         {
-            cmdParser.Parse();
-         }
-         catch (Exception ex)
-         {
-            Console.WriteLine(ex.Message);
-            throw;
-         }
+         Console.WriteLine("input["+this.InputFileName+"]");
+         Console.WriteLine("output["+this.OutputFileName+"]");
 
-         if (this.HelpRequest)
+         if (this.NeedHelp)
          {
             Console.WriteLine("pnml2prolog v. " + Assembly.GetExecutingAssembly().GetName().Version.ToString());
             return 0;
          }
 
-         if (cmdParser.Parameters.Length == 1)
-         {
-            this.inputFileName = cmdParser.Parameters[0];
-         }
-         else
-         {
-            if (cmdParser.Parameters.Length > 1)
-            {
-               Console.WriteLine("\nYou must specify only one or none input files.");
-               return 0;
-            }
-         }
-
          XmlSerializer serializer = new XmlSerializer(typeof(PetriNet));
-         if (this.inputFileName == "none")
+         if (this.InputFileName == null)
          {
-            try
-            {
-               this.net = (PetriNetPrologTranslated)serializer.Deserialize(Console.In);
-            }
-            catch (XmlException ex)
-            {
-               Console.WriteLine(ex.Message);
-               return 1;
-            }
+            this.net = (PetriNetPrologTranslated)serializer.Deserialize(Console.In);
          }
          else
          {
-            try
-            {
-               this.net = (PetriNetPrologTranslated)serializer.Deserialize(File.OpenText(this.inputFileName));
-            }
-            catch (XmlException ex)
-            {
-               Console.WriteLine(ex.Message);
-               return 1;
-            }
+            this.net = (PetriNetPrologTranslated)serializer.Deserialize(File.OpenText(this.InputFileName));
          }
 
-         if (this.outputFileName == "none")
+         if (this.OutputFileName == null)
          {
-            try
-            {
-               Console.WriteLine(this.net.ToProlog());
-            }
-            catch (Exception e)
-            {
-               Console.WriteLine(e.Message);
-               throw;
-            }
+            Console.WriteLine(this.net.ToProlog());
 
-            if (this.AddKernel)
+            if (this.NeedKernelCode)
             {
                Console.WriteLine(this.KernelCode());
             }
          }
          else
          {
-            StreamWriter targetText = new StreamWriter(this.outputFileName, false, this.enc1251);
-            try
-            {
-               targetText.WriteLine(this.net.ToProlog());
-            }
-            catch (Exception e)
-            {
-               Console.WriteLine(e.Message);
-               throw;
-            }
+            StreamWriter targetText = new StreamWriter(this.OutputFileName, false, this.encoding);
+            targetText.WriteLine(this.net.ToProlog());
 
-            if (this.AddKernel)
+            if (this.NeedKernelCode)
             {
                targetText.WriteLine(this.KernelCode());
             }
@@ -169,17 +133,17 @@
 
          StringBuilder code = new StringBuilder(3000);
 
-         stR = new StreamReader(current.GetManifestResourceStream("ss_kernel.pl"), this.enc1251);
+         stR = new StreamReader(current.GetManifestResourceStream("ss_kernel.pl"), this.encoding);
          code.AppendLine(stR.ReadToEnd());
-         stR = new StreamReader(current.GetManifestResourceStream("ss_requests.pl"), this.enc1251);
+         stR = new StreamReader(current.GetManifestResourceStream("ss_requests.pl"), this.encoding);
          code.AppendLine(stR.ReadToEnd());
-         stR = new StreamReader(current.GetManifestResourceStream("ctl_kernel.pl"), this.enc1251);
+         stR = new StreamReader(current.GetManifestResourceStream("ctl_kernel.pl"), this.encoding);
          code.AppendLine(stR.ReadToEnd());
-         stR = new StreamReader(current.GetManifestResourceStream("ctl_requests.pl"), this.enc1251);
+         stR = new StreamReader(current.GetManifestResourceStream("ctl_requests.pl"), this.encoding);
          code.AppendLine(stR.ReadToEnd());
-         stR = new StreamReader(current.GetManifestResourceStream("report_kernel.pl"), this.enc1251);
+         stR = new StreamReader(current.GetManifestResourceStream("report_kernel.pl"), this.encoding);
          code.AppendLine(stR.ReadToEnd());
-         stR = new StreamReader(current.GetManifestResourceStream("main.pl"), this.enc1251);
+         stR = new StreamReader(current.GetManifestResourceStream("main.pl"), this.encoding);
          code.AppendLine(stR.ReadToEnd());
          code.AppendLine();
          return code.ToString();

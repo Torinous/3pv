@@ -50,7 +50,6 @@
             text.AppendLine();
          }
 
-         /*TODO: Проверить а есть ли дополнительный код*/
          if (this.AdditionalCode.Length != 0)
          {
             text.AppendLine();
