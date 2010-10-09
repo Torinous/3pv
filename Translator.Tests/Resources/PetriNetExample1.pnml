@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<pnml>
+  <net id="test.pnml" type="PPr/T net">
+    <place id="P0">
+      <graphics>
+        <position x="189.0" y="99.0" />
+      </graphics>
+      <name>
+        <value>P0</value>
+      </name>
+      <initialMarking>
+        <token>
+          <value>1</value>
+        </token>
+        <token>
+          <value>2</value>
+        </token>
+        <token>
+          <value>3</value>
+        </token>
+        <token>
+          <value>4</value>
+        </token>
+        <token>
+          <value>5</value>
+        </token>
+      </initialMarking>
+    </place>
+    <place id="P1">
+      <graphics>
+        <position x="536.0" y="147.0" />
+      </graphics>
+      <name>
+        <value>P1</value>
+      </name>
+      <initialMarking />
+    </place>
+    <place id="P2">
+      <graphics>
+        <position x="194.0" y="244.0" />
+      </graphics>
+      <name>
+        <value>P2</value>
+      </name>
+      <initialMarking>
+        <token>
+          <value>1</value>
+        </token>
+        <token>
+          <value>2</value>
+        </token>
+        <token>
+          <value>3</value>
+        </token>
+        <token>
+          <value>4</value>
+        </token>
+      </initialMarking>
+    </place>
+    <transition id="T0">
+      <graphics>
+        <position x="369.0" y="149.0" />
+      </graphics>
+      <name>
+        <value>T0</value>
+      </name>
+      <guard>
+        <value />
+      </guard>
+    </transition>
+    <arc id="P0 to T0" source="P0" target="T0">
+      <cortege />
+      <type value="normal" />
+    </arc>
+    <arc id="T0 to P1" source="T0" target="P1">
+      <cortege />
+      <type value="normal" />
+    </arc>
+    <arc id="P2 to T0" source="P2" target="T0">
+      <cortege />
+      <type value="normal" />
+    </arc>
+    <additionalCode />
+  </net>
+</pnml>

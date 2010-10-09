@@ -34,6 +34,7 @@
          this.places = new ArrayList(30);
          this.transitions = new ArrayList(30);
          this.arcs = new ArrayList(60);
+         this.additionalCode = String.Empty;
       }
 
       public string Id

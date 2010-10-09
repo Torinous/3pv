@@ -55,7 +55,7 @@
 
       /*public void Run()
       {
-         //TODO: Тут бы надо завернуть в Try и написать хорошую форму для показа Exceptions
+         
          System.Windows.Forms.Application.Run(this.mainFormInst);
          PreciseTimer.ShowTimeTable();
       }*/
@@ -82,6 +82,7 @@
       {
          public void ApplicationThreadException(object sender, ThreadExceptionEventArgs e)
          {
+            // TODO: Тут бы надо написать хорошую форму для показа Exceptions
             RtlAwareMessageBox.Show(null, e.Exception.Message, "An exception occurred:", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, (MessageBoxOptions)0);
          }
       }

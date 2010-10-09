@@ -13,8 +13,25 @@
    using Pppv.Editor;
    using Pppv.Utils;
 
-   public class PetriNetPrologTranslated : PetriNet
+   public class PetriNetPrologTranslated
    {
+      private PetriNet net;
+
+      public PetriNetPrologTranslated()
+      {
+      }
+
+      public PetriNetPrologTranslated(PetriNet net)
+      {
+         this.Net = net;
+      }
+
+      public PetriNet Net
+      {
+         get { return this.net; }
+         set { this.net = value; }
+      }
+
       [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase", Justification = "Синтасис Prolog обязывает")]
       public string ToProlog()
       {
@@ -23,9 +40,9 @@
          text.AppendLine();
          text.AppendLine("%Changes to this file may cause incorrect behavior. Manual editing, only for experts.");
          text.AppendLine();
-         text.AppendFormat("netname('{0}').", Id);
+         text.AppendFormat("netname('{0}').", this.Net.Id);
          text.AppendLine();
-         text.AppendFormat("nettype('{0}').", NetType);
+         text.AppendFormat("nettype('{0}').", this.Net.NetType);
          text.AppendLine();
          text.AppendLine();
          text.Append(this.TransitionsList());
@@ -38,7 +55,7 @@
          text.AppendLine();
          text.AppendLine("%transitions semantic");
          text.AppendLine();
-         foreach (Transition tr in this.Transitions)
+         foreach (Transition tr in this.Net.Transitions)
          {
             text.AppendFormat(
                               CultureInfo.InvariantCulture,
@@ -50,12 +67,12 @@
             text.AppendLine();
          }
 
-         if (this.AdditionalCode.Length != 0)
+         if (!String.IsNullOrEmpty(this.Net.AdditionalCode))
          {
             text.AppendLine();
             text.AppendLine("%additional code");
             text.AppendLine();
-            text.Append(this.AdditionalCode);
+            text.Append(this.Net.AdditionalCode);
             text.AppendLine();
          }
 
@@ -66,7 +83,7 @@
       public string InitialMarking()
       {
          StringBuilder text = new StringBuilder(400);
-         foreach (Place pl in this.Places)
+         foreach (Place pl in this.Net.Places)
          {
             foreach (Token token in pl.Tokens)
             {
@@ -88,7 +105,7 @@
       public string TransitionsList()
       {
          StringBuilder text = new StringBuilder(400);
-         foreach (Transition transition in this.Transitions)
+         foreach (Transition transition in this.Net.Transitions)
          {
             text.AppendFormat("transition({0}).", transition.Name.ToLower(CultureInfo.InvariantCulture));
             text.AppendLine();
@@ -101,7 +118,7 @@
       public string PlacesList()
       {
          StringBuilder text = new StringBuilder(400);
-         foreach (Place place in this.Places)
+         foreach (Place place in this.Net.Places)
          {
             text.AppendFormat("place({0}).", place.Name.ToLower(CultureInfo.InvariantCulture));
             text.AppendLine();
@@ -114,11 +131,11 @@
       public string Precondition(INetElement inTransition)
       {
          StringBuilder text = new StringBuilder(100);
-         foreach (Arc arc in this.Arcs)
+         foreach (Arc arc in this.Net.Arcs)
          {
             if (arc.TargetId == inTransition.Id)
             {
-               foreach (Place place in this.Places)
+               foreach (Place place in this.Net.Places)
                {
                   if (place.Id == arc.SourceId)
                   {
@@ -145,11 +162,11 @@
       public string Postcondition(INetElement transition)
       {
          StringBuilder text = new StringBuilder(100);
-         foreach (Arc arc in this.Arcs)
+         foreach (Arc arc in this.Net.Arcs)
          {
             if (arc.SourceId == transition.Id)
             {
-               foreach (Place place in this.Places)
+               foreach (Place place in this.Net.Places)
                {
                   if (place.Id == arc.TargetId)
                   {

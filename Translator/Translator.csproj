@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Pppv.Translator</RootNamespace>
+    <RootNamespace>Pppv</RootNamespace>
     <AssemblyName>Pnml2Prolog</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -24,6 +24,7 @@
     <TargetFrameworkProfile />
     <PreBuildEvent>SubWCRev.exe ../../Properties ../../Properties/AssemblyInfo.in ../../Properties/AssemblyInfo.cs</PreBuildEvent>
     <PostBuildEvent>xcopy .\*  ..\..\..\Range  /y</PostBuildEvent>
+    <StartArguments>-input=test.pnml</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -68,7 +69,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Src\PPPV\Net\PetriNetPrologTranslated.cs" />
     <Compile Include="Src\PPPV\Translator\CommandLineArguments.cs" />
-    <Compile Include="Src\PPPV\Translator\Translator.cs" />
+    <Compile Include="Src\PPPV\Translator\TranslatorToProlog.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Verificator\ctl_kernel.pl" />
