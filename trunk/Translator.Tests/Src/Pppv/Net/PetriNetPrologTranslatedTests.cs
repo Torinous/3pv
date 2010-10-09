@@ -9,7 +9,13 @@
 namespace Pppv.Translator.Tests
 {
    using System;
+   using System.Reflection;
+   using System.Xml;
+   using System.Xml.Schema;
+   using System.Xml.Serialization;
+
    using NUnit.Framework;
+   using NUnit.Framework.Constraints;
 
    using Pppv.Net;
 
@@ -19,9 +25,13 @@ namespace Pppv.Translator.Tests
       [Test]
       public void TestSerialization()
       {
-         /*PetriNetPrologTranslated net = new PetriNetPrologTranslated();
-         SerealizationTestHelper serealizationHelper = new SerealizationTestHelper(net, "Pppv.Resources.ArcExample1.pnml");
-         serealizationHelper.Perform();*/
+         PetriNet net = new PetriNet();
+         XmlSerializer serializer = new XmlSerializer(typeof(PetriNet));
+         net = serializer.Deserialize(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.PetriNetExample1.pnml")) as PetriNet;
+         PetriNetPrologTranslated netTranslator = new PetriNetPrologTranslated(net);
+         Assert.That(netTranslator.PlacesList(), Is.StringContaining("place"));
+         Assert.That(netTranslator.TransitionsList(), Is.StringContaining("transition"));
+         Assert.That(netTranslator.ToProlog(), Is.StringContaining("transition"));
       }
    }
 }
