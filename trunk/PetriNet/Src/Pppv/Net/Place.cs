@@ -10,8 +10,6 @@
    using System.Xml.Schema;
    using System.Xml.Serialization;
 
-   using Pppv.Utils;
-
    [Serializable()]
    [XmlRoot("place")]
    public class Place : NetElement, IPlace

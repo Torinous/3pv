@@ -10,10 +10,6 @@
    using System.Xml.Schema;
    using System.Xml.Serialization;
 
-   using Pppv.Editor;
-   using Pppv.Editor.Shapes;
-   using Pppv.Utils;
-
    public interface IArc : INetElement
    {
       ArcType ArcType { get; set; }
