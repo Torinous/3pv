@@ -77,6 +77,7 @@
     <Compile Include="Src\Pppv\Utils\SerealizationTestHelper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Resources" />
     <Folder Include="Src" />
     <Folder Include="Src\Pppv" />
     <Folder Include="Src\Pppv\Net" />
@@ -90,6 +91,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AssemblyInfo.in" />
+    <EmbeddedResource Include="Resources\ArcExample1.pnml" />
+    <EmbeddedResource Include="Resources\PetriNetExample1.pnml" />
+    <EmbeddedResource Include="Resources\PlaceExample1.pnml" />
+    <EmbeddedResource Include="Resources\PredicateExample1.pnml" />
+    <EmbeddedResource Include="Resources\PredicateExample2.pnml" />
+    <EmbeddedResource Include="Resources\PredicateExample3.pnml" />
+    <EmbeddedResource Include="Resources\PredicatesListExample1.pnml" />
+    <EmbeddedResource Include="Resources\PredicatesListExample2.pnml" />
+    <EmbeddedResource Include="Resources\TokenExample1.pnml" />
+    <EmbeddedResource Include="Resources\TokensListExample1.pnml" />
+    <EmbeddedResource Include="Resources\TokensListExample2.pnml" />
+    <EmbeddedResource Include="Resources\TransitionExample1.pnml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>

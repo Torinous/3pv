@@ -87,7 +87,6 @@
     <Compile Include="Src\Pppv\Net\ParentNetChangeEventArgs.cs" />
     <Compile Include="Src\Pppv\Net\PenCapPlace.cs" />
     <Compile Include="Src\Pppv\Net\PetriNet.cs" />
-    <Compile Include="Src\Pppv\Net\PetriNetPrologTranslated.cs" />
     <Compile Include="Src\Pppv\Net\Place.cs" />
     <Compile Include="Src\Pppv\Net\Predicate.cs" />
     <Compile Include="Src\Pppv\Net\PredicateList.cs" />
