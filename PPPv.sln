@@ -18,13 +18,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translator", "Translator\Tr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Translator.Tests", "Translator.Tests\Translator.Tests.csproj", "{26117E7C-ECFF-4F12-B759-413B82FDA121}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PetriNet", "PetriNet", "{8BBDBFF9-E00C-44D7-A5D5-98081CBEB8D4}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PppNet", "PppNet", "{8BBDBFF9-E00C-44D7-A5D5-98081CBEB8D4}"
 	ProjectSection(SolutionItems) = postProject
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetriNet", "PetriNet\PetriNet.csproj", "{AED06680-760B-4499-A078-905464A9DE37}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PppNet", "PetriNet\PppNet.csproj", "{AED06680-760B-4499-A078-905464A9DE37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PetriNet.Tests", "PetriNet.Tests\PetriNet.Tests.csproj", "{C269346A-177C-465E-98BC-D21FCC205AA1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PppNet.Tests", "PetriNet.Tests\PppNet.Tests.csproj", "{C269346A-177C-465E-98BC-D21FCC205AA1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

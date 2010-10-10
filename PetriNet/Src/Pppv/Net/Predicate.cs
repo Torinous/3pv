@@ -8,8 +8,6 @@
    using System.Xml.Schema;
    using System.Xml.Serialization;
 
-   using Pppv.Utils;
-
    [Serializable()]
    [XmlRoot("predicate")]
    public class Predicate : IXmlSerializable

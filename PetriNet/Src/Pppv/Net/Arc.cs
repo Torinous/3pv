@@ -10,9 +10,6 @@
    using System.Xml.Schema;
    using System.Xml.Serialization;
 
-   using Pppv.Editor;
-   using Pppv.Utils;
-
    [Serializable()]
    [XmlRoot("arc")]
    public class Arc : NetElement, IArc

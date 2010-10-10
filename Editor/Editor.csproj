@@ -141,26 +141,6 @@
     <Compile Include="Src\PPPV\Editor\Tools\PointerTool.cs" />
     <Compile Include="Src\PPPV\Editor\Tools\Tool.cs" />
     <Compile Include="Src\PPPV\Editor\Tools\TransitionTool.cs" />
-    <Compile Include="Src\PPPV\Net\Arc.cs" />
-    <Compile Include="Src\PPPV\Net\ArcType.cs" />
-    <Compile Include="Src\PPPV\Net\IArc.cs" />
-    <Compile Include="Src\PPPV\Net\INetElement.cs" />
-    <Compile Include="Src\PPPV\Net\IPlace.cs" />
-    <Compile Include="Src\PPPV\Net\ITransition.cs" />
-    <Compile Include="Src\PPPV\Net\MouseEventArgs.cs" />
-    <Compile Include="Src\PPPV\Net\NetElement.cs" />
-    <Compile Include="Src\PPPV\Net\NetElementEnumerator.cs" />
-    <Compile Include="Src\PPPV\Net\NetException.cs" />
-    <Compile Include="Src\PPPV\Net\ParentNetChangeEventArgs.cs" />
-    <Compile Include="Src\PPPV\Net\PenCapPlace.cs" />
-    <Compile Include="Src\PPPV\Net\PetriNet.cs" />
-    <Compile Include="Src\PPPV\Net\Place.cs" />
-    <Compile Include="Src\PPPV\Net\Predicate.cs" />
-    <Compile Include="Src\PPPV\Net\PredicateList.cs" />
-    <Compile Include="Src\PPPV\Net\SelectionChangeEventArgs.cs" />
-    <Compile Include="Src\PPPV\Net\Token.cs" />
-    <Compile Include="Src\PPPV\Net\TokensList.cs" />
-    <Compile Include="Src\PPPV\Net\Transition.cs" />
     <Compile Include="Src\PPPV\Utils\CommandLineAliasAttribute.cs" />
     <Compile Include="Src\PPPV\Utils\CommandLineSwitchAttribute.cs" />
     <Compile Include="Src\PPPV\Utils\DebugAssistant.cs" />
@@ -204,8 +184,13 @@
     <Folder Include="Src\PPPV\Editor\Commands" />
     <Folder Include="Src\PPPV\Editor\Shapes" />
     <Folder Include="Src\PPPV\Editor\Tools" />
-    <Folder Include="Src\PPPV\Net" />
     <Folder Include="Src\PPPV\Utils" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PetriNet\PppNet.csproj">
+      <Project>{AED06680-760B-4499-A078-905464A9DE37}</Project>
+      <Name>PppNet</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <PreBuildEvent>SubWCRev.exe ../../Properties ../../Properties/AssemblyInfo.in ../../Properties/AssemblyInfo.cs

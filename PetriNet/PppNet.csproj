@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <OutputType>Library</OutputType>
     <RootNamespace>Pppv</RootNamespace>
-    <AssemblyName>PetriNet</AssemblyName>
+    <AssemblyName>PppNet</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <SourceAnalysisOverrideSettingsFile>F:\SVN\3pv\PetriNet\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
@@ -66,9 +66,32 @@
   <ItemGroup>
     <Folder Include="Src" />
     <Folder Include="Src\Pppv" />
+    <Folder Include="Src\Pppv\Net" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AssemblyInfo.in" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Src\Pppv\Net\Arc.cs" />
+    <Compile Include="Src\Pppv\Net\ArcType.cs" />
+    <Compile Include="Src\Pppv\Net\IArc.cs" />
+    <Compile Include="Src\Pppv\Net\INetElement.cs" />
+    <Compile Include="Src\Pppv\Net\IPlace.cs" />
+    <Compile Include="Src\Pppv\Net\ITransition.cs" />
+    <Compile Include="Src\Pppv\Net\NetElement.cs" />
+    <Compile Include="Src\Pppv\Net\NetElementEnumerator.cs" />
+    <Compile Include="Src\Pppv\Net\NetException.cs" />
+    <Compile Include="Src\Pppv\Net\ParentNetChangeEventArgs.cs" />
+    <Compile Include="Src\Pppv\Net\PenCapPlace.cs" />
+    <Compile Include="Src\Pppv\Net\PetriNet.cs" />
+    <Compile Include="Src\Pppv\Net\Place.cs" />
+    <Compile Include="Src\Pppv\Net\Predicate.cs" />
+    <Compile Include="Src\Pppv\Net\PredicateList.cs" />
+    <Compile Include="Src\Pppv\Net\SelectionChangeEventArgs.cs" />
+    <Compile Include="Src\Pppv\Net\Token.cs" />
+    <Compile Include="Src\Pppv\Net\TokensList.cs" />
+    <Compile Include="Src\Pppv\Net\Transition.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>
