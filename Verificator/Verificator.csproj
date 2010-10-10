@@ -64,21 +64,30 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainForm.cs" />
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Src\Pppv\Verificator\PetriNetPrologTranslated.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AssemblyInfo.in" />
+    <None Include="Resources\Prolog\ctl_kernel.pl" />
+    <None Include="Resources\Prolog\ctl_requests.pl" />
+    <None Include="Resources\Prolog\main.pl" />
+    <None Include="Resources\Prolog\report_kernel.pl" />
+    <None Include="Resources\Prolog\ss_kernel.pl" />
+    <None Include="Resources\Prolog\ss_requests.pl" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources" />
+    <Folder Include="Resources\Prolog" />
     <Folder Include="Src" />
     <Folder Include="Src\Pppv" />
     <Folder Include="Src\Pppv\Verificator" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PppNet\PppNet.csproj">
+      <Project>{AED06680-760B-4499-A078-905464A9DE37}</Project>
+      <Name>PppNet</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>
