@@ -3,8 +3,6 @@
  * User: Torinous
  * Date: 09.10.2010
  * Time: 19:41
- *
- *
  */
 namespace Pppv.Translator
 {
@@ -26,7 +24,6 @@ namespace Pppv.Translator
       public void TestOfAdditionalCode()
       {
          TranslatorToProlog netTranslator = new TranslatorToProlog();
-         Assert.IsNotNullOrEmpty(netTranslator.KernelCode(), "Кода ядра верификации нет");
       }
    }
 }
