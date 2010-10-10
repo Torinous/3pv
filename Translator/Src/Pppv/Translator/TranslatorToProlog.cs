@@ -66,29 +66,6 @@
       }
       #endregion
 
-      public string KernelCode()
-      {
-         Assembly current = Assembly.GetExecutingAssembly();
-         StreamReader stR;
-
-         StringBuilder code = new StringBuilder(3000);
-
-         stR = new StreamReader(current.GetManifestResourceStream("Pppv.Resources.Verificator.ss_kernel.pl"), this.encoding);
-         code.AppendLine(stR.ReadToEnd());
-         stR = new StreamReader(current.GetManifestResourceStream("Pppv.Resources.Verificator.ss_requests.pl"), this.encoding);
-         code.AppendLine(stR.ReadToEnd());
-         stR = new StreamReader(current.GetManifestResourceStream("Pppv.Resources.Verificator.ctl_kernel.pl"), this.encoding);
-         code.AppendLine(stR.ReadToEnd());
-         stR = new StreamReader(current.GetManifestResourceStream("Pppv.Resources.Verificator.ctl_requests.pl"), this.encoding);
-         code.AppendLine(stR.ReadToEnd());
-         stR = new StreamReader(current.GetManifestResourceStream("Pppv.Resources.Verificator.report_kernel.pl"), this.encoding);
-         code.AppendLine(stR.ReadToEnd());
-         stR = new StreamReader(current.GetManifestResourceStream("Pppv.Resources.Verificator.main.pl"), this.encoding);
-         code.AppendLine(stR.ReadToEnd());
-         code.AppendLine();
-         return code.ToString();
-      }
-
       private static int Main()
       {
          try
@@ -134,7 +111,7 @@
 
             if (this.NeedKernelCode)
             {
-               Console.WriteLine(this.KernelCode());
+               Console.WriteLine(PetriNetPrologTranslated.KernelCode);
             }
          }
          else
@@ -144,7 +121,7 @@
 
             if (this.NeedKernelCode)
             {
-               targetText.WriteLine(this.KernelCode());
+               targetText.WriteLine(PetriNetPrologTranslated.KernelCode);
             }
 
             targetText.Close();

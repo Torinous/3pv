@@ -10,9 +10,6 @@
    using System.Xml.Schema;
    using System.Xml.Serialization;
 
-   using Pppv.Editor;
-   using Pppv.Utils;
-
    public class PetriNetPrologTranslated
    {
       private PetriNet net;
@@ -30,6 +27,11 @@
       {
          get { return this.net; }
          set { this.net = value; }
+      }
+
+      public static string KernelCode
+      {
+         get { return GetKernelCode(); }
       }
 
       [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase", Justification = "Синтасис Prolog обязывает")]
@@ -187,6 +189,29 @@
          text.Append("]");
          text.Insert(0, "[");
          return text.ToString();
+      }
+
+      private static string GetKernelCode()
+      {
+         Assembly current = Assembly.GetExecutingAssembly();
+         StreamReader stR;
+
+         StringBuilder code = new StringBuilder(3000);
+
+         stR = new StreamReader(current.GetManifestResourceStream("Pppv.Resources.Verificator.ss_kernel.pl"), Encoding.GetEncoding(1251));
+         code.AppendLine(stR.ReadToEnd());
+         stR = new StreamReader(current.GetManifestResourceStream("Pppv.Resources.Verificator.ss_requests.pl"), Encoding.GetEncoding(1251));
+         code.AppendLine(stR.ReadToEnd());
+         stR = new StreamReader(current.GetManifestResourceStream("Pppv.Resources.Verificator.ctl_kernel.pl"), Encoding.GetEncoding(1251));
+         code.AppendLine(stR.ReadToEnd());
+         stR = new StreamReader(current.GetManifestResourceStream("Pppv.Resources.Verificator.ctl_requests.pl"), Encoding.GetEncoding(1251));
+         code.AppendLine(stR.ReadToEnd());
+         stR = new StreamReader(current.GetManifestResourceStream("Pppv.Resources.Verificator.report_kernel.pl"), Encoding.GetEncoding(1251));
+         code.AppendLine(stR.ReadToEnd());
+         stR = new StreamReader(current.GetManifestResourceStream("Pppv.Resources.Verificator.main.pl"), Encoding.GetEncoding(1251));
+         code.AppendLine(stR.ReadToEnd());
+         code.AppendLine();
+         return code.ToString();
       }
    }
 }
