@@ -70,14 +70,6 @@
     <Compile Include="Src\PPPV\Translator\TranslatorToProlog.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Verificator\ctl_kernel.pl" />
-    <EmbeddedResource Include="Resources\Verificator\ctl_requests.pl" />
-    <EmbeddedResource Include="Resources\Verificator\main.pl" />
-    <EmbeddedResource Include="Resources\Verificator\report_kernel.pl" />
-    <EmbeddedResource Include="Resources\Verificator\ss_kernel.pl" />
-    <EmbeddedResource Include="Resources\Verificator\ss_requests.pl" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Resources" />
     <Folder Include="Resources\Verificator" />
     <Folder Include="Src" />
@@ -92,6 +84,10 @@
     <ProjectReference Include="..\PppNet\PppNet.csproj">
       <Project>{AED06680-760B-4499-A078-905464A9DE37}</Project>
       <Name>PppNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Verificator\Verificator.csproj">
+      <Project>{E2CDB95D-6CB1-4316-8398-EBD5A4C5C5B4}</Project>
+      <Name>Verificator</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
