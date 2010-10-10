@@ -141,8 +141,6 @@
     <Compile Include="Src\PPPV\Editor\Tools\PointerTool.cs" />
     <Compile Include="Src\PPPV\Editor\Tools\Tool.cs" />
     <Compile Include="Src\PPPV\Editor\Tools\TransitionTool.cs" />
-    <Compile Include="Src\PPPV\Utils\CommandLineAliasAttribute.cs" />
-    <Compile Include="Src\PPPV\Utils\CommandLineSwitchAttribute.cs" />
     <Compile Include="Src\PPPV\Utils\DebugAssistant.cs" />
     <Compile Include="Src\PPPV\Utils\NativeMethods.cs" />
     <Compile Include="Src\PPPV\Utils\PreciseTimer.cs" />
@@ -187,7 +185,7 @@
     <Folder Include="Src\PPPV\Utils" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PetriNet\PppNet.csproj">
+    <ProjectReference Include="..\PppNet\PppNet.csproj">
       <Project>{AED06680-760B-4499-A078-905464A9DE37}</Project>
       <Name>PppNet</Name>
     </ProjectReference>
