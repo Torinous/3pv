@@ -9,7 +9,6 @@ namespace Pppv.Net
 {
    using System;
    using System.Drawing;
-   using System.Drawing.Drawing2D;
    using NUnit.Framework;
    using NUnit.Framework.Constraints;
 

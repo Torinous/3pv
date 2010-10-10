@@ -75,15 +75,6 @@
     <Compile Include="Src\Pppv\Editor\Commands\DeleteCommandTests.cs" />
     <Compile Include="Src\Pppv\Editor\Commands\MacroCommandTests.cs" />
     <Compile Include="Src\Pppv\Editor\Shapes\ShapeTests.cs" />
-    <Compile Include="Src\Pppv\Net\ArcTests.cs" />
-    <Compile Include="Src\Pppv\Net\PetriNetTests.cs" />
-    <Compile Include="Src\Pppv\Net\PlaceTests.cs" />
-    <Compile Include="Src\Pppv\Net\PredicatesListTests.cs" />
-    <Compile Include="Src\Pppv\Net\PredicateTests.cs" />
-    <Compile Include="Src\Pppv\Net\TokensListTests.cs" />
-    <Compile Include="Src\Pppv\Net\TokenTests.cs" />
-    <Compile Include="Src\Pppv\Net\TransitionTests.cs" />
-    <Compile Include="Src\Pppv\Utils\SerealizationTestHelper.cs" />
     <EmbeddedResource Include="Resources\TokensListExample1.pnml" />
     <EmbeddedResource Include="Resources\TokenExample1.pnml" />
     <EmbeddedResource Include="Resources\TokensListExample2.pnml" />
@@ -104,13 +95,11 @@
     <Folder Include="Src\Pppv\Editor" />
     <Folder Include="Src\Pppv\Editor\Commands" />
     <Folder Include="Src\Pppv\Editor\Shapes" />
-    <Folder Include="Src\Pppv\Net" />
-    <Folder Include="Src\Pppv\Utils" />
     <ProjectReference Include="..\Editor\Editor.csproj">
       <Project>{8C38059E-436D-468D-A131-040EF303CBF1}</Project>
       <Name>Editor</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PetriNet\PppNet.csproj">
+    <ProjectReference Include="..\PppNet\PppNet.csproj">
       <Project>{AED06680-760B-4499-A078-905464A9DE37}</Project>
       <Name>PppNet</Name>
     </ProjectReference>
