@@ -8,11 +8,13 @@
 	   enable/2
 	  ]).
 
+:-use_module(statespace).
+
 max(X,Y,Y) :- Y>X,!.
-max(X,Y,X).
+max(X,_,X).
 
 /*Разрешён ли переход T при маркировке S*/
-enable(T,S):-arc(S,T,S1).
+enable(T,S):-arc(S,T,_).
 
 /*запрос является ли определённое состояние тупиком*/
 dls(N):-non(gds(N,_,_)).
@@ -50,15 +52,15 @@ num(E,N,[E|R]) :- num(E,N1,R), N is N1 + 1,!.
 num(E,N,[_|R]) :- num(E,N,R).
 
 /* Истинно если срабатыание перехода T ведёт в состояние S*/
-fired(T,S):-arc(S1,T,S).
+fired(T,S):-arc(_,T,S).
 
 /*вычисляет k-ограниченность позиции*/
 k_restrict(P):-rstate(_,S),max(K),count(P,S,K1),max(K,K1,M),retract(max(_)),assertz(max(M)),fail;true.
 %k_restrict(P,K):-rstate(1,S1),count(P,S1,K).
 
 
-count(F,[H|L],C):-functor(H,Name,Arity),Name==F ->count(F,L,N),C is N+1;count(F,L,C).
-count(F,[],C):-C is 0.
+count(F,[H|L],C):-functor(H,Name,_),Name==F ->count(F,L,N),C is N+1;count(F,L,C).
+count(_,[],C):-C is 0.
 
 
 

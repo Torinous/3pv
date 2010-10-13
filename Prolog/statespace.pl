@@ -10,10 +10,15 @@
 	   stateSpaceToDotFormatTmpFile/1
 	  ]).
 
+:- dynamic rstate/2.
+:- dynamic gds/3.
+:- dynamic count/1.
+:- dynamic arc/3.
+:- dynamic gds_backup/3.
 
 %стартовый клоз построения пространства состояний
 createStateSpace:-
-	cleardb,
+	clearStateSpace,
 	init(S),
 	asserta(rstate(0,S)),
 	assertz(count(0)), !,
@@ -21,7 +26,10 @@ createStateSpace:-
 	fail;true.
 
 % Удаление баз данных:
-clearStateSpace:-clearrs,cleargds,clearcount.
+clearStateSpace:-
+	clearrs,
+	cleargds,
+	clearcount.
 
 % удаление базы данных о состояниях
 clearrs:-retract(rstate(_,_)),clearrs.
@@ -79,8 +87,8 @@ inlist(X,[_|L]):-inlist(X,L).
 */
 %% так будет до тех пор, пока не кончатся факты ds(_,_,_)
 backupall:-
-	gds(X,Y,Z),r
-	etract(gds(X,Y,Z)),
+	gds(X,Y,Z),
+	retract(gds(X,Y,Z)),
 	ds_backup(X,Y,Z),
 	fail;true. %% нет фактов - нет проблемы
 
