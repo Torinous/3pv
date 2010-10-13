@@ -1,4 +1,12 @@
-/* Êëîçû äëÿ ñîçäàíèÿ ôàéëà îò÷¸òà. */
+/*
+   Ìîäóëü ñîäåðæàùèé îïðåäåëåíèÿ ñâîéñòâ ñåòè è å¸ ýëåìåíòîâ.
+   ×àñòü êîìïëåêñà ïðîãðàìì 3Pv
+*/
+
+:- module(report,
+	  [
+	   make_report/0
+	  ]).
 
 body:-write('<?xml version="1.0" encoding="iso-8859-1"?>'),nl,
       write('<report text="Îò÷¸ò">'),nl,
@@ -65,7 +73,7 @@ net_properties:-tab(6),write('<properties text="Ñâîéñòâà:">'),nl,
 /*Êëîçû îá¸ðòêè íàä îäíîèì¸ííûìè ñ ïîñòôèêñîì _p*/
 
 live_p(T):-live(T),write('true').
-live_p(T):-write('false').
+live_p(_):-write('false').
 
 dead_p(T):-dead(T),write('true').
 dead_p(_):-write('false').

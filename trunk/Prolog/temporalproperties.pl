@@ -1,6 +1,17 @@
+/*
+   Модуль содержащий определения свойств сети и её элементов через
+   темпоральную логику.
+   Часть комплекса программ 3Pv
+*/
+
+:- module(temporallogicproperties,
+	  [
+	   liveness/0
+	  ]).
+
 /* Запросы с темпоральной логикой. */
 
-                  
+
 /*Живость сети*/
 liveness:-init(S),transition(T),
            not(implies(init,all(pot(enable(T)))),M),
