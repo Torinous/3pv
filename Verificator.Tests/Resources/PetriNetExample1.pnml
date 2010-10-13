@@ -65,19 +65,31 @@
         <value>T0</value>
       </name>
       <guard>
-        <value />
+        <value>Z=X+Y</value>
       </guard>
     </transition>
     <arc id="P0 to T0" source="P0" target="T0">
-      <cortege />
+      <cortege>
+        <predicate>
+          <value>X</value>
+        </predicate>
+      </cortege>
       <type value="normal" />
     </arc>
     <arc id="T0 to P1" source="T0" target="P1">
-      <cortege />
+      <cortege>
+        <predicate>
+          <value>Z</value>
+        </predicate>
+      </cortege>
       <type value="normal" />
     </arc>
     <arc id="P2 to T0" source="P2" target="T0">
-      <cortege />
+      <cortege>
+        <predicate>
+          <value>Y</value>
+        </predicate>
+      </cortege>
       <type value="normal" />
     </arc>
     <additionalCode />

@@ -137,6 +137,7 @@
          this.fileToolStrip.AddCommand(new CloseNetCommand());
          this.fileToolStrip.AddCommand(new SaveCommand());
          this.fileToolStrip.AddCommand(new SaveAsCommand());
+         this.fileToolStrip.AddCommand(new AnalyzeCommand());
 
          this.editToolStrip = new EditorToolStrip();
          this.editToolStrip.AddCommand(new UndoCommand());

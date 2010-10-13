@@ -13,6 +13,7 @@
 
    using Pppv.Net;
    using Pppv.Utils;
+   using Pppv.Verificator;
 
    public class TranslatorToProlog
    {

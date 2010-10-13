@@ -1,4 +1,4 @@
-﻿namespace Pppv.Net
+﻿namespace Pppv.Verificator
 {
    using System;
    using System.Globalization;
@@ -9,6 +9,8 @@
    using System.Xml;
    using System.Xml.Schema;
    using System.Xml.Serialization;
+
+   using Pppv.Net;
 
    public class PetriNetPrologTranslated
    {
@@ -137,15 +139,10 @@
          {
             if (arc.TargetId == inTransition.Id)
             {
-               foreach (Place place in this.Net.Places)
+               Place place = this.Net.GetElementById(arc.SourceId) as Place;
+               foreach (Predicate predicate in arc.Cortege.List)
                {
-                  if (place.Id == arc.SourceId)
-                  {
-                     foreach (Predicate predicate in arc.Cortege.List)
-                     {
-                        text.AppendFormat("{0}({1}),", place.Name.ToLower(CultureInfo.InvariantCulture), predicate);
-                     }
-                  }
+                  text.AppendFormat("{0}({1}),", place.Name.ToLower(CultureInfo.InvariantCulture), predicate);
                }
             }
          }
@@ -198,17 +195,17 @@
 
          StringBuilder code = new StringBuilder(3000);
 
-         stR = new StreamReader(current.GetManifestResourceStream("Pppv.Resources.Verificator.ss_kernel.pl"), Encoding.GetEncoding(1251));
+         stR = new StreamReader(current.GetManifestResourceStream("Pppv.Resources.Prolog.ss_kernel.pl"), Encoding.GetEncoding(1251));
          code.AppendLine(stR.ReadToEnd());
-         stR = new StreamReader(current.GetManifestResourceStream("Pppv.Resources.Verificator.ss_requests.pl"), Encoding.GetEncoding(1251));
+         stR = new StreamReader(current.GetManifestResourceStream("Pppv.Resources.Prolog.ss_requests.pl"), Encoding.GetEncoding(1251));
          code.AppendLine(stR.ReadToEnd());
-         stR = new StreamReader(current.GetManifestResourceStream("Pppv.Resources.Verificator.ctl_kernel.pl"), Encoding.GetEncoding(1251));
+         stR = new StreamReader(current.GetManifestResourceStream("Pppv.Resources.Prolog.ctl_kernel.pl"), Encoding.GetEncoding(1251));
          code.AppendLine(stR.ReadToEnd());
-         stR = new StreamReader(current.GetManifestResourceStream("Pppv.Resources.Verificator.ctl_requests.pl"), Encoding.GetEncoding(1251));
+         stR = new StreamReader(current.GetManifestResourceStream("Pppv.Resources.Prolog.ctl_requests.pl"), Encoding.GetEncoding(1251));
          code.AppendLine(stR.ReadToEnd());
-         stR = new StreamReader(current.GetManifestResourceStream("Pppv.Resources.Verificator.report_kernel.pl"), Encoding.GetEncoding(1251));
+         stR = new StreamReader(current.GetManifestResourceStream("Pppv.Resources.Prolog.report_kernel.pl"), Encoding.GetEncoding(1251));
          code.AppendLine(stR.ReadToEnd());
-         stR = new StreamReader(current.GetManifestResourceStream("Pppv.Resources.Verificator.main.pl"), Encoding.GetEncoding(1251));
+         stR = new StreamReader(current.GetManifestResourceStream("Pppv.Resources.Prolog.main.pl"), Encoding.GetEncoding(1251));
          code.AppendLine(stR.ReadToEnd());
          code.AppendLine();
          return code.ToString();

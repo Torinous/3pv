@@ -13,9 +13,9 @@
     <SignAssembly>True</SignAssembly>
     <DelaySign>False</DelaySign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
-    <RunCodeAnalysis>True</RunCodeAnalysis>
+    <RunCodeAnalysis>False</RunCodeAnalysis>
     <AssemblyOriginatorKeyFile>Editor.Tests.snk</AssemblyOriginatorKeyFile>
-    <CodeAnalysisRules>-Microsoft.Performance#CA1804;-Microsoft.Performance#CA1822;-Microsoft.Usage#CA1806</CodeAnalysisRules>
+    <CodeAnalysisRules>-Microsoft.Design#CA1020;-Microsoft.Performance#CA1804;-Microsoft.Performance#CA1822;-Microsoft.Usage#CA1806</CodeAnalysisRules>
     <TargetFrameworkProfile />
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>

@@ -71,7 +71,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources" />
-    <Folder Include="Resources\Verificator" />
     <Folder Include="Src" />
     <Folder Include="Src\PPPV" />
     <Folder Include="Src\PPPV\Translator" />
