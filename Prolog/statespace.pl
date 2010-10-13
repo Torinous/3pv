@@ -6,7 +6,8 @@
 :- module(statespace,
 	  [
 	   createStateSpace/0,
-	   clearStateSpace/0
+	   clearStateSpace/0,
+	   stateSpaceToDotFormatTmpFile/1
 	  ]).
 
 
@@ -97,6 +98,35 @@ restoreall:-
 	fail;true.
 
 rebuildall:-backupall,restoreall.
+
+stateSpaceToDotFormatTmpFile(FileName):-
+	tmp_file_stream(text, FileName, Stream),
+	tell(Stream),
+	stateSpaceToDotFormat,
+        tell(user),
+        close(FileName).
+
+stateSpaceToDotFormat:-write('digraf net{'),nl,
+	               paramsForDotFormat,nl,
+		       statesForDotFormats,nl,
+		       arcsForDotFormats,nl,
+		       write('}').
+
+paramsForDotFormat:-
+	tab(3),write('size="20,20";'),nl,
+	tab(3),write('node [shape = rectangle, style = filled];'),nl,
+	tab(3),write('edge [len=3];'),nl.
+
+statesForDotFormats:-
+	rstate(Number,tokenList),
+	tab(3),write('S'),write(Number),write('[label="'),
+	write('S'),write(Number),write(tokenList),write('" red]'),nl,
+	fail;true.
+
+arcsForDotFormats:-
+	gds(S1,T,S2),
+	tab(3),write(S1),write(' -> '),write(S2),write('[label="'),write(T),write('"]'),nl,
+	fail;true.
 
 
 
