@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Антонов Дмитрий Александрович AKA Torinous")]
 [assembly: AssemblyProduct("3Pv")]
-[assembly: AssemblyCopyright("Copyright © vv 2008")]
+[assembly: AssemblyCopyright("Copyright © vv 2010")]
 [assembly: AssemblyTrademark("Антонов Дмитрий Александрович AKA Torinous")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]

@@ -78,6 +78,7 @@
     <Compile Include="Src\PPPV\Editor\Commands\AddNetElementCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\AddPlaceCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\AddTransitionCommand.cs" />
+    <Compile Include="Src\Pppv\Editor\Commands\AnalyzeCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\CloseNetCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\Command.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\CopyCommand.cs" />
@@ -188,6 +189,10 @@
     <ProjectReference Include="..\PppNet\PppNet.csproj">
       <Project>{AED06680-760B-4499-A078-905464A9DE37}</Project>
       <Name>PppNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Verificator\Verificator.csproj">
+      <Project>{E2CDB95D-6CB1-4316-8398-EBD5A4C5C5B4}</Project>
+      <Name>Verificator</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -7,7 +7,7 @@
  *
  */
 
-namespace Pppv.Translator
+namespace Pppv.Utils
 {
    using System;
    using System.Collections.Specialized;
