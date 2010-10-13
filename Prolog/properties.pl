@@ -1,8 +1,15 @@
-/*Запросы без темпоральной логики*/
+/*
+Модуль содержащий определения свойств сети и её элементов.
+Часть комплекса программ 3Pv
+*/
+
+:- module(properties,
+	  [
+	   enable/2
+	  ]).
 
 max(X,Y,Y) :- Y>X,!.
 max(X,Y,X).
-
 
 /*Разрешён ли переход T при маркировке S*/
 enable(T,S):-arc(S,T,S1).
@@ -52,3 +59,23 @@ k_restrict(P):-rstate(_,S),max(K),count(P,S,K1),max(K,K1,M),retract(max(_)),asse
 
 count(F,[H|L],C):-functor(H,Name,Arity),Name==F ->count(F,L,N),C is N+1;count(F,L,C).
 count(F,[],C):-C is 0.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
