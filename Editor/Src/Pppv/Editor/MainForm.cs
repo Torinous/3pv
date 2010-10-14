@@ -108,6 +108,7 @@
             gnet.FileOfNetPath = fileName;
             TabPageForNet addedTabPage = this.TabControl.AddNewTab();
             addedTabPage.PutNetOnTabPage(gnet);
+            this.OnActiveNetChange(new EventArgs());
          }
       }
 

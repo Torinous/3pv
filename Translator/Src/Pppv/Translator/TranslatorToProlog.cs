@@ -60,11 +60,6 @@
       {
          get { return this.Arguments["h"] == "true" || this.Arguments["help"] == "true"; }
       }
-
-      public bool NeedKernelCode
-      {
-         get { return this.Arguments["addkernel"] == "true" || this.Arguments["addkernel"] == null; }
-      }
       #endregion
 
       private static int Main()
@@ -109,22 +104,11 @@
          if (this.OutputFileName == null)
          {
             Console.WriteLine(this.NetTranslator.ToProlog());
-
-            if (this.NeedKernelCode)
-            {
-               Console.WriteLine(PetriNetPrologTranslated.KernelCode);
-            }
          }
          else
          {
             StreamWriter targetText = new StreamWriter(this.OutputFileName, false, this.encoding);
             targetText.WriteLine(this.NetTranslator.ToProlog());
-
-            if (this.NeedKernelCode)
-            {
-               targetText.WriteLine(PetriNetPrologTranslated.KernelCode);
-            }
-
             targetText.Close();
          }
 

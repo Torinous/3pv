@@ -49,37 +49,6 @@ namespace Pppv.Editor.Commands
          set { this.parent = value; }
       }
 
-      /*private Form GetOwnerFormForMenu(ToolStripItem theItem)
-      {
-         if (theItem.Owner != null)
-         {
-            if (theItem.Owner.FindForm() != null)
-            {
-               return theItem.Owner.FindForm();
-            }
-            return this.GetOwnerFormForMenu(((ToolStripDropDown)theItem.Owner).OwnerItem);
-         }
-         return null;
-      }*/
-
-      /*private Form GetOwnerFormForTool()
-      {
-         if (this.ParentItem.GetCurrentParent() == null)
-         {
-            return null;
-         }
-
-         Form mainForm = this.ParentItem.GetCurrentParent().FindForm();
-         if (mainForm != null)
-         {
-            return mainForm;
-         }
-         else
-         {
-            return null;
-         }
-      }*/
-
       public virtual bool CheckEnabled()
       {
          return false;

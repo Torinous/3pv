@@ -10,6 +10,7 @@
 namespace Pppv.Verificator
 {
    using System;
+   using System.Diagnostics;
    using System.IO;
    using System.Reflection;
    using System.Text;
@@ -46,8 +47,14 @@ namespace Pppv.Verificator
       {
          if (!PlEngine.IsInitialized)
          {
-            String[] empty_param = { "-q" };
-            PlEngine.Initialize(empty_param);
+            string libraryPath = Environment.CurrentDirectory + "\\Prolog";
+            //libraryPath = libraryPath.Replace("\\","\\\\");
+            String[] param = { "-q", "-p", "pppv_library=" + libraryPath + ""};
+            Debug.WriteLine("library_directory set to ["+libraryPath+"]");
+            PlEngine.Initialize(param);
+            
+            //PlQuery.PlCall("assert(library_directory('" + libraryPath + "')).");
+            //PlQuery.PlCall("assert(file_search_path(pppv_library, '" + libraryPath + "')).");
          }
       }
 
@@ -59,7 +66,7 @@ namespace Pppv.Verificator
 
       public void StartInterface(Form parentForm)
       {
-         Form verificatorForm = new VerificatorForm(Net);
+         Form verificatorForm = new VerificatorForm(this);
          verificatorForm.ShowDialog(parentForm);
       }
 
@@ -72,8 +79,6 @@ namespace Pppv.Verificator
          string tmpFile = Path.GetTempFileName();
          StreamWriter tmpFilestream = new StreamWriter(tmpFile, false, Encoding.GetEncoding(1251));
          tmpFilestream.Write(netTranslator.ToProlog());
-         tmpFilestream.WriteLine();
-         tmpFilestream.Write(PetriNetPrologTranslated.KernelCode);
          tmpFilestream.Close();
          tmpFile = tmpFile.Replace("\\", "\\\\");
          PlQuery.PlCall("consult('" + tmpFile + "').");
@@ -87,7 +92,7 @@ namespace Pppv.Verificator
 
       public void CalculateStateSpace()
       {
-         PlQuery.PlCall("goalgds.");
+         PlQuery.PlCall("statespace:createStateSpace.");
       }
 
       public string GetStateSpaceInDot()
