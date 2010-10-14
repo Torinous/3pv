@@ -172,7 +172,7 @@
     <Folder Include="Src\PPPV\Editor\Tools" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\InterfaceFramework\ApplicationFramework.csproj">
+    <ProjectReference Include="..\ApplicationFramework\ApplicationFramework.csproj">
       <Project>{D29F492D-9E5A-4759-849C-8ADD0F13DA84}</Project>
       <Name>ApplicationFramework</Name>
     </ProjectReference>
