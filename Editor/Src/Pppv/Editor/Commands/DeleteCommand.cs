@@ -8,7 +8,6 @@
 
    using Pppv.Editor.Shapes;
    using Pppv.Net;
-   using Pppv.Utils;
 
    public class DeleteCommand : ElementInterfaceCommand
    {

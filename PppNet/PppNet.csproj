@@ -69,7 +69,6 @@
     <Folder Include="Src" />
     <Folder Include="Src\Pppv" />
     <Folder Include="Src\Pppv\Net" />
-    <Folder Include="Src\Pppv\Utils" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AssemblyInfo.in" />
@@ -95,7 +94,6 @@
     <Compile Include="Src\Pppv\Net\Token.cs" />
     <Compile Include="Src\Pppv\Net\TokensList.cs" />
     <Compile Include="Src\Pppv\Net\Transition.cs" />
-    <Compile Include="Src\Pppv\Utils\CommandLineArguments.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>

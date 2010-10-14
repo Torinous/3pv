@@ -7,7 +7,6 @@
    using Pppv.Editor.Commands;
    using Pppv.Editor.Shapes;
    using Pppv.Net;
-   using Pppv.Utils;
 
    public class ArcTool : Tool
    {

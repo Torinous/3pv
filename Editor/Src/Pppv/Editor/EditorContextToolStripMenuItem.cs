@@ -8,7 +8,6 @@ namespace Pppv.Editor
    using Pppv.Editor.Commands;
    using Pppv.ApplicationFramework;
    using Pppv.ApplicationFramework.Commands;
-   using Pppv.Utils;
 
    public class EditorContextToolStripMenuItem : CommandToolStripMenuItem
    {
