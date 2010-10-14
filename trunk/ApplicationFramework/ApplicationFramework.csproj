@@ -71,6 +71,7 @@
     <Compile Include="Src\Pppv\ApplicationFramework\EditorToolStripButton.cs" />
     <Compile Include="Src\Pppv\ApplicationFramework\EditorToolStripMenuItem.cs" />
     <Compile Include="Src\Pppv\ApplicationFramework\RefreshingListBox.cs" />
+    <Compile Include="Src\Pppv\ApplicationFramework\Utils\CommandLineArguments.cs" />
     <Compile Include="Src\Pppv\ApplicationFramework\Utils\DebugAssistant.cs" />
     <Compile Include="Src\Pppv\ApplicationFramework\Utils\NativeMethods.cs" />
     <Compile Include="Src\Pppv\ApplicationFramework\Utils\PreciseTimer.cs" />

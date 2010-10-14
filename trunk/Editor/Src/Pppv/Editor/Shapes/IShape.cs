@@ -16,7 +16,6 @@ namespace Pppv.Editor.Shapes
 
    using Pppv.Editor;
    using Pppv.Net;
-   using Pppv.Utils;
 
    public interface IShape
    {

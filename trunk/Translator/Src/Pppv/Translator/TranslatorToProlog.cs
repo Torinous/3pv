@@ -12,7 +12,7 @@
    using System.Xml.Serialization;
 
    using Pppv.Net;
-   using Pppv.Utils;
+   using Pppv.ApplicationFramework.Utils;
    using Pppv.Verificator;
 
    public class TranslatorToProlog
