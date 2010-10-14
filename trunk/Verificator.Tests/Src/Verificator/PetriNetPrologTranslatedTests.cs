@@ -35,11 +35,5 @@ namespace Pppv.Verificator
          Assert.That(netTranslator.TransitionsList(), Is.StringContaining("transition"));
          Assert.That(netTranslator.ToProlog(), Is.StringContaining("transition"));
       }
-
-      [Test]
-      public void TestOfKernelCodeExistance()
-      {
-         Assert.That(PetriNetPrologTranslated.KernelCode, Is.StringContaining("transition"));
-      }
    }
 }

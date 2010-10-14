@@ -22,6 +22,8 @@
     <AssemblyOriginatorKeyFile>Verificator.snk</AssemblyOriginatorKeyFile>
     <DelaySign>False</DelaySign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
+    <PostBuildEvent>xcopy ..\..\Resources\Prolog\*  .\Prolog\  /y
+xcopy .\Prolog\*  ..\..\..\Range\Prolog\  /y</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -70,18 +72,14 @@
     <Compile Include="Src\Pppv\Verificator\PetriNetVerificator.cs" />
     <Compile Include="Src\Pppv\Verificator\VerificatorException.cs" />
     <Compile Include="Src\Pppv\Verificator\VerificatorForm.cs" />
-    <Compile Include="Src\Pppv\Verificator\VerificatorForm.Designer.cs">
-      <DependentUpon>VerificatorForm.cs</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AssemblyInfo.in" />
-    <EmbeddedResource Include="Resources\Prolog\ctl_kernel.pl" />
-    <EmbeddedResource Include="Resources\Prolog\ctl_requests.pl" />
-    <EmbeddedResource Include="Resources\Prolog\main.pl" />
-    <EmbeddedResource Include="Resources\Prolog\report_kernel.pl" />
-    <EmbeddedResource Include="Resources\Prolog\ss_kernel.pl" />
-    <EmbeddedResource Include="Resources\Prolog\ss_requests.pl" />
+    <None Include="Resources\Prolog\properties.pl" />
+    <None Include="Resources\Prolog\report_kernel.pl" />
+    <None Include="Resources\Prolog\statespace.pl" />
+    <None Include="Resources\Prolog\temporallogic.pl" />
+    <None Include="Resources\Prolog\temporalproperties.pl" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources" />
