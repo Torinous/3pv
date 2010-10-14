@@ -5,6 +5,7 @@
    using System.Windows.Forms;
 
    using Pppv.Net;
+   using Pppv.ApplicationFramework.Commands;
 
    public class AboutCommand : InterfaceCommand
    {

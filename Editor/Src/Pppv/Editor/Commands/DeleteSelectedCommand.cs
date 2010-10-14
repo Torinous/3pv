@@ -15,7 +15,7 @@ namespace Pppv.Editor.Commands
 
    using Pppv.Editor.Shapes;
    using Pppv.Net;
-   using Pppv.Utils;
+   using Pppv.ApplicationFramework.Commands;
 
    public class DeleteSelectedCommand : NetInterfaceCommand
    {

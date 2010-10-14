@@ -8,8 +8,9 @@
 
    using Pppv.Net;
    using Pppv.Utils;
+   using Pppv.ApplicationFramework.Commands;
 
-   public class PasteCommand : InterfaceCommand
+   public class PasteCommand : EditorInterfaceCommand
    {
       public PasteCommand()
       {

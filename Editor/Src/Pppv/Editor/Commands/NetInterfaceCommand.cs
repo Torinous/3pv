@@ -11,8 +11,9 @@ namespace Pppv.Editor.Commands
    using System.Windows.Forms;
 
    using Pppv.Net;
+   using Pppv.ApplicationFramework.Commands;
 
-   public abstract class NetInterfaceCommand : InterfaceCommand
+   public abstract class NetInterfaceCommand : EditorInterfaceCommand
    {
       private PetriNetGraphical net;
 

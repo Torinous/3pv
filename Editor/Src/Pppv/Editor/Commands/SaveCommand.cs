@@ -6,8 +6,9 @@
    using System.Windows.Forms;
 
    using Pppv.Net;
+   using Pppv.ApplicationFramework.Commands;
 
-   public class SaveCommand : InterfaceCommand
+   public class SaveCommand : EditorInterfaceCommand
    {
       public SaveCommand()
       {

@@ -6,8 +6,9 @@
    using System.Windows.Forms;
 
    using Pppv.Net;
+   using Pppv.ApplicationFramework.Commands;
 
-   public class UndoCommand : InterfaceCommand
+   public class UndoCommand : EditorInterfaceCommand
    {
       public UndoCommand()
       {

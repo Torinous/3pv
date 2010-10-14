@@ -5,39 +5,40 @@
 
    using Pppv.Editor.Commands;
    using Pppv.Editor.Tools;
+   using Pppv.ApplicationFramework;
 
    public class EditorMainMenuStrip : MenuStrip
    {
-      private EditorToolStripMenuItem toolStripMenuFile;
-      private EditorToolStripMenuItem toolStripMenuNew;
-      private EditorToolStripMenuItem toolStripMenuOpen;
-      private EditorToolStripMenuItem toolStripMenuClose;
-      private EditorToolStripMenuItem toolStripMenuSave;
-      private EditorToolStripMenuItem toolStripMenuSaveAs;
-      private EditorToolStripMenuItem toolStripMenuExit;
+      private CommandToolStripMenuItem toolStripMenuFile;
+      private CommandToolStripMenuItem toolStripMenuNew;
+      private CommandToolStripMenuItem toolStripMenuOpen;
+      private CommandToolStripMenuItem toolStripMenuClose;
+      private CommandToolStripMenuItem toolStripMenuSave;
+      private CommandToolStripMenuItem toolStripMenuSaveAs;
+      private CommandToolStripMenuItem toolStripMenuExit;
 
-      private EditorToolStripMenuItem toolStripMenuEdit;
-      private EditorToolStripMenuItem toolStripMenuUndo;
-      private EditorToolStripMenuItem toolStripMenuRedo;
-      private EditorToolStripMenuItem toolStripMenuCut;
-      private EditorToolStripMenuItem toolStripMenuCopy;
-      private EditorToolStripMenuItem toolStripMenuPaste;
-      private EditorToolStripMenuItem toolStripMenuDelete;
+      private CommandToolStripMenuItem toolStripMenuEdit;
+      private CommandToolStripMenuItem toolStripMenuUndo;
+      private CommandToolStripMenuItem toolStripMenuRedo;
+      private CommandToolStripMenuItem toolStripMenuCut;
+      private CommandToolStripMenuItem toolStripMenuCopy;
+      private CommandToolStripMenuItem toolStripMenuPaste;
+      private CommandToolStripMenuItem toolStripMenuDelete;
 
-      private EditorToolStripMenuItem toolStripMenuView;
-      private EditorToolStripMenuItem toolStripMenuZoomIn;
-      private EditorToolStripMenuItem toolStripMenuZoomOut;
+      private CommandToolStripMenuItem toolStripMenuView;
+      private CommandToolStripMenuItem toolStripMenuZoomIn;
+      private CommandToolStripMenuItem toolStripMenuZoomOut;
 
-      private EditorToolStripMenuItem toolStripMenuNet;
-      private EditorToolStripMenuItem toolStripMenuPointer;
-      private EditorToolStripMenuItem toolStripMenuPlace;
-      private EditorToolStripMenuItem toolStripMenuTransition;
-      private EditorToolStripMenuItem toolStripMenuArc;
-      private EditorToolStripMenuItem toolStripMenuInhibitorArc;
-      private EditorToolStripMenuItem toolStripMenuAnnotation;
+      private CommandToolStripMenuItem toolStripMenuNet;
+      private CommandToolStripMenuItem toolStripMenuPointer;
+      private CommandToolStripMenuItem toolStripMenuPlace;
+      private CommandToolStripMenuItem toolStripMenuTransition;
+      private CommandToolStripMenuItem toolStripMenuArc;
+      private CommandToolStripMenuItem toolStripMenuInhibitorArc;
+      private CommandToolStripMenuItem toolStripMenuAnnotation;
 
-      private EditorToolStripMenuItem toolStripMenuHelp;
-      private EditorToolStripMenuItem toolStripMenuAbout;
+      private CommandToolStripMenuItem toolStripMenuHelp;
+      private CommandToolStripMenuItem toolStripMenuAbout;
 
       public EditorMainMenuStrip()
       {
@@ -50,36 +51,36 @@
 
       private void InitializeComponent()
       {
-         this.toolStripMenuFile    = new EditorToolStripMenuItem();
-         this.toolStripMenuNew     = new EditorToolStripMenuItem(new NewNetCommand());
-         this.toolStripMenuOpen    = new EditorToolStripMenuItem(new OpenNetCommand());
-         this.toolStripMenuClose   = new EditorToolStripMenuItem(new CloseNetCommand());
-         this.toolStripMenuSave    = new EditorToolStripMenuItem(new SaveCommand());
-         this.toolStripMenuSaveAs  = new EditorToolStripMenuItem(new SaveAsCommand());
-         this.toolStripMenuExit    = new EditorToolStripMenuItem(new QuitCommand());
+         this.toolStripMenuFile    = new CommandToolStripMenuItem();
+         this.toolStripMenuNew     = new CommandToolStripMenuItem(new NewNetCommand());
+         this.toolStripMenuOpen    = new CommandToolStripMenuItem(new OpenNetCommand());
+         this.toolStripMenuClose   = new CommandToolStripMenuItem(new CloseNetCommand());
+         this.toolStripMenuSave    = new CommandToolStripMenuItem(new SaveCommand());
+         this.toolStripMenuSaveAs  = new CommandToolStripMenuItem(new SaveAsCommand());
+         this.toolStripMenuExit    = new CommandToolStripMenuItem(new QuitCommand());
 
-         this.toolStripMenuEdit    = new EditorToolStripMenuItem();
-         this.toolStripMenuUndo    = new EditorToolStripMenuItem(new UndoCommand());
-         this.toolStripMenuRedo    = new EditorToolStripMenuItem(new RedoCommand());
-         this.toolStripMenuCut     = new EditorToolStripMenuItem(new CutCommand());
-         this.toolStripMenuCopy    = new EditorToolStripMenuItem(new CopyCommand());
-         this.toolStripMenuPaste   = new EditorToolStripMenuItem(new PasteCommand());
-         this.toolStripMenuDelete  = new EditorToolStripMenuItem(new DeleteCommand());
+         this.toolStripMenuEdit    = new CommandToolStripMenuItem();
+         this.toolStripMenuUndo    = new CommandToolStripMenuItem(new UndoCommand());
+         this.toolStripMenuRedo    = new CommandToolStripMenuItem(new RedoCommand());
+         this.toolStripMenuCut     = new CommandToolStripMenuItem(new CutCommand());
+         this.toolStripMenuCopy    = new CommandToolStripMenuItem(new CopyCommand());
+         this.toolStripMenuPaste   = new CommandToolStripMenuItem(new PasteCommand());
+         this.toolStripMenuDelete  = new CommandToolStripMenuItem(new DeleteCommand());
 
-         this.toolStripMenuView    = new EditorToolStripMenuItem();
-         this.toolStripMenuZoomIn  = new EditorToolStripMenuItem(new ZoomInCommand());
-         this.toolStripMenuZoomOut = new EditorToolStripMenuItem(new ZoomOutCommand());
+         this.toolStripMenuView    = new CommandToolStripMenuItem();
+         this.toolStripMenuZoomIn  = new CommandToolStripMenuItem(new ZoomInCommand());
+         this.toolStripMenuZoomOut = new CommandToolStripMenuItem(new ZoomOutCommand());
 
-         this.toolStripMenuNet          = new EditorToolStripMenuItem();
-         this.toolStripMenuPointer      = new EditorToolStripMenuItem(new SelectToolCommand(typeof(PointerTool)));
-         this.toolStripMenuPlace        = new EditorToolStripMenuItem(new SelectToolCommand(typeof(PlaceTool)));
-         this.toolStripMenuTransition   = new EditorToolStripMenuItem(new SelectToolCommand(typeof(TransitionTool)));
-         this.toolStripMenuArc          = new EditorToolStripMenuItem(new SelectToolCommand(typeof(ArcTool)));
-         this.toolStripMenuInhibitorArc = new EditorToolStripMenuItem(new SelectToolCommand(typeof(InhibitorArcTool)));
-         this.toolStripMenuAnnotation   = new EditorToolStripMenuItem(new SelectToolCommand(typeof(AnnotationTool)));
+         this.toolStripMenuNet          = new CommandToolStripMenuItem();
+         this.toolStripMenuPointer      = new CommandToolStripMenuItem(new SelectToolCommand(typeof(PointerTool)));
+         this.toolStripMenuPlace        = new CommandToolStripMenuItem(new SelectToolCommand(typeof(PlaceTool)));
+         this.toolStripMenuTransition   = new CommandToolStripMenuItem(new SelectToolCommand(typeof(TransitionTool)));
+         this.toolStripMenuArc          = new CommandToolStripMenuItem(new SelectToolCommand(typeof(ArcTool)));
+         this.toolStripMenuInhibitorArc = new CommandToolStripMenuItem(new SelectToolCommand(typeof(InhibitorArcTool)));
+         this.toolStripMenuAnnotation   = new CommandToolStripMenuItem(new SelectToolCommand(typeof(AnnotationTool)));
 
-         this.toolStripMenuHelp    = new EditorToolStripMenuItem();
-         this.toolStripMenuAbout   = new EditorToolStripMenuItem(new AboutCommand(this as Control));
+         this.toolStripMenuHelp    = new CommandToolStripMenuItem();
+         this.toolStripMenuAbout   = new CommandToolStripMenuItem(new AboutCommand(this as Control));
 
          this.Items.Add(this.toolStripMenuFile);
          this.toolStripMenuFile.Name = this.toolStripMenuFile.Text = "Файл";

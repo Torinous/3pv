@@ -8,9 +8,10 @@
 
    using Pppv.Editor.Tools;
    using Pppv.Net;
-   using Pppv.Utils;
+   using Pppv.ApplicationFramework.Commands;
+   using Pppv.ApplicationFramework.Utils;
 
-   public class SelectToolCommand : InterfaceCommand
+   public class SelectToolCommand : EditorInterfaceCommand
    {
       private Type toolType;
 

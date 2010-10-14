@@ -15,7 +15,7 @@ namespace Pppv.Editor.Shapes
 
    using Pppv.Editor;
    using Pppv.Net;
-   using Pppv.Utils;
+   using Pppv.ApplicationFramework.Utils;
 
    public class PlaceShape : Shape, IPlace
    {

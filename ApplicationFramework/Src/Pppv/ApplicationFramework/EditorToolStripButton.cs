@@ -1,20 +1,20 @@
-﻿namespace Pppv.Editor
+﻿namespace Pppv.ApplicationFramework
 {
    using System.Windows.Forms;
 
-   using Pppv.Editor.Commands;
+   using Pppv.ApplicationFramework.Commands;
 
-   public class EditorToolStripButton : System.Windows.Forms.ToolStripButton
+   public class CommandToolStripButton : System.Windows.Forms.ToolStripButton
    {
       private IInterfaceCommand command;
 
-      public EditorToolStripButton()
+      public CommandToolStripButton()
       {
          this.ImageScaling = ToolStripItemImageScaling.SizeToFit;
       }
 
       [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors", Justification = "Не страшно")]
-      public EditorToolStripButton(IInterfaceCommand command) : this()
+      public CommandToolStripButton(IInterfaceCommand command) : this()
       {
          this.Command = command;
       }

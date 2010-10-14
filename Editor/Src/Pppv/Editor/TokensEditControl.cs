@@ -11,7 +11,7 @@
    using System.Windows.Forms;
 
    using Pppv.Net;
-   using Pppv.Utils;
+   using Pppv.ApplicationFramework;
    
    public class TokensEditControl : System.Windows.Forms.UserControl
    {

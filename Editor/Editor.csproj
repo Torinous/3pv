@@ -80,22 +80,17 @@
     <Compile Include="Src\PPPV\Editor\Commands\AddTransitionCommand.cs" />
     <Compile Include="Src\Pppv\Editor\Commands\AnalyzeCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\CloseNetCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\Command.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\CopyCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\CutCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\DeleteCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\DeleteSelectedCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\EditNetElementCommand.cs" />
+    <Compile Include="Src\Pppv\Editor\Commands\EditorInterfaceCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\ElementCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\ElementInterfaceCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\ICommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\IInterfaceCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\InterfaceCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\MacroCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\NetCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\NetInterfaceCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\NewNetCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\NullCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\OpenNetCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\PasteCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\QuitCommand.cs" />
@@ -111,12 +106,9 @@
     <Compile Include="Src\PPPV\Editor\EditorContextToolStripMenuItem.cs" />
     <Compile Include="Src\PPPV\Editor\EditorException.cs" />
     <Compile Include="Src\PPPV\Editor\EditorToolStrip.cs" />
-    <Compile Include="Src\PPPV\Editor\EditorToolStripButton.cs" />
-    <Compile Include="Src\PPPV\Editor\EditorToolStripMenuItem.cs" />
     <Compile Include="Src\PPPV\Editor\GuardEditForm.cs" />
     <Compile Include="Src\PPPV\Editor\MainForm.cs" />
     <Compile Include="Src\PPPV\Editor\EditorMainMenuStrip.cs" />
-    <Compile Include="Src\PPPV\Editor\NativeMethods.cs" />
     <Compile Include="Src\PPPV\Editor\NetCanvas.cs" />
     <Compile Include="Src\PPPV\Editor\PetriNetGraphical.cs" />
     <Compile Include="Src\PPPV\Editor\PlaceEditForm.cs" />
@@ -142,11 +134,6 @@
     <Compile Include="Src\PPPV\Editor\Tools\PointerTool.cs" />
     <Compile Include="Src\PPPV\Editor\Tools\Tool.cs" />
     <Compile Include="Src\PPPV\Editor\Tools\TransitionTool.cs" />
-    <Compile Include="Src\PPPV\Utils\DebugAssistant.cs" />
-    <Compile Include="Src\PPPV\Utils\NativeMethods.cs" />
-    <Compile Include="Src\PPPV\Utils\PreciseTimer.cs" />
-    <Compile Include="Src\PPPV\Utils\RefreshingListBox.cs" />
-    <Compile Include="Src\PPPV\Utils\RtlAwareMessageBox.cs" />
     <EmbeddedResource Include="Resources\About.png" />
     <EmbeddedResource Include="Resources\Annotation.png" />
     <EmbeddedResource Include="Resources\Arc.png" />
@@ -183,9 +170,12 @@
     <Folder Include="Src\PPPV\Editor\Commands" />
     <Folder Include="Src\PPPV\Editor\Shapes" />
     <Folder Include="Src\PPPV\Editor\Tools" />
-    <Folder Include="Src\PPPV\Utils" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\InterfaceFramework\ApplicationFramework.csproj">
+      <Project>{D29F492D-9E5A-4759-849C-8ADD0F13DA84}</Project>
+      <Name>ApplicationFramework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PppNet\PppNet.csproj">
       <Project>{AED06680-760B-4499-A078-905464A9DE37}</Project>
       <Name>PppNet</Name>

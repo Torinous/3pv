@@ -13,6 +13,7 @@ namespace Pppv.Editor.Commands
    using Pppv.Editor;
    using Pppv.Editor.Commands;
    using Pppv.Net;
+   using Pppv.ApplicationFramework.Commands;
 
    [TestFixture]
    public class MacroCommandTests

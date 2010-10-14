@@ -5,7 +5,7 @@
  * Time: 17:50
  */
 
-namespace Pppv.Utils
+namespace Pppv.ApplicationFramework.Utils
 {
    using System;
    using System.Globalization;
