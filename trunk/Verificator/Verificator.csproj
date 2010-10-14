@@ -92,13 +92,13 @@ xcopy .\Prolog\*  ..\..\..\Range\Prolog\  /y</PostBuildEvent>
     <Folder Include="Src\Pppv\Verificator\Commands" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ApplicationFramework\ApplicationFramework.csproj">
+      <Project>{D29F492D-9E5A-4759-849C-8ADD0F13DA84}</Project>
+      <Name>ApplicationFramework</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Deploy\SwiPlCs\SwiPlCs.csproj">
       <Project>{8C8EFC28-3E9E-47BD-A6ED-4C36EA71B138}</Project>
       <Name>SwiPlCs</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\InterfaceFramework\ApplicationFramework.csproj">
-      <Project>{D29F492D-9E5A-4759-849C-8ADD0F13DA84}</Project>
-      <Name>ApplicationFramework</Name>
     </ProjectReference>
     <ProjectReference Include="..\PppNet\PppNet.csproj">
       <Project>{AED06680-760B-4499-A078-905464A9DE37}</Project>
