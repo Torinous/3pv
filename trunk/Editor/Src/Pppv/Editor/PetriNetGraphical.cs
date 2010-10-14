@@ -16,7 +16,8 @@
    using Pppv.Editor.Shapes;
    using Pppv.Editor.Tools;
    using Pppv.Net;
-   using Pppv.Utils;
+   using Pppv.ApplicationFramework.Utils;
+   
 
    public class PetriNetGraphical : PetriNet, IXmlSerializable
    {

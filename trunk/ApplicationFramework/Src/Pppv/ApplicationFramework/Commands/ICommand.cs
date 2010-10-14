@@ -1,4 +1,4 @@
-﻿namespace Pppv.Editor.Commands
+﻿namespace Pppv.ApplicationFramework.Commands
 {
    using System;
 

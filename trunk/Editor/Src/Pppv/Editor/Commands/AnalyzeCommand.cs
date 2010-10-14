@@ -46,7 +46,7 @@ namespace Pppv.Editor.Commands
 
       public override bool CheckEnabled()
       {
-         return CheckFormAndActiveNet();
+         return true;
       }
    }
 }

@@ -1,9 +1,7 @@
-﻿namespace Pppv.Editor.Commands
+﻿namespace Pppv.ApplicationFramework.Commands
 {
    using System;
    using System.Drawing;
-
-   using Pppv.Net;
 
    public class NullCommand : InterfaceCommand
    {

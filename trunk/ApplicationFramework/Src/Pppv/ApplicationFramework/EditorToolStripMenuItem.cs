@@ -1,20 +1,20 @@
-﻿namespace Pppv.Editor
+﻿namespace Pppv.ApplicationFramework
 {
    using System;
    using System.ComponentModel;
    using System.Globalization;
    using System.Windows.Forms;
 
-   using Pppv.Editor.Commands;
-   using Pppv.Utils;
+   using Pppv.ApplicationFramework.Commands;
+   using Pppv.ApplicationFramework.Utils;
 
-   public class EditorToolStripMenuItem : ToolStripMenuItem
+   public class CommandToolStripMenuItem : ToolStripMenuItem
    {
       private const int MapVkVkToChar = 2;
 
       private IInterfaceCommand associatedCommand;
 
-      public EditorToolStripMenuItem(InterfaceCommand command) : base(command.Name, command.Pictogram)
+      public CommandToolStripMenuItem(InterfaceCommand command) : base(command.Name, command.Pictogram)
       {
          this.AssociatedCommand = command;
          this.ToolTipText = this.AssociatedCommand.Description;
@@ -23,7 +23,7 @@
          this.SetShortcutString();
       }
 
-      public EditorToolStripMenuItem() : base()
+      public CommandToolStripMenuItem() : base()
       {
          this.Click += this.ClickHandler;
       }

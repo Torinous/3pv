@@ -6,12 +6,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Verificator.Tests")]
+[assembly: AssemblyTitle("ApplicationFramework")]
 [assembly: AssemblyDescription("Predicate Petri Prolog Verification - комплекс инструментов для верификации свойств моделей на основе предикатных сетей Петри, посредством трансляции их в Prolog представление.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Антонов Дмитрий Александрович AKA Torinous")]
 [assembly: AssemblyProduct("3Pv")]
-[assembly: AssemblyCopyright("Copyright © vv 2008")]
+[assembly: AssemblyCopyright("Copyright © vv 2010")]
 [assembly: AssemblyTrademark("Антонов Дмитрий Александрович AKA Torinous")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
@@ -24,5 +24,5 @@ using System.Runtime.InteropServices;
 ////      Build Number
 ////      Revision
 
-[assembly: AssemblyVersion("2010.10.0.144")]
-[assembly: AssemblyFileVersion("2010.10.0.144")]
+[assembly: AssemblyVersion("2010.10.0.0")]
+[assembly: AssemblyFileVersion("2010.10.0.0")]

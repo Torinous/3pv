@@ -21,6 +21,7 @@
    using Pppv.Editor.Tools;
    using Pppv.Net;
    using Pppv.Utils;
+   using Pppv.ApplicationFramework;
    
    public class CortegeEditControl : System.Windows.Forms.UserControl
    {

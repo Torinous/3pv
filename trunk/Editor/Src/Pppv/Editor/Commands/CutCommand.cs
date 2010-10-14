@@ -7,9 +7,9 @@
    using System.Windows.Forms;
 
    using Pppv.Net;
-   using Pppv.Utils;
+   using Pppv.ApplicationFramework.Commands;
 
-   public class CutCommand : InterfaceCommand
+   public class CutCommand : EditorInterfaceCommand
    {
       public CutCommand()
       {

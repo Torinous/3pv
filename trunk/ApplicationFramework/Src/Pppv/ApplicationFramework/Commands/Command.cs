@@ -1,10 +1,6 @@
-﻿namespace Pppv.Editor.Commands
+﻿namespace Pppv.ApplicationFramework.Commands
 {
    using System;
-   using System.Drawing;
-   using System.Windows.Forms;
-
-   using Pppv.Net;
 
    public abstract class Command : ICommand
    {

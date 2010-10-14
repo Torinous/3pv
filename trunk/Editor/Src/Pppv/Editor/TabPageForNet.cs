@@ -5,7 +5,7 @@
    using System.Windows.Forms;
 
    using Pppv.Net;
-   using Pppv.Utils;
+   using Pppv.ApplicationFramework.Utils;
 
    public class TabPageForNet : TabPage
    {

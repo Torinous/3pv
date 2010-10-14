@@ -25,6 +25,7 @@ namespace Pppv.Verificator
    {
       private static PetriNetVerificator instance;
       private PetriNet net;
+      private VerificatorForm mainForm;
 
       private PetriNetVerificator()
       {
@@ -41,6 +42,12 @@ namespace Pppv.Verificator
             }
             return instance;
          }
+      }
+
+      public VerificatorForm MainForm
+      {
+         get { return this.mainForm; }
+         private set { this.mainForm = value; }
       }
 
       private void InitPrologEngineIfNeed()
@@ -66,8 +73,14 @@ namespace Pppv.Verificator
 
       public void StartInterface(Form parentForm)
       {
-         Form verificatorForm = new VerificatorForm(this);
-         verificatorForm.ShowDialog(parentForm);
+         this.MainForm = new VerificatorForm(this);
+         this.MainForm.ShowDialog(parentForm);
+      }
+
+      public void StopInterface()
+      {
+         this.MainForm.Close();
+         this.MainForm = null;
       }
 
       public  void LoadNetToPrologEngine(PetriNet petriNet)

@@ -5,14 +5,12 @@
  * Time: 17:16
  */
 
-namespace Pppv.Editor.Commands
+namespace Pppv.ApplicationFramework.Commands
 {
    using System;
    using System.ComponentModel;
    using System.Drawing;
    using System.Windows.Forms;
-
-   using Pppv.Net;
 
    public abstract class InterfaceCommand : Command, IInterfaceCommand
    {
@@ -52,19 +50,6 @@ namespace Pppv.Editor.Commands
       public virtual bool CheckEnabled()
       {
          return false;
-      }
-
-      protected static bool CheckFormAndActiveNet()
-      {
-         MainForm mainForm = MainForm.Instance;
-         if (mainForm != null && mainForm.ActiveNet != null)
-         {
-            return true;
-         }
-         else
-         {
-            return false;
-         }
       }
    }
 }

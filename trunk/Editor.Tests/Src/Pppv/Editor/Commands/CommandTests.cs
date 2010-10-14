@@ -9,6 +9,7 @@ namespace Pppv.Editor.Commands
 {
    using System;
    using NUnit.Framework;
+   using Pppv.ApplicationFramework.Commands;
 
    [TestFixture]
    public class NullCommandTests
