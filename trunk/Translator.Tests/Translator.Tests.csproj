@@ -75,7 +75,7 @@
     <None Include="Properties\AssemblyInfo.in" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PppNet\PppNet.csproj">
+    <ProjectReference Include="..\PppNet\PppNet\PppNet.csproj">
       <Project>{AED06680-760B-4499-A078-905464A9DE37}</Project>
       <Name>PppNet</Name>
     </ProjectReference>

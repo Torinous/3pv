@@ -100,7 +100,7 @@ xcopy .\Prolog\*  ..\..\..\Range\Prolog\  /y</PostBuildEvent>
       <Project>{8C8EFC28-3E9E-47BD-A6ED-4C36EA71B138}</Project>
       <Name>SwiPlCs</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PppNet\PppNet.csproj">
+    <ProjectReference Include="..\PppNet\PppNet\PppNet.csproj">
       <Project>{AED06680-760B-4499-A078-905464A9DE37}</Project>
       <Name>PppNet</Name>
     </ProjectReference>
