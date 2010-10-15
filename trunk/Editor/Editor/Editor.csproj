@@ -23,7 +23,7 @@
     <DelaySign>False</DelaySign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
     <TargetFrameworkProfile />
-    <PostBuildEvent>xcopy .\*  ..\..\..\Range  /y
+    <PostBuildEvent>xcopy .\*  ..\..\..\..\Range  /y
 
 </PostBuildEvent>
   </PropertyGroup>
@@ -172,15 +172,15 @@
     <Folder Include="Src\PPPV\Editor\Tools" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ApplicationFramework\ApplicationFramework.csproj">
+    <ProjectReference Include="..\..\ApplicationFramework\ApplicationFramework.csproj">
       <Project>{D29F492D-9E5A-4759-849C-8ADD0F13DA84}</Project>
       <Name>ApplicationFramework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PppNet\PppNet.csproj">
+    <ProjectReference Include="..\..\PppNet\PppNet.csproj">
       <Project>{AED06680-760B-4499-A078-905464A9DE37}</Project>
       <Name>PppNet</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Verificator\Verificator.csproj">
+    <ProjectReference Include="..\..\Verificator\Verificator.csproj">
       <Project>{E2CDB95D-6CB1-4316-8398-EBD5A4C5C5B4}</Project>
       <Name>Verificator</Name>
     </ProjectReference>

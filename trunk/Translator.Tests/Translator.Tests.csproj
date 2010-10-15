@@ -75,10 +75,6 @@
     <None Include="Properties\AssemblyInfo.in" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Editor\Editor.csproj">
-      <Project>{8C38059E-436D-468D-A131-040EF303CBF1}</Project>
-      <Name>Editor</Name>
-    </ProjectReference>
     <ProjectReference Include="..\PppNet\PppNet.csproj">
       <Project>{AED06680-760B-4499-A078-905464A9DE37}</Project>
       <Name>PppNet</Name>
