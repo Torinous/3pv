@@ -91,7 +91,7 @@
       <Project>{D29F492D-9E5A-4759-849C-8ADD0F13DA84}</Project>
       <Name>ApplicationFramework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\PppNet\PppNet.csproj">
+    <ProjectReference Include="..\..\PppNet\PppNet\PppNet.csproj">
       <Project>{AED06680-760B-4499-A078-905464A9DE37}</Project>
       <Name>PppNet</Name>
     </ProjectReference>
