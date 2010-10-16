@@ -88,11 +88,11 @@
     <None Include="Resources\Prolog\temporalproperties.pl" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Deploy\SwiPlCs\SwiPlCs.csproj">
+    <ProjectReference Include="..\..\Deploy\SwiPlCs\SwiPlCs.csproj">
       <Project>{8C8EFC28-3E9E-47BD-A6ED-4C36EA71B138}</Project>
       <Name>SwiPlCs</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PppNet\PppNet\PppNet.csproj">
+    <ProjectReference Include="..\..\PppNet\PppNet\PppNet.csproj">
       <Project>{AED06680-760B-4499-A078-905464A9DE37}</Project>
       <Name>PppNet</Name>
     </ProjectReference>
