@@ -87,7 +87,7 @@
     <None Include="Properties\AssemblyInfo.in" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\ApplicationFramework\ApplicationFramework.csproj">
+    <ProjectReference Include="..\..\ApplicationFramework\ApplicationFramework\ApplicationFramework.csproj">
       <Project>{D29F492D-9E5A-4759-849C-8ADD0F13DA84}</Project>
       <Name>ApplicationFramework</Name>
     </ProjectReference>

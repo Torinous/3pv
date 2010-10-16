@@ -23,7 +23,7 @@
     <RunSourceAnalysis>False</RunSourceAnalysis>
     <TargetFrameworkProfile />
     <PreBuildEvent>SubWCRev.exe ../../Properties ../../Properties/AssemblyInfo.in ../../Properties/AssemblyInfo.cs</PreBuildEvent>
-    <PostBuildEvent>xcopy .\*  ..\..\..\Range  /y</PostBuildEvent>
+    <PostBuildEvent>xcopy .\*  ..\..\..\..\Range  /y</PostBuildEvent>
     <StartArguments>-input=test.pnml</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
@@ -76,25 +76,21 @@
     <Folder Include="Src\PPPV\Translator" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ApplicationFramework\ApplicationFramework.csproj">
+    <None Include="Properties\AssemblyInfo.in" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ApplicationFramework\ApplicationFramework\ApplicationFramework.csproj">
       <Project>{D29F492D-9E5A-4759-849C-8ADD0F13DA84}</Project>
       <Name>ApplicationFramework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Editor\Editor\Editor.csproj">
-      <Project>{8C38059E-436D-468D-A131-040EF303CBF1}</Project>
-      <Name>Editor</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PppNet\PppNet\PppNet.csproj">
+    <ProjectReference Include="..\..\PppNet\PppNet\PppNet.csproj">
       <Project>{AED06680-760B-4499-A078-905464A9DE37}</Project>
       <Name>PppNet</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Verificator\Verificator.csproj">
+    <ProjectReference Include="..\..\Verificator\Verificator\Verificator.csproj">
       <Project>{E2CDB95D-6CB1-4316-8398-EBD5A4C5C5B4}</Project>
       <Name>Verificator</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Properties\AssemblyInfo.in" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>
