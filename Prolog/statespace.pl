@@ -111,14 +111,14 @@ stateSpaceToDotFormatTmpFile(FileName):-
 	tmp_file_stream(text, FileName, Stream),
 	tell(Stream),
 	stateSpaceToDotFormat,
-        tell(user),
-        close(FileName).
+	tell(user),
+	close(Stream).
 
 stateSpaceToDotFormat:-write('digraf net{'),nl,
-	               paramsForDotFormat,nl,
-		       statesForDotFormats,nl,
-		       arcsForDotFormats,nl,
-		       write('}').
+	paramsForDotFormat,nl,
+	statesForDotFormats,nl,
+	arcsForDotFormats,nl,
+	write('}').
 
 paramsForDotFormat:-
 	tab(3),write('size="20,20";'),nl,
