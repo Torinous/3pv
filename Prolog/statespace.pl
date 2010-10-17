@@ -13,7 +13,6 @@
 :- dynamic rstate/2.
 :- dynamic gds/3.
 :- dynamic count/1.
-:- dynamic arc/3.
 :- dynamic gds_backup/3.
 
 %стартовый клоз построения пространства состояний
