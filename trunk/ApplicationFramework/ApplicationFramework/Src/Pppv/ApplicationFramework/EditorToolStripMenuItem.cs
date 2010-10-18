@@ -6,7 +6,7 @@
    using System.Windows.Forms;
 
    using Pppv.ApplicationFramework.Commands;
-   using Pppv.ApplicationFramework.Utils;
+   using Pppv.Utils;
 
    public class CommandToolStripMenuItem : ToolStripMenuItem
    {
