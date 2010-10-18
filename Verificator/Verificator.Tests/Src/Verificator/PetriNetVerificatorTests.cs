@@ -29,7 +29,6 @@ namespace Pppv.Verificator
          PetriNet net = new PetriNet();
          PetriNetVerificator verificator = PetriNetVerificator.Instance;
          verificator.LoadNetToPrologEngine(net);
-         verificator.Cleanup();
       }
 
       [Test]
@@ -40,18 +39,6 @@ namespace Pppv.Verificator
          PetriNetVerificator verificator2 = PetriNetVerificator.Instance;
          verificator.LoadNetToPrologEngine(net);
          verificator2.LoadNetToPrologEngine(net);
-         verificator.Cleanup();
-         verificator2.Cleanup();
-      }
-
-      [Test]
-      public void TestOfIsInitializedOnCleanup()
-      {
-         PetriNet net = new PetriNet();
-         PetriNetVerificator verificator = PetriNetVerificator.Instance;
-         verificator.LoadNetToPrologEngine(net);
-         verificator.Cleanup();
-         Assert.That(PlEngine.IsInitialized, Is.EqualTo(false), "После Cleanup`а ядро пролога осталось инициализированным");
       }
 
       [Test]
@@ -70,8 +57,9 @@ namespace Pppv.Verificator
          {
             Console.WriteLine(e.Message);
          }
+
          verificator.CalculateStateSpace();
-         Assert.That(PlQuery.PlCall("statespace:rstate(N,X)."),Is.True, "Предложения пространства состояний отсутствуют после его построения");
+         Assert.That(PlQuery.PlCall("statespace:rstate(N,X)."), Is.True, "Предложения пространства состояний отсутствуют после его построения");
       }
    }
 }

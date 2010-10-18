@@ -10,9 +10,9 @@
    using System.Globalization;
    using System.Windows.Forms;
 
-   using Pppv.Net;
    using Pppv.ApplicationFramework;
-   
+   using Pppv.Net;
+
    public class TokensEditControl : System.Windows.Forms.UserControl
    {
       private GroupBox groupBox;

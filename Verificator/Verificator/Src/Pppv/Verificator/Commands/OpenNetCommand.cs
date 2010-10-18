@@ -1,4 +1,13 @@
-﻿namespace Pppv.Editor.Commands
+﻿/*
+ * Created by SharpDevelop.
+ * User: Torinous
+ * Date: 17.10.2010
+ * Time: 5:27
+ *
+ *
+ */
+
+namespace Pppv.Verificator.Commands
 {
    using System;
    using System.Drawing;
@@ -6,6 +15,9 @@
    using System.Reflection;
    using System.Text;
    using System.Windows.Forms;
+   using System.Xml;
+   using System.Xml.Schema;
+   using System.Xml.Serialization;
 
    using Pppv.ApplicationFramework.Commands;
    using Pppv.Net;
@@ -29,11 +41,14 @@
 
          if (openFileDialog.ShowDialog() == DialogResult.OK)
          {
-            MainForm mainForm = MainForm.Instance;
+            PetriNetVerificator verificator = PetriNetVerificator.Instance;
+            PetriNet net = new PetriNet();
             StreamReader stream;
             stream = new StreamReader(openFileDialog.FileName, Encoding.GetEncoding(1251));
-            mainForm.LoadNet(stream, openFileDialog.FileName);
+            XmlSerializer serializer = new XmlSerializer(typeof(PetriNet));
+            net = serializer.Deserialize(stream) as PetriNet;
             stream.Close();
+            verificator.LoadNetToPrologEngine(net);
          }
       }
 

@@ -28,8 +28,7 @@ namespace Pppv.Verificator
          PetriNetVerificator verificator = PetriNetVerificator.Instance;
          verificator.LoadNetToPrologEngine(net);
          string stateSpaceInDot = StateSpaceInDotFormatTranslator.Create();
-         verificator.Cleanup();
-         Assert.That(stateSpaceInDot, Is.StringContaining("digraph"), "Пространство состояний в формате dot не имеет глобального тега");
+         Assert.That(stateSpaceInDot, Is.StringContaining("digraf"), "Пространство состояний в формате dot не имеет глобального тега");
       }
 
       [Test]
@@ -42,7 +41,7 @@ namespace Pppv.Verificator
          verificator.LoadNetToPrologEngine(net);
          verificator.CalculateStateSpace();
          string stateSpaceInDot = StateSpaceInDotFormatTranslator.Create();
-         Console.WriteLine(stateSpaceInDot);
+         Assert.That(stateSpaceInDot, Is.StringContaining("0 -> 1"), "Пространство состояний в формате dot не имеет перехода из стартового состояния");
       }
    }
 }

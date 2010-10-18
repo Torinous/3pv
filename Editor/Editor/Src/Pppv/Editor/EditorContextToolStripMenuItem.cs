@@ -5,9 +5,9 @@ namespace Pppv.Editor
    using System.Runtime.InteropServices;
    using System.Windows.Forms;
 
-   using Pppv.Editor.Commands;
    using Pppv.ApplicationFramework;
    using Pppv.ApplicationFramework.Commands;
+   using Pppv.Editor.Commands;
 
    public class EditorContextToolStripMenuItem : CommandToolStripMenuItem
    {

@@ -31,13 +31,13 @@ namespace Pppv.Editor.Commands
       public override void Execute()
       {
          MainForm mainForm = MainForm.Instance;
+         PetriNetVerificator verificator = PetriNetVerificator.Instance;
          if (mainForm.ActiveNet != null)
          {
-            PetriNetVerificator verificator = PetriNetVerificator.Instance;
-            verificator.LoadNetToPrologEngine(mainForm.ActiveNet);
-            verificator.StartInterface(mainForm);
-            verificator.Cleanup();
+            verificator.LoadNetToPrologEngine(mainForm.ActiveNet.BaseNet);
          }
+
+         verificator.StartInterface(mainForm);
       }
 
       public override void Unexecute()

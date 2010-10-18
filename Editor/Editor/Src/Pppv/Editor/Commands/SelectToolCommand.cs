@@ -6,10 +6,10 @@
    using System.Reflection;
    using System.Windows.Forms;
 
+   using Pppv.ApplicationFramework.Commands;
    using Pppv.Editor.Tools;
    using Pppv.Net;
-   using Pppv.ApplicationFramework.Commands;
-   using Pppv.ApplicationFramework.Utils;
+   using Pppv.Utils;
 
    public class SelectToolCommand : EditorInterfaceCommand
    {

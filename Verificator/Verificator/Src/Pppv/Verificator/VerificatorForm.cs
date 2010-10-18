@@ -14,36 +14,48 @@ namespace Pppv.Verificator
    using System.Reflection;
    using System.Windows.Forms;
 
-   using Pppv.Net;
    using Pppv.ApplicationFramework;
    using Pppv.ApplicationFramework.Commands;
+   using Pppv.Net;
 
    public class VerificatorForm : Form
    {
       private PetriNetVerificator netVerificator;
+      private VerificatorStatusStrip statusStrip;
+      private VerificatorMainMenuStrip menuStrip;
+      private CommandToolStrip commonToolStrip;
+      private TabControl tabControl;
+      private ToolStripContainer toolToolStripContainer;
 
       public VerificatorForm(PetriNetVerificator netVerificator)
       {
-         InitializeComponent();
+         this.InitializeComponent();
          this.NetVerificator = netVerificator;
+         this.NetVerificator.PostStatusMessage += this.PostStatusMessageHandler;
       }
 
       public PetriNetVerificator NetVerificator
       {
-         get { return netVerificator; }
-         private set { netVerificator = value; }
+         get { return this.netVerificator; }
+         private set { this.netVerificator = value; }
       }
-
-      private VerificatorMainMenuStrip menuStrip;
-      private CommandToolStrip commonToolStrip;
-      private StatusStrip statusStrip;
-      private TabControl tabControl;
-      private ToolStripContainer toolToolStripContainer;
 
       public VerificatorMainMenuStrip MainVerificatorMenuStrip
       {
          get { return this.menuStrip; }
          private set { this.menuStrip = value; }
+      }
+
+      public VerificatorStatusStrip StatusStrip
+      {
+         get { return this.statusStrip; }
+         set { this.statusStrip = value; }
+      }
+
+      protected override void OnClosed(EventArgs e)
+      {
+         this.NetVerificator.PostStatusMessage -= this.PostStatusMessageHandler;
+         base.OnClosed(e);
       }
 
       private void InitializeComponent()
@@ -55,7 +67,7 @@ namespace Pppv.Verificator
          this.commonToolStrip = new CommandToolStrip();
          this.commonToolStrip.AddCommand(new NullCommand());
 
-         this.statusStrip = new StatusStrip();
+         this.statusStrip = new VerificatorStatusStrip();
 
          this.tabControl = new TabControl();
          this.toolToolStripContainer = new ToolStripContainer();
@@ -85,7 +97,7 @@ namespace Pppv.Verificator
          this.toolToolStripContainer.TopToolStripPanel.AutoSize = true;
 
          this.ClientSize = new System.Drawing.Size(599, 299);
-         this.Name = "MainForm";
+         this.Name = "VerificatorForm";
          this.Text = "3Pv:Editor " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
          this.toolToolStripContainer.ContentPanel.ResumeLayout(false);
@@ -108,6 +120,11 @@ namespace Pppv.Verificator
          this.commonToolStrip.PerformLayout();
          this.ResumeLayout(false);
          this.PerformLayout();
+      }
+
+      private void PostStatusMessageHandler(object sender, PostStatusMessageArgs args)
+      {
+         this.StatusStrip.PostStatusMessage(args.Message);
       }
    }
 }

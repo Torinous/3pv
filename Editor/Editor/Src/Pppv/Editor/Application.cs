@@ -13,7 +13,7 @@
    using Pppv.Editor.Commands;
    using Pppv.Editor.Tools;
    using Pppv.Net;
-   using Pppv.ApplicationFramework.Utils;
+   using Pppv.Utils;
 
    public class EditorApplication : ApplicationContext
    {

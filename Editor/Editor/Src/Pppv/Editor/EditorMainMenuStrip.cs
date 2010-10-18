@@ -3,9 +3,9 @@
    using System.Drawing;
    using System.Windows.Forms;
 
+   using Pppv.ApplicationFramework;
    using Pppv.Editor.Commands;
    using Pppv.Editor.Tools;
-   using Pppv.ApplicationFramework;
 
    public class EditorMainMenuStrip : MenuStrip
    {

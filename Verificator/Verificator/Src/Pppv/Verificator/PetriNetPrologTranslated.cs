@@ -61,7 +61,7 @@
          {
             text.AppendFormat(
                               CultureInfo.InvariantCulture,
-                              "arc(S0,{0},S2):-remove({1},S0,S1),{2}insert({3},S1,S2).",
+                              "arc(S0,{0},S2):-statespace:remove({1},S0,S1),{2}statespace:insert({3},S1,S2).",
                               tr.Name.ToLower(CultureInfo.InvariantCulture),
                               this.Precondition(tr),
                               (!String.IsNullOrEmpty(tr.GuardFunction) ? tr.GuardFunction + "," : String.Empty),

@@ -3,6 +3,7 @@
    using System;
    using System.Drawing;
 
+   using Pppv.ApplicationFramework;
    using Pppv.Net;
 
    public class AddNetElementCommand : NetCommand
@@ -49,7 +50,7 @@
          }
          catch (Exception e)
          {
-            throw new EditorException("Внутреннее исключение в команде AddNetElementCommand", e);
+            throw new PppvException("Внутреннее исключение в команде AddNetElementCommand", e);
          }
       }
 

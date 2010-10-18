@@ -4,14 +4,15 @@
  * Date: 06.10.2010
  * Time: 17:47
  */
+
 namespace Pppv.Editor.Commands
 {
    using System;
    using System.Drawing;
    using System.Windows.Forms;
 
-   using Pppv.Net;
    using Pppv.ApplicationFramework.Commands;
+   using Pppv.Net;
 
    public abstract class NetInterfaceCommand : EditorInterfaceCommand
    {

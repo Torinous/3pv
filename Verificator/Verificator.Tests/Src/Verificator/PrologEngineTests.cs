@@ -21,7 +21,7 @@ namespace Pppv.Verificator
       {
          if (!PlEngine.IsInitialized)
          {
-            String[] empty_param = { "-q" };
+            string[] empty_param = { "-q" };
             PlEngine.Initialize(empty_param);
             PlEngine.PlCleanup();
          }
@@ -32,7 +32,7 @@ namespace Pppv.Verificator
       {
          if (!PlEngine.IsInitialized)
          {
-            String[] empty_param = { "-q" };
+            string[] empty_param = { "-q" };
             PlEngine.Initialize(empty_param);
             using (PlQuery q = new PlQuery("member(A, [h,e,l,l,o])"))
             {
