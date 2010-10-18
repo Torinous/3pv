@@ -41,6 +41,8 @@
     <Optimize>False</Optimize>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <StartAction>Program</StartAction>
+    <StartProgram>..\..\Range\Editor.exe</StartProgram>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -104,7 +106,6 @@
     <Compile Include="Src\PPPV\Editor\Commands\ZoomOutCommand.cs" />
     <Compile Include="Src\PPPV\Editor\CortegeEditControl.cs" />
     <Compile Include="Src\PPPV\Editor\EditorContextToolStripMenuItem.cs" />
-    <Compile Include="Src\PPPV\Editor\EditorException.cs" />
     <Compile Include="Src\PPPV\Editor\EditorToolStrip.cs" />
     <Compile Include="Src\PPPV\Editor\GuardEditForm.cs" />
     <Compile Include="Src\PPPV\Editor\MainForm.cs" />

@@ -5,8 +5,8 @@
    using System.Reflection;
    using System.Windows.Forms;
 
-   using Pppv.Net;
    using Pppv.ApplicationFramework.Commands;
+   using Pppv.Net;
 
    public class RedoCommand : EditorInterfaceCommand
    {

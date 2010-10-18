@@ -17,11 +17,11 @@
    using System.Xml.Schema;
    using System.Xml.Serialization;
 
+   using Pppv.ApplicationFramework;
    using Pppv.Editor.Commands;
    using Pppv.Editor.Tools;
    using Pppv.Net;
-   using Pppv.ApplicationFramework;
-   
+
    public class CortegeEditControl : System.Windows.Forms.UserControl
    {
       private GroupBox groupBox;
@@ -116,7 +116,7 @@
          catch (NetException)
          {
          }
-         catch (EditorException)
+         catch (PppvException)
          {
          }
 

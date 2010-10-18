@@ -13,11 +13,11 @@
    using System.Xml.Schema;
    using System.Xml.Serialization;
 
+   using Pppv.ApplicationFramework;
    using Pppv.Editor.Shapes;
    using Pppv.Editor.Tools;
    using Pppv.Net;
-   using Pppv.ApplicationFramework.Utils;
-   
+   using Pppv.Utils;
 
    public class PetriNetGraphical : PetriNet, IXmlSerializable
    {
@@ -279,7 +279,7 @@
          }
          else
          {
-            throw new EditorException("Not appropriate tool type!");
+            throw new PppvException("Not appropriate tool type!");
          }
       }
 

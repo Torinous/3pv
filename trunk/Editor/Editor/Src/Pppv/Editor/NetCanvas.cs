@@ -9,7 +9,7 @@
    using System.Windows.Forms;
 
    using Pppv.Net;
-   using Pppv.ApplicationFramework.Utils;
+   using Pppv.Utils;
 
    public class NetCanvas : UserControl
    {

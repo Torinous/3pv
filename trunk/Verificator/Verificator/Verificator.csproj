@@ -67,16 +67,27 @@ xcopy .\Prolog\*  ..\..\..\..\Range\Prolog\  /y</PostBuildEvent>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Src\Pppv\Verificator\Commands\ConstructStateSpaceCommand.cs" />
+    <Compile Include="Src\Pppv\Verificator\Commands\OpenNetCommand.cs" />
     <Compile Include="Src\Pppv\Verificator\Commands\QuitCommand.cs" />
-    <Compile Include="Src\Pppv\Verificator\StateSpaceIndDotFormatTranslator.cs" />
+    <Compile Include="Src\Pppv\Verificator\Commands\StartPrologInterfaceCommand.cs" />
+    <Compile Include="Src\Pppv\Verificator\PostStatusMessageArgs.cs" />
+    <Compile Include="Src\Pppv\Verificator\SizeMode.cs" />
+    <Compile Include="Src\Pppv\Verificator\StateSpaceInDotFormatTranslator.cs" />
     <Compile Include="Src\Pppv\Verificator\PetriNetPrologTranslated.cs" />
     <Compile Include="Src\Pppv\Verificator\PetriNetVerificator.cs" />
-    <Compile Include="Src\Pppv\Verificator\VerificatorException.cs" />
+    <Compile Include="Src\Pppv\Verificator\PicViewer.cs" />
     <Compile Include="Src\Pppv\Verificator\VerificatorForm.cs" />
     <Compile Include="Src\Pppv\Verificator\VerificatorMainMenuStrip.cs" />
+    <Compile Include="Src\Pppv\Verificator\VerificatorStatusStrip.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Src\Pppv\Verificator\UserControl1.resx">
+      <DependentUpon>PicViewer.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\AssemblyInfo.in" />
+    <EmbeddedResource Include="Resources\Exit.png" />
+    <EmbeddedResource Include="Resources\Open.png" />
     <None Include="Resources\Prolog\properties.pl" />
     <None Include="Resources\Prolog\report_kernel.pl" />
     <None Include="Resources\Prolog\statespace.pl" />

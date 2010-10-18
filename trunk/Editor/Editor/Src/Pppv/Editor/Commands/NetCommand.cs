@@ -4,8 +4,8 @@
    using System.Drawing;
    using System.Windows.Forms;
 
-   using Pppv.Net;
    using Pppv.ApplicationFramework.Commands;
+   using Pppv.Net;
 
    public abstract class NetCommand : Command
    {

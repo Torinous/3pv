@@ -4,9 +4,9 @@
    using System.Reflection;
    using System.Windows.Forms;
 
-   using Pppv.Editor.Commands;
    using Pppv.ApplicationFramework;
    using Pppv.ApplicationFramework.Commands;
+   using Pppv.Editor.Commands;
 
    public class EditorToolStrip : CommandToolStrip
    {
