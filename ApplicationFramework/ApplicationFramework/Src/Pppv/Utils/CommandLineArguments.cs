@@ -7,7 +7,7 @@
  *
  */
 
-namespace Pppv.ApplicationFramework.Utils
+namespace Pppv.Utils
 {
    using System;
    using System.Collections.Specialized;
