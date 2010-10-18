@@ -113,7 +113,7 @@ stateSpaceToDotFormatTmpFile(FileName):-
 	tell(user),
 	close(Stream).
 
-stateSpaceToDotFormat:-write('digraf net{'),nl,
+stateSpaceToDotFormat:-write('digraph net{'),nl,
 	paramsForDotFormat,nl,
 	statesForDotFormats,nl,
 	arcsForDotFormats,nl,
