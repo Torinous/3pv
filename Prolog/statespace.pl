@@ -4,11 +4,11 @@
 */
 
 :- module(statespace,
-	  [
-	   createStateSpace/0,
-	   clearStateSpace/0,
-	   stateSpaceToDotFormatTmpFile/1
-	  ]).
+     [
+      createStateSpace/0,
+      clearStateSpace/0,
+      stateSpaceToDotFormatTmpFile/1
+     ]).
 
 :- dynamic rstate/2.
 :- dynamic gds/3.
@@ -19,18 +19,18 @@
 
 %стартовый клоз построени€ пространства состо€ний
 createStateSpace:-
-	clearStateSpace,
-	init(S),
-	asserta(rstate(0,S)),
-	assertz(count(0)), !,
-	seq(S,_,_),
-	fail;true.
+   clearStateSpace,
+   init(S),
+   asserta(rstate(0,S)),
+   assertz(count(0)), !,
+   seq(S,_,_),
+   fail;true.
 
 % ”даление баз данных:
 clearStateSpace:-
-	retractall(rstate(_,_)),
-	retractall(gds(_,_,_)),
-	retractall(count(_)).
+   retractall(rstate(_,_)),
+   retractall(gds(_,_,_)),
+   retractall(count(_)).
 
 %  ќЌ—“–” “ќ– √ƒћ
 seq(M,[T|L],M1):-
@@ -41,9 +41,9 @@ seq(M,[T|L],M1):-
 seq(M,[],M).
 
 inbase(NM,T,M1):-
-	rstate(NM1,M),
+   rstate(NM1,M),
         remove(M,M1,[]),!,
-	assertz(gds(NM,T,NM1)),
+   assertz(gds(NM,T,NM1)),
         fail.
 inbase(NM,T,M1):-
         retract(count(N)),
@@ -57,21 +57,21 @@ inbase(NM,T,M1):-
 % (в основном используютс€ в кодировке PrT-сети в предикатах типа arc)
 
 remove([E|X],L2,L3):-
-	delel(E,L2,LP),
-	remove(X,LP,L3).
+   delel(E,L2,LP),
+   remove(X,LP,L3).
 remove([],L,L).
 
 delel(X,[X|L],L).
 delel(X,[Y|L],[Y|L1]):-
-	delel(X,L,L1).
+   delel(X,L,L1).
 
 insert([],L,L).
 insert([X|L1],L2,[X|L3]):-
-	insert(L1,L2,L3).
+   insert(L1,L2,L3).
 
 inlist(X,[X|_]).
 inlist(X,[_|L]):-
-	inlist(X,L).
+   inlist(X,L).
 
 
 /*процедура удал€юща€ из базы дублирующиес€ переходы.
@@ -79,62 +79,67 @@ inlist(X,[_|L]):-
 */
 %% так будет до тех пор, пока не кончатс€ факты ds(_,_,_)
 backupall:-
-	gds(X,Y,Z),
-	retract(gds(X,Y,Z)),
-	ds_backup(X,Y,Z),
-	fail;true. %% нет фактов - нет проблемы
+   gds(X,Y,Z),
+   retract(gds(X,Y,Z)),
+   ds_backup(X,Y,Z),
+   fail;true. %% нет фактов - нет проблемы
 
 ds_backup(X,Y,Z):-
-	backuponce(X,Y,Z),!.
+   backuponce(X,Y,Z),!.
 
 %% не будем повтор€ть чужих ошибок: если факт уже есть, то всЄ
 backuponce(X,Y,Z):-
-	gds(X,Y,Z);
-	assertz(gds_backup(X,Y,Z)). %% а если нет, то добавим единожды
+   gds(X,Y,Z);
+   assertz(gds_backup(X,Y,Z)). %% а если нет, то добавим единожды
 
 restoreall:-
-	gds_backup(X,Y,Z),
-	retract(gds_backup(X,Y,Z)),
-	assertz(gds(X,Y,Z)),
-	fail;true.
+   gds_backup(X,Y,Z),
+   retract(gds_backup(X,Y,Z)),
+   assertz(gds(X,Y,Z)),
+   fail;true.
 
 rebuildall:-
-	backupall,
-	restoreall.
+   backupall,
+   restoreall.
+
+
+/*
+   “рансл€ци€ пространства состо€ний в dot-формат
+*/
 
 assert(defaultNodeShape(rectangle)).
 assert(defaultEdgeLength(3)).
 
 stateSpaceToDotFormatTmpFile(FileName):-
-	tmp_file_stream(text, FileName, Stream),
-	tell(Stream),
-	stateSpaceToDotFormat,
-	tell(user),
-	close(Stream).
+   tmp_file_stream(text, FileName, Stream),
+   tell(Stream),
+   stateSpaceToDotFormat,
+   tell(user),
+   close(Stream).
 
 stateSpaceToDotFormat:-write('digraph net{'),nl,
-	paramsForDotFormat,nl,
-	statesForDotFormats,nl,
-	arcsForDotFormats,nl,
-	write('}').
+   paramsForDotFormat,nl,
+   statesForDotFormats,nl,
+   arcsForDotFormats,nl,
+   write('}').
 
 paramsForDotFormat:-
-	defaultNodeShape(Shape),
-	defaultEdgeLength(Length),
-	tab(3),write('size="20,20";'),nl,
-	tab(3),write('node [shape='),write(Shape),write(', style = filled];'),nl,
-	tab(3),write('edge [len='),write(Length),write('];'),nl.
+   defaultNodeShape(Shape),
+   defaultEdgeLength(Length),
+   tab(3),write('size="20,20";'),nl,
+   tab(3),write('node [shape='),write(Shape),write(', style = filled];'),nl,
+   tab(3),write('edge [len='),write(Length),write('];'),nl.
 
 statesForDotFormats:-
-	rstate(Number,tokenList),
-	tab(3),write('S'),write(Number),write('[label="'),
-	write('S'),write(Number),write(tokenList),write('" red]'),nl,
-	fail;true.
+   rstate(Number,tokenList),
+   tab(3),write('S'),write(Number),write('[label="'),
+   write('S'),write(Number),write(tokenList),write('" red]'),nl,
+   fail;true.
 
 arcsForDotFormats:-
-	gds(S1,T,S2),
-	tab(3),write(S1),write(' -> '),write(S2),write('[label="'),write(T),write('"]'),nl,
-	fail;true.
+   gds(S1,T,S2),
+   tab(3),write(S1),write(' -> '),write(S2),write('[label="'),write(T),write('"]'),nl,
+   fail;true.
 
 
 
