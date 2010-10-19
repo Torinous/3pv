@@ -14,6 +14,8 @@
 :- dynamic gds/3.
 :- dynamic count/1.
 :- dynamic gds_backup/3.
+:- dynamic defaultNodeShape/1.
+:- dynamic defaultEdgeLength/1.
 
 %стартовый клоз построения пространства состояний
 createStateSpace:-
@@ -100,8 +102,8 @@ rebuildall:-
 	backupall,
 	restoreall.
 
-defaultNodeShape(rectangle).
-defaultEdgeLength(3).
+assert(defaultNodeShape(rectangle)).
+assert(defaultEdgeLength(3)).
 
 stateSpaceToDotFormatTmpFile(FileName):-
 	tmp_file_stream(text, FileName, Stream),
