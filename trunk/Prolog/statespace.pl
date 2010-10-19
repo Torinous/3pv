@@ -106,6 +106,9 @@ restoreall:-
 
 rebuildall:-backupall,restoreall.
 
+defaultNodeShape(rectangle).
+defaultEdgeLength(3).
+
 stateSpaceToDotFormatTmpFile(FileName):-
 	tmp_file_stream(text, FileName, Stream),
 	tell(Stream),
