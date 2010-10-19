@@ -26,9 +26,9 @@ createStateSpace:-
 
 % Удаление баз данных:
 clearStateSpace:-
-	retractall(rastate),
-	retractall(gds),
-	retractall(count).
+	retractall(rstate(_,_)),
+	retractall(gds(_,_,_)),
+	retractall(count(_)).
 
 % КОНСТРУКТОР ГДМ
 seq(M,[T|L],M1):-
