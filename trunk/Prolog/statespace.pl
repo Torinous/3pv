@@ -107,8 +107,13 @@ rebuildall:-
    “рансл€ци€ пространства состо€ний в dot-формат
 */
 
-assert(defaultNodeShape(rectangle)).
-assert(defaultEdgeLength(3)).
+getDefaultNodeShape(Shape):-
+   defaultNodeShape(Shape);
+   Shape = rectangle.
+
+getDefaultEdgeLength(Length):-
+   defaultEdgeLength(Length);
+   Length = 3.
 
 stateSpaceToDotFormatTmpFile(FileName):-
    tmp_file_stream(text, FileName, Stream),
@@ -124,8 +129,8 @@ stateSpaceToDotFormat:-write('digraph net{'),nl,
    write('}').
 
 paramsForDotFormat:-
-   defaultNodeShape(Shape),
-   defaultEdgeLength(Length),
+   getDefaultNodeShape(Shape),
+   getDefaultEdgeLength(Length),
    tab(3),write('size="20,20";'),nl,
    tab(3),write('node [shape='),write(Shape),write(', style = filled];'),nl,
    tab(3),write('edge [len='),write(Length),write('];'),nl.
