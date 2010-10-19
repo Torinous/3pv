@@ -26,21 +26,9 @@ createStateSpace:-
 
 % Удаление баз данных:
 clearStateSpace:-
-	clearrs,
-	cleargds,
-	clearcount.
-
-% удаление базы данных о состояниях
-clearrs:-retract(rstate(_,_)),clearrs.
-clearrs.
-
-% удаление базы данных о дугах ГДС
-cleargds:-retract(gds(_,_,_)),cleargds.
-cleargds.
-
-% удаление базы данных для счетчика достигнутых маркировок
-clearcount:-retract(count(_)),clearcount.
-clearcount.
+	retractall(rastate),
+	retractall(gds),
+	retractall(count).
 
 % КОНСТРУКТОР ГДМ
 seq(M,[T|L],M1):-
@@ -51,34 +39,37 @@ seq(M,[T|L],M1):-
 seq(M,[],M).
 
 inbase(NM,T,M1):-
-                  rstate(NM1,M),
-                  remove(M,M1,[]),
-                  !,
-                  assertz(gds(NM,T,NM1)),
-                  fail.
+	rstate(NM1,M),
+        remove(M,M1,[]),!,
+	assertz(gds(NM,T,NM1)),
+        fail.
 inbase(NM,T,M1):-
-                  retract(count(N)),
-                  NM1 is N + 1,
-                  assertz(count(NM1)),
-                  assertz(rstate(NM1,M1)),
-                  write(NM),tab(1),
-                  assertz(gds(NM,T,NM1)).
+        retract(count(N)),
+        NM1 is N + 1,
+        assertz(count(NM1)),
+        assertz(rstate(NM1,M1)),
+        write(NM),tab(1),
+        assertz(gds(NM,T,NM1)).
 
 % Предикаты работы со списками
 % (в основном используются в кодировке PrT-сети в предикатах типа arc)
 
-remove([E|X],L2,L3):-delel(E,L2,LP),remove(X,LP,L3).
+remove([E|X],L2,L3):-
+	delel(E,L2,LP),
+	remove(X,LP,L3).
 remove([],L,L).
 
 delel(X,[X|L],L).
-delel(X,[Y|L],[Y|L1]):-delel(X,L,L1).
+delel(X,[Y|L],[Y|L1]):-
+	delel(X,L,L1).
 
 insert([],L,L).
-insert([X|L1],L2,[X|L3]):-insert(L1,L2,L3).
+insert([X|L1],L2,[X|L3]):-
+	insert(L1,L2,L3).
 
 inlist(X,[X|_]).
-inlist(X,[_|L]):-inlist(X,L).
-
+inlist(X,[_|L]):-
+	inlist(X,L).
 
 
 /*процедура удаляющая из базы дублирующиеся переходы.
@@ -91,7 +82,8 @@ backupall:-
 	ds_backup(X,Y,Z),
 	fail;true. %% нет фактов - нет проблемы
 
-ds_backup(X,Y,Z):-backuponce(X,Y,Z),!.
+ds_backup(X,Y,Z):-
+	backuponce(X,Y,Z),!.
 
 %% не будем повторять чужих ошибок: если факт уже есть, то всё
 backuponce(X,Y,Z):-
@@ -104,7 +96,9 @@ restoreall:-
 	assertz(gds(X,Y,Z)),
 	fail;true.
 
-rebuildall:-backupall,restoreall.
+rebuildall:-
+	backupall,
+	restoreall.
 
 defaultNodeShape(rectangle).
 defaultEdgeLength(3).
@@ -123,9 +117,11 @@ stateSpaceToDotFormat:-write('digraph net{'),nl,
 	write('}').
 
 paramsForDotFormat:-
+	defaultNodeShape(Shape),
+	defaultEdgeLength(Length),
 	tab(3),write('size="20,20";'),nl,
-	tab(3),write('node [shape = rectangle, style = filled];'),nl,
-	tab(3),write('edge [len=3];'),nl.
+	tab(3),write('node [shape='),write(Shape),write(', style = filled];'),nl,
+	tab(3),write('edge [len='),write(Length),write('];'),nl.
 
 statesForDotFormats:-
 	rstate(Number,tokenList),
@@ -137,6 +133,7 @@ arcsForDotFormats:-
 	gds(S1,T,S2),
 	tab(3),write(S1),write(' -> '),write(S2),write('[label="'),write(T),write('"]'),nl,
 	fail;true.
+
 
 
 
