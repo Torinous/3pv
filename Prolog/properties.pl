@@ -4,11 +4,13 @@
 */
 
 :- module(properties,
-	  [
-	   enable/2
-	  ]).
+	[
+		enable/2,
+		deadlock/1
+	]).
 
 :-use_module(statespace).
+:-use_module(temporallogic).
 
 max(X,Y,Y) :- Y>X,!.
 max(X,_,X).
@@ -17,24 +19,28 @@ max(X,_,X).
 enable(T,S):-arc(S,T,_).
 
 /*запрос является ли определённое состояние тупиком*/
-dls(N):-non(gds(N,_,_)).
+deadlock(N):-non(gds(N,_,_)).
 
 /*  Есть ли дублирующие маркировки? (no)*/
 doubleMarking:- rstate(N1,M1),rstate(N2,M2),N1 \= N2,remove(M1,M2,[]).
 
-/* Нет ли глобальных тупиков ?   (no)*/
+/* Нет ли глобальных тупиков ?	(no)*/
 deadlock:-rstate(N,_),non(gds(N,_,_)).
 
 /* Есть ли инверсные маркировни (yes)*/
-inverseMarking(M1,M2):- rstate(N1,M1),rstate(N2,M2),N1 \= N2,
-           invlist(M1,M3),remove(M3,M2,[]).
+inverseMarking(M1,M2):-
+	rstate(N1,M1),
+	rstate(N2,M2),N1 \= N2,
+	invlist(M1,M3),
+	remove(M3,M2,[]).
 
-/* Кол-во инверсных маркировок (24)*/
-i:-recons,assert(coim(0)),!,
-      rstate(N1,M1),rstate(N2,M2),N1 \= N2,
-      invlist(M1,M3),remove(M3,M2,[]),
-      retract(coim(X)),X1 is X + 1,
-      assert(coim(X1)),fail.
+/* Кол-во инверсных маркировок*/
+i:-
+	recons,assert(coim(0)),!,
+	rstate(N1,M1),rstate(N2,M2),N1 \= N2,
+	invlist(M1,M3),remove(M3,M2,[]),
+	retract(coim(X)),X1 is X + 1,
+	assert(coim(X1)),fail.
 
 /* INVLIST*/
 
@@ -43,7 +49,7 @@ invlist([],[]).
 
 invelem(X,X1):-functor(X,_,1),arg(1,X,A),inv(A,NA),argrep(X,1,NA,X1),!.
 invelem(X,X1):-functor(X,_,2),arg(1,X,A),inv(A,NA),argrep(X,1,NA,X2),
-               arg(2,X,B),inv(B,NB),argrep(X2,2,NB,X1).
+					arg(2,X,B),inv(B,NB),argrep(X2,2,NB,X1).
 
 
 /* Определение количества элементов в списке*/
@@ -55,7 +61,14 @@ num(E,N,[_|R]) :- num(E,N,R).
 fired(T,S):-arc(_,T,S).
 
 /*вычисляет k-ограниченность позиции*/
-k_restrict(P):-rstate(_,S),max(K),count(P,S,K1),max(K,K1,M),retract(max(_)),assertz(max(M)),fail;true.
+k_restrict(P):-
+	rstate(_,S),
+	max(K),
+	count(P,S,K1),
+	max(K,K1,M),
+	retract(max(_)),
+	assertz(max(M)),
+	fail;true.
 %k_restrict(P,K):-rstate(1,S1),count(P,S1,K).
 
 
