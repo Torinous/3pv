@@ -1,13 +1,13 @@
 /*
-   Модуль содержащий определения свойств сети и её элементов через
-   темпоральную логику.
-   Часть комплекса программ 3Pv
+	Модуль содержащий определения свойств сети и её элементов через
+	темпоральную логику.
+	Часть комплекса программ 3Pv
 */
 
 :- module(temporallogicproperties,
-	  [
-	   liveness/0
-	  ]).
+	[
+		liveness/0
+	]).
 
 /* Запросы с темпоральной логикой. */
 
@@ -16,7 +16,7 @@
 liveness:-
 	init(_),
 	transition(T),
-        not(implies(init,all(pot(enable(T)))),M),!,
+	not(implies(init,all(pot(enable(T)))),M),!,
 	fail.
 liveness.
 
@@ -28,24 +28,26 @@ live(T):-
 /*Мёртвость перехода*/
 dead(T):- init(S),implies(init,all(not(enable(T))),S).
 
-
 /*Мёртвость сети*/
-deadness:-init(S),transition(T),
-          not(implies(init,all(not(enable(T)))),S),
-          !,fail.
+deadness:-
+	init(S),
+	transition(T),
+	not(implies(init,all(not(enable(T)))),S),
+	!,fail.
 deadness.
 
 /*Потенциальная живость перехода*/
 potlive(T):-init(S),implies(init,pot(all(pot(enable(T)))),S).
 
-
 /*Потенциальная живость сети*/
 potliveness:-
 	init(S),
 	transition(_),
-        not(implies(init,pot(all(pot(enable(t))))),S),
-        !,fail.
-        potliveness.
-
+	not(implies(init,pot(all(pot(enable(t))))),S),
+	!,fail.
+	potliveness.
+	
 /*Детерминированность срабатывания перехода*/
-determ(T):-init(S),implies(init,all(implies(enable(T),pretilda(fired(T)))),S).
+determ(T):-
+	init(S),
+	implies(init,all(implies(enable(T),pretilda(fired(T)))),S).
