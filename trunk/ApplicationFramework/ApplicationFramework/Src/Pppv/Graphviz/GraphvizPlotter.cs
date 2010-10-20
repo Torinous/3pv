@@ -90,10 +90,8 @@ namespace Pppv.Graphviz
          string pngFile = Path.ChangeExtension(dstFile, "png");
          File.Move(dstFile, pngFile);
          Image image = new Bitmap(pngFile);
-         image.Dispose();
          File.Delete(srcFile);
          File.Delete(dstFile);
-         File.Delete(pngFile);
          return image;
       }
 

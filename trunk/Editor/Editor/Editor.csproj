@@ -9,10 +9,10 @@
     <AssemblyName>Editor</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <SourceAnalysisOverrideSettingsFile>F:\SVN\3pv\Editor\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <SourceAnalysisOverrideSettingsFile>F:\SVN\3pv\Editor\Editor\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <RunCodeAnalysis>True</RunCodeAnalysis>
+    <RunCodeAnalysis>False</RunCodeAnalysis>
     <RunSourceAnalysis>False</RunSourceAnalysis>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <NoStdLib>False</NoStdLib>
@@ -40,9 +40,9 @@
     <DebugType>Full</DebugType>
     <Optimize>False</Optimize>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <StartAction>Program</StartAction>
     <StartProgram>..\..\Range\Editor.exe</StartProgram>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputPath>bin\Release\</OutputPath>

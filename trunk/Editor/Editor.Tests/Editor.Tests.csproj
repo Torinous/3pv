@@ -9,7 +9,7 @@
     <AssemblyName>Editor.Tests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <SourceAnalysisOverrideSettingsFile>F:\SVN\3pv2\Editor.Tests\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <SourceAnalysisOverrideSettingsFile>F:\SVN\3pv\Editor\Editor.Tests\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <SignAssembly>True</SignAssembly>
     <DelaySign>False</DelaySign>
     <AssemblyOriginatorKeyMode>File</AssemblyOriginatorKeyMode>
@@ -23,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <PreBuildEvent>SubWCRev.exe ../../Properties ../../Properties/AssemblyInfo.in ../../Properties/AssemblyInfo.cs</PreBuildEvent>
+    <RunSourceAnalysis>False</RunSourceAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'x86' ">
     <PlatformTarget>x86</PlatformTarget>

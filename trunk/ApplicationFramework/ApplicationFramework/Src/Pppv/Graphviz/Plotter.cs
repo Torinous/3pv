@@ -10,9 +10,10 @@ namespace Pppv.Graphviz
 {
    public enum Plotter
    {
+      Neato,
       Dot,
-      Dotty,
-      Lefty,
-      Neato
+      Twopi,
+      Fdp,
+      Circo
    }
 }

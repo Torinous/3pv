@@ -24,11 +24,12 @@ namespace Pppv.Verificator
       private VerificatorStatusStrip statusStrip;
       private VerificatorMainMenuStrip menuStrip;
       private CommandToolStrip commonToolStrip;
-      private TabControl tabControl;
+      private VerificatorTabControl tabControl;
       private ToolStripContainer toolToolStripContainer;
 
       public VerificatorForm(PetriNetVerificator netVerificator)
       {
+         this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
          this.InitializeComponent();
          this.NetVerificator = netVerificator;
          this.NetVerificator.PostStatusMessage += this.PostStatusMessageHandler;
@@ -52,6 +53,11 @@ namespace Pppv.Verificator
          set { this.statusStrip = value; }
       }
 
+      public void ShowStateSpace(Image image)
+      {
+         this.tabControl.ShowStateSpace(image);
+      }
+
       protected override void OnClosed(EventArgs e)
       {
          this.NetVerificator.PostStatusMessage -= this.PostStatusMessageHandler;
@@ -69,7 +75,7 @@ namespace Pppv.Verificator
 
          this.statusStrip = new VerificatorStatusStrip();
 
-         this.tabControl = new TabControl();
+         this.tabControl = new VerificatorTabControl();
          this.toolToolStripContainer = new ToolStripContainer();
 
          this.toolToolStripContainer.ContentPanel.SuspendLayout();
@@ -83,6 +89,8 @@ namespace Pppv.Verificator
          this.statusStrip.Name = this.statusStrip.Text = "_statusStrip";
          this.statusStrip.Size = new System.Drawing.Size(599, 24);
          this.statusStrip.TabIndex = 1;
+
+         this.tabControl.Dock = DockStyle.Fill;
 
          this.commonToolStrip.AutoSize = true;
 

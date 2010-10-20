@@ -19,14 +19,16 @@ namespace Pppv.Graphviz
       {
          switch (plotter)
          {
-            case Plotter.Dot:
-               return "dot.exe";
-            case Plotter.Dotty:
-               return "dotty.exe";
-            case Plotter.Lefty:
-               return "lefty.exe";
             case Plotter.Neato:
                return "neato.exe";
+            case Plotter.Dot:
+               return "dot.exe";
+            case Plotter.Twopi:
+               return "twopi.exe";
+            case Plotter.Fdp:
+               return "fdp.exe";
+            case Plotter.Circo:
+               return "circo.exe";
             default:
                throw new PppvException("Invalid value for Plotter");
          }
