@@ -130,12 +130,12 @@
       }
 
       [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1308:NormalizeStringsToUppercase", Justification = "Синтасис Prolog обязывает")]
-      public string Precondition(INetElement inTransition)
+      public string Precondition(INetElement inputTransition)
       {
          StringBuilder text = new StringBuilder(100);
          foreach (Arc arc in this.Net.Arcs)
          {
-            if (arc.TargetId == inTransition.Id)
+            if (arc.TargetId == inputTransition.Id)
             {
                Place place = this.Net.GetElementById(arc.SourceId) as Place;
                foreach (Predicate predicate in arc.Cortege.List)

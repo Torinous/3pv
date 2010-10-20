@@ -9,7 +9,7 @@
     <AssemblyName>PppNet</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <SourceAnalysisOverrideSettingsFile>F:\SVN\3pv\PetriNet\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <SourceAnalysisOverrideSettingsFile>F:\SVN\3pv\PppNet\PppNet\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>PetriNet.snk</AssemblyOriginatorKeyFile>
     <DelaySign>False</DelaySign>

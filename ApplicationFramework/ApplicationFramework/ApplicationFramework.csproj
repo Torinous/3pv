@@ -61,18 +61,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Src\Pppv\ApplicationFramework\CommandButton.cs" />
+    <Compile Include="Src\Pppv\ApplicationFramework\CommandButton.Designer.cs">
+      <DependentUpon>CommandButton.cs</DependentUpon>
+    </Compile>
     <Compile Include="Src\Pppv\ApplicationFramework\Commands\Command.cs" />
     <Compile Include="Src\Pppv\ApplicationFramework\Commands\ICommand.cs" />
     <Compile Include="Src\Pppv\ApplicationFramework\Commands\IInterfaceCommand.cs" />
     <Compile Include="Src\Pppv\ApplicationFramework\Commands\InterfaceCommand.cs" />
     <Compile Include="Src\Pppv\ApplicationFramework\Commands\MacroCommand.cs" />
     <Compile Include="Src\Pppv\ApplicationFramework\Commands\NullCommand.cs" />
-    <Compile Include="Src\Pppv\ApplicationFramework\EditorToolStrip.cs" />
-    <Compile Include="Src\Pppv\ApplicationFramework\EditorToolStripButton.cs" />
-    <Compile Include="Src\Pppv\ApplicationFramework\EditorToolStripMenuItem.cs" />
+    <Compile Include="Src\Pppv\ApplicationFramework\CommandToolStrip.cs" />
+    <Compile Include="Src\Pppv\ApplicationFramework\CommandEditorToolStripButton.cs" />
+    <Compile Include="Src\Pppv\ApplicationFramework\CommandToolStripMenuItem.cs" />
     <Compile Include="Src\Pppv\ApplicationFramework\PppvException.cs" />
     <Compile Include="Src\Pppv\ApplicationFramework\RefreshingListBox.cs" />
-    <Compile Include="Src\Pppv\Utils\Class1.cs" />
+    <Compile Include="Src\Pppv\Graphviz\NodeShape.cs" />
+    <Compile Include="Src\Pppv\Graphviz\NodeShapeFabric.cs" />
+    <Compile Include="Src\Pppv\Utils\Configuration.cs" />
     <Compile Include="Src\Pppv\Utils\CommandLineArguments.cs" />
     <Compile Include="Src\Pppv\Utils\DebugAssistant.cs" />
     <Compile Include="Src\Pppv\Utils\NativeMethods.cs" />
@@ -94,6 +100,11 @@
     <Folder Include="Src\Pppv\ApplicationFramework" />
     <Folder Include="Src\Pppv\Utils" />
     <Folder Include="Src\Pppv\Graphviz" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Src\Pppv\ApplicationFramework\CommandButton.resx">
+      <DependentUpon>CommandButton.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>

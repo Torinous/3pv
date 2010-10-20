@@ -112,11 +112,11 @@
          }
       }
 
-      public bool HaveArcBetween(INetElement fromElement, INetElement toElement)
+      public bool HaveArcBetween(INetElement startElement, INetElement endElement)
       {
          for (int i = 0; i < this.Arcs.Count; ++i)
          {
-            if ((this.Arcs[i] as Arc).SourceId == fromElement.Id && (this.Arcs[i] as Arc).TargetId == toElement.Id)
+            if ((this.Arcs[i] as Arc).SourceId == startElement.Id && (this.Arcs[i] as Arc).TargetId == endElement.Id)
             {
                return true;
             }

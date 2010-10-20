@@ -16,6 +16,7 @@ namespace Pppv.Verificator.Commands
    using System.Windows.Forms;
 
    using Pppv.ApplicationFramework.Commands;
+   using Pppv.Graphviz;
    using Pppv.Net;
 
    public class ConstructStateSpaceCommand : InterfaceCommand
@@ -32,6 +33,7 @@ namespace Pppv.Verificator.Commands
       {
          PetriNetVerificator verificator = PetriNetVerificator.Instance;
          verificator.CalculateStateSpace();
+         new PlotStateSpaceImage().Execute();
       }
 
       public override void Unexecute()

@@ -27,10 +27,19 @@ namespace Pppv.Verificator
       private static PetriNetVerificator instance;
       private PetriNet net;
       private VerificatorForm mainForm;
+      private Configuration<VerificatorConfigurationData> configuration;
 
       private PetriNetVerificator()
       {
+         this.configuration = Configuration<VerificatorConfigurationData>.Instance;
+         this.configuration.SourceFile = Environment.CurrentDirectory + "\\Verificator.conf";
+         this.configuration.Load();
          this.InitPrologEngineIfNeed();
+      }
+
+      ~PetriNetVerificator()
+      {
+         this.configuration.Save();
       }
 
       public event EventHandler<PostStatusMessageArgs> PostStatusMessage;
