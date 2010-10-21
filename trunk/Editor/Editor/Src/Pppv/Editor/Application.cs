@@ -10,6 +10,8 @@
 	using System.Threading;
 	using System.Windows.Forms;
 
+	using Microsoft.SqlServer.MessageBox;
+	
 	using Pppv.Editor.Commands;
 	using Pppv.Editor.Tools;
 	using Pppv.Net;
@@ -69,21 +71,24 @@
 
 		private void InitializeComponent()
 		{
-			this.mainFormInst = new Editor.MainForm();
+			this.mainFormInst = new MainForm();
 			this.mainFormInst.Closed += this.MainFormCloseHandler;
 		}
 
 		private void MainFormCloseHandler(object sender, EventArgs e)
 		{
-			ExitThread();
+			this.ExitThread();
 		}
 
 		private class ThreadExceptionHandler
 		{
 			public void ApplicationThreadException(object sender, ThreadExceptionEventArgs e)
 			{
-				// TODO: Тут бы надо написать хорошую форму для показа Exceptions
-				RtlAwareMessageBox.Show(null, e.Exception.Message, "An exception occurred:", MessageBoxButtons.OK, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, (MessageBoxOptions)0);
+				string str = "Необработанное исключение в потоке. Что-то пошло не так. ;(";
+				ApplicationException exTop = new ApplicationException(str, e.Exception);
+				exTop.Source = "EditorApplication";
+				ExceptionMessageBox box = new ExceptionMessageBox(exTop);
+				box.Show(null);
 			}
 		}
 	}

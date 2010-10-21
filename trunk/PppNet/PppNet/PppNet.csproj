@@ -83,7 +83,6 @@
     <Compile Include="Src\Pppv\Net\ITransition.cs" />
     <Compile Include="Src\Pppv\Net\NetElement.cs" />
     <Compile Include="Src\Pppv\Net\NetElementEnumerator.cs" />
-    <Compile Include="Src\Pppv\Net\NetException.cs" />
     <Compile Include="Src\Pppv\Net\ParentNetChangeEventArgs.cs" />
     <Compile Include="Src\Pppv\Net\PenCapPlace.cs" />
     <Compile Include="Src\Pppv\Net\PetriNet.cs" />
@@ -94,6 +93,12 @@
     <Compile Include="Src\Pppv\Net\Token.cs" />
     <Compile Include="Src\Pppv\Net\TokensList.cs" />
     <Compile Include="Src\Pppv\Net\Transition.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ApplicationFramework\ApplicationFramework\ApplicationFramework.csproj">
+      <Project>{D29F492D-9E5A-4759-849C-8ADD0F13DA84}</Project>
+      <Name>ApplicationFramework</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>

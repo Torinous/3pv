@@ -30,14 +30,14 @@
 
          if (Element is TransitionShape)
          {
-            Form f = new GuardEditForm((ITransition)Element);
+            Form f = new TransitionEditForm((ITransition)Element);
             f.ShowDialog(mainForm);
             f.Dispose();
          }
 
          if (Element is PlaceShape)
          {
-            Form f = new PlaceEditForm((IPlace)Element);
+            Form f = new PlaceEditForm2((IPlace)Element);
             f.ShowDialog(mainForm);
             f.Dispose();
          }

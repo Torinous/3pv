@@ -62,7 +62,7 @@
             text.AppendFormat(
                               CultureInfo.InvariantCulture,
                               "arc(S0,{0},S2):-statespace:remove({1},S0,S1),{2}statespace:insert({3},S1,S2).",
-                              tr.Name.ToLower(CultureInfo.InvariantCulture),
+                              tr.Name,
                               this.Precondition(tr),
                               (!String.IsNullOrEmpty(tr.GuardFunction) ? tr.GuardFunction + "," : String.Empty),
                               this.Postcondition(tr));
@@ -89,7 +89,7 @@
          {
             foreach (Token token in pl.Tokens)
             {
-               text.AppendFormat("{0}({1}),", pl.Name.ToLower(CultureInfo.InvariantCulture), token.Text);
+               text.AppendFormat("{0}({1}),", pl.Name, token.Text);
             }
          }
 
@@ -109,7 +109,7 @@
          StringBuilder text = new StringBuilder(400);
          foreach (Transition transition in this.Net.Transitions)
          {
-            text.AppendFormat("transition({0}).", transition.Name.ToLower(CultureInfo.InvariantCulture));
+            text.AppendFormat("transition({0}).", transition.Name);
             text.AppendLine();
          }
 
@@ -122,7 +122,7 @@
          StringBuilder text = new StringBuilder(400);
          foreach (Place place in this.Net.Places)
          {
-            text.AppendFormat("place({0}).", place.Name.ToLower(CultureInfo.InvariantCulture));
+            text.AppendFormat("place({0}).", place.Name);
             text.AppendLine();
          }
 
@@ -140,7 +140,7 @@
                Place place = this.Net.GetElementById(arc.SourceId) as Place;
                foreach (Predicate predicate in arc.Cortege.List)
                {
-                  text.AppendFormat("{0}({1}),", place.Name.ToLower(CultureInfo.InvariantCulture), predicate);
+                  text.AppendFormat("{0}({1}),", place.Name, predicate);
                }
             }
          }
@@ -169,7 +169,7 @@
                   {
                      foreach (Predicate predicate in arc.Cortege.List)
                      {
-                        text.AppendFormat("{0}({1}),", place.Name.ToLower(CultureInfo.InvariantCulture), predicate);
+                        text.AppendFormat("{0}({1}),", place.Name, predicate);
                      }
                   }
                }

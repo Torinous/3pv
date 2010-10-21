@@ -113,9 +113,6 @@
          {
             this.listBoxPredicates.Items.RemoveAt(this.listBoxPredicates.SelectedIndex);
          }
-         catch (NetException)
-         {
-         }
          catch (PppvException)
          {
          }
