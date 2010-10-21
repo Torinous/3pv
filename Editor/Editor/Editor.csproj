@@ -54,6 +54,9 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
   <ItemGroup>
+    <Reference Include="Microsoft.ExceptionMessageBox">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -107,12 +110,19 @@
     <Compile Include="Src\PPPV\Editor\CortegeEditControl.cs" />
     <Compile Include="Src\PPPV\Editor\EditorContextToolStripMenuItem.cs" />
     <Compile Include="Src\PPPV\Editor\EditorToolStrip.cs" />
-    <Compile Include="Src\PPPV\Editor\GuardEditForm.cs" />
     <Compile Include="Src\PPPV\Editor\MainForm.cs" />
     <Compile Include="Src\PPPV\Editor\EditorMainMenuStrip.cs" />
     <Compile Include="Src\PPPV\Editor\NetCanvas.cs" />
     <Compile Include="Src\PPPV\Editor\PetriNetGraphical.cs" />
+    <Compile Include="Src\Pppv\Editor\PlaceEditControl.cs" />
+    <Compile Include="Src\Pppv\Editor\PlaceEditControl.Designer.cs">
+      <DependentUpon>PlaceEditControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Src\PPPV\Editor\PlaceEditForm.cs" />
+    <Compile Include="Src\Pppv\Editor\PlaceEditForm2.cs" />
+    <Compile Include="Src\Pppv\Editor\PlaceEditForm2.Designer.cs">
+      <DependentUpon>PlaceEditForm2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Src\PPPV\Editor\RegionSelectionEventArgs.cs" />
     <Compile Include="Src\PPPV\Editor\RemoveTabPageEventArgs.cs" />
     <Compile Include="Src\PPPV\Editor\SaveNetEventArgs.cs" />
@@ -128,6 +138,10 @@
     <Compile Include="Src\PPPV\Editor\TabControlForNets.cs" />
     <Compile Include="Src\PPPV\Editor\TabPageForNet.cs" />
     <Compile Include="Src\PPPV\Editor\TokensEditControl.cs" />
+    <Compile Include="Src\Pppv\Editor\TokensEditControl2.cs" />
+    <Compile Include="Src\Pppv\Editor\TokensEditControl2.Designer.cs">
+      <DependentUpon>TokensEditControl2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Src\PPPV\Editor\Tools\AnnotationTool.cs" />
     <Compile Include="Src\PPPV\Editor\Tools\ArcTool.cs" />
     <Compile Include="Src\PPPV\Editor\Tools\InhibitorArcTool.cs" />
@@ -135,6 +149,14 @@
     <Compile Include="Src\PPPV\Editor\Tools\PointerTool.cs" />
     <Compile Include="Src\PPPV\Editor\Tools\Tool.cs" />
     <Compile Include="Src\PPPV\Editor\Tools\TransitionTool.cs" />
+    <Compile Include="Src\Pppv\Editor\TransitionEditControl.cs" />
+    <Compile Include="Src\Pppv\Editor\TransitionEditControl.Designer.cs">
+      <DependentUpon>TransitionEditControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Src\Pppv\Editor\TransitionEditForm.cs" />
+    <Compile Include="Src\Pppv\Editor\TransitionEditForm.Designer.cs">
+      <DependentUpon>TransitionEditForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Resources\About.png" />
     <EmbeddedResource Include="Resources\Annotation.png" />
     <EmbeddedResource Include="Resources\Arc.png" />
@@ -159,6 +181,15 @@
     <EmbeddedResource Include="Resources\Zoom in.png" />
     <EmbeddedResource Include="Resources\Zoom out.png" />
     <EmbeddedResource Include="Resources\Zoom.png" />
+    <EmbeddedResource Include="Src\Pppv\Editor\PlaceEditForm2.resx">
+      <DependentUpon>PlaceEditForm2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Src\Pppv\Editor\TokensEditControl2.resx">
+      <DependentUpon>TokensEditControl2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Src\Pppv\Editor\TransitionEditForm.resx">
+      <DependentUpon>TransitionEditForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config" />
     <None Include="app.manifest" />
     <None Include="Properties\AssemblyInfo.in" />
