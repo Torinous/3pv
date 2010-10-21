@@ -118,7 +118,6 @@
     <Compile Include="Src\Pppv\Editor\PlaceEditControl.Designer.cs">
       <DependentUpon>PlaceEditControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Src\PPPV\Editor\PlaceEditForm.cs" />
     <Compile Include="Src\Pppv\Editor\PlaceEditForm2.cs" />
     <Compile Include="Src\Pppv\Editor\PlaceEditForm2.Designer.cs">
       <DependentUpon>PlaceEditForm2.cs</DependentUpon>
@@ -137,7 +136,6 @@
     <Compile Include="Src\PPPV\Editor\Shapes\TransitionShape.cs" />
     <Compile Include="Src\PPPV\Editor\TabControlForNets.cs" />
     <Compile Include="Src\PPPV\Editor\TabPageForNet.cs" />
-    <Compile Include="Src\PPPV\Editor\TokensEditControl.cs" />
     <Compile Include="Src\Pppv\Editor\TokensEditControl2.cs" />
     <Compile Include="Src\Pppv\Editor\TokensEditControl2.Designer.cs">
       <DependentUpon>TokensEditControl2.cs</DependentUpon>
