@@ -8,7 +8,7 @@
  */
 namespace Pppv.Editor
 {
-	partial class PlaceEditForm2
+	partial class PlaceEditForm
 	{
 		/// <summary>
 		/// Designer variable used to keep track of non-visual components.

@@ -15,15 +15,15 @@ namespace Pppv.Editor
 	
 	using Pppv.Net;
 
-	public partial class PlaceEditForm2 : Form
+	public partial class PlaceEditForm : Form
 	{
-		public PlaceEditForm2(IPlace place)
+		public PlaceEditForm(IPlace place)
 		{
-			InitializeComponent();
+			this.InitializeComponent();
 			this.placeEditControl1.Place = place;
 		}
 		
-		void OKbuttonClick(object sender, EventArgs e)
+		private void OKbuttonClick(object sender, EventArgs e)
 		{
 			this.placeEditControl1.ChangesApproved();
 		}

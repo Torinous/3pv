@@ -22,7 +22,7 @@ namespace Pppv.Editor
 		
 		public PlaceEditControl()
 		{
-			InitializeComponent();
+			this.InitializeComponent();
 		}
 		
 		public IPlace Place
@@ -66,29 +66,29 @@ namespace Pppv.Editor
 			this.tokensEditControl.ListTokens = null;
 		}
 
-		private bool isPlaceDataInvalid()
+		private bool IsPlaceDataInvalid()
 		{
-			bool isInvalid = false;
+			bool invalid = false;
 			if (this.Place != null)
 			{
 				if (Char.IsUpper(this.nameTextBox.Text[0]))
 				{
-					errorProvider.SetError(this.nameTextBox, "Согласно синтаксису Prolog`а, терм не может начинаться с большой буквы");
-					isInvalid = true;
+					this.errorProvider.SetError(this.nameTextBox, "Согласно синтаксису Prolog`а, терм не может начинаться с большой буквы");
+					invalid = true;
 				}
 				else
 				{
-					errorProvider.SetError(this.nameTextBox, "");
-					isInvalid = false;
+					this.errorProvider.SetError(this.nameTextBox, String.Empty);
+					invalid = false;
 				}
 			}
 			
-			return isInvalid;
+			return invalid;
 		}
 		
-		private void nameTextBoxValidating(object sender, CancelEventArgs e)
+		private void NameTextBoxValidating(object sender, CancelEventArgs e)
 		{
-			e.Cancel = isPlaceDataInvalid();
+			e.Cancel = this.IsPlaceDataInvalid();
 		}
 	}
 }

@@ -25,7 +25,7 @@ namespace Pppv.Verificator.Commands
          this.Name = "Prolog интерпретатор";
          this.Description = "Запустить Prolog интерпретатор";
          this.ShortcutKeys = Keys.Control | Keys.Shift | Keys.P;
-         this.Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Exit.png"), true);
+         this.Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.swiprolog.ico"), true);
       }
 
       public override void Execute()

@@ -72,6 +72,7 @@ xcopy .\Prolog\*  ..\..\..\..\Range\Prolog\  /y</PostBuildEvent>
     <Compile Include="Src\Pppv\Verificator\Commands\OpenNetCommand.cs" />
     <Compile Include="Src\Pppv\Verificator\Commands\PlotStateSpaceImage.cs" />
     <Compile Include="Src\Pppv\Verificator\Commands\QuitCommand.cs" />
+    <Compile Include="Src\Pppv\Verificator\Commands\SaveStateSpaceImage.cs" />
     <Compile Include="Src\Pppv\Verificator\Commands\StartPrologInterfaceCommand.cs" />
     <Compile Include="Src\Pppv\Verificator\PostStatusMessageArgs.cs" />
     <Compile Include="Src\Pppv\Verificator\SizeMode.cs" />
@@ -105,11 +106,14 @@ xcopy .\Prolog\*  ..\..\..\..\Range\Prolog\  /y</PostBuildEvent>
     <None Include="Properties\AssemblyInfo.in" />
     <EmbeddedResource Include="Resources\Exit.png" />
     <EmbeddedResource Include="Resources\Open.png" />
+    <EmbeddedResource Include="Resources\Export.png" />
     <None Include="Resources\Prolog\properties.pl" />
     <None Include="Resources\Prolog\report_kernel.pl" />
     <None Include="Resources\Prolog\statespace.pl" />
     <None Include="Resources\Prolog\temporallogic.pl" />
     <None Include="Resources\Prolog\temporalproperties.pl" />
+    <EmbeddedResource Include="Resources\swiprolog.ico" />
+    <EmbeddedResource Include="Resources\StateSpace.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources" />

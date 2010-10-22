@@ -85,9 +85,9 @@
 			public void ApplicationThreadException(object sender, ThreadExceptionEventArgs e)
 			{
 				string str = "Необработанное исключение в потоке. Что-то пошло не так. ;(";
-				ApplicationException exTop = new ApplicationException(str, e.Exception);
-				exTop.Source = "EditorApplication";
-				ExceptionMessageBox box = new ExceptionMessageBox(exTop);
+				ApplicationException newException = new ApplicationException(str, e.Exception);
+				newException.Source = "EditorApplication";
+				ExceptionMessageBox box = new ExceptionMessageBox(newException);
 				box.Show(null);
 			}
 		}
