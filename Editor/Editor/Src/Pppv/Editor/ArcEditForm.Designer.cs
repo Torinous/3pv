@@ -8,7 +8,7 @@
  */
 namespace Pppv.Editor
 {
-	partial class ArcEditForm2
+	partial class ArcEditForm
 	{
 		/// <summary>
 		/// Designer variable used to keep track of non-visual components.

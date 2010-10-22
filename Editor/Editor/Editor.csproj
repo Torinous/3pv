@@ -81,9 +81,9 @@
     <Compile Include="Src\Pppv\Editor\ArcEditControl.Designer.cs">
       <DependentUpon>ArcEditControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Src\Pppv\Editor\ArcEditForm2.cs" />
-    <Compile Include="Src\Pppv\Editor\ArcEditForm2.Designer.cs">
-      <DependentUpon>ArcEditForm2.cs</DependentUpon>
+    <Compile Include="Src\Pppv\Editor\ArcEditForm.cs" />
+    <Compile Include="Src\Pppv\Editor\ArcEditForm.Designer.cs">
+      <DependentUpon>ArcEditForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Src\PPPV\Editor\CanvasMouseEventArgs.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\AboutCommand.cs" />
@@ -114,9 +114,9 @@
     <Compile Include="Src\PPPV\Editor\Commands\UndoCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\ZoomInCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\ZoomOutCommand.cs" />
-    <Compile Include="Src\Pppv\Editor\CortegeEditControl2.cs" />
-    <Compile Include="Src\Pppv\Editor\CortegeEditControl2.Designer.cs">
-      <DependentUpon>CortegeEditControl2.cs</DependentUpon>
+    <Compile Include="Src\Pppv\Editor\CortegeEditControl.cs" />
+    <Compile Include="Src\Pppv\Editor\CortegeEditControl.Designer.cs">
+      <DependentUpon>CortegeEditControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Src\PPPV\Editor\EditorContextToolStripMenuItem.cs" />
     <Compile Include="Src\PPPV\Editor\EditorToolStrip.cs" />
@@ -192,11 +192,11 @@
     <EmbeddedResource Include="Src\Pppv\Editor\ArcEditControl.resx">
       <DependentUpon>ArcEditControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Src\Pppv\Editor\ArcEditForm2.resx">
-      <DependentUpon>ArcEditForm2.cs</DependentUpon>
+    <EmbeddedResource Include="Src\Pppv\Editor\ArcEditForm.resx">
+      <DependentUpon>ArcEditForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Src\Pppv\Editor\CortegeEditControl2.resx">
-      <DependentUpon>CortegeEditControl2.cs</DependentUpon>
+    <EmbeddedResource Include="Src\Pppv\Editor\CortegeEditControl.resx">
+      <DependentUpon>CortegeEditControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Src\Pppv\Editor\PlaceEditForm.resx">
       <DependentUpon>PlaceEditForm.cs</DependentUpon>
