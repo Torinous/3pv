@@ -9,35 +9,35 @@
 
 namespace Pppv.Verificator.Commands
 {
-   using System;
-   using System.Diagnostics;
-   using System.Drawing;
-   using System.Reflection;
-   using System.Windows.Forms;
+	using System;
+	using System.Diagnostics;
+	using System.Drawing;
+	using System.Reflection;
+	using System.Windows.Forms;
 
-   using Pppv.ApplicationFramework.Commands;
-   using Pppv.Graphviz;
-   using Pppv.Net;
+	using Pppv.ApplicationFramework.Commands;
+	using Pppv.Graphviz;
+	using Pppv.Net;
 
-   public class ConstructStateSpaceCommand : InterfaceCommand
-   {
-      public ConstructStateSpaceCommand()
-      {
-         this.Name = "Пространство состояний";
-         this.Description = "Построить пространство состояний сети";
-         this.ShortcutKeys = Keys.Control | Keys.Shift | Keys.S;
-         this.Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Exit.png"), true);
-      }
+	public class ConstructStateSpaceCommand : InterfaceCommand
+	{
+		public ConstructStateSpaceCommand()
+		{
+			this.Name = "Пространство состояний";
+			this.Description = "Построить пространство состояний сети";
+			this.ShortcutKeys = Keys.Control | Keys.Shift | Keys.S;
+			this.Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.StateSpace.png"), true);
+		}
 
-      public override void Execute()
-      {
-         PetriNetVerificator verificator = PetriNetVerificator.Instance;
-         verificator.CalculateStateSpace();
-         new PlotStateSpaceImage().Execute();
-      }
+		public override void Execute()
+		{
+			PetriNetVerificator verificator = PetriNetVerificator.Instance;
+			verificator.CalculateStateSpace();
+			new PlotStateSpaceImage().Execute();
+		}
 
-      public override void Unexecute()
-      {
-      }
-   }
+		public override void Unexecute()
+		{
+		}
+	}
 }

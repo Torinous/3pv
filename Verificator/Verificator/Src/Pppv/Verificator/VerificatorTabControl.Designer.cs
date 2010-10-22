@@ -38,8 +38,8 @@ namespace Pppv.Verificator
       {
       	this.tabControl1 = new System.Windows.Forms.TabControl();
       	this.tabPageWithStateSpace = new System.Windows.Forms.TabPage();
-      	this.tabPage1 = new System.Windows.Forms.TabPage();
       	this.stateSpaceViewer1 = new Pppv.Verificator.StateSpaceViewer();
+      	this.tabPage1 = new System.Windows.Forms.TabPage();
       	this.tabControl1.SuspendLayout();
       	this.tabPageWithStateSpace.SuspendLayout();
       	this.SuspendLayout();
@@ -67,6 +67,14 @@ namespace Pppv.Verificator
       	this.tabPageWithStateSpace.Text = "Пространство состояний";
       	this.tabPageWithStateSpace.UseVisualStyleBackColor = true;
       	// 
+      	// stateSpaceViewer1
+      	// 
+      	this.stateSpaceViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
+      	this.stateSpaceViewer1.Location = new System.Drawing.Point(3, 3);
+      	this.stateSpaceViewer1.Name = "stateSpaceViewer1";
+      	this.stateSpaceViewer1.Size = new System.Drawing.Size(520, 377);
+      	this.stateSpaceViewer1.TabIndex = 0;
+      	// 
       	// tabPage1
       	// 
       	this.tabPage1.Location = new System.Drawing.Point(4, 22);
@@ -76,14 +84,6 @@ namespace Pppv.Verificator
       	this.tabPage1.TabIndex = 1;
       	this.tabPage1.Text = "tabPage1";
       	this.tabPage1.UseVisualStyleBackColor = true;
-      	// 
-      	// stateSpaceViewer1
-      	// 
-      	this.stateSpaceViewer1.Dock = System.Windows.Forms.DockStyle.Fill;
-      	this.stateSpaceViewer1.Location = new System.Drawing.Point(3, 3);
-      	this.stateSpaceViewer1.Name = "stateSpaceViewer1";
-      	this.stateSpaceViewer1.Size = new System.Drawing.Size(520, 377);
-      	this.stateSpaceViewer1.TabIndex = 0;
       	// 
       	// VerificatorTabControl
       	// 
@@ -97,9 +97,9 @@ namespace Pppv.Verificator
       	this.tabPageWithStateSpace.ResumeLayout(false);
       	this.ResumeLayout(false);
       }
-      private Pppv.Verificator.StateSpaceViewer stateSpaceViewer1;
+      public Pppv.Verificator.StateSpaceViewer stateSpaceViewer1;
       private System.Windows.Forms.TabPage tabPage1;
-      private System.Windows.Forms.TabPage tabPageWithStateSpace;
+      public System.Windows.Forms.TabPage tabPageWithStateSpace;
       private System.Windows.Forms.TabControl tabControl1;
    }
 }

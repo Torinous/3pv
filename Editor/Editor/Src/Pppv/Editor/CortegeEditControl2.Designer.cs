@@ -1,14 +1,14 @@
 ﻿/*
  * Created by SharpDevelop.
  * User: Torinous
- * Date: 21.10.2010
- * Time: 10:36
+ * Date: 22.10.2010
+ * Time: 15:21
  *
  *
  */
 namespace Pppv.Editor
 {
-	partial class TokensEditControl2
+	partial class CortegeEditControl2
 	{
 		/// <summary>
 		/// Designer variable used to keep track of non-visual components.
@@ -39,8 +39,8 @@ namespace Pppv.Editor
 			this.groupBox = new System.Windows.Forms.GroupBox();
 			this.buttonDelete = new System.Windows.Forms.Button();
 			this.buttonAdd = new System.Windows.Forms.Button();
-			this.textBoxCurrentToken = new System.Windows.Forms.TextBox();
-			this.listBoxTokens = new Pppv.ApplicationFramework.RefreshingListBox();
+			this.textBoxCurrentPredicate = new System.Windows.Forms.TextBox();
+			this.listBoxPredicates = new Pppv.ApplicationFramework.RefreshingListBox();
 			this.groupBox.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -48,21 +48,20 @@ namespace Pppv.Editor
 			// 
 			this.groupBox.Controls.Add(this.buttonDelete);
 			this.groupBox.Controls.Add(this.buttonAdd);
-			this.groupBox.Controls.Add(this.textBoxCurrentToken);
-			this.groupBox.Controls.Add(this.listBoxTokens);
-			this.groupBox.Location = new System.Drawing.Point(3, 3);
+			this.groupBox.Controls.Add(this.textBoxCurrentPredicate);
+			this.groupBox.Controls.Add(this.listBoxPredicates);
+			this.groupBox.Location = new System.Drawing.Point(9, 7);
 			this.groupBox.Name = "groupBox";
-			this.groupBox.Size = new System.Drawing.Size(417, 227);
+			this.groupBox.Size = new System.Drawing.Size(436, 277);
 			this.groupBox.TabIndex = 0;
 			this.groupBox.TabStop = false;
 			this.groupBox.Text = "groupBox1";
 			// 
 			// buttonDelete
 			// 
-			this.buttonDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.buttonDelete.Location = new System.Drawing.Point(185, 48);
+			this.buttonDelete.Location = new System.Drawing.Point(179, 48);
 			this.buttonDelete.Name = "buttonDelete";
-			this.buttonDelete.Size = new System.Drawing.Size(56, 23);
+			this.buttonDelete.Size = new System.Drawing.Size(75, 23);
 			this.buttonDelete.TabIndex = 3;
 			this.buttonDelete.Text = "-";
 			this.buttonDelete.UseVisualStyleBackColor = true;
@@ -70,50 +69,48 @@ namespace Pppv.Editor
 			// 
 			// buttonAdd
 			// 
-			this.buttonAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			this.buttonAdd.Location = new System.Drawing.Point(185, 19);
+			this.buttonAdd.Location = new System.Drawing.Point(179, 19);
 			this.buttonAdd.Name = "buttonAdd";
-			this.buttonAdd.Size = new System.Drawing.Size(56, 23);
+			this.buttonAdd.Size = new System.Drawing.Size(75, 23);
 			this.buttonAdd.TabIndex = 2;
 			this.buttonAdd.Text = "+";
 			this.buttonAdd.UseVisualStyleBackColor = true;
 			this.buttonAdd.Click += new System.EventHandler(this.ButtonAddClick);
 			// 
-			// textBoxCurrentToken
+			// textBoxCurrentPredicate
 			// 
-			this.textBoxCurrentToken.AcceptsReturn = true;
-			this.textBoxCurrentToken.Enabled = false;
-			this.textBoxCurrentToken.Location = new System.Drawing.Point(247, 19);
-			this.textBoxCurrentToken.Multiline = true;
-			this.textBoxCurrentToken.Name = "textBoxCurrentToken";
-			this.textBoxCurrentToken.Size = new System.Drawing.Size(164, 199);
-			this.textBoxCurrentToken.TabIndex = 1;
-			this.textBoxCurrentToken.TextChanged += new System.EventHandler(this.TextBoxCurrentTokenTextChanged);
+			this.textBoxCurrentPredicate.Enabled = false;
+			this.textBoxCurrentPredicate.Location = new System.Drawing.Point(260, 19);
+			this.textBoxCurrentPredicate.Multiline = true;
+			this.textBoxCurrentPredicate.Name = "textBoxCurrentPredicate";
+			this.textBoxCurrentPredicate.Size = new System.Drawing.Size(170, 251);
+			this.textBoxCurrentPredicate.TabIndex = 1;
+			this.textBoxCurrentPredicate.TextChanged += new System.EventHandler(this.TextBoxCurrentPredicateTextChanged);
 			// 
-			// listBoxTokens
+			// listBoxPredicates
 			// 
-			this.listBoxTokens.FormattingEnabled = true;
-			this.listBoxTokens.Location = new System.Drawing.Point(6, 19);
-			this.listBoxTokens.Name = "listBoxTokens";
-			this.listBoxTokens.Size = new System.Drawing.Size(173, 199);
-			this.listBoxTokens.TabIndex = 0;
-			this.listBoxTokens.SelectedIndexChanged += new System.EventHandler(this.ListBoxTokensSelectedIndexChanged);
+			this.listBoxPredicates.FormattingEnabled = true;
+			this.listBoxPredicates.Location = new System.Drawing.Point(6, 19);
+			this.listBoxPredicates.Name = "listBoxPredicates";
+			this.listBoxPredicates.Size = new System.Drawing.Size(167, 251);
+			this.listBoxPredicates.TabIndex = 0;
+			this.listBoxPredicates.SelectedIndexChanged += new System.EventHandler(this.ListBoxPredicatesSelectedIndexChanged);
 			// 
-			// TokensEditControl2
+			// CortegeEditControl2
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.groupBox);
-			this.Name = "TokensEditControl2";
-			this.Size = new System.Drawing.Size(421, 233);
+			this.Name = "CortegeEditControl2";
+			this.Size = new System.Drawing.Size(448, 287);
 			this.groupBox.ResumeLayout(false);
 			this.groupBox.PerformLayout();
 			this.ResumeLayout(false);
 		}
 		private System.Windows.Forms.GroupBox groupBox;
+		private Pppv.ApplicationFramework.RefreshingListBox listBoxPredicates;
+		private System.Windows.Forms.TextBox textBoxCurrentPredicate;
 		private System.Windows.Forms.Button buttonAdd;
 		private System.Windows.Forms.Button buttonDelete;
-		private System.Windows.Forms.TextBox textBoxCurrentToken;
-		private Pppv.ApplicationFramework.RefreshingListBox listBoxTokens;
 	}
 }

@@ -106,7 +106,7 @@
             this.Id = "P" + number;
             if (String.IsNullOrEmpty(this.Name))
             {
-               this.Name = this.Id;
+               this.Name = this.Id.ToLower(CultureInfo.InvariantCulture);
             }
          }
       }

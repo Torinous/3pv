@@ -19,7 +19,7 @@ namespace Pppv.Verificator.Commands
    using Pppv.Net;
    using Pppv.Utils;
 
-   public class PlotStateSpaceImage : Command
+   public class PlotStateSpaceImage : InterfaceCommand
    {
       private Plotter plotterType;
 
@@ -27,6 +27,7 @@ namespace Pppv.Verificator.Commands
       {
          VerificatorConfigurationData config = Configuration<VerificatorConfigurationData>.Instance.Data;
          this.Name = "Изображение пространства состояний";
+         this.Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.StateSpace.png"), true);
          this.PlotterType = config.DefaultPlotter;
       }
 

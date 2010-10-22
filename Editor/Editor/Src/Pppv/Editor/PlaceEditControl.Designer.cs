@@ -38,7 +38,7 @@ namespace Pppv.Editor
 		{
 			this.components = new System.ComponentModel.Container();
 			this.groupBox = new System.Windows.Forms.GroupBox();
-			this.tokensEditControl = new Pppv.Editor.TokensEditControl2();
+			this.tokensEditControl = new Pppv.Editor.TokensEditControl();
 			this.nameTextBox = new System.Windows.Forms.TextBox();
 			this.idTextBox = new System.Windows.Forms.TextBox();
 			this.label2 = new System.Windows.Forms.Label();
@@ -76,7 +76,7 @@ namespace Pppv.Editor
 			this.nameTextBox.Name = "nameTextBox";
 			this.nameTextBox.Size = new System.Drawing.Size(297, 20);
 			this.nameTextBox.TabIndex = 3;
-			this.nameTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.nameTextBoxValidating);
+			this.nameTextBox.Validating += new System.ComponentModel.CancelEventHandler(this.NameTextBoxValidating);
 			// 
 			// idTextBox
 			// 
@@ -118,7 +118,7 @@ namespace Pppv.Editor
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.ResumeLayout(false);
 		}
-		private Pppv.Editor.TokensEditControl2 tokensEditControl;
+		private Pppv.Editor.TokensEditControl tokensEditControl;
 		private System.Windows.Forms.ErrorProvider errorProvider;
 		private System.Windows.Forms.TextBox nameTextBox;
 		private System.Windows.Forms.TextBox idTextBox;

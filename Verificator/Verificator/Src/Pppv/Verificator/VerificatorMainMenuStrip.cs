@@ -42,6 +42,7 @@ namespace Pppv.Verificator
       {
          this.toolStripMenuFile = new CommandToolStripMenuItem();
          this.toolStripMenuOpen = new CommandToolStripMenuItem(new OpenNetCommand());
+         this.toolStripMenuOpen = new CommandToolStripMenuItem(new SaveStateSpaceImageCommand());
          this.toolStripMenuExit = new CommandToolStripMenuItem(new QuitCommand());
 
          this.toolStripMenuAnalize = new CommandToolStripMenuItem();

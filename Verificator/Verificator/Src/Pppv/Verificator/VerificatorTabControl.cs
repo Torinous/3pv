@@ -21,6 +21,11 @@ namespace Pppv.Verificator
 			this.InitializeComponent();
 		}
 		
+		public Image StateSpaceImage
+		{
+			get { return this.stateSpaceViewer1.picViewer1.Image; }
+		}
+		
 		public void ShowStateSpace(Image image)
 		{
 			this.stateSpaceViewer1.picViewer1.Image = image;

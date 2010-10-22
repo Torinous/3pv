@@ -23,7 +23,7 @@
 
          if (Element is ArcShape)
          {
-            Form f = new ArcEditForm((IArc)Element);
+            Form f = new ArcEditForm2((IArc)Element);
             f.ShowDialog(mainForm);
             f.Dispose();
          }
@@ -37,7 +37,7 @@
 
          if (Element is PlaceShape)
          {
-            Form f = new PlaceEditForm2((IPlace)Element);
+            Form f = new PlaceEditForm((IPlace)Element);
             f.ShowDialog(mainForm);
             f.Dispose();
          }

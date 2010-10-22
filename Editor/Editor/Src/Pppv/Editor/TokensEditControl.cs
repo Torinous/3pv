@@ -10,8 +10,8 @@
 namespace Pppv.Editor
 {
 	using System;
-	using System.ComponentModel;
 	using System.Collections.ObjectModel;
+	using System.ComponentModel;
 	using System.Drawing;
 	using System.Globalization;
 	using System.Windows.Forms;
@@ -19,21 +19,25 @@ namespace Pppv.Editor
 	using Pppv.ApplicationFramework;
 	using Pppv.Net;
 
-	public partial class TokensEditControl2 : UserControl
+	public partial class TokensEditControl : UserControl
 	{
 		private Collection<Token> listTokens;
 		
-		public TokensEditControl2()
+		public TokensEditControl()
 		{
-			InitializeComponent();
+			this.InitializeComponent();
 		}
 
 		public Collection<Token> ListTokens
 		{
-			get { return listTokens; }
+			get
+			{
+				return this.listTokens;
+			}
+			
 			set
 			{
-				listTokens = value;
+				this.listTokens = value;
 				if (this.ListTokens != null)
 				{
 					this.FetchFromList();
