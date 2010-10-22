@@ -18,13 +18,13 @@ namespace Pppv.Editor
 	using Pppv.ApplicationFramework;
 	using Pppv.Net;
 	
-	public partial class CortegeEditControl2 : UserControl
+	public partial class CortegeEditControl : UserControl
 	{
 		private PredicatesList listPredicates;
 		
-		public CortegeEditControl2()
+		public CortegeEditControl()
 		{
-			InitializeComponent();
+			this.InitializeComponent();
 		}
 		
 		public PredicatesList ListPredicates
@@ -77,14 +77,14 @@ namespace Pppv.Editor
 			this.groupBox.Text = "Предикаты в кортеже[" + count.ToString(CultureInfo.CurrentCulture) + "]";
 		}
 		
-		void ButtonAddClick(object sender, EventArgs e)
+		private void ButtonAddClick(object sender, EventArgs e)
 		{
 			this.listBoxPredicates.Items.Add(new Predicate("X"));
 			this.SetCountText(this.listBoxPredicates.Items.Count);
 			this.listBoxPredicates.SelectedIndex = this.listBoxPredicates.Items.Count - 1;	
 		}
 		
-		void ButtonDeleteClick(object sender, EventArgs e)
+		private void ButtonDeleteClick(object sender, EventArgs e)
 		{
 			int index = this.listBoxPredicates.SelectedIndex;
 			try
@@ -106,7 +106,7 @@ namespace Pppv.Editor
 			}
 		}
 		
-		void ListBoxPredicatesSelectedIndexChanged(object sender, EventArgs e)
+		private void ListBoxPredicatesSelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (this.listBoxPredicates.SelectedIndex == -1)
 			{
@@ -122,7 +122,7 @@ namespace Pppv.Editor
 			}
 		}
 		
-		void TextBoxCurrentPredicateTextChanged(object sender, EventArgs e)
+		private void TextBoxCurrentPredicateTextChanged(object sender, EventArgs e)
 		{
 			if (this.listBoxPredicates.SelectedIndex != -1)
 			{
@@ -131,7 +131,7 @@ namespace Pppv.Editor
 				(this.listBoxPredicates.Items[this.listBoxPredicates.SelectedIndex] as Predicate).Text = this.textBoxCurrentPredicate.Text;
 				this.listBoxPredicates.RefreshItem(this.listBoxPredicates.SelectedIndex);
 				this.textBoxCurrentPredicate.Focus();
-				this.textBoxCurrentPredicate.SelectionStart  = p1;
+				this.textBoxCurrentPredicate.SelectionStart = p1;
 				this.textBoxCurrentPredicate.SelectionLength = p2;
 			}
 		}

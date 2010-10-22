@@ -36,7 +36,7 @@ namespace Pppv.Editor
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.cortegeEditControl = new Pppv.Editor.CortegeEditControl2();
+			this.cortegeEditControl = new Pppv.Editor.CortegeEditControl();
 			this.label1 = new System.Windows.Forms.Label();
 			this.idTextBox = new System.Windows.Forms.TextBox();
 			this.SuspendLayout();
@@ -78,7 +78,7 @@ namespace Pppv.Editor
 			this.PerformLayout();
 		}
 		private System.Windows.Forms.TextBox idTextBox;
-		private Pppv.Editor.CortegeEditControl2 cortegeEditControl;
+		private Pppv.Editor.CortegeEditControl cortegeEditControl;
 		private System.Windows.Forms.Label label1;
 	}
 }

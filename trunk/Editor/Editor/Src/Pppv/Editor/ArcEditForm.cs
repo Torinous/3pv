@@ -15,16 +15,15 @@ namespace Pppv.Editor
 	
 	using Pppv.Net;
 
-	public partial class ArcEditForm2 : Form
+	public partial class ArcEditForm : Form
 	{
-		public ArcEditForm2(IArc arc)
+		public ArcEditForm(IArc arc)
 		{
-			InitializeComponent();
+			this.InitializeComponent();
 			this.arcEditControl.Arc = arc;
 		}
 		
-		
-		void OkButtonClick(object sender, EventArgs e)
+		private void OkButtonClick(object sender, EventArgs e)
 		{
 			this.arcEditControl.ChangesApproved();
 		}

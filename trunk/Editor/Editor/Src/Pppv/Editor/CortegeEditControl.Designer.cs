@@ -8,7 +8,7 @@
  */
 namespace Pppv.Editor
 {
-	partial class CortegeEditControl2
+	partial class CortegeEditControl
 	{
 		/// <summary>
 		/// Designer variable used to keep track of non-visual components.
