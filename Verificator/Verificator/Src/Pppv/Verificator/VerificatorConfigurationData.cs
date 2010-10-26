@@ -28,7 +28,7 @@ namespace Pppv.Verificator
 			this.defaultPlotter = Plotter.Neato;
 			this.EdgeLength = 3;
 			this.DefaultNodeShape = NodeShape.Rectangle;
-			this.UseMarkingInStateLabel = true;
+			this.UseMarkingInStateLabel = false;
 		}
 
 		public Plotter DefaultPlotter

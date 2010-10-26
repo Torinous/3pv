@@ -27,6 +27,12 @@ namespace Pppv.Editor.Shapes
 			this.BaseElement = arc;
 			this.ParentNetGraphical = parentNet;
 			//this.Move += this.MoveHandler;
+			int i = 0;
+			foreach (Point point in arc.Points)
+			{
+				this.DependentShapes.Add(new ArcPointPilonShape(i));
+				i++;
+			}
 		}
 
 		public ArcType ArcType

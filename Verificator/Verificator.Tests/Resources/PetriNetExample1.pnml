@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <pnml>
-  <net id="test.pnml" type="PPr/T net">
+  <net id="ex.pnml" type="PPr/T net">
     <place id="P0">
       <graphics>
-        <position x="189.0" y="99.0" />
+        <position x="168.0" y="99.0" />
       </graphics>
       <name>
         <value>p0</value>
@@ -18,17 +18,11 @@
         <token>
           <value>3</value>
         </token>
-        <token>
-          <value>4</value>
-        </token>
-        <token>
-          <value>5</value>
-        </token>
       </initialMarking>
     </place>
     <place id="P1">
       <graphics>
-        <position x="536.0" y="147.0" />
+        <position x="389.0" y="109.0" />
       </graphics>
       <name>
         <value>p1</value>
@@ -37,38 +31,48 @@
     </place>
     <place id="P2">
       <graphics>
-        <position x="194.0" y="244.0" />
+        <position x="266.0" y="306.0" />
       </graphics>
       <name>
-        <value>P2</value>
+        <value>p2</value>
       </name>
-      <initialMarking>
-        <token>
-          <value>1</value>
-        </token>
-        <token>
-          <value>2</value>
-        </token>
-        <token>
-          <value>3</value>
-        </token>
-        <token>
-          <value>4</value>
-        </token>
-      </initialMarking>
+      <initialMarking />
     </place>
     <transition id="T0">
       <graphics>
-        <position x="369.0" y="149.0" />
+        <position x="282.0" y="122.0" />
       </graphics>
       <name>
-        <value>T0</value>
+        <value>t0</value>
       </name>
       <guard>
-        <value>Z=X+Y</value>
+        <value />
+      </guard>
+    </transition>
+    <transition id="T1">
+      <graphics>
+        <position x="371.0" y="228.0" />
+      </graphics>
+      <name>
+        <value>t1</value>
+      </name>
+      <guard>
+        <value />
+      </guard>
+    </transition>
+    <transition id="T2">
+      <graphics>
+        <position x="209.0" y="230.0" />
+      </graphics>
+      <name>
+        <value>t2</value>
+      </name>
+      <guard>
+        <value />
       </guard>
     </transition>
     <arc id="P0 to T0" source="P0" target="T0">
+      <graphics />
       <cortege>
         <predicate>
           <value>X</value>
@@ -77,17 +81,46 @@
       <type value="normal" />
     </arc>
     <arc id="T0 to P1" source="T0" target="P1">
+      <graphics />
       <cortege>
         <predicate>
-          <value>Z</value>
+          <value>X</value>
         </predicate>
       </cortege>
       <type value="normal" />
     </arc>
-    <arc id="P2 to T0" source="P2" target="T0">
+    <arc id="P1 to T1" source="P1" target="T1">
+      <graphics />
       <cortege>
         <predicate>
-          <value>Y</value>
+          <value>X</value>
+        </predicate>
+      </cortege>
+      <type value="normal" />
+    </arc>
+    <arc id="T1 to P2" source="T1" target="P2">
+      <graphics />
+      <cortege>
+        <predicate>
+          <value>X</value>
+        </predicate>
+      </cortege>
+      <type value="normal" />
+    </arc>
+    <arc id="P2 to T2" source="P2" target="T2">
+      <graphics />
+      <cortege>
+        <predicate>
+          <value>X</value>
+        </predicate>
+      </cortege>
+      <type value="normal" />
+    </arc>
+    <arc id="T2 to P0" source="T2" target="P0">
+      <graphics />
+      <cortege>
+        <predicate>
+          <value>X</value>
         </predicate>
       </cortege>
       <type value="normal" />
