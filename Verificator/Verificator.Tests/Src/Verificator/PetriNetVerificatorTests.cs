@@ -51,7 +51,7 @@ namespace Pppv.Verificator
 			verificator.LoadNetToPrologEngine(net);
 			try
 			{
-				Assert.That(PlQuery.PlCall("rstate(N,X)."), Is.False, "Предложения пространства состояний присутствуют до его построения");
+				Assert.That(PlQuery.PlCall("statespace:rstate(N,X)."), Is.False, "Предложения пространства состояний присутствуют до его построения");
 			}
 			catch (PlException e)
 			{
