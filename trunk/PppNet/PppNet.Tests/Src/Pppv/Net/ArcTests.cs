@@ -7,27 +7,27 @@
 
 namespace Pppv.Net
 {
-   using System;
-   using NUnit.Framework;
+	using System;
+	using NUnit.Framework;
 
-   using Pppv.Utils;
+	using Pppv.Utils;
 
-   [TestFixture]
-   public class ArcTests
-   {
-      [Test]
-      public void TestOfEmptyConstructor()
-      {
-         new Arc(ArcType.NormalArc);
-         new Arc(ArcType.InhibitorArc);
-      }
+	[TestFixture]
+	public class ArcTests
+	{
+		[Test]
+		public void TestOfEmptyConstructor()
+		{
+			new Arc(ArcType.NormalArc);
+			new Arc(ArcType.InhibitorArc);
+		}
 
-      [Test]
-      public void TestOfSerealizationWithoutData()
-      {
-         Arc arc = new Arc();
-         SerealizationTestHelper serealizationHelper = new SerealizationTestHelper(arc, "Pppv.Resources.ArcExample1.pnml");
-         serealizationHelper.Perform();
-      }
-   }
+		[Test]
+		public void TestOfSerealizationWithoutData()
+		{
+			Arc arc = new Arc();
+			SerealizationTestHelper serealizationHelper = new SerealizationTestHelper(arc, "Pppv.Resources.ArcExample1.pnml");
+			serealizationHelper.Perform();
+		}
+	}
 }

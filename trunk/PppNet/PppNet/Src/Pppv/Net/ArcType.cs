@@ -7,10 +7,10 @@
 
 namespace Pppv.Net
 {
-   public enum ArcType
-   {
-      NormalArc,
-      InhibitorArc
-   }
+	public enum ArcType
+	{
+		NormalArc,
+		InhibitorArc
+	}
 }
 

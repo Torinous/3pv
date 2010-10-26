@@ -7,34 +7,34 @@
 
 namespace Pppv.Net
 {
-   using System;
-   using NUnit.Framework;
+	using System;
+	using NUnit.Framework;
 
-   using Pppv.Utils;
+	using Pppv.Utils;
 
-   [TestFixture]
-   public class PredicatesListTests
-   {
-      [Test]
-      public void TestOfEmptyConstructor()
-      {
-         PredicatesList predicatesList = new PredicatesList();
-      }
+	[TestFixture]
+	public class PredicatesListTests
+	{
+		[Test]
+		public void TestOfEmptyConstructor()
+		{
+			PredicatesList predicatesList = new PredicatesList();
+		}
 
-      [Test]
-      public void TestOfSerealizationWithData()
-      {
-         PredicatesList predicatesList = new PredicatesList();
-         SerealizationTestHelper serealizationHelper = new SerealizationTestHelper(predicatesList, "Pppv.Resources.PredicatesListExample1.pnml");
-         serealizationHelper.Perform();
-      }
+		[Test]
+		public void TestOfSerealizationWithData()
+		{
+			PredicatesList predicatesList = new PredicatesList();
+			SerealizationTestHelper serealizationHelper = new SerealizationTestHelper(predicatesList, "Pppv.Resources.PredicatesListExample1.pnml");
+			serealizationHelper.Perform();
+		}
 
-      [Test]
-      public void TestOfSerealizationWithoutData()
-      {
-         PredicatesList predicatesList = new PredicatesList();
-         SerealizationTestHelper serealizationHelper = new SerealizationTestHelper(predicatesList, "Pppv.Resources.PredicatesListExample2.pnml");
-         serealizationHelper.Perform();
-      }
-   }
+		[Test]
+		public void TestOfSerealizationWithoutData()
+		{
+			PredicatesList predicatesList = new PredicatesList();
+			SerealizationTestHelper serealizationHelper = new SerealizationTestHelper(predicatesList, "Pppv.Resources.PredicatesListExample2.pnml");
+			serealizationHelper.Perform();
+		}
+	}
 }

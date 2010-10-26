@@ -7,11 +7,11 @@
 
 namespace Pppv.Net
 {
-   using System;
+	using System;
 
-   public enum PositionOnArc
-   {
-      Start,
-      End
-   }
+	public enum PositionOnArc
+	{
+		Start,
+		End
+	}
 }
