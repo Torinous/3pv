@@ -6,7 +6,7 @@
         <position x="189.0" y="99.0" />
       </graphics>
       <name>
-        <value>P0</value>
+        <value>p0</value>
       </name>
       <initialMarking>
         <token>
@@ -31,7 +31,7 @@
         <position x="536.0" y="147.0" />
       </graphics>
       <name>
-        <value>P1</value>
+        <value>p1</value>
       </name>
       <initialMarking />
     </place>
