@@ -1,76 +1,96 @@
 ﻿/*
  * Created by SharpDevelop.
  * User: Torinous
- * Date: 01.10.2010
- * Time: 17:18
+ * Date: 24.10.2010
+ * Time: 14:46
+ *
+ *
  */
+
 namespace Pppv.Editor.Shapes
 {
 	using System;
+	using System.Collections;
+	using System.Collections.ObjectModel;
+	using System.Collections.Generic;
 	using System.Drawing;
 	using System.Drawing.Drawing2D;
 	using System.Windows.Forms;
-	using System.Xml;
-	using System.Xml.Schema;
-	using System.Xml.Serialization;
-
-	using Pppv.Editor;
+	
 	using Pppv.Net;
 
-	public abstract class Shape : IShape, INetElement
+	public abstract class Shape : IShape
 	{
+		private PetriNetGraphical parentNet;
 		private Size size;
 		private Region hitRegion;
-		private PetriNetGraphical parentNet;
-		private INetElement baseElement;
-
-		protected Shape()
+		private int x, y;
+		private DependentShapesList dependentShapes;
+		private IShape parentShape;
+		
+		public Shape()
 		{
+			hitRegion = new Region();
+			this.DependentShapes = new DependentShapesList(this);
 		}
-
+		
 		public event EventHandler<MoveEventArgs> Move;
 
 		public event PaintEventHandler Paint;
 
 		public event EventHandler Change;
-
+		
+		public event EventHandler<ParentShapeChangedEventArgs> ParentShapeChanged;
+		
+		public virtual INetElement BaseElement
+		{
+			get { return null; }
+			protected set { }
+		}
+		
+		public PetriNetGraphical ParentNetGraphical
+		{
+			get { return this.parentNet; }
+			set { this.parentNet = value; }
+		}
+		
 		public Point Location
 		{
-			get { return new Point(this.BaseElement.X, this.BaseElement.Y); }
+			get { return new Point(this.X, this.Y); }
 		}
 
-		public int X
+		public virtual int X
 		{
-			get { return this.BaseElement.X; }
-			set { this.BaseElement.X = value; }
+			get { return this.x; }
+			set { this.x = value; }
 		}
 
-		public int Y
+		public virtual int Y
 		{
-			get { return this.BaseElement.Y; }
-			set { this.BaseElement.Y = value; }
+			get { return this.y; }
+			set { this.y = value; }
 		}
-
-		public Point Center
+		
+		public virtual Point Center
 		{
 			get
 			{
-				Graphics g = this.ParentNetGraphical.Canvas.CreateGraphics();
-				RectangleF rect = this.HitRegion.GetBounds(g);
 				float xt, yt;
-				xt = rect.X + (rect.Width / 2);
-				yt = rect.Y + (rect.Height / 2);
-				Point center = new Point();
-				center.X = (int)xt;
-				center.Y = (int)yt;
-				return center;
+				xt = this.X + (this.Size.Width / 2);
+				yt = this.Y + (this.Size.Height / 2);
+				return new Point((int)xt, (int)yt);
 			}
 		}
-
+		
 		public Size Size
 		{
 			get { return this.size; }
-			set { this.size = value; }
+			
+			set
+			{
+				this.size = value;
+				this.UpdateHitRegion();
+			}
 		}
 
 		public Region HitRegion
@@ -78,48 +98,56 @@ namespace Pppv.Editor.Shapes
 			get { return this.hitRegion; }
 			set { this.hitRegion = value; }
 		}
-
-		public PetriNetGraphical ParentNetGraphical
+		
+		public IShape ParentShape
 		{
-			get { return this.parentNet; }
-			set { this.parentNet = value; }
-		}
+			get
+			{
+				return this.parentShape;
+			}
 
-		public INetElement BaseElement
+			set
+			{
+				ParentShapeChangedEventArgs args = new ParentShapeChangedEventArgs(this.parentShape, value);
+				this.parentShape = value;
+				this.OnParentShapeChanged(args);
+ 			}
+		}
+		
+		public DependentShapesList DependentShapes
 		{
-			get { return this.baseElement; }
-			protected set { this.baseElement = value; }
+			get { return this.dependentShapes; }
+			private set { this.dependentShapes = value; }
 		}
-
-		public string Name
-		{
-			get { return this.BaseElement.Name; }
-			set { this.BaseElement.Name = value; }
-		}
-
-		public string Id
-		{
-			get { return this.BaseElement.Id; }
-		}
-
-		public PetriNet ParentNet
-		{
-			get { return this.BaseElement.ParentNet; }
-			set { this.BaseElement.ParentNet = value; }
-		}
-
-		public void MoveBy(Point radiusVector)
+		
+		public virtual void MoveBy(Point radiusVector)
 		{
 			Point old = new Point(this.X, this.Y);
 			this.X = this.X + radiusVector.X;
 			this.Y = this.Y + radiusVector.Y;
 			this.OnMove(new MoveEventArgs(old, this.Location));
 			this.OnChange(new EventArgs());
+			foreach (IShape shape in this.DependentShapes)
+			{
+				shape.MoveBy(radiusVector);
+			}
 		}
 
 		public bool Intersect(Point point)
 		{
-			return this.HitRegion.IsVisible(point);
+			if (this.HitRegion.IsVisible(point))
+			{
+				return true;
+			}
+			
+			foreach (IShape shape in this.DependentShapes)
+			{
+				if (shape.Intersect(point))
+				{
+					return true;
+				}
+			}
+			return false;
 		}
 
 		public bool Intersect(Rectangle rectangle)
@@ -130,45 +158,38 @@ namespace Pppv.Editor.Shapes
 		public bool Intersect(Region region)
 		{
 			/*Region tmp = new Region(HitRegion);
-         tmp.Intersect(_region);
-         return tmp.IsEmpty;*/
+			tmp.Intersect(_region);
+			return tmp.IsEmpty;*/
 			return false;
 		}
-
+		
 		public virtual Point GetConnectPoint(Point from)
 		{
-			return this.GetConnectPoint(from, this.ParentNetGraphical.Canvas);
+			return this.Center;
 		}
-
-		public abstract void UpdateHitRegion();
-
-		public abstract void Draw(PaintEventArgs e);
 		
-		public void WriteXml(XmlWriter writer)
+		public abstract void UpdateHitRegion();
+		
+		public virtual void Draw(PaintEventArgs e)
 		{
-			this.BaseElement.WriteXml(writer);
+			OnPaint(e);
 		}
-
-		public void ReadXml(XmlReader reader)
-		{
-			this.BaseElement.ReadXml(reader);
-		}
-
-		public XmlSchema GetSchema()
-		{
-			return this.BaseElement.GetSchema();
-		}
-
-		public void SetId(int number)
-		{
-			this.BaseElement.SetId(number);
-		}
-
+		
 		public void DrawHandler(object sender, PaintEventArgs e)
 		{
 			this.Draw(e);
 		}
-
+		
+		public void AddDependantShape(IShape shape)
+		{
+			this.DependentShapes.Add(shape);
+		}
+		
+		public void RemoveDependantShape(int index)
+		{
+			this.DependentShapes.RemoveAt(index);
+		}
+		
 		protected void OnMove(MoveEventArgs args)
 		{
 			this.UpdateHitRegion();
@@ -195,68 +216,13 @@ namespace Pppv.Editor.Shapes
 				this.Paint(this, e);
 			}
 		}
-
-		protected Point GetConnectPoint(Point from, Control canvas)
+		
+		protected virtual void OnParentShapeChanged(ParentShapeChangedEventArgs args)
 		{
-			Graphics g;
-			Point pilon = new Point();
-			if (canvas != null)
+			if (ParentShapeChanged != null)
 			{
-				g = canvas.CreateGraphics();
-				Region reg = new Region();
-				reg = this.HitRegion.Clone();
-				Pen greenPen = new Pen(Color.Black, 1);
-				GraphicsPath gp = new GraphicsPath();
-				Rectangle rect = new Rectangle();
-
-				/*Если не посчитается, просто вернём центр*/
-				pilon.X = this.Center.X;
-				pilon.Y = this.Center.Y;
-
-				if (from != this.Center)
-				{
-					gp.AddLine(from, this.Center);
-					gp.Widen(greenPen);
-					reg.Intersect(gp);
-					RectangleF bounds = reg.GetBounds(g);
-					rect = Rectangle.Ceiling(bounds);
-					if (from.X <= this.Center.X)
-					{
-						if (from.Y <= this.Center.Y)
-						{
-							pilon.X = rect.Left;
-							pilon.Y = rect.Top;
-						}
-						else
-						{
-							pilon.X = rect.Left;
-							pilon.Y = rect.Bottom;
-						}
-					}
-					else
-					{
-						if (from.Y <= this.Center.Y)
-						{
-							pilon.X = rect.Right;
-							pilon.Y = rect.Top;
-						}
-						else
-						{
-							pilon.X = rect.Right;
-							pilon.Y = rect.Bottom;
-						}
-					}
-
-					g.Dispose();
-				}
+				ParentShapeChanged(this, args);
 			}
-			else
-			{
-				pilon.X = this.Center.X;
-				pilon.Y = this.Center.Y;
-			}
-
-			return pilon;
 		}
 	}
 }

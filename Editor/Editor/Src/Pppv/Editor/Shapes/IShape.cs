@@ -7,56 +7,66 @@
 
 namespace Pppv.Editor.Shapes
 {
-   using System;
-   using System.Diagnostics.CodeAnalysis;
-   using System.Drawing;
-   using System.Drawing.Drawing2D;
-   using System.Windows.Forms;
-   using System.Xml.Serialization;
+	using System;
+	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
+	using System.Diagnostics.CodeAnalysis;
+	using System.Drawing;
+	using System.Drawing.Drawing2D;
+	using System.Windows.Forms;
+	using System.Xml.Serialization;
 
-   using Pppv.Editor;
-   using Pppv.Net;
+	using Pppv.Editor;
+	using Pppv.Net;
 
-   public interface IShape
-   {
-      event EventHandler<MoveEventArgs> Move;
+	public interface IShape
+	{
+		event EventHandler<MoveEventArgs> Move;
 
-      event PaintEventHandler Paint;
+		event PaintEventHandler Paint;
 
-      event EventHandler Change;
+		event EventHandler Change;
 
-      Point Location { get; }
+		INetElement BaseElement { get; }
+				
+		Point Location { get; }
 
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "етить")]
-      int X { get; set; }
+		[SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "етить")]
+		int X { get; set; }
 
-      [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "етить")]
-      int Y { get; set; }
+		[SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "етить")]
+		int Y { get; set; }
 
-      Region HitRegion { get; set; }
+		Region HitRegion { get; set; }
 
-      Point Center { get; }
+		Point Center { get; }
 
-      Size Size { get; set; }
+		Size Size { get; set; }
+		
+		IShape ParentShape { get; set; }
+		
+		DependentShapesList DependentShapes { get; }
+		
+		PetriNetGraphical ParentNetGraphical { get; set; }
+		
+		void MoveBy(Point radiusVector);
 
-      PetriNetGraphical ParentNetGraphical { get; set; }
+		bool Intersect(Point point);
 
-      INetElement BaseElement { get; }
+		bool Intersect(Rectangle rectangle);
 
-      void MoveBy(Point radiusVector);
+		bool Intersect(Region region);
 
-      bool Intersect(Point point);
+		void Draw(PaintEventArgs e);
 
-      bool Intersect(Rectangle rectangle);
+		void DrawHandler(object sender, PaintEventArgs e);
 
-      bool Intersect(Region region);
+		Point GetConnectPoint(Point from);
 
-      void Draw(PaintEventArgs e);
-
-      void DrawHandler(object sender, PaintEventArgs e);
-
-      Point GetConnectPoint(Point from);
-
-      void UpdateHitRegion();
-   }
+		void UpdateHitRegion();
+		
+		void AddDependantShape(IShape shape);
+		
+		void RemoveDependantShape(int index);
+	}
 }

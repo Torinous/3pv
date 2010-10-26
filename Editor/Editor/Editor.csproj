@@ -87,7 +87,7 @@
     </Compile>
     <Compile Include="Src\PPPV\Editor\CanvasMouseEventArgs.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\AboutCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\AddNetElementCommand.cs" />
+    <Compile Include="Src\Pppv\Editor\Commands\AddShapeCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\AddPlaceCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\AddTransitionCommand.cs" />
     <Compile Include="Src\Pppv\Editor\Commands\AnalyzeCommand.cs" />
@@ -96,10 +96,10 @@
     <Compile Include="Src\PPPV\Editor\Commands\CutCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\DeleteCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\DeleteSelectedCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\EditNetElementCommand.cs" />
+    <Compile Include="Src\Pppv\Editor\Commands\EditShapeCommand.cs" />
     <Compile Include="Src\Pppv\Editor\Commands\EditorInterfaceCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\ElementCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\ElementInterfaceCommand.cs" />
+    <Compile Include="Src\Pppv\Editor\Commands\NetElementInterfaceCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\NetCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\NetInterfaceCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\NewNetCommand.cs" />
@@ -135,14 +135,19 @@
     <Compile Include="Src\PPPV\Editor\RegionSelectionEventArgs.cs" />
     <Compile Include="Src\PPPV\Editor\RemoveTabPageEventArgs.cs" />
     <Compile Include="Src\PPPV\Editor\SaveNetEventArgs.cs" />
-    <Compile Include="Src\PPPV\Editor\SelectedNetObjectsList.cs" />
-    <Compile Include="Src\PPPV\Editor\ShapeCollection.cs" />
+    <Compile Include="Src\Pppv\Editor\SelectedNetElements.cs" />
+    <Compile Include="Src\Pppv\Editor\ShapeCollection.cs" />
+    <Compile Include="Src\Pppv\Editor\Shapes\ArcPointPilonShape.cs" />
     <Compile Include="Src\PPPV\Editor\Shapes\ArcShape.cs" />
+    <Compile Include="Src\Pppv\Editor\Shapes\DependentShapesList.cs" />
     <Compile Include="Src\PPPV\Editor\Shapes\IShape.cs" />
     <Compile Include="Src\PPPV\Editor\Shapes\MoveEventArgs.cs" />
+    <Compile Include="Src\Pppv\Editor\Shapes\ParentShapeChangedEventArgs.cs" />
     <Compile Include="Src\PPPV\Editor\Shapes\PlaceShape.cs" />
     <Compile Include="Src\PPPV\Editor\Shapes\ResizeEventArgs.cs" />
-    <Compile Include="Src\PPPV\Editor\Shapes\Shape.cs" />
+    <Compile Include="Src\Pppv\Editor\Shapes\NetElementShape.cs" />
+    <Compile Include="Src\Pppv\Editor\Shapes\Shape.cs" />
+    <Compile Include="Src\Pppv\Editor\Shapes\SizePilonShape.cs" />
     <Compile Include="Src\PPPV\Editor\Shapes\TransitionShape.cs" />
     <Compile Include="Src\PPPV\Editor\TabControlForNets.cs" />
     <Compile Include="Src\PPPV\Editor\TabPageForNet.cs" />
