@@ -7,45 +7,45 @@
 
 namespace Pppv.Net
 {
-   using System.Collections;
+	using System.Collections;
 
-   public class NetElementEnumerator : IEnumerator
-   {
-      private IEnumerator innerNetElementEnumerator;
+	public class NetElementEnumerator : IEnumerator
+	{
+		private IEnumerator innerNetElementEnumerator;
 
-      public NetElementEnumerator(IEnumerator enumerator)
-      {
-         this.innerNetElementEnumerator = enumerator;
-      }
+		public NetElementEnumerator(IEnumerator enumerator)
+		{
+			this.innerNetElementEnumerator = enumerator;
+		}
 
-      private NetElementEnumerator()
-      {
-      }
+		private NetElementEnumerator()
+		{
+		}
 
-      object IEnumerator.Current
-      {
-         get
-         {
-            return this.innerNetElementEnumerator.Current;
-         }
-      }
+		object IEnumerator.Current
+		{
+			get
+			{
+				return this.innerNetElementEnumerator.Current;
+			}
+		}
 
-      public NetElement Current
-      {
-         get
-         {
-            return (NetElement) this.innerNetElementEnumerator.Current;
-         }
-      }
+		public NetElement Current
+		{
+			get
+			{
+				return (NetElement) this.innerNetElementEnumerator.Current;
+			}
+		}
 
-      public bool MoveNext()
-      {
-         return this.innerNetElementEnumerator.MoveNext();
-      }
+		public bool MoveNext()
+		{
+			return this.innerNetElementEnumerator.MoveNext();
+		}
 
-      public void Reset()
-      {
-         this.innerNetElementEnumerator.Reset();
-      }
-   }
+		public void Reset()
+		{
+			this.innerNetElementEnumerator.Reset();
+		}
+	}
 }

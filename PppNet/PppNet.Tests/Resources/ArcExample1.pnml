@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <arc id="P0 to T0" source="P0" target="T0">
-  <cortege />
+  <graphics />
+  <cortege>
+    <predicate>
+      <value>X</value>
+    </predicate>
+  </cortege>
   <type value="normal" />
 </arc>
