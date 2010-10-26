@@ -1,11 +1,13 @@
 ﻿/*
  * Created by SharpDevelop.
  * User: Torinous
- * Date: 26.09.2010
- * Time: 17:06
+ * Date: 25.10.2010
+ * Time: 1:30
+ *
+ *
  */
 
-namespace Pppv.Editor
+namespace Pppv.Editor.Shapes
 {
 	using System;
 	using System.Collections;
@@ -19,36 +21,36 @@ namespace Pppv.Editor
 	using Pppv.Editor.Tools;
 	using Pppv.Net;
 
-	public class ShapeCollection : Collection<IShape>
+	public class DependentShapesList : List<IShape>
 	{
-		private PetriNetGraphical parentNet;
-
-		public ShapeCollection(PetriNetGraphical net) : base()
+		private IShape parentShape;
+		
+		public DependentShapesList(IShape parentShape) : base()
 		{
-			this.parentNet = net;
-			this.ParentNet.Paint += this.ParentNetPaintHandler;
+			this.parentShape = parentShape;
+			this.parentShape.Paint += this.ParentShapePaintHandler;
 		}
 
 		public event EventHandler Change;
 
 		public event PaintEventHandler Paint;
-
-		public PetriNetGraphical ParentNet
+		
+		public IShape ParentShape
 		{
-			get { return this.parentNet; }
+			get { return this.parentShape; }
 		}
 
 		public new void Add(IShape shape)
 		{
 			base.Add(shape);
-			shape.ParentNetGraphical = this.parentNet;
+			shape.ParentShape = this.parentShape;
 			this.LinkEvents(shape);
 		}
 
 		public new void Remove(IShape shape)
 		{
 			base.Remove(shape);
-			shape.ParentNetGraphical = null;
+			shape.ParentShape = null;
 			this.UnlinkEvents(shape);
 		}
 
@@ -56,19 +58,19 @@ namespace Pppv.Editor
 		{
 			foreach (IShape shape in this)
 			{
-				shape.ParentNetGraphical = null;
+				shape.ParentShape = null;
 				this.UnlinkEvents(shape);
 			}
 
 			base.Clear();
 		}
 
-		public void AddRange(IEnumerable<IShape> collection)
+		public new void AddRange(IEnumerable<IShape> collection)
 		{
 			foreach (IShape shape in collection)
 			{
 				base.Add(shape);
-				shape.ParentNetGraphical = this.parentNet;
+				shape.ParentShape = this.parentShape;
 				this.LinkEvents(shape);
 			}
 		}
@@ -78,11 +80,11 @@ namespace Pppv.Editor
 			this.OnChange(new EventArgs());
 		}
 
-		private void ParentNetPaintHandler(object sender, PaintEventArgs args)
+		private void ParentShapePaintHandler(object sender, PaintEventArgs args)
 		{
 			this.OnPaint(args);
 		}
-
+		
 		private void OnChange(EventArgs args)
 		{
 			if (this.Change != null)
@@ -98,7 +100,7 @@ namespace Pppv.Editor
 				this.Paint(this, e);
 			}
 		}
-
+		
 		private void LinkEvents(IShape shape)
 		{
 			this.Paint += shape.DrawHandler;

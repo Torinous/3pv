@@ -1,33 +1,33 @@
 namespace Pppv.Editor
 {
-   using System;
-   using System.ComponentModel;
-   using System.Runtime.InteropServices;
-   using System.Windows.Forms;
+	using System;
+	using System.ComponentModel;
+	using System.Runtime.InteropServices;
+	using System.Windows.Forms;
 
-   using Pppv.ApplicationFramework;
-   using Pppv.ApplicationFramework.Commands;
-   using Pppv.Editor.Commands;
+	using Pppv.ApplicationFramework;
+	using Pppv.ApplicationFramework.Commands;
+	using Pppv.Editor.Commands;
 
-   public class EditorContextToolStripMenuItem : CommandToolStripMenuItem
-   {
-      public EditorContextToolStripMenuItem() : base()
-      {
-         this.ShortcutKeys = Keys.None;
-         this.ShortcutKeyDisplayString = null;
-      }
+	public class EditorContextToolStripMenuItem : CommandToolStripMenuItem
+	{
+		public EditorContextToolStripMenuItem() : base()
+		{
+			this.ShortcutKeys = Keys.None;
+			this.ShortcutKeyDisplayString = null;
+		}
 
-      public EditorContextToolStripMenuItem(InterfaceCommand command) : base(command)
-      {
-      }
+		public EditorContextToolStripMenuItem(InterfaceCommand command) : base(command)
+		{
+		}
 
-      public void CheckEnabled()
-      {
-         ElementCommand elementCommand = AssociatedCommand as ElementCommand;
-         if (elementCommand != null)
-         {
-            Enabled = elementCommand.Element != null;
-         }
-      }
-   }
+		public void CheckEnabled()
+		{
+			ElementCommand elementCommand = AssociatedCommand as ElementCommand;
+			if (elementCommand != null)
+			{
+				Enabled = elementCommand.Element != null;
+			}
+		}
+	}
 }

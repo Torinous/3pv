@@ -18,10 +18,11 @@
 		private static Image pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Pointer.png"), true);
 
 		private Point lastMouseDownPoint;
-		private bool active;
+		private bool frameIsActive;
 		private Rectangle selectedRectangle;
 		private Point selectFrom;
-
+		private IShape pickedShape;
+		
 		public PointerTool(PetriNetGraphical net) : base(net)
 		{
 			this.SelectedRectangle = new Rectangle(new Point(0, 0), new Size(0, 0));
@@ -57,25 +58,31 @@
 			private set { this.selectedRectangle = value; }
 		}
 
+		public IShape PickedShape
+		{
+			get { return this.pickedShape; }
+			private set { this.pickedShape = value; }
+		}		
+		
 		protected override void HandleMouseDown(NetCanvas canvas, System.Windows.Forms.MouseEventArgs args)
 		{
 			PetriNetGraphical net = canvas.Net;
 			this.lastMouseDownPoint = new Point(args.X, args.Y);
 			if (args.Button == MouseButtons.Left)
 			{
-				IShape tmp = net.GetElementUnder(new Point(args.X, args.Y));
-				if (tmp != null)
+				PickedShape = net.GetShapeUnder(new Point(args.X, args.Y));
+				if (pickedShape != null)
 				{
-					if (!net.SelectedObjects.Contains(tmp))
-					{
-						net.SelectedObjects.Clear();
-						net.SelectedObjects.Add(tmp);
-					}
+						if (!net.SelectedObjects.Contains(pickedShape))
+						{
+							net.SelectedObjects.Clear();
+							net.SelectedObjects.Add(pickedShape);
+						}
 				}
 				else
 				{
 					net.SelectedObjects.Clear();
-					this.active = true;
+					this.frameIsActive = true;
 					this.selectFrom = new Point(args.X, args.Y);
 				}
 
@@ -91,7 +98,7 @@
 			PetriNetGraphical pnw = canvas.Net;
 			if (args.Button == MouseButtons.Left)
 			{
-				if (this.active)
+				if (this.frameIsActive)
 				{
 					Point startPoint = new Point(this.selectFrom.X, this.selectFrom.Y);
 					if (args.X < this.selectFrom.X)
@@ -107,16 +114,23 @@
 					this.selectedRectangle.Location = startPoint;
 					this.selectedRectangle.Size = new Size(Math.Abs(args.X - this.selectFrom.X), System.Math.Abs(args.Y - this.selectFrom.Y));
 					pnw.SelectedObjects.Clear();
-					pnw.SelectedObjects.AddRange(canvas.Net.GetElementUnder(this.SelectedRectangle));
+					pnw.SelectedObjects.AddRange(canvas.Net.GetShapeUnder(this.SelectedRectangle));
 					canvas.Invalidate();
 				}
 				else
 				{
 					Point delta = new Point(args.X - this.lastMouseDownPoint.X, args.Y - this.lastMouseDownPoint.Y);
-
-					for (int i = 0; i < pnw.SelectedObjects.Count; ++i)
+					
+					if (pnw.SelectedObjects.Contains(this.PickedShape))
 					{
-						pnw.SelectedObjects[i].MoveBy(delta);
+						for (int i = 0; i < pnw.SelectedObjects.Count; ++i)
+						{
+							pnw.SelectedObjects[i].MoveBy(delta);
+						}
+					}
+					else
+					{
+						this.PickedShape.MoveBy(delta);
 					}
 
 					canvas.Invalidate();
@@ -132,7 +146,7 @@
 		{
 			this.selectedRectangle.Size = new Size(0, 0);
 			canvas.Paint -= this.DrawSelectionRegion;
-			this.active = false;
+			this.frameIsActive = false;
 			base.HandleMouseUp(canvas, args);
 			canvas.Invalidate();
 		}
@@ -149,7 +163,7 @@
 
 		private void DrawSelectionRegion(object sender, PaintEventArgs e)
 		{
-			if (this.active)
+			if (this.frameIsActive)
 			{
 				Pen redPen = new Pen(Color.Red, 1);
 				Graphics dc = e.Graphics;

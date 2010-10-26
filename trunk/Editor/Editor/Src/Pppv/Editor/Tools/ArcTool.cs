@@ -54,7 +54,7 @@
 		{
 			if (args.Button == MouseButtons.Left)
 			{
-				IShape clicked = EventSourceNet.GetElementUnder(new Point(args.X, args.Y));
+				IShape clicked = EventSourceNet.GetTopLevelShapeUnder(args.Location);
 				if (this.Arc == null)
 				{
 					if (!(clicked is Arc) && clicked != null)
@@ -66,14 +66,21 @@
 				}
 				else
 				{
-					if (clicked != null && this.Arc.Source.GetType() != clicked.GetType())
+					if (clicked != null)
 					{
-						this.Arc.TargetId = clicked.BaseElement.Id;
-						AddNetElementCommand c = new AddNetElementCommand(EventSourceNet);
-						c.Element = this.Arc.BaseElement;
-						c.Execute();
-						EventSourceNet.Paint -= this.Arc.DrawHandler;
-						this.Arc = null;
+						if (this.Arc.Source.GetType() != clicked.GetType())
+						{
+							this.Arc.TargetId = clicked.BaseElement.Id;
+							AddShapeCommand c = new AddShapeCommand(EventSourceNet);
+							c.Shape = this.Arc;
+							c.Execute();
+							EventSourceNet.Paint -= this.Arc.DrawHandler;
+							this.Arc = null;
+						}
+					}
+					else
+					{
+						this.Arc.AddPoint(args.Location);
 					}
 				}
 
