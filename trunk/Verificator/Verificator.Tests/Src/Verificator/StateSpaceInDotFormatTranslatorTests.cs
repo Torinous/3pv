@@ -41,7 +41,7 @@ namespace Pppv.Verificator
 			verificator.LoadNetToPrologEngine(net);
 			verificator.CalculateStateSpace();
 			string stateSpaceInDot = StateSpaceInDotFormatTranslator.Create();
-			Assert.That(stateSpaceInDot, Is.StringContaining("0 -> 1"), "Пространство состояний в формате dot не имеет перехода из стартового состояния");
+			Assert.That(stateSpaceInDot, Is.StringContaining("S0 -> S1"), "Пространство состояний в формате dot не имеет перехода из стартового состояния");
 		}
 	}
 }
