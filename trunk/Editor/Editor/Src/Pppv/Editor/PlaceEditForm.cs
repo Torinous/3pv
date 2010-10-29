@@ -25,7 +25,7 @@ namespace Pppv.Editor
 		
 		private void OKbuttonClick(object sender, EventArgs e)
 		{
-			this.placeEditControl1.ChangesApproved();
+			this.placeEditControl1.ApproveChanges();
 		}
 	}
 }

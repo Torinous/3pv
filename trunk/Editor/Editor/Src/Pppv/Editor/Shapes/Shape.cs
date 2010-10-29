@@ -11,8 +11,8 @@ namespace Pppv.Editor.Shapes
 {
 	using System;
 	using System.Collections;
-	using System.Collections.ObjectModel;
 	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
 	using System.Drawing;
 	using System.Drawing.Drawing2D;
 	using System.Windows.Forms;
@@ -30,7 +30,7 @@ namespace Pppv.Editor.Shapes
 		
 		public Shape()
 		{
-			hitRegion = new Region();
+			this.hitRegion = new Region();
 			this.DependentShapes = new DependentShapesList(this);
 		}
 		
@@ -84,7 +84,10 @@ namespace Pppv.Editor.Shapes
 		
 		public Size Size
 		{
-			get { return this.size; }
+			get
+			{
+				return this.size;
+			}
 			
 			set
 			{
@@ -147,6 +150,7 @@ namespace Pppv.Editor.Shapes
 					return true;
 				}
 			}
+
 			return false;
 		}
 
@@ -172,7 +176,7 @@ namespace Pppv.Editor.Shapes
 		
 		public virtual void Draw(PaintEventArgs e)
 		{
-			OnPaint(e);
+			this.OnPaint(e);
 		}
 		
 		public void DrawHandler(object sender, PaintEventArgs e)
@@ -219,9 +223,9 @@ namespace Pppv.Editor.Shapes
 		
 		protected virtual void OnParentShapeChanged(ParentShapeChangedEventArgs args)
 		{
-			if (ParentShapeChanged != null)
+			if (this.ParentShapeChanged != null)
 			{
-				ParentShapeChanged(this, args);
+				this.ParentShapeChanged(this, args);
 			}
 		}
 	}

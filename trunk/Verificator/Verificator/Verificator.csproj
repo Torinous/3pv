@@ -9,7 +9,7 @@
     <AssemblyName>Verificator</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <PreBuildEvent>SubWCRev.exe ../../Properties ../../Properties/AssemblyInfo.in ../../Properties/AssemblyInfo.cs</PreBuildEvent>
+    <PreBuildEvent>SubWCRev.exe ../../ ../../Properties/AssemblyInfo.in ../../Properties/AssemblyInfo.cs</PreBuildEvent>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
     <SourceAnalysisOverrideSettingsFile>F:\SVN\3pv\Verificator\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <AllowUnsafeBlocks>False</AllowUnsafeBlocks>

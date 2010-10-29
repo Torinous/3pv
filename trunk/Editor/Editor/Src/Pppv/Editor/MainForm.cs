@@ -128,7 +128,7 @@
 			this.toolToolStrip.AddCommand(new SelectToolCommand(typeof(ArcTool)));
 			this.toolToolStrip.AddCommand(new SelectToolCommand(typeof(InhibitorArcTool)));
 			this.toolToolStrip.AddCommand(new SelectToolCommand(typeof(AnnotationTool)));
-
+				
 			this.fileToolStrip = new EditorToolStrip();
 			this.fileToolStrip.AddCommand(new NewNetCommand());
 			this.fileToolStrip.AddCommand(new OpenNetCommand());
@@ -148,6 +148,7 @@
 			this.viewToolStrip = new EditorToolStrip();
 			this.viewToolStrip.AddCommand(new ZoomInCommand());
 			this.viewToolStrip.AddCommand(new ZoomOutCommand());
+			this.viewToolStrip.AddCommand(new AdditionalCodeEditCommand());
 
 			this.statusStrip = new StatusStrip();
 
@@ -211,18 +212,6 @@
 		{
 			this.OnActiveNetChange(new EventArgs());
 		}
-
-		/*TODO: Пригодится при написании команды, потом убъём
-		 * private void EditAdditionalCode(object sender, EventArgs e)
-      {
-         EditorApplication app = EditorApplication.Instance;
-         if (app.ActiveNet != null)
-         {
-            Form f = new AdditionalCodeEditForm(app.ActiveNet);
-            f.ShowDialog(this);
-            f.Dispose();
-         }
-      }*/
 		
 		private void ClosingHandler(object sender, CancelEventArgs args)
 		{

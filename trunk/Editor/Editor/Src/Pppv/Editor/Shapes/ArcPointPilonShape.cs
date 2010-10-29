@@ -10,9 +10,9 @@
 namespace Pppv.Editor.Shapes
 {
 	using System;
-	using System.Windows.Forms;
 	using System.Drawing;
 	using System.Drawing.Drawing2D;
+	using System.Windows.Forms;
 	
 	public class ArcPointPilonShape : Shape
 	{
@@ -22,14 +22,14 @@ namespace Pppv.Editor.Shapes
 		{
 			this.Index = index;
 			this.Size = new Size(7, 7);
-			this.ParentShapeChanged += ParentShapeChangedHandler;
-			this.Move += MoveHandler;
+			this.ParentShapeChanged += this.ParentShapeChangedHandler;
+			this.Move += this.MoveHandler;
 		}
 		
 		public int Index
 		{
-			get { return index; }
-			private set { index = value; }
+			get { return this.index; }
+			private set { this.index = value; }
 		}
 		
 		public override void Draw(PaintEventArgs e)
@@ -45,47 +45,32 @@ namespace Pppv.Editor.Shapes
 			this.OnPaint(new PaintEventArgs(e.Graphics, e.ClipRectangle));
 		}
 
-		private void UpdateRelativePosition()
-		{
-			if (this.ParentShape != null)
-			{
-				ArcShape arc = this.ParentShape as ArcShape;
-				this.X = arc.Points[index].X - 3;
-				this.Y = arc.Points[index].Y - 3;
-				this.UpdateHitRegion();
-			}
-		}
-
 		public override void UpdateHitRegion()
 		{
 			this.HitRegion.MakeEmpty();
 			this.HitRegion.Union(new Rectangle(this.X, this.Y, Size.Width, Size.Height));
 		}
 		
-		private void ParentShapeChangedHandler(object sender, ParentShapeChangedEventArgs args)
+		private void UpdateRelativePosition()
 		{
-			/*if (args.OldParentShape != null)
+			if (this.ParentShape != null)
 			{
-				args.OldParentShape.Move -= this.ParentShapeMoveHandler;
+				ArcShape arc = this.ParentShape as ArcShape;
+				this.X = arc.Points[this.index].X - 3;
+				this.Y = arc.Points[this.index].Y - 3;
+				this.UpdateHitRegion();
 			}
-			
-			if (args.NewParentShape != null)
-			{
-				args.NewParentShape.Move += this.ParentShapeMoveHandler;
-			}*/
-			
-			this.UpdateRelativePosition();
 		}
 		
-		/*private void ParentShapeMoveHandler(object sender, MoveEventArgs args)
+		private void ParentShapeChangedHandler(object sender, ParentShapeChangedEventArgs args)
 		{
 			this.UpdateRelativePosition();
-		}*/
-		
+		}
+	
 		private void MoveHandler(object sender, MoveEventArgs args)
 		{
 			ArcShape arc = this.ParentShape as ArcShape;
-			arc.Points[index] = new Point(this.X + 3, this.Y + 3);
+			arc.Points[this.index] = new Point(this.X + 3, this.Y + 3);
 		}
 	}
 }

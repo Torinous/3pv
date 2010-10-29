@@ -29,7 +29,7 @@ namespace Pppv.Editor.Shapes
 		public override INetElement BaseElement
 		{
 			get { return this.baseElement; }
-			protected set {this.baseElement = value; }
+			protected set { this.baseElement = value; }
 		}
 				
 		public new Point Location

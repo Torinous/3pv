@@ -22,13 +22,13 @@
 	public class PetriNetGraphical : PetriNet, IXmlSerializable
 	{
 		private SelectedNetElements selectedObjects;
-		private Tool  currentTool,
-							pointerTool,
-							placeTool,
-							transitionTool,
-							arcTool,
-							inhibitorArcTool,
-							annotationTool;
+		private Tool currentTool,
+						  pointerTool,
+						  placeTool,
+						  transitionTool,
+						  arcTool,
+						  inhibitorArcTool,
+						  annotationTool;
 
 		private int width, height;
 		private string fileOfNetPath;
@@ -239,6 +239,7 @@
 			{
 				return null;
 			}
+			
 			bool haveDeeperLevelForTest = true;
 			while (haveDeeperLevelForTest)
 			{
@@ -253,6 +254,7 @@
 					}
 				}
 			}
+			
 			return shape;
 		}
 

@@ -32,5 +32,25 @@ namespace Pppv.Editor.Commands
 			get { return this.net; }
 			set { this.net = value; }
 		}
+		
+		public override bool CheckEnabled()
+		{
+			return CheckFormAndActiveNet();
+		}
+		
+		protected void SetUpTargetNet()
+		{
+			if (this.Net == null)
+			{
+				MainForm mainForm = MainForm.Instance;
+				if (mainForm != null)
+				{
+					if (mainForm.ActiveNet != null)
+					{
+						this.Net = mainForm.ActiveNet;
+					}
+				}
+			}
+		}
 	}
 }

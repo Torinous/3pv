@@ -51,7 +51,7 @@ namespace Pppv.Editor
 			}
 		}
 		
-		public void ChangesApproved()
+		public void ApproveChanges()
 		{
 			this.listTokens.Clear();
 			foreach (Token value in this.listBoxTokens.Items)

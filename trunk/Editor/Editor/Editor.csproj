@@ -75,7 +75,14 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Src\PPPV\Editor\AboutForm.cs" />
-    <Compile Include="Src\PPPV\Editor\AdditionalCodeEditForm.cs" />
+    <Compile Include="Src\Pppv\Editor\AdditionalCodeControl.cs" />
+    <Compile Include="Src\Pppv\Editor\AdditionalCodeControl.Designer.cs">
+      <DependentUpon>AdditionalCodeControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Src\Pppv\Editor\AdditionalCodeEditForm2.cs" />
+    <Compile Include="Src\Pppv\Editor\AdditionalCodeEditForm2.Designer.cs">
+      <DependentUpon>AdditionalCodeEditForm2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Src\PPPV\Editor\Application.cs" />
     <Compile Include="Src\Pppv\Editor\ArcEditControl.cs" />
     <Compile Include="Src\Pppv\Editor\ArcEditControl.Designer.cs">
@@ -87,6 +94,7 @@
     </Compile>
     <Compile Include="Src\PPPV\Editor\CanvasMouseEventArgs.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\AboutCommand.cs" />
+    <Compile Include="Src\Pppv\Editor\Commands\AdditionalCodeEditCommand.cs" />
     <Compile Include="Src\Pppv\Editor\Commands\AddShapeCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\AddPlaceCommand.cs" />
     <Compile Include="Src\PPPV\Editor\Commands\AddTransitionCommand.cs" />
@@ -171,7 +179,7 @@
       <DependentUpon>TransitionEditForm.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Resources\About.png" />
-    <EmbeddedResource Include="Resources\Annotation.png" />
+    <EmbeddedResource Include="Resources\AdditionalCode.png" />
     <EmbeddedResource Include="Resources\Arc.png" />
     <EmbeddedResource Include="Resources\Close.png" />
     <EmbeddedResource Include="Resources\Copy.png" />
@@ -194,6 +202,12 @@
     <EmbeddedResource Include="Resources\Zoom in.png" />
     <EmbeddedResource Include="Resources\Zoom out.png" />
     <EmbeddedResource Include="Resources\Zoom.png" />
+    <EmbeddedResource Include="Src\Pppv\Editor\AdditionalCodeControl.resx">
+      <DependentUpon>AdditionalCodeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Src\Pppv\Editor\AdditionalCodeEditForm2.resx">
+      <DependentUpon>AdditionalCodeEditForm2.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Src\Pppv\Editor\ArcEditControl.resx">
       <DependentUpon>ArcEditControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -215,6 +229,7 @@
     <None Include="app.config" />
     <None Include="app.manifest" />
     <None Include="Properties\AssemblyInfo.in" />
+    <EmbeddedResource Include="Resources\Annotation.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources" />
@@ -240,7 +255,7 @@
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
-    <PreBuildEvent>SubWCRev.exe ../../Properties ../../Properties/AssemblyInfo.in ../../Properties/AssemblyInfo.cs
+    <PreBuildEvent>SubWCRev.exe ../../ ../../Properties/AssemblyInfo.in ../../Properties/AssemblyInfo.cs
 </PreBuildEvent>
   </PropertyGroup>
 </Project>

@@ -9,8 +9,8 @@ namespace Pppv.Editor.Shapes
 {
 	using System;
 	using System.Collections;
-	using System.Collections.ObjectModel;
 	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
 	using System.Drawing;
 	using System.Drawing.Drawing2D;
 	using System.Windows.Forms;
@@ -26,7 +26,6 @@ namespace Pppv.Editor.Shapes
 		{
 			this.BaseElement = arc;
 			this.ParentNetGraphical = parentNet;
-			//this.Move += this.MoveHandler;
 			int i = 0;
 			foreach (Point point in arc.Points)
 			{
@@ -109,13 +108,25 @@ namespace Pppv.Editor.Shapes
 			}
 		}
 		
-		public void AddPoint(Point p)
+		private Point SourceConnectPoint
 		{
-			IArc arc = (this.BaseElement as IArc);
-			arc.AddPoint(p);
-			this.DependentShapes.Add(new ArcPointPilonShape(arc.Points.Count-1));
+			get { return this.sourceConnectPoint; }
+			set { this.sourceConnectPoint = value; }
 		}
 
+		private Point TargetConnectPoint
+		{
+			get { return this.targetConnectPoint; }
+			set { this.targetConnectPoint = value; }
+		}
+		
+		public void AddPoint(Point p)
+		{
+			IArc arc = this.BaseElement as IArc;
+			arc.AddPoint(p);
+			this.DependentShapes.Add(new ArcPointPilonShape(arc.Points.Count - 1));
+		}
+		
 		public void DeletePoint(int index)
 		{
 			IShape pilon = null;
@@ -134,19 +145,8 @@ namespace Pppv.Editor.Shapes
 			{
 				this.DependentShapes.Remove(pilon);
 			}
+			
 			(this.BaseElement as IArc).DeletePoint(index);
-		}
-
-		private Point SourceConnectPoint
-		{
-			get { return this.sourceConnectPoint; }
-			set { this.sourceConnectPoint = value; }
-		}
-
-		private Point TargetConnectPoint
-		{
-			get { return this.targetConnectPoint; }
-			set { this.targetConnectPoint = value; }
 		}
 
 		public override void Draw(PaintEventArgs e)
@@ -208,7 +208,6 @@ namespace Pppv.Editor.Shapes
 			{
 				if (this.Points.Count == 0)
 				{
-					
 					this.TargetConnectPoint = targetShape.GetConnectPoint(sourceShape.Center);
 				}
 				else
