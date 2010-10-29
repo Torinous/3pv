@@ -22,13 +22,13 @@
 	public class PetriNetGraphical : PetriNet, IXmlSerializable
 	{
 		private SelectedNetElements selectedObjects;
-		private Tool currentTool,
-		pointerTool,
-		placeTool,
-		transitionTool,
-		arcTool,
-		inhibitorArcTool,
-		annotationTool;
+		private Tool  currentTool,
+							pointerTool,
+							placeTool,
+							transitionTool,
+							arcTool,
+							inhibitorArcTool,
+							annotationTool;
 
 		private int width, height;
 		private string fileOfNetPath;
@@ -47,7 +47,7 @@
 			this.arcTool          = new ArcTool(this);
 			this.inhibitorArcTool = new InhibitorArcTool(this);
 			this.annotationTool   = new AnnotationTool(this);
-			this.NetSaved = false;
+			this.NetSaved = true;
 			this.FileOfNetPath = String.Empty;
 			this.Change += this.ChangeController;
 			this.shapes = new ShapeCollection(this);

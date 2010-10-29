@@ -7,30 +7,30 @@
 
 namespace Pppv.Editor.Commands
 {
-   using System;
-   using System.Drawing;
-   using System.Windows.Forms;
+	using System;
+	using System.Drawing;
+	using System.Windows.Forms;
 
-   using Pppv.ApplicationFramework.Commands;
-   using Pppv.Net;
+	using Pppv.ApplicationFramework.Commands;
+	using Pppv.Net;
 
-   public abstract class NetInterfaceCommand : EditorInterfaceCommand
-   {
-      private PetriNetGraphical net;
+	public abstract class NetEditorInterfaceCommand : EditorInterfaceCommand
+	{
+		private PetriNetGraphical net;
 
-      protected NetInterfaceCommand(PetriNetGraphical net) : base()
-      {
-         this.Net = net;
-      }
+		protected NetEditorInterfaceCommand(PetriNetGraphical net) : base()
+		{
+			this.Net = net;
+		}
 
-      protected NetInterfaceCommand() : base()
-      {
-      }
+		protected NetEditorInterfaceCommand() : base()
+		{
+		}
 
-      public PetriNetGraphical Net
-      {
-         get { return this.net; }
-         set { this.net = value; }
-      }
-   }
+		public PetriNetGraphical Net
+		{
+			get { return this.net; }
+			set { this.net = value; }
+		}
+	}
 }

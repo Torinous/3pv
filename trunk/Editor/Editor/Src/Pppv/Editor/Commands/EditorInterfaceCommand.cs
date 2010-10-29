@@ -8,27 +8,27 @@
  */
 namespace Pppv.Editor.Commands
 {
-   using System;
+	using System;
 
-   using Pppv.ApplicationFramework.Commands;
+	using Pppv.ApplicationFramework.Commands;
 
-   public abstract class EditorInterfaceCommand : InterfaceCommand
-   {
-      protected EditorInterfaceCommand()
-      {
-      }
+	public abstract class EditorInterfaceCommand : InterfaceCommand
+	{
+		protected EditorInterfaceCommand()
+		{
+		}
 
-      protected static bool CheckFormAndActiveNet()
-      {
-         MainForm mainForm = MainForm.Instance;
-         if (mainForm != null && mainForm.ActiveNet != null)
-         {
-            return true;
-         }
-         else
-         {
-            return false;
-         }
-      }
-   }
+		protected static bool CheckFormAndActiveNet()
+		{
+			MainForm mainForm = MainForm.Instance;
+			if (mainForm != null && mainForm.ActiveNet != null)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	}
 }

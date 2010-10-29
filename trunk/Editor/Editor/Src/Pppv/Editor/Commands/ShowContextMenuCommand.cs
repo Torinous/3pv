@@ -8,7 +8,7 @@
 	using Pppv.Editor.Shapes;
 	using Pppv.Net;
 
-	public class ShowContextMenuCommand : NetInterfaceCommand
+	public class ShowContextMenuCommand : NetEditorInterfaceCommand
 	{
 		private Point position;
 

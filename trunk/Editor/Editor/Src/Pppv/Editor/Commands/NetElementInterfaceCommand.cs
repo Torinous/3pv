@@ -14,7 +14,7 @@ namespace Pppv.Editor.Commands
 	using Pppv.Editor.Shapes;
 	using Pppv.Net;
 
-	public abstract class NetElementInterfaceCommand : NetInterfaceCommand
+	public abstract class NetElementInterfaceCommand : NetEditorInterfaceCommand
 	{
 		private IShape shape;
 
