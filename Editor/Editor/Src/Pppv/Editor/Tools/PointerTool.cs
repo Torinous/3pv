@@ -70,14 +70,14 @@
 			this.lastMouseDownPoint = new Point(args.X, args.Y);
 			if (args.Button == MouseButtons.Left)
 			{
-				PickedShape = net.GetShapeUnder(new Point(args.X, args.Y));
-				if (pickedShape != null)
+				this.PickedShape = net.GetShapeUnder(new Point(args.X, args.Y));
+				if (this.PickedShape != null)
 				{
-						if (!net.SelectedObjects.Contains(pickedShape))
-						{
-							net.SelectedObjects.Clear();
-							net.SelectedObjects.Add(pickedShape);
-						}
+					if (!net.SelectedObjects.Contains(this.PickedShape))
+					{
+						net.SelectedObjects.Clear();
+						net.SelectedObjects.Add(this.PickedShape);
+					}
 				}
 				else
 				{

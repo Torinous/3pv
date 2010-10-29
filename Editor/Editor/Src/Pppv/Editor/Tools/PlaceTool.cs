@@ -46,9 +46,9 @@
 		{
 			if (args.Button == MouseButtons.Left)
 			{
-				AddShapeCommand c = new AddShapeCommand(canvas.Net);
-				c.Shape = canvas.Net.CreateShapeForNetElement( new Place(args.Location));
-				c.Execute();
+				AddShapeCommand command = new AddShapeCommand(canvas.Net);
+				command.Shape = canvas.Net.CreateShapeForNetElement(new Place(args.Location));
+				command.Execute();
 			}
 
 			base.HandleMouseDown(canvas, args);

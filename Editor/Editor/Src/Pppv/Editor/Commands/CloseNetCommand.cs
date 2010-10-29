@@ -34,7 +34,7 @@
 				this.SetUpTargetNet();
 				if (!this.Net.NetSaved)
 				{
-					DialogResult dialogResult = RtlAwareMessageBox.Show(mainForm, "Сохранить сеть перед закрытием?", "Попытка закрыть несохранённую сеть", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning,MessageBoxDefaultButton.Button1, 0);
+					DialogResult dialogResult = RtlAwareMessageBox.Show(mainForm, "Сохранить сеть перед закрытием?", "Попытка закрыть несохранённую сеть", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, 0);
 					switch (dialogResult)
 					{
 						case DialogResult.Yes:
@@ -58,28 +58,8 @@
 			}
 		}
 		
-		private void SetUpTargetNet()
-		{
-			if (this.Net == null)
-			{
-				MainForm mainForm = MainForm.Instance;
-				if (mainForm != null)
-				{
-					if (mainForm.ActiveNet != null)
-					{
-						this.Net = mainForm.ActiveNet;
-					}
-				}
-			}
-		}
-		
 		public override void Unexecute()
 		{
-		}
-
-		public override bool CheckEnabled()
-		{
-			return CheckFormAndActiveNet();
 		}
 	}
 }

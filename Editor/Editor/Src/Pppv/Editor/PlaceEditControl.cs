@@ -46,10 +46,10 @@ namespace Pppv.Editor
 			}
 		}
 		
-		public void ChangesApproved()
+		public void ApproveChanges()
 		{
 			this.Place.Name = this.nameTextBox.Text;
-			this.tokensEditControl.ChangesApproved();
+			this.tokensEditControl.ApproveChanges();
 		}
 		
 		private void FillFieldsFromPlace()

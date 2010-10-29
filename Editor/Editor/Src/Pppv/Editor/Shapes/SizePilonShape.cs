@@ -10,17 +10,17 @@
 namespace Pppv.Editor.Shapes
 {
 	using System;
-	using System.Windows.Forms;
 	using System.Drawing;
 	using System.Drawing.Drawing2D;
+	using System.Windows.Forms;
 	
 	public class SizePilonShape : Shape
 	{
 		public SizePilonShape()
 		{
 			this.Size = new Size(7, 7);
-			this.ParentShapeChanged += ParentShapeChangedHandler;
-			this.Move += MoveHandler;
+			this.ParentShapeChanged += this.ParentShapeChangedHandler;
+			this.Move += this.MoveHandler;
 		}
 		
 		public override void Draw(PaintEventArgs e)
@@ -36,6 +36,12 @@ namespace Pppv.Editor.Shapes
 			this.OnPaint(new PaintEventArgs(e.Graphics, e.ClipRectangle));
 		}
 
+		public override void UpdateHitRegion()
+		{
+			this.HitRegion.MakeEmpty();
+			this.HitRegion.Union(new Rectangle(this.X, this.Y, Size.Width, Size.Height));
+		}
+
 		private void UpdateRelativePosition()
 		{
 			if (this.ParentShape != null)
@@ -45,32 +51,11 @@ namespace Pppv.Editor.Shapes
 				this.UpdateHitRegion();
 			}
 		}
-
-		public override void UpdateHitRegion()
-		{
-			this.HitRegion.MakeEmpty();
-			this.HitRegion.Union(new Rectangle(this.X, this.Y, Size.Width, Size.Height));
-		}
 		
 		private void ParentShapeChangedHandler(object sender, ParentShapeChangedEventArgs args)
 		{
-			/*if (args.OldParentShape != null)
-			{
-				args.OldParentShape.Move -= this.ParentShapeMoveHandler;
-			}
-			
-			if (args.NewParentShape != null)
-			{
-				args.NewParentShape.Move += this.ParentShapeMoveHandler;
-			}*/
-			
 			this.UpdateRelativePosition();
 		}
-		
-		/*private void ParentShapeMoveHandler(object sender, MoveEventArgs args)
-		{
-			this.UpdateRelativePosition();
-		}*/
 		
 		private void MoveHandler(object sender, MoveEventArgs args)
 		{
