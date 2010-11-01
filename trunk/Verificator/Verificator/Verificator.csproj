@@ -68,40 +68,40 @@ xcopy .\Prolog\*  ..\..\..\..\Range\Prolog\  /y</PostBuildEvent>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Src\Pppv\Verificator\Commands\ConstructStateSpaceCommand.cs" />
-    <Compile Include="Src\Pppv\Verificator\Commands\LoadNetCommand.cs" />
-    <Compile Include="Src\Pppv\Verificator\Commands\OpenNetCommand.cs" />
-    <Compile Include="Src\Pppv\Verificator\Commands\PlotStateSpaceImage.cs" />
-    <Compile Include="Src\Pppv\Verificator\Commands\QuitCommand.cs" />
-    <Compile Include="Src\Pppv\Verificator\Commands\SaveStateSpaceImage.cs" />
-    <Compile Include="Src\Pppv\Verificator\Commands\StartPrologInterfaceCommand.cs" />
-    <Compile Include="Src\Pppv\Verificator\PostStatusMessageArgs.cs" />
-    <Compile Include="Src\Pppv\Verificator\SizeMode.cs" />
-    <Compile Include="Src\Pppv\Verificator\StateSpaceInDotFormatTranslator.cs" />
-    <Compile Include="Src\Pppv\Verificator\PetriNetPrologTranslated.cs" />
-    <Compile Include="Src\Pppv\Verificator\PicViewer.cs" />
-    <Compile Include="Src\Pppv\Verificator\StateSpaceViewer.cs" />
-    <Compile Include="Src\Pppv\Verificator\StateSpaceViewer.Designer.cs">
+    <Compile Include="Src\Verificator\Commands\ConstructStateSpaceCommand.cs" />
+    <Compile Include="Src\Verificator\Commands\LoadNetCommand.cs" />
+    <Compile Include="Src\Verificator\Commands\OpenNetCommand.cs" />
+    <Compile Include="Src\Verificator\Commands\PlotStateSpaceImage.cs" />
+    <Compile Include="Src\Verificator\Commands\QuitCommand.cs" />
+    <Compile Include="Src\Verificator\Commands\SaveStateSpaceImage.cs" />
+    <Compile Include="Src\Verificator\Commands\StartPrologInterfaceCommand.cs" />
+    <Compile Include="Src\Verificator\PostStatusMessageArgs.cs" />
+    <Compile Include="Src\Verificator\SizeMode.cs" />
+    <Compile Include="Src\Verificator\StateSpaceInDotFormatTranslator.cs" />
+    <Compile Include="Src\Verificator\PetriNetPrologTranslated.cs" />
+    <Compile Include="Src\Verificator\PicViewer.cs" />
+    <Compile Include="Src\Verificator\StateSpaceViewer.cs" />
+    <Compile Include="Src\Verificator\StateSpaceViewer.Designer.cs">
       <DependentUpon>StateSpaceViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Src\Pppv\Verificator\SWIProlog.cs" />
-    <Compile Include="Src\Pppv\Verificator\VerificatorConfigurationData.cs" />
-    <Compile Include="Src\Pppv\Verificator\VerificatorForm.cs" />
-    <Compile Include="Src\Pppv\Verificator\VerificatorMainMenuStrip.cs" />
-    <Compile Include="Src\Pppv\Verificator\VerificatorStatusStrip.cs" />
-    <Compile Include="Src\Pppv\Verificator\VerificatorTabControl.cs" />
-    <Compile Include="Src\Pppv\Verificator\VerificatorTabControl.Designer.cs">
+    <Compile Include="Src\Verificator\SWIProlog.cs" />
+    <Compile Include="Src\Verificator\VerificatorConfigurationData.cs" />
+    <Compile Include="Src\Verificator\VerificatorForm.cs" />
+    <Compile Include="Src\Verificator\VerificatorMainMenuStrip.cs" />
+    <Compile Include="Src\Verificator\VerificatorStatusStrip.cs" />
+    <Compile Include="Src\Verificator\VerificatorTabControl.cs" />
+    <Compile Include="Src\Verificator\VerificatorTabControl.Designer.cs">
       <DependentUpon>VerificatorTabControl.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Src\Pppv\Verificator\PicViewer.resx">
+    <EmbeddedResource Include="Src\Verificator\PicViewer.resx">
       <DependentUpon>PicViewer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Src\Pppv\Verificator\StateSpaceViewer.resx">
+    <EmbeddedResource Include="Src\Verificator\StateSpaceViewer.resx">
       <DependentUpon>StateSpaceViewer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Src\Pppv\Verificator\VerificatorTabControl.resx">
+    <EmbeddedResource Include="Src\Verificator\VerificatorTabControl.resx">
       <DependentUpon>VerificatorTabControl.Designer.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\AssemblyInfo.in" />
@@ -121,8 +121,8 @@ xcopy .\Prolog\*  ..\..\..\..\Range\Prolog\  /y</PostBuildEvent>
     <Folder Include="Resources\Prolog" />
     <Folder Include="Src" />
     <Folder Include="Src\Pppv" />
-    <Folder Include="Src\Pppv\Verificator" />
-    <Folder Include="Src\Pppv\Verificator\Commands" />
+    <Folder Include="Src\Verificator" />
+    <Folder Include="Src\Verificator\Commands" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\ApplicationFramework\ApplicationFramework\ApplicationFramework.csproj">

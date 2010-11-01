@@ -66,22 +66,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Src\Pppv\Net\ArcTests.cs" />
-    <Compile Include="Src\Pppv\Net\PetriNetTests.cs" />
-    <Compile Include="Src\Pppv\Net\PlaceTests.cs" />
-    <Compile Include="Src\Pppv\Net\PredicatesListTests.cs" />
-    <Compile Include="Src\Pppv\Net\PredicateTests.cs" />
-    <Compile Include="Src\Pppv\Net\TokensListTests.cs" />
-    <Compile Include="Src\Pppv\Net\TokenTests.cs" />
-    <Compile Include="Src\Pppv\Net\TransitionTests.cs" />
-    <Compile Include="Src\Pppv\Utils\SerealizationTestHelper.cs" />
+    <Compile Include="Src\Net\ArcTests.cs" />
+    <Compile Include="Src\Net\PetriNetTests.cs" />
+    <Compile Include="Src\Net\PlaceTests.cs" />
+    <Compile Include="Src\Net\PredicatesListTests.cs" />
+    <Compile Include="Src\Net\PredicateTests.cs" />
+    <Compile Include="Src\Net\TokensListTests.cs" />
+    <Compile Include="Src\Net\TokenTests.cs" />
+    <Compile Include="Src\Net\TransitionTests.cs" />
+    <Compile Include="Src\Utils\SerealizationTestHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources" />
     <Folder Include="Src" />
     <Folder Include="Src\Pppv" />
-    <Folder Include="Src\Pppv\Net" />
-    <Folder Include="Src\Pppv\Utils" />
+    <Folder Include="Src\Net" />
+    <Folder Include="Src\Utils" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PppNet\PppNet.csproj">
