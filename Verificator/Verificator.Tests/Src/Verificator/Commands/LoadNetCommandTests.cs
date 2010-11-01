@@ -1,12 +1,12 @@
 ﻿/*
  * Created by SharpDevelop.
  * User: Torinous
- * Date: 12.10.2010
- * Time: 6:01
+ * Date: 31.10.2010
+ * Time: 17:35
  *
  */
 
-namespace Pppv.Verificator
+namespace Pppv.Verificator.Commands
 {
 	using System;
 	using System.Reflection;
@@ -17,28 +17,25 @@ namespace Pppv.Verificator
 	using NUnit.Framework.Constraints;
 
 	using Pppv.Net;
+	using Pppv.ApplicationFramework.Commands;
 	using SbsSW.SwiPlCs;
 	using SbsSW.SwiPlCs.Exceptions;
 
 	[TestFixture]
-	public class PetriNetVerificatorTests
+	public class LoadNetCommandTests
 	{
+		[TestFixtureSetUp]
+		public void Init()
+		{
+			SWIProlog.InitPrologEngineIfNeed();
+		}
+		
 		[Test]
 		public void TestOfSimpeCreation()
 		{
 			PetriNet net = new PetriNet();
-			PetriNetVerificator verificator = PetriNetVerificator.Instance;
-			verificator.LoadNetToPrologEngine(net);
-		}
-
-		[Test]
-		public void TestOfMultipleCreation()
-		{
-			PetriNet net = new PetriNet();
-			PetriNetVerificator verificator = PetriNetVerificator.Instance;
-			PetriNetVerificator verificator2 = PetriNetVerificator.Instance;
-			verificator.LoadNetToPrologEngine(net);
-			verificator2.LoadNetToPrologEngine(net);
+			Command command = new LoadNetCommand(net);
+			command.Execute();
 		}
 
 		[Test]
@@ -47,8 +44,8 @@ namespace Pppv.Verificator
 			PetriNet net = new PetriNet();
 			XmlSerializer serializer = new XmlSerializer(typeof(PetriNet));
 			net = serializer.Deserialize(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.PetriNetExample1.pnml")) as PetriNet;
-			PetriNetVerificator verificator = PetriNetVerificator.Instance;
-			verificator.LoadNetToPrologEngine(net);
+			Command command = new LoadNetCommand(net);
+			command.Execute();
 			try
 			{
 				Assert.That(PlQuery.PlCall("statespace:rstate(N,X)."), Is.False, "Предложения пространства состояний присутствуют до его построения");
@@ -58,8 +55,10 @@ namespace Pppv.Verificator
 				Console.WriteLine(e.Message);
 			}
 
-			verificator.CalculateStateSpace();
+			Command command2 = new ConstructStateSpaceCommand();
+			command2.Execute();
 			Assert.That(PlQuery.PlCall("statespace:rstate(N,X)."), Is.True, "Предложения пространства состояний отсутствуют после его построения");
 		}
 	}
 }
+

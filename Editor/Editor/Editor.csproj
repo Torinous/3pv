@@ -79,9 +79,9 @@
     <Compile Include="Src\Pppv\Editor\AdditionalCodeControl.Designer.cs">
       <DependentUpon>AdditionalCodeControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Src\Pppv\Editor\AdditionalCodeEditForm2.cs" />
-    <Compile Include="Src\Pppv\Editor\AdditionalCodeEditForm2.Designer.cs">
-      <DependentUpon>AdditionalCodeEditForm2.cs</DependentUpon>
+    <Compile Include="Src\Pppv\Editor\AdditionalCodeEditForm.cs" />
+    <Compile Include="Src\Pppv\Editor\AdditionalCodeEditForm.Designer.cs">
+      <DependentUpon>AdditionalCodeEditForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Src\PPPV\Editor\Application.cs" />
     <Compile Include="Src\Pppv\Editor\ArcEditControl.cs" />
@@ -205,8 +205,8 @@
     <EmbeddedResource Include="Src\Pppv\Editor\AdditionalCodeControl.resx">
       <DependentUpon>AdditionalCodeControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Src\Pppv\Editor\AdditionalCodeEditForm2.resx">
-      <DependentUpon>AdditionalCodeEditForm2.cs</DependentUpon>
+    <EmbeddedResource Include="Src\Pppv\Editor\AdditionalCodeEditForm.resx">
+      <DependentUpon>AdditionalCodeEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Src\Pppv\Editor\ArcEditControl.resx">
       <DependentUpon>ArcEditControl.cs</DependentUpon>

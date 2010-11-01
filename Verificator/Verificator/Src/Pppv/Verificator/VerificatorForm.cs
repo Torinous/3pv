@@ -17,28 +17,41 @@ namespace Pppv.Verificator
 	using Pppv.ApplicationFramework;
 	using Pppv.ApplicationFramework.Commands;
 	using Pppv.Net;
+	using Pppv.Utils;
+	using Pppv.Verificator.Commands;
+
+	using SbsSW.SwiPlCs;
 
 	public class VerificatorForm : Form
 	{
-		private PetriNetVerificator netVerificator;
+		private PetriNet net;
 		private VerificatorStatusStrip statusStrip;
 		private VerificatorMainMenuStrip menuStrip;
 		private CommandToolStrip commonToolStrip;
 		private VerificatorTabControl tabControl;
 		private ToolStripContainer toolToolStripContainer;
+		private Configuration<VerificatorConfigurationData> configuration;
 
-		public VerificatorForm(PetriNetVerificator netVerificator)
+		public VerificatorForm()
 		{
 			this.SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true);
 			this.InitializeComponent();
-			this.NetVerificator = netVerificator;
-			this.NetVerificator.PostStatusMessage += this.PostStatusMessageHandler;
+			this.configuration = Configuration<VerificatorConfigurationData>.Instance;
+			this.configuration.SourceFile = Environment.CurrentDirectory + "\\Verificator.conf";
+			this.configuration.Load();
+			SWIProlog.InitPrologEngineIfNeed();
 		}
 
-		public PetriNetVerificator NetVerificator
+		public VerificatorForm(PetriNet net) : this()
 		{
-			get { return this.netVerificator; }
-			private set { this.netVerificator = value; }
+			this.Net = net;
+			new LoadNetCommand(this.Net).Execute();
+		}
+		
+		public PetriNet Net
+		{
+			get { return this.net; }
+			private set { this.net = value; }
 		}
 
 		public VerificatorMainMenuStrip MainVerificatorMenuStrip
@@ -68,7 +81,7 @@ namespace Pppv.Verificator
 
 		protected override void OnClosed(EventArgs e)
 		{
-			this.NetVerificator.PostStatusMessage -= this.PostStatusMessageHandler;
+			this.configuration.Save();
 			base.OnClosed(e);
 		}
 
@@ -114,7 +127,7 @@ namespace Pppv.Verificator
 
 			this.ClientSize = new System.Drawing.Size(599, 299);
 			this.Name = "VerificatorForm";
-			this.Text = "3Pv:Editor " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
+			this.Text = "3Pv:Verificator " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
 			this.toolToolStripContainer.ContentPanel.ResumeLayout(false);
 			this.toolToolStripContainer.ContentPanel.PerformLayout();

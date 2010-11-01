@@ -41,6 +41,7 @@ namespace Pppv.Verificator
 			}
 			
 			plotCommand.Execute();
+			this.picViewer1.Image = plotCommand.ResultImage;
 		}
 		
 		private void GraphvizToolPickerTextChanged(object sender, EventArgs e)

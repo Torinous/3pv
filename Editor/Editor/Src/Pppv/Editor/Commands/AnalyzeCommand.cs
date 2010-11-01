@@ -4,7 +4,6 @@
  * Date: 12.10.2010
  * Time: 3:42
  *
- *
  */
 
 namespace Pppv.Editor.Commands
@@ -19,6 +18,8 @@ namespace Pppv.Editor.Commands
 
 	public class AnalyzeCommand : NetEditorInterfaceCommand
 	{
+		private Form mainForm;
+		
 		public AnalyzeCommand()
 		{
 			this.Name = "Анализ";
@@ -27,17 +28,22 @@ namespace Pppv.Editor.Commands
 			this.Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Save.png"), true);
 			this.IsHistorical = false;
 		}
-
+		
+		public AnalyzeCommand(Form form) : this()
+		{
+			this.MainForm = form;
+		}
+		
+		public Form MainForm
+		{
+			get { return mainForm; }
+			set { mainForm = value; }
+		}		
+		
 		public override void Execute()
 		{
-			MainForm mainForm = MainForm.Instance;
-			PetriNetVerificator verificator = PetriNetVerificator.Instance;
-			if (mainForm.ActiveNet != null)
-			{
-				verificator.LoadNetToPrologEngine(mainForm.ActiveNet.BaseNet);
-			}
-
-			verificator.StartInterface(mainForm);
+			this.SetUpTargetNet();
+			this.RunVerificator();
 		}
 
 		public override void Unexecute()
@@ -47,6 +53,21 @@ namespace Pppv.Editor.Commands
 		public override bool CheckEnabled()
 		{
 			return true;
+		}
+		
+		private void RunVerificator()
+		{
+			Form verificatorForm;
+			if (this.Net != null)
+			{
+				verificatorForm = new VerificatorForm(this.Net.BaseNet);
+			}
+			else
+			{
+				verificatorForm = new VerificatorForm();
+			}
+
+			verificatorForm.ShowDialog(this.MainForm);			
 		}
 	}
 }

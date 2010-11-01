@@ -55,13 +55,6 @@
 			System.Diagnostics.Debug.AutoFlush = true;
 		}
 
-		/*public void Run()
-      {
-         
-         System.Windows.Forms.Application.Run(this.mainFormInst);
-         PreciseTimer.ShowTimeTable();
-      }*/
-
 		[STAThread]
 		private static void Main()
 		{
