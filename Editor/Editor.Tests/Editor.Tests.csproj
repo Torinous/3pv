@@ -79,7 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Src" />
-    <Folder Include="Src\Pppv" />
     <Folder Include="Src\Editor" />
     <Folder Include="Src\Editor\Commands" />
     <Folder Include="Src\Editor\Shapes" />

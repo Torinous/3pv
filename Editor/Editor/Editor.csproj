@@ -234,7 +234,6 @@
   <ItemGroup>
     <Folder Include="Resources" />
     <Folder Include="Src" />
-    <Folder Include="Src\PPPV" />
     <Folder Include="Src\Editor" />
     <Folder Include="Src\Editor\Commands" />
     <Folder Include="Src\Editor\Shapes" />
