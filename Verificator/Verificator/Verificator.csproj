@@ -120,7 +120,6 @@ xcopy .\Prolog\*  ..\..\..\..\Range\Prolog\  /y</PostBuildEvent>
     <Folder Include="Resources" />
     <Folder Include="Resources\Prolog" />
     <Folder Include="Src" />
-    <Folder Include="Src\Pppv" />
     <Folder Include="Src\Verificator" />
     <Folder Include="Src\Verificator\Commands" />
   </ItemGroup>
