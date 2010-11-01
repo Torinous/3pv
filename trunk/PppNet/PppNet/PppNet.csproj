@@ -67,7 +67,6 @@
   <ItemGroup>
     <Folder Include="Resources" />
     <Folder Include="Src" />
-    <Folder Include="Src\Pppv" />
     <Folder Include="Src\Net" />
   </ItemGroup>
   <ItemGroup>
