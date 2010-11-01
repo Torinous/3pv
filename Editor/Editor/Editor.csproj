@@ -74,108 +74,108 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Src\PPPV\Editor\AboutForm.cs" />
-    <Compile Include="Src\Pppv\Editor\AdditionalCodeControl.cs" />
-    <Compile Include="Src\Pppv\Editor\AdditionalCodeControl.Designer.cs">
+    <Compile Include="Src\Editor\AboutForm.cs" />
+    <Compile Include="Src\Editor\AdditionalCodeControl.cs" />
+    <Compile Include="Src\Editor\AdditionalCodeControl.Designer.cs">
       <DependentUpon>AdditionalCodeControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Src\Pppv\Editor\AdditionalCodeEditForm.cs" />
-    <Compile Include="Src\Pppv\Editor\AdditionalCodeEditForm.Designer.cs">
+    <Compile Include="Src\Editor\AdditionalCodeEditForm.cs" />
+    <Compile Include="Src\Editor\AdditionalCodeEditForm.Designer.cs">
       <DependentUpon>AdditionalCodeEditForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Src\PPPV\Editor\Application.cs" />
-    <Compile Include="Src\Pppv\Editor\ArcEditControl.cs" />
-    <Compile Include="Src\Pppv\Editor\ArcEditControl.Designer.cs">
+    <Compile Include="Src\Editor\Application.cs" />
+    <Compile Include="Src\Editor\ArcEditControl.cs" />
+    <Compile Include="Src\Editor\ArcEditControl.Designer.cs">
       <DependentUpon>ArcEditControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Src\Pppv\Editor\ArcEditForm.cs" />
-    <Compile Include="Src\Pppv\Editor\ArcEditForm.Designer.cs">
+    <Compile Include="Src\Editor\ArcEditForm.cs" />
+    <Compile Include="Src\Editor\ArcEditForm.Designer.cs">
       <DependentUpon>ArcEditForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Src\PPPV\Editor\CanvasMouseEventArgs.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\AboutCommand.cs" />
-    <Compile Include="Src\Pppv\Editor\Commands\AdditionalCodeEditCommand.cs" />
-    <Compile Include="Src\Pppv\Editor\Commands\AddShapeCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\AddPlaceCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\AddTransitionCommand.cs" />
-    <Compile Include="Src\Pppv\Editor\Commands\AnalyzeCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\CloseNetCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\CopyCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\CutCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\DeleteCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\DeleteSelectedCommand.cs" />
-    <Compile Include="Src\Pppv\Editor\Commands\EditShapeCommand.cs" />
-    <Compile Include="Src\Pppv\Editor\Commands\EditorInterfaceCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\ElementCommand.cs" />
-    <Compile Include="Src\Pppv\Editor\Commands\NetElementInterfaceCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\NetCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\NetInterfaceCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\NewNetCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\OpenNetCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\PasteCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\QuitCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\RedoCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\SaveAsCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\SaveCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\SelectToolCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\ShowContextMenuCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\UndoCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\ZoomInCommand.cs" />
-    <Compile Include="Src\PPPV\Editor\Commands\ZoomOutCommand.cs" />
-    <Compile Include="Src\Pppv\Editor\CortegeEditControl.cs" />
-    <Compile Include="Src\Pppv\Editor\CortegeEditControl.Designer.cs">
+    <Compile Include="Src\Editor\CanvasMouseEventArgs.cs" />
+    <Compile Include="Src\Editor\Commands\AboutCommand.cs" />
+    <Compile Include="Src\Editor\Commands\AdditionalCodeEditCommand.cs" />
+    <Compile Include="Src\Editor\Commands\AddShapeCommand.cs" />
+    <Compile Include="Src\Editor\Commands\AddPlaceCommand.cs" />
+    <Compile Include="Src\Editor\Commands\AddTransitionCommand.cs" />
+    <Compile Include="Src\Editor\Commands\AnalyzeCommand.cs" />
+    <Compile Include="Src\Editor\Commands\CloseNetCommand.cs" />
+    <Compile Include="Src\Editor\Commands\CopyCommand.cs" />
+    <Compile Include="Src\Editor\Commands\CutCommand.cs" />
+    <Compile Include="Src\Editor\Commands\DeleteCommand.cs" />
+    <Compile Include="Src\Editor\Commands\DeleteSelectedCommand.cs" />
+    <Compile Include="Src\Editor\Commands\EditShapeCommand.cs" />
+    <Compile Include="Src\Editor\Commands\EditorInterfaceCommand.cs" />
+    <Compile Include="Src\Editor\Commands\ElementCommand.cs" />
+    <Compile Include="Src\Editor\Commands\NetElementInterfaceCommand.cs" />
+    <Compile Include="Src\Editor\Commands\NetCommand.cs" />
+    <Compile Include="Src\Editor\Commands\NetInterfaceCommand.cs" />
+    <Compile Include="Src\Editor\Commands\NewNetCommand.cs" />
+    <Compile Include="Src\Editor\Commands\OpenNetCommand.cs" />
+    <Compile Include="Src\Editor\Commands\PasteCommand.cs" />
+    <Compile Include="Src\Editor\Commands\QuitCommand.cs" />
+    <Compile Include="Src\Editor\Commands\RedoCommand.cs" />
+    <Compile Include="Src\Editor\Commands\SaveAsCommand.cs" />
+    <Compile Include="Src\Editor\Commands\SaveCommand.cs" />
+    <Compile Include="Src\Editor\Commands\SelectToolCommand.cs" />
+    <Compile Include="Src\Editor\Commands\ShowContextMenuCommand.cs" />
+    <Compile Include="Src\Editor\Commands\UndoCommand.cs" />
+    <Compile Include="Src\Editor\Commands\ZoomInCommand.cs" />
+    <Compile Include="Src\Editor\Commands\ZoomOutCommand.cs" />
+    <Compile Include="Src\Editor\CortegeEditControl.cs" />
+    <Compile Include="Src\Editor\CortegeEditControl.Designer.cs">
       <DependentUpon>CortegeEditControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Src\PPPV\Editor\EditorContextToolStripMenuItem.cs" />
-    <Compile Include="Src\PPPV\Editor\EditorToolStrip.cs" />
-    <Compile Include="Src\PPPV\Editor\MainForm.cs" />
-    <Compile Include="Src\PPPV\Editor\EditorMainMenuStrip.cs" />
-    <Compile Include="Src\PPPV\Editor\NetCanvas.cs" />
-    <Compile Include="Src\PPPV\Editor\PetriNetGraphical.cs" />
-    <Compile Include="Src\Pppv\Editor\PlaceEditControl.cs" />
-    <Compile Include="Src\Pppv\Editor\PlaceEditControl.Designer.cs">
+    <Compile Include="Src\Editor\EditorContextToolStripMenuItem.cs" />
+    <Compile Include="Src\Editor\EditorToolStrip.cs" />
+    <Compile Include="Src\Editor\MainForm.cs" />
+    <Compile Include="Src\Editor\EditorMainMenuStrip.cs" />
+    <Compile Include="Src\Editor\NetCanvas.cs" />
+    <Compile Include="Src\Editor\PetriNetGraphical.cs" />
+    <Compile Include="Src\Editor\PlaceEditControl.cs" />
+    <Compile Include="Src\Editor\PlaceEditControl.Designer.cs">
       <DependentUpon>PlaceEditControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Src\Pppv\Editor\PlaceEditForm.cs" />
-    <Compile Include="Src\Pppv\Editor\PlaceEditForm.Designer.cs">
+    <Compile Include="Src\Editor\PlaceEditForm.cs" />
+    <Compile Include="Src\Editor\PlaceEditForm.Designer.cs">
       <DependentUpon>PlaceEditForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Src\PPPV\Editor\RegionSelectionEventArgs.cs" />
-    <Compile Include="Src\PPPV\Editor\RemoveTabPageEventArgs.cs" />
-    <Compile Include="Src\PPPV\Editor\SaveNetEventArgs.cs" />
-    <Compile Include="Src\Pppv\Editor\SelectedNetElements.cs" />
-    <Compile Include="Src\Pppv\Editor\ShapeCollection.cs" />
-    <Compile Include="Src\Pppv\Editor\Shapes\ArcPointPilonShape.cs" />
-    <Compile Include="Src\PPPV\Editor\Shapes\ArcShape.cs" />
-    <Compile Include="Src\Pppv\Editor\Shapes\DependentShapesList.cs" />
-    <Compile Include="Src\PPPV\Editor\Shapes\IShape.cs" />
-    <Compile Include="Src\PPPV\Editor\Shapes\MoveEventArgs.cs" />
-    <Compile Include="Src\Pppv\Editor\Shapes\ParentShapeChangedEventArgs.cs" />
-    <Compile Include="Src\PPPV\Editor\Shapes\PlaceShape.cs" />
-    <Compile Include="Src\PPPV\Editor\Shapes\ResizeEventArgs.cs" />
-    <Compile Include="Src\Pppv\Editor\Shapes\NetElementShape.cs" />
-    <Compile Include="Src\Pppv\Editor\Shapes\Shape.cs" />
-    <Compile Include="Src\Pppv\Editor\Shapes\SizePilonShape.cs" />
-    <Compile Include="Src\PPPV\Editor\Shapes\TransitionShape.cs" />
-    <Compile Include="Src\PPPV\Editor\TabControlForNets.cs" />
-    <Compile Include="Src\PPPV\Editor\TabPageForNet.cs" />
-    <Compile Include="Src\Pppv\Editor\TokensEditControl.cs" />
-    <Compile Include="Src\Pppv\Editor\TokensEditControl.Designer.cs">
+    <Compile Include="Src\Editor\RegionSelectionEventArgs.cs" />
+    <Compile Include="Src\Editor\RemoveTabPageEventArgs.cs" />
+    <Compile Include="Src\Editor\SaveNetEventArgs.cs" />
+    <Compile Include="Src\Editor\SelectedNetElements.cs" />
+    <Compile Include="Src\Editor\ShapeCollection.cs" />
+    <Compile Include="Src\Editor\Shapes\ArcPointPilonShape.cs" />
+    <Compile Include="Src\Editor\Shapes\ArcShape.cs" />
+    <Compile Include="Src\Editor\Shapes\DependentShapesList.cs" />
+    <Compile Include="Src\Editor\Shapes\IShape.cs" />
+    <Compile Include="Src\Editor\Shapes\MoveEventArgs.cs" />
+    <Compile Include="Src\Editor\Shapes\ParentShapeChangedEventArgs.cs" />
+    <Compile Include="Src\Editor\Shapes\PlaceShape.cs" />
+    <Compile Include="Src\Editor\Shapes\ResizeEventArgs.cs" />
+    <Compile Include="Src\Editor\Shapes\NetElementShape.cs" />
+    <Compile Include="Src\Editor\Shapes\Shape.cs" />
+    <Compile Include="Src\Editor\Shapes\SizePilonShape.cs" />
+    <Compile Include="Src\Editor\Shapes\TransitionShape.cs" />
+    <Compile Include="Src\Editor\TabControlForNets.cs" />
+    <Compile Include="Src\Editor\TabPageForNet.cs" />
+    <Compile Include="Src\Editor\TokensEditControl.cs" />
+    <Compile Include="Src\Editor\TokensEditControl.Designer.cs">
       <DependentUpon>TokensEditControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Src\PPPV\Editor\Tools\AnnotationTool.cs" />
-    <Compile Include="Src\PPPV\Editor\Tools\ArcTool.cs" />
-    <Compile Include="Src\PPPV\Editor\Tools\InhibitorArcTool.cs" />
-    <Compile Include="Src\PPPV\Editor\Tools\PlaceTool.cs" />
-    <Compile Include="Src\PPPV\Editor\Tools\PointerTool.cs" />
-    <Compile Include="Src\PPPV\Editor\Tools\Tool.cs" />
-    <Compile Include="Src\PPPV\Editor\Tools\TransitionTool.cs" />
-    <Compile Include="Src\Pppv\Editor\TransitionEditControl.cs" />
-    <Compile Include="Src\Pppv\Editor\TransitionEditControl.Designer.cs">
+    <Compile Include="Src\Editor\Tools\AnnotationTool.cs" />
+    <Compile Include="Src\Editor\Tools\ArcTool.cs" />
+    <Compile Include="Src\Editor\Tools\InhibitorArcTool.cs" />
+    <Compile Include="Src\Editor\Tools\PlaceTool.cs" />
+    <Compile Include="Src\Editor\Tools\PointerTool.cs" />
+    <Compile Include="Src\Editor\Tools\Tool.cs" />
+    <Compile Include="Src\Editor\Tools\TransitionTool.cs" />
+    <Compile Include="Src\Editor\TransitionEditControl.cs" />
+    <Compile Include="Src\Editor\TransitionEditControl.Designer.cs">
       <DependentUpon>TransitionEditControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Src\Pppv\Editor\TransitionEditForm.cs" />
-    <Compile Include="Src\Pppv\Editor\TransitionEditForm.Designer.cs">
+    <Compile Include="Src\Editor\TransitionEditForm.cs" />
+    <Compile Include="Src\Editor\TransitionEditForm.Designer.cs">
       <DependentUpon>TransitionEditForm.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Resources\About.png" />
@@ -202,28 +202,28 @@
     <EmbeddedResource Include="Resources\Zoom in.png" />
     <EmbeddedResource Include="Resources\Zoom out.png" />
     <EmbeddedResource Include="Resources\Zoom.png" />
-    <EmbeddedResource Include="Src\Pppv\Editor\AdditionalCodeControl.resx">
+    <EmbeddedResource Include="Src\Editor\AdditionalCodeControl.resx">
       <DependentUpon>AdditionalCodeControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Src\Pppv\Editor\AdditionalCodeEditForm.resx">
+    <EmbeddedResource Include="Src\Editor\AdditionalCodeEditForm.resx">
       <DependentUpon>AdditionalCodeEditForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Src\Pppv\Editor\ArcEditControl.resx">
+    <EmbeddedResource Include="Src\Editor\ArcEditControl.resx">
       <DependentUpon>ArcEditControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Src\Pppv\Editor\ArcEditForm.resx">
+    <EmbeddedResource Include="Src\Editor\ArcEditForm.resx">
       <DependentUpon>ArcEditForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Src\Pppv\Editor\CortegeEditControl.resx">
+    <EmbeddedResource Include="Src\Editor\CortegeEditControl.resx">
       <DependentUpon>CortegeEditControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Src\Pppv\Editor\PlaceEditForm.resx">
+    <EmbeddedResource Include="Src\Editor\PlaceEditForm.resx">
       <DependentUpon>PlaceEditForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Src\Pppv\Editor\TokensEditControl.resx">
+    <EmbeddedResource Include="Src\Editor\TokensEditControl.resx">
       <DependentUpon>TokensEditControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Src\Pppv\Editor\TransitionEditForm.resx">
+    <EmbeddedResource Include="Src\Editor\TransitionEditForm.resx">
       <DependentUpon>TransitionEditForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
@@ -235,10 +235,10 @@
     <Folder Include="Resources" />
     <Folder Include="Src" />
     <Folder Include="Src\PPPV" />
-    <Folder Include="Src\PPPV\Editor" />
-    <Folder Include="Src\PPPV\Editor\Commands" />
-    <Folder Include="Src\PPPV\Editor\Shapes" />
-    <Folder Include="Src\PPPV\Editor\Tools" />
+    <Folder Include="Src\Editor" />
+    <Folder Include="Src\Editor\Commands" />
+    <Folder Include="Src\Editor\Shapes" />
+    <Folder Include="Src\Editor\Tools" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\ApplicationFramework\ApplicationFramework\ApplicationFramework.csproj">

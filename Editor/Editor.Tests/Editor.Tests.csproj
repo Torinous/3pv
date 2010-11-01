@@ -71,18 +71,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Src\Pppv\Editor\Commands\AddNetElementCommandTests.cs" />
-    <Compile Include="Src\Pppv\Editor\Commands\CommandTests.cs" />
-    <Compile Include="Src\Pppv\Editor\Commands\DeleteCommandTests.cs" />
-    <Compile Include="Src\Pppv\Editor\Commands\MacroCommandTests.cs" />
-    <Compile Include="Src\Pppv\Editor\Shapes\ShapeTests.cs" />
+    <Compile Include="Src\Editor\Commands\AddNetElementCommandTests.cs" />
+    <Compile Include="Src\Editor\Commands\CommandTests.cs" />
+    <Compile Include="Src\Editor\Commands\DeleteCommandTests.cs" />
+    <Compile Include="Src\Editor\Commands\MacroCommandTests.cs" />
+    <Compile Include="Src\Editor\Shapes\ShapeTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Src" />
     <Folder Include="Src\Pppv" />
-    <Folder Include="Src\Pppv\Editor" />
-    <Folder Include="Src\Pppv\Editor\Commands" />
-    <Folder Include="Src\Pppv\Editor\Shapes" />
+    <Folder Include="Src\Editor" />
+    <Folder Include="Src\Editor\Commands" />
+    <Folder Include="Src\Editor\Shapes" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AssemblyInfo.in" />

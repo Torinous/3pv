@@ -68,31 +68,31 @@
     <Folder Include="Resources" />
     <Folder Include="Src" />
     <Folder Include="Src\Pppv" />
-    <Folder Include="Src\Pppv\Net" />
+    <Folder Include="Src\Net" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AssemblyInfo.in" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Src\Pppv\Net\Arc.cs" />
-    <Compile Include="Src\Pppv\Net\ArcType.cs" />
-    <Compile Include="Src\Pppv\Net\IArc.cs" />
-    <Compile Include="Src\Pppv\Net\INetElement.cs" />
-    <Compile Include="Src\Pppv\Net\IPlace.cs" />
-    <Compile Include="Src\Pppv\Net\ITransition.cs" />
-    <Compile Include="Src\Pppv\Net\NetElement.cs" />
-    <Compile Include="Src\Pppv\Net\NetElementEnumerator.cs" />
-    <Compile Include="Src\Pppv\Net\ParentNetChangeEventArgs.cs" />
-    <Compile Include="Src\Pppv\Net\PenCapPlace.cs" />
-    <Compile Include="Src\Pppv\Net\PetriNet.cs" />
-    <Compile Include="Src\Pppv\Net\Place.cs" />
-    <Compile Include="Src\Pppv\Net\Predicate.cs" />
-    <Compile Include="Src\Pppv\Net\PredicateList.cs" />
-    <Compile Include="Src\Pppv\Net\SelectionChangeEventArgs.cs" />
-    <Compile Include="Src\Pppv\Net\Token.cs" />
-    <Compile Include="Src\Pppv\Net\TokensList.cs" />
-    <Compile Include="Src\Pppv\Net\Transition.cs" />
+    <Compile Include="Src\Net\Arc.cs" />
+    <Compile Include="Src\Net\ArcType.cs" />
+    <Compile Include="Src\Net\IArc.cs" />
+    <Compile Include="Src\Net\INetElement.cs" />
+    <Compile Include="Src\Net\IPlace.cs" />
+    <Compile Include="Src\Net\ITransition.cs" />
+    <Compile Include="Src\Net\NetElement.cs" />
+    <Compile Include="Src\Net\NetElementEnumerator.cs" />
+    <Compile Include="Src\Net\ParentNetChangeEventArgs.cs" />
+    <Compile Include="Src\Net\PenCapPlace.cs" />
+    <Compile Include="Src\Net\PetriNet.cs" />
+    <Compile Include="Src\Net\Place.cs" />
+    <Compile Include="Src\Net\Predicate.cs" />
+    <Compile Include="Src\Net\PredicateList.cs" />
+    <Compile Include="Src\Net\SelectionChangeEventArgs.cs" />
+    <Compile Include="Src\Net\Token.cs" />
+    <Compile Include="Src\Net\TokensList.cs" />
+    <Compile Include="Src\Net\Transition.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\ApplicationFramework\ApplicationFramework\ApplicationFramework.csproj">
