@@ -62,7 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Src\Pppv\Graphviz\GraphvizPlotterTests.cs" />
+    <Compile Include="Src\Graphviz\GraphvizPlotterTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ApplicationFramework\ApplicationFramework.csproj">
@@ -75,8 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Src" />
-    <Folder Include="Src\Pppv" />
-    <Folder Include="Src\Pppv\Graphviz" />
+    <Folder Include="Src\Graphviz" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>
