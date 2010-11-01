@@ -61,48 +61,47 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Src\Pppv\ApplicationFramework\CommandButton.cs" />
-    <Compile Include="Src\Pppv\ApplicationFramework\CommandButton.Designer.cs">
+    <Compile Include="Src\ApplicationFramework\CommandButton.cs" />
+    <Compile Include="Src\ApplicationFramework\CommandButton.Designer.cs">
       <DependentUpon>CommandButton.cs</DependentUpon>
     </Compile>
-    <Compile Include="Src\Pppv\ApplicationFramework\Commands\Command.cs" />
-    <Compile Include="Src\Pppv\ApplicationFramework\Commands\ICommand.cs" />
-    <Compile Include="Src\Pppv\ApplicationFramework\Commands\IInterfaceCommand.cs" />
-    <Compile Include="Src\Pppv\ApplicationFramework\Commands\InterfaceCommand.cs" />
-    <Compile Include="Src\Pppv\ApplicationFramework\Commands\MacroCommand.cs" />
-    <Compile Include="Src\Pppv\ApplicationFramework\Commands\NullCommand.cs" />
-    <Compile Include="Src\Pppv\ApplicationFramework\CommandToolStrip.cs" />
-    <Compile Include="Src\Pppv\ApplicationFramework\CommandEditorToolStripButton.cs" />
-    <Compile Include="Src\Pppv\ApplicationFramework\CommandToolStripMenuItem.cs" />
-    <Compile Include="Src\Pppv\ApplicationFramework\PppvException.cs" />
-    <Compile Include="Src\Pppv\ApplicationFramework\RefreshingListBox.cs" />
-    <Compile Include="Src\Pppv\Graphviz\NodeShape.cs" />
-    <Compile Include="Src\Pppv\Graphviz\NodeShapeFabric.cs" />
-    <Compile Include="Src\Pppv\Utils\Configuration.cs" />
-    <Compile Include="Src\Pppv\Utils\CommandLineArguments.cs" />
-    <Compile Include="Src\Pppv\Utils\DebugAssistant.cs" />
-    <Compile Include="Src\Pppv\Utils\NativeMethods.cs" />
-    <Compile Include="Src\Pppv\Utils\PreciseTimer.cs" />
-    <Compile Include="Src\Pppv\Utils\RtlAwareMessageBox.cs" />
-    <Compile Include="Src\Pppv\Graphviz\GraphvizPlotter.cs" />
-    <Compile Include="Src\Pppv\Graphviz\OutputFormat.cs" />
-    <Compile Include="Src\Pppv\Graphviz\OutputFormatFabric.cs" />
-    <Compile Include="Src\Pppv\Graphviz\Plotter.cs" />
-    <Compile Include="Src\Pppv\Graphviz\PlotterFileNameFabric.cs" />
+    <Compile Include="Src\ApplicationFramework\Commands\Command.cs" />
+    <Compile Include="Src\ApplicationFramework\Commands\ICommand.cs" />
+    <Compile Include="Src\ApplicationFramework\Commands\IInterfaceCommand.cs" />
+    <Compile Include="Src\ApplicationFramework\Commands\InterfaceCommand.cs" />
+    <Compile Include="Src\ApplicationFramework\Commands\MacroCommand.cs" />
+    <Compile Include="Src\ApplicationFramework\Commands\NullCommand.cs" />
+    <Compile Include="Src\ApplicationFramework\CommandToolStrip.cs" />
+    <Compile Include="Src\ApplicationFramework\CommandEditorToolStripButton.cs" />
+    <Compile Include="Src\ApplicationFramework\CommandToolStripMenuItem.cs" />
+    <Compile Include="Src\ApplicationFramework\PppvException.cs" />
+    <Compile Include="Src\ApplicationFramework\RefreshingListBox.cs" />
+    <Compile Include="Src\Graphviz\NodeShape.cs" />
+    <Compile Include="Src\Graphviz\NodeShapeFabric.cs" />
+    <Compile Include="Src\Utils\Configuration.cs" />
+    <Compile Include="Src\Utils\CommandLineArguments.cs" />
+    <Compile Include="Src\Utils\DebugAssistant.cs" />
+    <Compile Include="Src\Utils\NativeMethods.cs" />
+    <Compile Include="Src\Utils\PreciseTimer.cs" />
+    <Compile Include="Src\Utils\RtlAwareMessageBox.cs" />
+    <Compile Include="Src\Graphviz\GraphvizPlotter.cs" />
+    <Compile Include="Src\Graphviz\OutputFormat.cs" />
+    <Compile Include="Src\Graphviz\OutputFormatFabric.cs" />
+    <Compile Include="Src\Graphviz\Plotter.cs" />
+    <Compile Include="Src\Graphviz\PlotterFileNameFabric.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AssemblyInfo.in" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Src" />
-    <Folder Include="Src\Pppv" />
-    <Folder Include="Src\Pppv\ApplicationFramework\Commands" />
-    <Folder Include="Src\Pppv\ApplicationFramework" />
-    <Folder Include="Src\Pppv\Utils" />
-    <Folder Include="Src\Pppv\Graphviz" />
+    <Folder Include="Src\ApplicationFramework\Commands" />
+    <Folder Include="Src\ApplicationFramework" />
+    <Folder Include="Src\Utils" />
+    <Folder Include="Src\Graphviz" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Src\Pppv\ApplicationFramework\CommandButton.resx">
+    <EmbeddedResource Include="Src\ApplicationFramework\CommandButton.resx">
       <DependentUpon>CommandButton.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
