@@ -19,6 +19,8 @@ namespace Pppv.Verificator.Commands
 
 	public class SaveStateSpaceImageCommand : InterfaceCommand
 	{
+		private VerificatorForm mainForm;
+		
 		public SaveStateSpaceImageCommand()
 		{
 			this.Name = "Сохранить пространство состояний";
@@ -27,22 +29,22 @@ namespace Pppv.Verificator.Commands
 			this.Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Export.png"), true);
 		}
 		
+		public SaveStateSpaceImageCommand(VerificatorForm form) : this()
+		{
+			this.MainForm = form;
+		}
+		
+		public VerificatorForm MainForm
+		{
+			get { return this.mainForm; }
+			set { this.mainForm = value; }
+		}
+			
 		public override void Execute()
 		{
 			SaveFileDialog saveFileDialog = new SaveFileDialog();
-			PetriNetVerificator verificator = PetriNetVerificator.Instance;
-			if (verificator == null)
-			{
-				return;
-			}
 			
-			VerificatorForm mainForm = verificator.MainForm;
-			if (mainForm == null)
-			{
-				return;
-			}
-			
-			Image image = mainForm.StateSpaceImage;
+			Image image = this.MainForm.StateSpaceImage;
 			if (image == null)
 			{
 				return;

@@ -13,9 +13,9 @@ namespace Pppv.Editor
 	using System.Drawing;
 	using System.Windows.Forms;
 
-	public partial class AdditionalCodeEditForm2 : Form
+	public partial class AdditionalCodeEditForm : Form
 	{
-		public AdditionalCodeEditForm2(PetriNetGraphical net)
+		public AdditionalCodeEditForm(PetriNetGraphical net)
 		{
 			this.InitializeComponent();
 			this.additionalCodeControl1.Net = net;

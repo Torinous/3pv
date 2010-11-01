@@ -9,28 +9,28 @@
 
 namespace Pppv.Verificator
 {
-   using System;
-   using System.Windows.Forms;
+	using System;
+	using System.Windows.Forms;
 
-   public class VerificatorStatusStrip : StatusStrip
-   {
-      private ToolStripStatusLabel toolStripStatusLabel;
+	public class VerificatorStatusStrip : StatusStrip
+	{
+		private ToolStripStatusLabel toolStripStatusLabel;
 
-      public VerificatorStatusStrip()
-      {
-         this.toolStripStatusLabel = new ToolStripStatusLabel();
-         this.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.ToolStripStatusLabel });
-      }
+		public VerificatorStatusStrip()
+		{
+			this.toolStripStatusLabel = new ToolStripStatusLabel();
+			this.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { this.ToolStripStatusLabel });
+		}
 
-      public ToolStripStatusLabel ToolStripStatusLabel
-      {
-         get { return this.toolStripStatusLabel; }
-         private set { this.toolStripStatusLabel = value; }
-      }
-      
-      public void PostStatusMessage(string message)
-      {
-         this.ToolStripStatusLabel.Text = message;
-      }
-   }
+		public ToolStripStatusLabel ToolStripStatusLabel
+		{
+			get { return this.toolStripStatusLabel; }
+			private set { this.toolStripStatusLabel = value; }
+		}
+		
+		public void PostStatusMessage(string message)
+		{
+			this.ToolStripStatusLabel.Text = message;
+		}
+	}
 }

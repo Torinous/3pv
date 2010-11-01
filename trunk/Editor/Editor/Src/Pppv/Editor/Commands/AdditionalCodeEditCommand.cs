@@ -35,7 +35,7 @@ namespace Pppv.Editor.Commands
 			MainForm mainForm = MainForm.Instance;
 			if (mainForm != null)
 			{
-				Form f = new AdditionalCodeEditForm2(this.Net);
+				Form f = new AdditionalCodeEditForm(this.Net);
 				f.ShowDialog(mainForm);
 				f.Dispose();
 			}

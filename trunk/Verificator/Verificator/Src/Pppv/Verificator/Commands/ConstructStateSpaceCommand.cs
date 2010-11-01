@@ -18,6 +18,8 @@ namespace Pppv.Verificator.Commands
 	using Pppv.ApplicationFramework.Commands;
 	using Pppv.Graphviz;
 	using Pppv.Net;
+	
+	using SbsSW.SwiPlCs;
 
 	public class ConstructStateSpaceCommand : InterfaceCommand
 	{
@@ -31,9 +33,11 @@ namespace Pppv.Verificator.Commands
 
 		public override void Execute()
 		{
-			PetriNetVerificator verificator = PetriNetVerificator.Instance;
-			verificator.CalculateStateSpace();
-			new PlotStateSpaceImage().Execute();
+			//this.SetStatusMessage("Вычисление пространства состояний сети: " + this.Net.Id);
+			DateTime startTime = DateTime.Now;
+			PlQuery.PlCall("statespace:createStateSpace.");
+			TimeSpan duration = DateTime.Now - startTime;
+			//this.SetStatusMessage(String.Format("Пространство состояний сети: {0} построено({1} мс)", this.Net.Id, duration.TotalMilliseconds));
 		}
 
 		public override void Unexecute()
