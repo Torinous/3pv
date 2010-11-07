@@ -23,7 +23,6 @@
 			this.UpdateFileNameText(false);
 			this.InitializeComponent();
 			this.AutoScroll = true;
-			this.Enter += this.EnterHandler;
 		}
 
 		public NetCanvas NetCanvas
@@ -109,15 +108,6 @@
 			this.Controls.Add(NetCanvas = new NetCanvas());
 			this.ResumeLayout(false);
 			this.PerformLayout();
-		}
-
-		private void EnterHandler(object sender, System.EventArgs e)
-		{
-			if (this.Net != null)
-			{
-				this.Net.SetSelected();
-				DebugAssistant.LogTrace("tabEntered");
-			}
 		}
 
 		private void UpdateFileNameText(bool changedMark)

@@ -27,6 +27,7 @@ namespace Pppv.Verificator.Commands
 	public class LoadNetCommand : InterfaceCommand
 	{
 		private PetriNet net;
+		private VerificatorForm form;
 		
 		public LoadNetCommand()
 		{
@@ -36,8 +37,9 @@ namespace Pppv.Verificator.Commands
 			this.Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Open.png"), true);
 		}
 
-		public LoadNetCommand(PetriNet net) : this()
+		public LoadNetCommand(VerificatorForm form, PetriNet net) : this()
 		{
+			this.Form = form;
 			this.Net = net;
 		}
 
@@ -46,15 +48,23 @@ namespace Pppv.Verificator.Commands
 			get { return this.net; }
 			set { this.net = value; }
 		}
+		
+		public VerificatorForm Form
+		{
+			get { return form; }
+			set { form = value; }
+		}
 
 		public override void Execute()
 		{
 			DateTime startTime = DateTime.Now;
+			this.Form.Net = this.Net;
 			PetriNetPrologTranslated netTranslator = new PetriNetPrologTranslated(this.Net);
 
 			string tmpFile = Path.GetTempFileName();
 			StreamWriter tmpFilestream = new StreamWriter(tmpFile, false, Encoding.GetEncoding(1251));
 			tmpFilestream.Write(netTranslator.ToProlog());
+			this.Form.PublishPrologCode(netTranslator.ToProlog());
 			tmpFilestream.Close();
 			tmpFile = tmpFile.Replace("\\", "\\\\");
 			PlQuery.PlCall("consult('" + tmpFile + "').");

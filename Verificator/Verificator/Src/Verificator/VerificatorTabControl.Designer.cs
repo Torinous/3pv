@@ -39,15 +39,17 @@ namespace Pppv.Verificator
       	this.tabControl1 = new System.Windows.Forms.TabControl();
       	this.tabPageWithStateSpace = new System.Windows.Forms.TabPage();
       	this.stateSpaceViewer1 = new Pppv.Verificator.StateSpaceViewer();
-      	this.tabPage1 = new System.Windows.Forms.TabPage();
+      	this.tabPageWithProlog = new System.Windows.Forms.TabPage();
+      	this.PrologTextBox = new System.Windows.Forms.TextBox();
       	this.tabControl1.SuspendLayout();
       	this.tabPageWithStateSpace.SuspendLayout();
+      	this.tabPageWithProlog.SuspendLayout();
       	this.SuspendLayout();
       	// 
       	// tabControl1
       	// 
       	this.tabControl1.Controls.Add(this.tabPageWithStateSpace);
-      	this.tabControl1.Controls.Add(this.tabPage1);
+      	this.tabControl1.Controls.Add(this.tabPageWithProlog);
       	this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
       	this.tabControl1.Location = new System.Drawing.Point(0, 0);
       	this.tabControl1.Name = "tabControl1";
@@ -75,15 +77,27 @@ namespace Pppv.Verificator
       	this.stateSpaceViewer1.Size = new System.Drawing.Size(520, 377);
       	this.stateSpaceViewer1.TabIndex = 0;
       	// 
-      	// tabPage1
+      	// tabPageWithProlog
       	// 
-      	this.tabPage1.Location = new System.Drawing.Point(4, 22);
-      	this.tabPage1.Name = "tabPage1";
-      	this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-      	this.tabPage1.Size = new System.Drawing.Size(528, 385);
-      	this.tabPage1.TabIndex = 1;
-      	this.tabPage1.Text = "tabPage1";
-      	this.tabPage1.UseVisualStyleBackColor = true;
+      	this.tabPageWithProlog.Controls.Add(this.PrologTextBox);
+      	this.tabPageWithProlog.Location = new System.Drawing.Point(4, 22);
+      	this.tabPageWithProlog.Name = "tabPageWithProlog";
+      	this.tabPageWithProlog.Padding = new System.Windows.Forms.Padding(3);
+      	this.tabPageWithProlog.Size = new System.Drawing.Size(528, 385);
+      	this.tabPageWithProlog.TabIndex = 1;
+      	this.tabPageWithProlog.Text = "Prolog";
+      	this.tabPageWithProlog.UseVisualStyleBackColor = true;
+      	// 
+      	// PrologTextBox
+      	// 
+      	this.PrologTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+      	this.PrologTextBox.Location = new System.Drawing.Point(3, 3);
+      	this.PrologTextBox.Multiline = true;
+      	this.PrologTextBox.Name = "PrologTextBox";
+      	this.PrologTextBox.ReadOnly = true;
+      	this.PrologTextBox.Size = new System.Drawing.Size(522, 379);
+      	this.PrologTextBox.TabIndex = 0;
+      	this.PrologTextBox.WordWrap = false;
       	// 
       	// VerificatorTabControl
       	// 
@@ -95,10 +109,13 @@ namespace Pppv.Verificator
       	this.Size = new System.Drawing.Size(536, 411);
       	this.tabControl1.ResumeLayout(false);
       	this.tabPageWithStateSpace.ResumeLayout(false);
+      	this.tabPageWithProlog.ResumeLayout(false);
+      	this.tabPageWithProlog.PerformLayout();
       	this.ResumeLayout(false);
       }
+      public System.Windows.Forms.TabPage tabPageWithProlog;
+      public System.Windows.Forms.TextBox PrologTextBox;
       public Pppv.Verificator.StateSpaceViewer stateSpaceViewer1;
-      private System.Windows.Forms.TabPage tabPage1;
       public System.Windows.Forms.TabPage tabPageWithStateSpace;
       private System.Windows.Forms.TabControl tabControl1;
    }

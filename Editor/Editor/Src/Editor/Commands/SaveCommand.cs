@@ -5,25 +5,21 @@
 	using System.Reflection;
 	using System.Windows.Forms;
 
-	using Pppv.ApplicationFramework.Commands;
+	using Pppv.Commands;
 	using Pppv.Net;
 
-	public class SaveCommand : NetEditorInterfaceCommand
+	public class SaveNetCommand : Command
 	{
-		public SaveCommand()
+		public static string id = "Сохранить";
+		
+		public SaveNetCommand(EventHandler<EventArgs> handlerExecute, EventHandler<EventArgs> handlerUpdate) : base(id, handlerExecute, handlerUpdate)
 		{
-			this.Name = "Сохранить";
 			this.Description = "Сохранить сеть в файл";
 			this.ShortcutKeys = Keys.Control | Keys.S;
 			this.Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Save.png"), true);
 		}
-
-		public SaveCommand(PetriNetGraphical net) : this()
-		{
-			this.Net = net;
-		}
 			
-		public override void Execute()
+		/*public override void Execute()
 		{	
 			if (this.Net != null)
 			{
@@ -46,6 +42,6 @@
 		public override bool CheckEnabled()
 		{
 			return CheckFormAndActiveNet();
-		}
+		}*/
 	}
 }

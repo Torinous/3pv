@@ -76,6 +76,13 @@
     <Compile Include="Src\ApplicationFramework\CommandToolStripMenuItem.cs" />
     <Compile Include="Src\ApplicationFramework\PppvException.cs" />
     <Compile Include="Src\ApplicationFramework\RefreshingListBox.cs" />
+    <Compile Include="Src\Commands\Command.cs" />
+    <Compile Include="Src\Commands\CommandExecutor.cs" />
+    <Compile Include="Src\Commands\CommandInstanceList.cs" />
+    <Compile Include="Src\Commands\CommandManager.cs" />
+    <Compile Include="Src\Commands\CommandsList.cs" />
+    <Compile Include="Src\Commands\MenuCommandExecutor.cs" />
+    <Compile Include="Src\Commands\ToolbarCommandExecutor.cs" />
     <Compile Include="Src\Graphviz\NodeShape.cs" />
     <Compile Include="Src\Graphviz\NodeShapeFabric.cs" />
     <Compile Include="Src\Utils\Configuration.cs" />
@@ -97,6 +104,7 @@
     <Folder Include="Src" />
     <Folder Include="Src\ApplicationFramework\Commands" />
     <Folder Include="Src\ApplicationFramework" />
+    <Folder Include="Src\Commands" />
     <Folder Include="Src\Utils" />
     <Folder Include="Src\Graphviz" />
   </ItemGroup>

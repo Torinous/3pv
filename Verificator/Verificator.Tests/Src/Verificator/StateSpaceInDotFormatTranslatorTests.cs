@@ -23,7 +23,7 @@ namespace Pppv.Verificator
 	[TestFixture]
 	public class StateSpaceInDotFormatTranslatorTests
 	{
-		[Test]
+		/*[Test]
 		public void TestTranslationOfEmptyNet()
 		{
 			PetriNet net = new PetriNet();
@@ -31,9 +31,9 @@ namespace Pppv.Verificator
 			
 			string stateSpaceInDot = StateSpaceInDotFormatTranslator.Create();
 			Assert.That(stateSpaceInDot, Is.StringContaining("digraph"), "Пространство состояний в формате dot не имеет глобального тега");
-		}
+		}*/
 
-		[Test]
+		/*[Test]
 		public void TestTranslationOfNetWithData()
 		{
 			PetriNet net = new PetriNet();
@@ -44,6 +44,6 @@ namespace Pppv.Verificator
 
 			string stateSpaceInDot = StateSpaceInDotFormatTranslator.Create();
 			Assert.That(stateSpaceInDot, Is.StringContaining("S0 -> S1"), "Пространство состояний в формате dot не имеет перехода из стартового состояния");
-		}
+		}*/
 	}
 }

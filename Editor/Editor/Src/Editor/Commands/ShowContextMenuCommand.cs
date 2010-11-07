@@ -77,7 +77,7 @@
 
 		private void AddDeleteSection(ContextMenuStrip contextMenuStrip)
 		{
-			if (this.Net.SelectedObjects.Count == 0)
+			/*if (this.Net.SelectedObjects.Count == 0)
 			{
 				EditorContextToolStripMenuItem item = new EditorContextToolStripMenuItem(new DeleteCommand(this.ContextMenuTarget));
 				contextMenuStrip.Items.Add(item);
@@ -88,7 +88,7 @@
 				EditorContextToolStripMenuItem item = new EditorContextToolStripMenuItem(new DeleteSelectedCommand(this.Net));
 				contextMenuStrip.Items.Add(item);
 				item.CheckEnabled();
-			}
+			}*/
 		}
 	}
 }

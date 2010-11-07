@@ -117,7 +117,12 @@
     <Compile Include="Src\Editor\Commands\RedoCommand.cs" />
     <Compile Include="Src\Editor\Commands\SaveAsCommand.cs" />
     <Compile Include="Src\Editor\Commands\SaveCommand.cs" />
-    <Compile Include="Src\Editor\Commands\SelectToolCommand.cs" />
+    <Compile Include="Src\Editor\Commands\SelectAnnotationToolCommand.cs" />
+    <Compile Include="Src\Editor\Commands\SelectArcToolCommand.cs" />
+    <Compile Include="Src\Editor\Commands\SelectInhibitorArcCommand.cs" />
+    <Compile Include="Src\Editor\Commands\SelectPlaceToolCommand.cs" />
+    <Compile Include="Src\Editor\Commands\SelectPointerToolCommand.cs" />
+    <Compile Include="Src\Editor\Commands\SelectTransitionToolCommand.cs" />
     <Compile Include="Src\Editor\Commands\ShowContextMenuCommand.cs" />
     <Compile Include="Src\Editor\Commands\UndoCommand.cs" />
     <Compile Include="Src\Editor\Commands\ZoomInCommand.cs" />
@@ -127,7 +132,14 @@
       <DependentUpon>CortegeEditControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Src\Editor\EditorContextToolStripMenuItem.cs" />
-    <Compile Include="Src\Editor\EditorToolStrip.cs" />
+    <Compile Include="Src\Editor\EditorForm.cs" />
+    <Compile Include="Src\Editor\EditorForm.Designer.cs">
+      <DependentUpon>EditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Src\Editor\EditorTabControl.cs" />
+    <Compile Include="Src\Editor\EditorTabControl.Designer.cs">
+      <DependentUpon>EditorTabControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Src\Editor\MainForm.cs" />
     <Compile Include="Src\Editor\EditorMainMenuStrip.cs" />
     <Compile Include="Src\Editor\NetCanvas.cs" />
@@ -169,6 +181,8 @@
     <Compile Include="Src\Editor\Tools\PlaceTool.cs" />
     <Compile Include="Src\Editor\Tools\PointerTool.cs" />
     <Compile Include="Src\Editor\Tools\Tool.cs" />
+    <Compile Include="Src\Editor\Tools\ToolsEnum.cs" />
+    <Compile Include="Src\Editor\Tools\ToolsManager.cs" />
     <Compile Include="Src\Editor\Tools\TransitionTool.cs" />
     <Compile Include="Src\Editor\TransitionEditControl.cs" />
     <Compile Include="Src\Editor\TransitionEditControl.Designer.cs">
@@ -217,6 +231,9 @@
     <EmbeddedResource Include="Src\Editor\CortegeEditControl.resx">
       <DependentUpon>CortegeEditControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Src\Editor\EditorTabControl.resx">
+      <DependentUpon>EditorTabControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Src\Editor\PlaceEditForm.resx">
       <DependentUpon>PlaceEditForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -230,6 +247,7 @@
     <None Include="app.manifest" />
     <None Include="Properties\AssemblyInfo.in" />
     <EmbeddedResource Include="Resources\Annotation.png" />
+    <EmbeddedResource Include="Resources\Exit.ico" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources" />

@@ -12,44 +12,15 @@
 
 	public class PointerTool : Tool
 	{
-		private static string name = "Указатель";
-		private static string description = "Инструмент выбора и перемещения элементов сети";
-		private static Keys shortcutKeys = Keys.Control | Keys.Shift | Keys.M;
-		private static Image pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Pointer.png"), true);
-
 		private Point lastMouseDownPoint;
 		private bool frameIsActive;
 		private Rectangle selectedRectangle;
 		private Point selectFrom;
 		private IShape pickedShape;
 		
-		public PointerTool(PetriNetGraphical net) : base(net)
+		public PointerTool() : base()
 		{
 			this.SelectedRectangle = new Rectangle(new Point(0, 0), new Size(0, 0));
-		}
-
-		public override string Name
-		{
-			get { return name; }
-			set { name = value; }
-		}
-		
-		public override string Description
-		{
-			get { return description; }
-			set { description = value; }
-		}
-
-		public override Keys ShortcutKeys
-		{
-			get { return shortcutKeys; }
-			set { shortcutKeys = value; }
-		}
-
-		public override Image Pictogram
-		{
-			get { return pictogram; }
-			set { pictogram = value; }
 		}
 
 		public Rectangle SelectedRectangle

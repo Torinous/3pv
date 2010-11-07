@@ -8,7 +8,10 @@
 		createStateSpace/0,
 		clearStateSpace/0,
 		stateSpaceToDotFormatTmpFile/1,
-		gds/3
+		gds/3,
+		rstate/2,
+		remove/3,
+		insert/3
 	]).
 
 :-use_module(properties).
