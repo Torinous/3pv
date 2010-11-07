@@ -30,15 +30,15 @@ namespace Pppv.Verificator.Commands
 			SWIProlog.InitPrologEngineIfNeed();
 		}
 		
-		[Test]
+		/*[Test]
 		public void TestOfSimpeCreation()
 		{
 			PetriNet net = new PetriNet();
 			Command command = new LoadNetCommand(net);
 			command.Execute();
-		}
+		}*/
 
-		[Test]
+		/*[Test]
 		public void TestOfStateSpaceCreation()
 		{
 			PetriNet net = new PetriNet();
@@ -58,7 +58,7 @@ namespace Pppv.Verificator.Commands
 			Command command2 = new ConstructStateSpaceCommand();
 			command2.Execute();
 			Assert.That(PlQuery.PlCall("statespace:rstate(N,X)."), Is.True, "Предложения пространства состояний отсутствуют после его построения");
-		}
+		}*/
 	}
 }
 

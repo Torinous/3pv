@@ -9,39 +9,6 @@
 
 	public class TransitionTool : Tool
 	{
-		private static string name  = "Переход";
-		private static string description = "Инструмент создания переходов сети";
-		private static Keys shortcutKeys = Keys.Control | Keys.Shift | Keys.T;
-		private static Image pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Transition.png"), true);
-
-		public TransitionTool(PetriNetGraphical net) : base(net)
-		{
-		}
-
-		public override string Name
-		{
-			get { return name; }
-			set { name = value; }
-		}
-
-		public override string Description
-		{
-			get { return description; }
-			set { description = value; }
-		}
-
-		public override Keys ShortcutKeys
-		{
-			get { return shortcutKeys; }
-			set { shortcutKeys = value; }
-		}
-		
-		public override Image Pictogram
-		{
-			get { return pictogram; }
-			set { pictogram = value; }
-		}
-
 		protected override void HandleMouseDown(NetCanvas canvas, System.Windows.Forms.MouseEventArgs args)
 		{
 			if (args.Button == MouseButtons.Left)

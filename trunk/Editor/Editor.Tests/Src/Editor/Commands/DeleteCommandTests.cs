@@ -16,7 +16,7 @@ namespace Pppv.Editor.Commands
 	[TestFixture]
 	public class DeleteCommandTests
 	{
-		[Test]
+		/*[Test]
 		public void TestSimpleDeletion()
 		{
 			PetriNet net = new PetriNet();
@@ -32,5 +32,6 @@ namespace Pppv.Editor.Commands
 			command2.Execute();
 			Assert.That(net.Places.Count, Is.EqualTo(0), "Комманда не удалила место из сети");
 		}
+		*/
 	}
 }

@@ -38,20 +38,27 @@ namespace Pppv.Verificator
 			this.InitializeComponent();
 			this.configuration = Configuration<VerificatorConfigurationData>.Instance;
 			this.configuration.SourceFile = Environment.CurrentDirectory + "\\Verificator.conf";
-			this.configuration.Load();
+			try
+			{
+				this.configuration.Load();
+			}
+			catch(Exception ex)
+			{
+				MessageBox.Show(ex.Message);
+			}
 			SWIProlog.InitPrologEngineIfNeed();
 		}
 
 		public VerificatorForm(PetriNet net) : this()
 		{
 			this.Net = net;
-			new LoadNetCommand(this.Net).Execute();
+			new LoadNetCommand(this, this.Net).Execute();
 		}
 		
 		public PetriNet Net
 		{
 			get { return this.net; }
-			private set { this.net = value; }
+			set { this.net = value; }
 		}
 
 		public VerificatorMainMenuStrip MainVerificatorMenuStrip
@@ -79,6 +86,11 @@ namespace Pppv.Verificator
 			}
 		}
 
+		public void PublishPrologCode(string text)
+		{
+			this.tabControl.PrologTextBox.Text = text;
+		}
+		
 		protected override void OnClosed(EventArgs e)
 		{
 			this.configuration.Save();

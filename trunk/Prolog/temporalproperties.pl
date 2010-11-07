@@ -6,8 +6,13 @@
 
 :- module(temporallogicproperties,
 	[
-		liveness/0
+		liveness/0,
+		deadness/0,
+		dead/1
 	]).
+
+:-use_module(statespace).
+:-use_module(temporallogic).
 
 /* Запросы с темпоральной логикой. */
 

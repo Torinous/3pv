@@ -42,6 +42,9 @@ namespace Pppv.Editor
 			// 
 			// additionalCodeControl1
 			// 
+			this.additionalCodeControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+									| System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
 			this.additionalCodeControl1.Location = new System.Drawing.Point(12, 12);
 			this.additionalCodeControl1.Name = "additionalCodeControl1";
 			this.additionalCodeControl1.Net = null;
@@ -50,6 +53,7 @@ namespace Pppv.Editor
 			// 
 			// OkButton
 			// 
+			this.OkButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.OkButton.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.OkButton.Location = new System.Drawing.Point(381, 317);
 			this.OkButton.Name = "OkButton";
@@ -59,16 +63,15 @@ namespace Pppv.Editor
 			this.OkButton.UseVisualStyleBackColor = true;
 			this.OkButton.Click += new System.EventHandler(this.OkButtonClick);
 			// 
-			// AdditionalCodeEditForm2
+			// AdditionalCodeEditForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(468, 349);
 			this.Controls.Add(this.OkButton);
 			this.Controls.Add(this.additionalCodeControl1);
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-			this.Name = "AdditionalCodeEditForm2";
-			this.Text = "AdditionalCodeEditForm2";
+			this.Name = "AdditionalCodeEditForm";
+			this.Text = "Дополнительный код:";
 			this.ResumeLayout(false);
 		}
 		private System.Windows.Forms.Button OkButton;

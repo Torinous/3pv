@@ -6,11 +6,14 @@
 :- module(properties,
 	[
 		enable/2,
-		deadlock/1
+		deadlock/1,
+		k_restrict/1
 	]).
 
 :-use_module(statespace).
 :-use_module(temporallogic).
+
+:- dynamic max/1.
 
 max(X,Y,Y) :- Y>X,!.
 max(X,_,X).

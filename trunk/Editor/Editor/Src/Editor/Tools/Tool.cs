@@ -9,43 +9,26 @@
 
 	public abstract class Tool
 	{
-		private PetriNetGraphical eventSourceNet;
-
-		protected Tool(PetriNetGraphical net)
+		protected Tool()
 		{
-			this.EventSourceNet = net;
 		}
 
-		public PetriNetGraphical EventSourceNet
+		public void ConnectEvents(PetriNetGraphical net)
 		{
-			get { return this.eventSourceNet; }
-			set { this.eventSourceNet = value; }
-		}
-
-		public virtual string Name { get; set; }
-
-		public virtual string Description { get; set; }
-
-		public virtual Keys ShortcutKeys { get; set; }
-
-		public virtual Image Pictogram { get; set; }
-
-		public void ConnectEvents()
-		{
-			this.EventSourceNet.Canvas.CanvasMouseClick += this.CanvasMouseClickHandler;
-			this.EventSourceNet.Canvas.CanvasMouseMove += this.CanvasMouseMoveHandler;
-			this.EventSourceNet.Canvas.CanvasMouseDown += this.CanvasMouseDownHandler;
-			this.EventSourceNet.Canvas.CanvasMouseUp += this.CanvasMouseUpHandler;
-			this.EventSourceNet.Canvas.KeyDown += this.CanvasKeyDownHandler;
+			net.Canvas.CanvasMouseClick += this.CanvasMouseClickHandler;
+			net.Canvas.CanvasMouseMove += this.CanvasMouseMoveHandler;
+			net.Canvas.CanvasMouseDown += this.CanvasMouseDownHandler;
+			net.Canvas.CanvasMouseUp += this.CanvasMouseUpHandler;
+			net.Canvas.KeyDown += this.CanvasKeyDownHandler;
 		}
 		
-		public void DisconnectEvents()
+		public void DisconnectEvents(PetriNetGraphical net)
 		{
-			this.EventSourceNet.Canvas.CanvasMouseClick -= this.CanvasMouseClickHandler;
-			this.EventSourceNet.Canvas.CanvasMouseMove -= this.CanvasMouseMoveHandler;
-			this.EventSourceNet.Canvas.CanvasMouseDown -= this.CanvasMouseDownHandler;
-			this.EventSourceNet.Canvas.CanvasMouseUp -= this.CanvasMouseUpHandler;
-			this.EventSourceNet.Canvas.KeyDown -= this.CanvasKeyDownHandler;
+			net.Canvas.CanvasMouseClick -= this.CanvasMouseClickHandler;
+			net.Canvas.CanvasMouseMove -= this.CanvasMouseMoveHandler;
+			net.Canvas.CanvasMouseDown -= this.CanvasMouseDownHandler;
+			net.Canvas.CanvasMouseUp -= this.CanvasMouseUpHandler;
+			net.Canvas.KeyDown -= this.CanvasKeyDownHandler;
 		}
 
 		protected virtual void HandleMouseDown(NetCanvas canvas, System.Windows.Forms.MouseEventArgs args)

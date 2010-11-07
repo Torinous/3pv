@@ -14,60 +14,18 @@ namespace Pppv.Editor.Commands
 	using System.Windows.Forms;
 
 	using Pppv.Net;
+	using Pppv.Commands;
 	using Pppv.Verificator;
 
-	public class AnalyzeCommand : NetEditorInterfaceCommand
+	public class AnalyzeCommand : Command
 	{
-		private Form mainForm;
+		public static string id = "Анализ";
 		
-		public AnalyzeCommand()
+		public AnalyzeCommand(EventHandler<EventArgs> handlerExecute, EventHandler<EventArgs> handlerUpdate) : base(id, handlerExecute, handlerUpdate)
 		{
-			this.Name = "Анализ";
 			this.Description = "Запуск средства анализа над текущей сетью";
 			this.ShortcutKeys = Keys.Control | Keys.A;
 			this.Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Save.png"), true);
-			this.IsHistorical = false;
-		}
-		
-		public AnalyzeCommand(Form form) : this()
-		{
-			this.MainForm = form;
-		}
-		
-		public Form MainForm
-		{
-			get { return mainForm; }
-			set { mainForm = value; }
-		}		
-		
-		public override void Execute()
-		{
-			this.SetUpTargetNet();
-			this.RunVerificator();
-		}
-
-		public override void Unexecute()
-		{
-		}
-
-		public override bool CheckEnabled()
-		{
-			return true;
-		}
-		
-		private void RunVerificator()
-		{
-			Form verificatorForm;
-			if (this.Net != null)
-			{
-				verificatorForm = new VerificatorForm(this.Net.BaseNet);
-			}
-			else
-			{
-				verificatorForm = new VerificatorForm();
-			}
-
-			verificatorForm.ShowDialog(this.MainForm);			
 		}
 	}
 }

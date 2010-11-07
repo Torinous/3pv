@@ -19,7 +19,7 @@
 
 	public class EditorApplication : ApplicationContext
 	{
-		private Editor.MainForm mainFormInst;
+		private Form mainFormInst;
 
 		private EditorApplication()
 		{
@@ -36,7 +36,7 @@
 			}
 		}
 
-		public MainForm MainFormInst
+		public Form MainFormInst
 		{
 			get
 			{
@@ -64,7 +64,7 @@
 
 		private void InitializeComponent()
 		{
-			this.mainFormInst = new MainForm();
+			this.mainFormInst = new EditorForm();
 			this.mainFormInst.Closed += this.MainFormCloseHandler;
 		}
 

@@ -22,14 +22,6 @@
 	public class PetriNetGraphical : PetriNet, IXmlSerializable
 	{
 		private SelectedNetElements selectedObjects;
-		private Tool currentTool,
-						  pointerTool,
-						  placeTool,
-						  transitionTool,
-						  arcTool,
-						  inhibitorArcTool,
-						  annotationTool;
-
 		private int width, height;
 		private string fileOfNetPath;
 		private bool netSaved;
@@ -40,17 +32,11 @@
 		public PetriNetGraphical(PetriNet baseNet)
 		{
 			this.baseNet = baseNet;
-			this.selectedObjects  = new SelectedNetElements();
-			this.pointerTool      = new PointerTool(this);
-			this.placeTool        = new PlaceTool(this);
-			this.transitionTool   = new TransitionTool(this);
-			this.arcTool          = new ArcTool(this);
-			this.inhibitorArcTool = new InhibitorArcTool(this);
-			this.annotationTool   = new AnnotationTool(this);
 			this.NetSaved = true;
 			this.FileOfNetPath = String.Empty;
 			this.Change += this.ChangeController;
 			this.shapes = new ShapeCollection(this);
+			this.selectedObjects  = new SelectedNetElements();
 			this.Shapes.Change += this.ShapesChangeHandler;
 			this.CreateShapesForBaseNet();
 		}
@@ -132,28 +118,6 @@
 		public ShapeCollection Shapes
 		{
 			get { return this.shapes; }
-		}
-
-		public Tool CurrentTool
-		{
-			get
-			{
-				return this.currentTool;
-			}
-
-			set
-			{
-				if (this.currentTool != null)
-				{
-					this.currentTool.DisconnectEvents();
-				}
-
-				this.currentTool = value;
-				if (this.currentTool != null)
-				{
-					this.currentTool.ConnectEvents();
-				}
-			}
 		}
 
 		public SelectedNetElements SelectedObjects
@@ -278,38 +242,6 @@
 			return this.baseNet.GetElementById(searchingId);
 		}
 
-		public void SelectToolByType(Type toolType)
-		{
-			if (toolType == typeof(PointerTool))
-			{
-				this.CurrentTool = this.pointerTool;
-			}
-			else if (toolType == typeof(PlaceTool))
-			{
-				this.CurrentTool = this.placeTool;
-			}
-			else if (toolType == typeof(TransitionTool))
-			{
-				this.CurrentTool = this.transitionTool;
-			}
-			else if (toolType == typeof(ArcTool))
-			{
-				this.CurrentTool = this.arcTool;
-			}
-			else if (toolType == typeof(InhibitorArcTool))
-			{
-				this.CurrentTool = this.inhibitorArcTool;
-			}
-			else if (toolType == typeof(AnnotationTool))
-			{
-				this.CurrentTool = this.annotationTool;
-			}
-			else
-			{
-				throw new PppvException("Not appropriate tool type!");
-			}
-		}
-
 		public bool SaveNet()
 		{
 			bool result = false;
@@ -370,19 +302,6 @@
 			}
 
 			return result;
-		}
-
-		public void SetSelected()
-		{
-			MainForm mainForm = Application.OpenForms[0] as MainForm;
-			if (this.CurrentTool != null)
-			{
-				mainForm.ToolToolStrip.CheckToolByType(this.CurrentTool.GetType());
-			}
-			else
-			{
-				mainForm.ToolToolStrip.UncheckTool();
-			}
 		}
 
 		public IShape FindShapeForElement(INetElement element)

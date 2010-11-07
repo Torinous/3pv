@@ -6,7 +6,8 @@
 :- module(temporallogic,
 	[
 		pre/3,
-		non/1
+		non/1,
+		not/2
 	]).
 
 :-use_module(statespace).
