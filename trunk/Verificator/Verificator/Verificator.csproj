@@ -69,13 +69,10 @@ xcopy .\Prolog\*  ..\..\..\..\Range\Prolog\  /y</PostBuildEvent>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Src\Verificator\Commands\ConstructStateSpaceCommand.cs" />
-    <Compile Include="Src\Verificator\Commands\LoadNetCommand.cs" />
-    <Compile Include="Src\Verificator\Commands\OpenNetCommand.cs" />
-    <Compile Include="Src\Verificator\Commands\PlotStateSpaceImage.cs" />
+    <Compile Include="Src\Verificator\Commands\PlotStateSpaceImageCommand.cs" />
     <Compile Include="Src\Verificator\Commands\QuitCommand.cs" />
     <Compile Include="Src\Verificator\Commands\SaveStateSpaceImage.cs" />
     <Compile Include="Src\Verificator\Commands\StartPrologInterfaceCommand.cs" />
-    <Compile Include="Src\Verificator\PostStatusMessageArgs.cs" />
     <Compile Include="Src\Verificator\SizeMode.cs" />
     <Compile Include="Src\Verificator\StateSpaceInDotFormatTranslator.cs" />
     <Compile Include="Src\Verificator\PetriNetPrologTranslated.cs" />
@@ -86,8 +83,10 @@ xcopy .\Prolog\*  ..\..\..\..\Range\Prolog\  /y</PostBuildEvent>
     </Compile>
     <Compile Include="Src\Verificator\SWIProlog.cs" />
     <Compile Include="Src\Verificator\VerificatorConfigurationData.cs" />
-    <Compile Include="Src\Verificator\VerificatorForm.cs" />
-    <Compile Include="Src\Verificator\VerificatorMainMenuStrip.cs" />
+    <Compile Include="Src\Verificator\VerificatorForm2.cs" />
+    <Compile Include="Src\Verificator\VerificatorForm2.Designer.cs">
+      <DependentUpon>VerificatorForm2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Src\Verificator\VerificatorStatusStrip.cs" />
     <Compile Include="Src\Verificator\VerificatorTabControl.cs" />
     <Compile Include="Src\Verificator\VerificatorTabControl.Designer.cs">

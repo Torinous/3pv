@@ -5,7 +5,7 @@
 
 	using Pppv.Net;
 
-	public class AddTransitionCommand : NetEditorInterfaceCommand
+	public class AddTransitionCommand : NetCommand
 	{
 		private Point position;
 
@@ -13,8 +13,6 @@
 		{
 			this.Net = net;
 			this.Position = position;
-			this.Name = "Добавить Переход к сети";
-			this.Description = "Команда добавляющая к заданной сети Переход по заданным координатам";
 		}
 
 		public Point Position

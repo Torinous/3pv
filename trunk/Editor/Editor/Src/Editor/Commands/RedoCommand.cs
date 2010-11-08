@@ -10,13 +10,18 @@
 
 	public class RedoCommand : Command
 	{
-		public static string id = "Повтор";
+		private static string id = "Повтор";
 		
 		public RedoCommand(EventHandler<EventArgs> handlerExecute, EventHandler<EventArgs> handlerUpdate) : base(id, handlerExecute, handlerUpdate)
 		{
 			this.Description = "Повтор последнего отменённого действия";
 			this.ShortcutKeys = Keys.Control | Keys.Y;
 			this.Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Redo.png"), true);
+		}
+		
+		public static string Id
+		{
+			get { return id; }
 		}
 	}
 }

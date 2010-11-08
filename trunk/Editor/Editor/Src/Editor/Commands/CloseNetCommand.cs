@@ -11,7 +11,7 @@
 
 	public class CloseNetCommand : Command
 	{
-		public static string id = "&Закрыть сеть";
+		private static string id = "&Закрыть сеть";
 		private bool canceled;
 		
 		public CloseNetCommand(EventHandler<EventArgs> handlerExecute, EventHandler<EventArgs> handlerUpdate) : base(id, handlerExecute, handlerUpdate)
@@ -21,10 +21,15 @@
 			this.Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Close.png"), true);
 		}
 		
+		public static string Id
+		{
+			get { return id; }
+		}
+		
 		public bool Canceled
 		{
-			get { return canceled; }
-			set { canceled = value; }
+			get { return this.canceled; }
+			set { this.canceled = value; }
 		}
 		
 		public override void Execute()

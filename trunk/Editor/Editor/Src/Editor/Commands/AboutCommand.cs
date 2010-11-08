@@ -4,29 +4,21 @@
 	using System.Drawing;
 	using System.Windows.Forms;
 
-	using Pppv.ApplicationFramework.Commands;
+	using Pppv.Commands;
 	using Pppv.Net;
 
-	public class AboutCommand : InterfaceCommand
+	public class AboutCommand : Command
 	{
-		private Control sender;
-
-		public AboutCommand(Control sender)
+		private static string id = "О программе";
+		
+		public AboutCommand(EventHandler<EventArgs> handlerExecute, EventHandler<EventArgs> handlerUpdate) : base(id, handlerExecute, handlerUpdate)
 		{
-			Name = "О программе";
 			Description = "Вызов формы \"О программе\"";
-			this.sender = sender;
 		}
-
-		public override void Execute()
+		
+		public static string Id
 		{
-			Form f = new AboutForm();
-			f.ShowDialog(this.sender.FindForm());
-			f.Dispose();
-		}
-
-		public override void Unexecute()
-		{
+			get { return id; }
 		}
 	}
 }

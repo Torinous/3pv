@@ -51,6 +51,11 @@ namespace Pppv.Commands
 		{
 			this.commands.CopyTo(array, index);
 		}
+		
+		public void CopyTo(Command[] array, int index)
+		{
+			((ICollection)this).CopyTo(array, index);
+		}
 
 		public System.Collections.IEnumerator GetEnumerator()
 		{

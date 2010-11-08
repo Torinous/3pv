@@ -15,13 +15,15 @@ namespace Pppv.Verificator
 	using System.Windows.Forms;
 	
 	using Pppv.ApplicationFramework;
-	using Pppv.ApplicationFramework.Commands;
+	using Pppv.Commands;
 	using Pppv.Graphviz;
 	using Pppv.Utils;
 	using Pppv.Verificator.Commands;
 
 	public partial class StateSpaceViewer : UserControl
 	{
+		private CommandManager commandManager;
+		
 		public StateSpaceViewer()
 		{
 			this.InitializeComponent();
@@ -30,18 +32,32 @@ namespace Pppv.Verificator
 			this.graphvizEdgeLengthPicker.Value = config.EdgeLength;
 			this.graphvizShapePicker.SelectedIndex = (int)config.DefaultNodeShape;
 			this.useMarkingInStateName.Checked = config.UseMarkingInStateLabel;
+			this.InitializeCommandManager();
 		}
 
-		private void Button1Click(object sender, EventArgs e)
+		public CommandManager CommandManager
 		{
-			PlotStateSpaceImage plotCommand = new PlotStateSpaceImage();
-			if (this.graphvizToolPicker.SelectedIndex != -1)
-			{
-				plotCommand.PlotterType = (Plotter)this.graphvizToolPicker.SelectedIndex;
-			}
-			
-			plotCommand.Execute();
-			this.picViewer1.Image = plotCommand.ResultImage;
+			get { return this.commandManager; }
+			private set { this.commandManager = value; }
+		}
+		
+		private void InitializeCommandManager()
+		{
+			this.CommandManager = new CommandManager();
+			this.AddCommandsToManager();
+			this.AssociateCommandsWithUI();
+		}
+		
+		private void AddCommandsToManager()
+		{
+			CommandsList commandList = this.CommandManager.Commands;
+			commandList.Add(new PlotReachabilityGraphImageCommand(this.PlotStateSpaceCommandHandler, null));
+		}
+		
+		private void AssociateCommandsWithUI()
+		{
+			CommandsList commandList = this.CommandManager.Commands;
+			commandList[PlotReachabilityGraphImageCommand.Id].CommandInstances.Add(this.plotStateSpaceButton);
 		}
 		
 		private void GraphvizToolPickerTextChanged(object sender, EventArgs e)
@@ -62,6 +78,13 @@ namespace Pppv.Verificator
 		private void UseMarkingInStateNameCheckedChanged(object sender, EventArgs e)
 		{
 			Configuration<VerificatorConfigurationData>.Instance.Data.UseMarkingInStateLabel = (sender as CheckBox).Checked;
+		}
+		
+		private void PlotStateSpaceCommandHandler(object sender, System.EventArgs e)
+		{
+			GraphvizPlotter plotter = new GraphvizPlotter();
+			plotter.PlotterType = (Plotter)this.graphvizToolPicker.SelectedIndex;
+			this.picViewer1.Image =	plotter.Plot(StateSpaceInDotFormatTranslator.Create());
 		}
 	}
 }

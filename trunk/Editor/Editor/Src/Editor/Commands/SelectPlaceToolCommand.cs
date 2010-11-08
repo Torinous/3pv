@@ -10,21 +10,26 @@
 namespace Pppv.Editor.Commands
 {
 	using System;
-	using System.Windows.Forms;
 	using System.Drawing;
 	using System.Reflection;
+	using System.Windows.Forms;
 	
 	using Pppv.Commands;
 
 	public class SelectPlaceToolCommand : Command
 	{
-		public static string id = "Позиция";
+		private static string id = "Позиция";
 
 		public SelectPlaceToolCommand(EventHandler<EventArgs> handlerExecute, EventHandler<EventArgs> handlerUpdate) : base(id, handlerExecute, handlerUpdate)
 		{
 			this.Description = "Инструмент создания позиций сети";
 			this.ShortcutKeys = Keys.Control | Keys.Shift | Keys.P;
 			this.Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Place.png"), true);
+		}
+		
+		public static string Id
+		{
+			get { return id; }
 		}
 	}
 }

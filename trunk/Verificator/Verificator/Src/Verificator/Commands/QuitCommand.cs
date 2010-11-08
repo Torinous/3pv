@@ -6,6 +6,7 @@
  *
  *
  */
+
 namespace Pppv.Verificator.Commands
 {
 	using System;
@@ -14,39 +15,23 @@ namespace Pppv.Verificator.Commands
 	using System.Reflection;
 	using System.Windows.Forms;
 
-	using Pppv.ApplicationFramework.Commands;
+	using Pppv.Commands;
 	using Pppv.Net;
 
-	public class QuitCommand : InterfaceCommand
+	public class QuitCommand : Command
 	{
-		private Form formToClose;
-
-		public QuitCommand()
+		private static string id = "Выход";
+		
+		public QuitCommand(EventHandler<EventArgs> handlerExecute, EventHandler<EventArgs> handlerUpdate) : base(id, handlerExecute, handlerUpdate)
 		{
-			this.Name = "Выход";
 			this.Description = "Завершение работы приложения 3PV:Verificator";
 			this.ShortcutKeys = Keys.Control | Keys.Q;
 			this.Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Exit.png"), true);
 		}
 		
-		public QuitCommand(VerificatorForm form) : this ()
+		public static string Id
 		{
-			this.formToClose = form;
-		}
-
-		public Form FormToClose
-		{
-			get { return this.formToClose; }
-			set { this.formToClose = value; }
-		}
-
-		public override void Execute()
-		{
-			this.FormToClose.Close();
-		}
-
-		public override void Unexecute()
-		{
+			get { return id; }
 		}
 	}
 }

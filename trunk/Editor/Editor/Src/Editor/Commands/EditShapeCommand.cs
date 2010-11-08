@@ -5,48 +5,23 @@
 	using System.Reflection;
 	using System.Windows.Forms;
 
+	using Pppv.Commands;
 	using Pppv.Editor.Shapes;
 	using Pppv.Net;
 
-	public class EditShapeCommand : NetElementInterfaceCommand
+	public class EditShapeCommand : Command
 	{
-		public EditShapeCommand(IShape shape)
+		private static string id = "Редактировать";
+		
+		public EditShapeCommand(EventHandler<EventArgs> handlerExecute, EventHandler<EventArgs> handlerUpdate) : base(id, handlerExecute, handlerUpdate)
 		{
-			this.Shape = shape;
-			this.Name = "Редактировать элемент сети";
-			this.Description = "Команда редактирования свойств елемента сети";
+			this.Description = "Редактировать элемент сети";
+			this.Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Edit.png"), true);
 		}
-
-		public override void Execute()
+		
+		public static string Id
 		{
-			MainForm mainForm = this.Shape.ParentNetGraphical.Canvas.FindForm() as MainForm;
-
-			if (Shape is ArcShape)
-			{
-				Form f = new ArcEditForm((IArc)Shape);
-				f.ShowDialog(mainForm);
-				f.Dispose();
-			}
-
-			if (Shape is TransitionShape)
-			{
-				Form f = new TransitionEditForm((ITransition)Shape);
-				f.ShowDialog(mainForm);
-				f.Dispose();
-			}
-
-			if (Shape is PlaceShape)
-			{
-				Form f = new PlaceEditForm((IPlace)Shape);
-				f.ShowDialog(mainForm);
-				f.Dispose();
-			}
-
-			Shape.ParentNetGraphical.Canvas.Invalidate();
-		}
-
-		public override void Unexecute()
-		{
+			get { return id; }
 		}
 	}
 }

@@ -20,8 +20,8 @@ namespace Pppv.Editor
 	{
 		public EditorTabControl()
 		{
-			InitializeComponent();
-			this.tabControl.SelectedIndexChanged += SelectedIndexChangedRetranslator;
+			this.InitializeComponent();
+			this.tabControl.SelectedIndexChanged += this.SelectedIndexChangedRetranslator;
 		}
 		
 		public event EventHandler<EventArgs> AddTabPage;
@@ -55,7 +55,8 @@ namespace Pppv.Editor
 			this.SuspendLayout();
 			this.tabControl.TabPages.Add(tmpTabPage);
 			this.tabControl.SelectTab(tmpTabPage);
-			//this.tabControl.OnSelectedIndexChanged(new EventArgs()); // Делаем за Microsoft их работу
+
+			// this.tabControl.OnSelectedIndexChanged(new EventArgs()); // Делаем за Microsoft их работу
 			this.ResumeLayout(false);
 			this.PerformLayout();
 			this.OnAddTabPage(new EventArgs());
@@ -90,9 +91,9 @@ namespace Pppv.Editor
 
 		protected virtual void OnSelectedIndexChanged(EventArgs e)
 		{
-			if (SelectedIndexChanged != null)
+			if (this.SelectedIndexChanged != null)
 			{
-				SelectedIndexChanged(this, e);
+				this.SelectedIndexChanged(this, e);
 			}
 		}
 		

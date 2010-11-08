@@ -76,6 +76,7 @@
     <Compile Include="Src\ApplicationFramework\CommandToolStripMenuItem.cs" />
     <Compile Include="Src\ApplicationFramework\PppvException.cs" />
     <Compile Include="Src\ApplicationFramework\RefreshingListBox.cs" />
+    <Compile Include="Src\Commands\ButtonCommandExecutor.cs" />
     <Compile Include="Src\Commands\Command.cs" />
     <Compile Include="Src\Commands\CommandExecutor.cs" />
     <Compile Include="Src\Commands\CommandInstanceList.cs" />

@@ -105,11 +105,9 @@
     <Compile Include="Src\Editor\Commands\DeleteCommand.cs" />
     <Compile Include="Src\Editor\Commands\DeleteSelectedCommand.cs" />
     <Compile Include="Src\Editor\Commands\EditShapeCommand.cs" />
-    <Compile Include="Src\Editor\Commands\EditorInterfaceCommand.cs" />
     <Compile Include="Src\Editor\Commands\ElementCommand.cs" />
     <Compile Include="Src\Editor\Commands\NetElementInterfaceCommand.cs" />
     <Compile Include="Src\Editor\Commands\NetCommand.cs" />
-    <Compile Include="Src\Editor\Commands\NetInterfaceCommand.cs" />
     <Compile Include="Src\Editor\Commands\NewNetCommand.cs" />
     <Compile Include="Src\Editor\Commands\OpenNetCommand.cs" />
     <Compile Include="Src\Editor\Commands\PasteCommand.cs" />
@@ -123,15 +121,14 @@
     <Compile Include="Src\Editor\Commands\SelectPlaceToolCommand.cs" />
     <Compile Include="Src\Editor\Commands\SelectPointerToolCommand.cs" />
     <Compile Include="Src\Editor\Commands\SelectTransitionToolCommand.cs" />
-    <Compile Include="Src\Editor\Commands\ShowContextMenuCommand.cs" />
     <Compile Include="Src\Editor\Commands\UndoCommand.cs" />
     <Compile Include="Src\Editor\Commands\ZoomInCommand.cs" />
     <Compile Include="Src\Editor\Commands\ZoomOutCommand.cs" />
+    <Compile Include="Src\Editor\ContextMenuShower.cs" />
     <Compile Include="Src\Editor\CortegeEditControl.cs" />
     <Compile Include="Src\Editor\CortegeEditControl.Designer.cs">
       <DependentUpon>CortegeEditControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Src\Editor\EditorContextToolStripMenuItem.cs" />
     <Compile Include="Src\Editor\EditorForm.cs" />
     <Compile Include="Src\Editor\EditorForm.Designer.cs">
       <DependentUpon>EditorForm.cs</DependentUpon>
@@ -140,8 +137,6 @@
     <Compile Include="Src\Editor\EditorTabControl.Designer.cs">
       <DependentUpon>EditorTabControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Src\Editor\MainForm.cs" />
-    <Compile Include="Src\Editor\EditorMainMenuStrip.cs" />
     <Compile Include="Src\Editor\NetCanvas.cs" />
     <Compile Include="Src\Editor\PetriNetGraphical.cs" />
     <Compile Include="Src\Editor\PlaceEditControl.cs" />
@@ -248,6 +243,8 @@
     <None Include="Properties\AssemblyInfo.in" />
     <EmbeddedResource Include="Resources\Annotation.png" />
     <EmbeddedResource Include="Resources\Exit.ico" />
+    <EmbeddedResource Include="Resources\Edit.png" />
+    <EmbeddedResource Include="Resources\Run.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources" />

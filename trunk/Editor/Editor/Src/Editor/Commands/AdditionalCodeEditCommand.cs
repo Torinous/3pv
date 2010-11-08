@@ -13,36 +13,23 @@ namespace Pppv.Editor.Commands
 	using System.Drawing;
 	using System.Reflection;
 	using System.Windows.Forms;
+	
+	using Pppv.Commands;
 
-	public class AdditionalCodeEditCommand : NetEditorInterfaceCommand
+	public class AdditionalCodeEditCommand : Command
 	{
-		public AdditionalCodeEditCommand()
+		private static string id = "Дополнительный код";
+		
+		public AdditionalCodeEditCommand(EventHandler<EventArgs> handlerExecute, EventHandler<EventArgs> handlerUpdate) : base(id, handlerExecute, handlerUpdate)
 		{
-			this.Name = "Дополнительный код";
 			this.Description = "Редактировать дополнительный Prolog код сети";
 			this.ShortcutKeys = Keys.Control | Keys.C;
 			this.Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.AdditionalCode.png"), true);
 		}
-
-		public AdditionalCodeEditCommand(PetriNetGraphical net) : this()
-		{
-			this.Net = net;
-		}
-
-		public override void Execute()
-		{
-			this.SetUpTargetNet();
-			MainForm mainForm = MainForm.Instance;
-			if (mainForm != null)
-			{
-				Form f = new AdditionalCodeEditForm(this.Net);
-				f.ShowDialog(mainForm);
-				f.Dispose();
-			}
-		}
 		
-		public override void Unexecute()
+		public static string Id
 		{
+			get { return id; }
 		}
 	}
 }

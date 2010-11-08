@@ -92,7 +92,7 @@
 			base.HandleKeyDown(canvas, args);
 		}
 
-		protected virtual ArcShape ArcFabric(PetriNetGraphical net,INetElement clicked)
+		protected virtual ArcShape ArcFabric(PetriNetGraphical net, INetElement clicked)
 		{
 			Arc arc = new Arc(clicked, ArcType.NormalArc);
 			arc.Cortege.Add(new Predicate("X"));

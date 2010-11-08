@@ -48,9 +48,8 @@
 			/*Контекстное меню по умолчанию показывают все инструменты*/
 			if (args.Button == MouseButtons.Right)
 			{
-				ShowContextMenuCommand c = new ShowContextMenuCommand(args.Location);
-				c.Net = canvas.Net;
-				c.Execute();
+				ContextMenuShower contextMenu = new ContextMenuShower(canvas.Net.GetShapeUnder(args.Location));
+				contextMenu.Show(canvas.PointToScreen(args.Location));
 			}
 		}
 

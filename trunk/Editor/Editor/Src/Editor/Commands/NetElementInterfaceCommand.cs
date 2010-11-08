@@ -14,15 +14,15 @@ namespace Pppv.Editor.Commands
 	using Pppv.Editor.Shapes;
 	using Pppv.Net;
 
-	public abstract class NetElementInterfaceCommand : NetEditorInterfaceCommand
+	public abstract class NetElementCommand : NetCommand
 	{
 		private IShape shape;
 
-		protected NetElementInterfaceCommand() : base()
+		protected NetElementCommand() : base()
 		{
 		}
 
-		protected NetElementInterfaceCommand(NetElement ne) : base(ne.ParentNet as PetriNetGraphical)
+		protected NetElementCommand(NetElement ne) : base(ne.ParentNet as PetriNetGraphical)
 		{
 		}
 

@@ -11,13 +11,18 @@
 
 	public class ZoomOutCommand : Command
 	{
-		public static string id = "Уменьшить";
+		private static string id = "Уменьшить";
 		
 		public ZoomOutCommand(EventHandler<EventArgs> handlerExecute, EventHandler<EventArgs> handlerUpdate) : base(id, handlerExecute, handlerUpdate)
 		{
 			this.Description = "Уменьшение";
 			this.ShortcutKeys = Keys.Control | Keys.Down;
 			this.Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Zoom out.png"), true);
+		}
+		
+		public static string Id
+		{
+			get { return id; }
 		}
 	}
 }

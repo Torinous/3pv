@@ -31,14 +31,14 @@ namespace Pppv.Editor.Tools
 
 		public Hashtable Tools
 		{
-			get { return tools; }
-			private set { tools = value; }
+			get { return this.tools; }
+			private set { this.tools = value; }
 		}
 		
 		public Hashtable ToolForNet
 		{
-			get { return toolForNet; }
-			private set { toolForNet = value; }
+			get { return this.toolForNet; }
+			private set { this.toolForNet = value; }
 		}
 		
 		public void Link(ToolsEnum tool, PetriNetGraphical net)
@@ -50,7 +50,6 @@ namespace Pppv.Editor.Tools
 		public void Unlink(ToolsEnum tool, PetriNetGraphical net)
 		{
 			(this.Tools[tool] as Tool).DisconnectEvents(net);
-			this.ToolForNet.Add(net, tool);
 			this.ToolForNet.Remove(net);
 		}
 		
@@ -60,6 +59,7 @@ namespace Pppv.Editor.Tools
 			{
 				(entry.Value as Tool).DisconnectEvents(net);
 			}
+			
 			this.ToolForNet.Remove(net);
 		}
 	}

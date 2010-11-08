@@ -13,21 +13,22 @@ namespace Pppv.Editor
 	using System.Collections;
 	using System.ComponentModel;
 	using System.Drawing;
-	using System.Text;
 	using System.IO;
+	using System.Reflection;
+	using System.Text;
 	using System.Windows.Forms;
 	using System.Xml;
 	using System.Xml.Schema;
 	using System.Xml.Serialization;
-	
+
+	using Pppv.ApplicationFramework;	
 	using Pppv.Commands;
-	using Pppv.Net;
-	using Pppv.Editor.Shapes;
 	using Pppv.Editor.Commands;
-	using Pppv.Utils;
-	using Pppv.ApplicationFramework;
-	using Pppv.Verificator;
+	using Pppv.Editor.Shapes;
 	using Pppv.Editor.Tools;
+	using Pppv.Net;
+	using Pppv.Utils;
+	using Pppv.Verificator;
 
 	public partial class EditorForm : Form
 	{
@@ -40,17 +41,18 @@ namespace Pppv.Editor
 			this.InitializeComponent();
 			this.InitializeCommandManager();
 			Application.Idle += this.OnIdle;
-			this.ActiveNetChange += ToolsChekedSynchronizer;
-			this.TabControl.SelectedIndexChanged += SelectedIndexChangedHandler;
+			this.ActiveNetChange += this.ToolsChekedSynchronize;
+			this.TabControl.SelectedIndexChanged += this.SelectedIndexChangedHandler;
 			this.Closing += this.ClosingHandler;
+			this.Text = "3Pv:Editor " + Assembly.GetExecutingAssembly().GetName().Version.ToString();
 		}
 		
 		public event EventHandler<EventArgs> ActiveNetChange;
 
 		public ToolsManager ToolsManager
 		{
-			get { return toolsManager; }
-			set { toolsManager = value; }
+			get { return this.toolsManager; }
+			set { this.toolsManager = value; }
 		}
 		
 		public PetriNetGraphical ActiveNet
@@ -101,17 +103,18 @@ namespace Pppv.Editor
 			this.CommandManager.Commands.Add(new CloseNetCommand(this.CloseNetCommandHandler, null));
 			this.CommandManager.Commands.Add(new SaveNetCommand(this.SaveNetCommandHandler, null));
 			this.CommandManager.Commands.Add(new SaveAsNetCommand(this.SaveAsNetCommandHandler, null));
-			this.CommandManager.Commands.Add(new QuitCommand(this.QuiteCommandHandler, null));
+			this.CommandManager.Commands.Add(new QuitCommand(this.QuitCommandHandler, null));
 			
 			this.CommandManager.Commands.Add(new UndoCommand(null, null));
 			this.CommandManager.Commands.Add(new RedoCommand(null, null));
 			this.CommandManager.Commands.Add(new CutCommand(null, null));
 			this.CommandManager.Commands.Add(new CopyCommand(null, null));
 			this.CommandManager.Commands.Add(new PasteCommand(null, null));
-			this.CommandManager.Commands.Add(new DeleteSelectedCommand(null, null));
+			this.CommandManager.Commands.Add(new DeleteSelectedCommand(this.DeleteCommandHandler, null));
 			
 			this.CommandManager.Commands.Add(new ZoomInCommand(this.ZoomInCommandHandler, null));
 			this.CommandManager.Commands.Add(new ZoomOutCommand(this.ZoomOutCommandHandler, null));
+			this.CommandManager.Commands.Add(new AdditionalCodeEditCommand(this.AdditionalCodeEditCommandHandler, null));
 			
 			this.CommandManager.Commands.Add(new SelectPointerToolCommand(this.SelectPointerToolCommandHandler, null));
 			this.CommandManager.Commands.Add(new SelectPlaceToolCommand(this.SelectPlaceToolCommandHandler, null));
@@ -121,62 +124,68 @@ namespace Pppv.Editor
 			this.CommandManager.Commands.Add(new SelectAnnotationToolCommand(this.SelectAnnotationToolCommandHandler, null));
 			
 			this.CommandManager.Commands.Add(new AnalyzeCommand(this.AnalyzeCommandHandler, null));
+			
+			this.CommandManager.Commands.Add(new AboutCommand(this.AboutCommandHandler, null));
 		}
 		
 		private void SetCommandEnabled(bool state)
 		{
-			this.CommandManager.Commands[CloseNetCommand.id].Enabled = state;
-			this.CommandManager.Commands[SaveNetCommand.id].Enabled = state;
-			this.CommandManager.Commands[SaveAsNetCommand.id].Enabled = state;
+			this.CommandManager.Commands[CloseNetCommand.Id].Enabled = state;
+			this.CommandManager.Commands[SaveNetCommand.Id].Enabled = state;
+			this.CommandManager.Commands[SaveAsNetCommand.Id].Enabled = state;
 			
-			this.CommandManager.Commands[UndoCommand.id].Enabled = state;
-			this.CommandManager.Commands[RedoCommand.id].Enabled = state;
-			this.CommandManager.Commands[CutCommand.id].Enabled = state;
-			this.CommandManager.Commands[CopyCommand.id].Enabled = state;
-			this.CommandManager.Commands[PasteCommand.id].Enabled = state;
-			this.CommandManager.Commands[DeleteSelectedCommand.id].Enabled = state;
+			this.CommandManager.Commands[UndoCommand.Id].Enabled = state;
+			this.CommandManager.Commands[RedoCommand.Id].Enabled = state;
+			this.CommandManager.Commands[CutCommand.Id].Enabled = state;
+			this.CommandManager.Commands[CopyCommand.Id].Enabled = state;
+			this.CommandManager.Commands[PasteCommand.Id].Enabled = state;
+			this.CommandManager.Commands[DeleteSelectedCommand.Id].Enabled = state;
+			this.CommandManager.Commands[AdditionalCodeEditCommand.Id].Enabled = state;
 			
-			this.CommandManager.Commands[ZoomInCommand.id].Enabled = state;
-			this.CommandManager.Commands[ZoomOutCommand.id].Enabled = state;
+			this.CommandManager.Commands[ZoomInCommand.Id].Enabled = state;
+			this.CommandManager.Commands[ZoomOutCommand.Id].Enabled = state;
 			
-			this.CommandManager.Commands[SelectPointerToolCommand.id].Enabled = state;
-			this.CommandManager.Commands[SelectPlaceToolCommand.id].Enabled = state;
-			this.CommandManager.Commands[SelectTransitionToolCommand.id].Enabled = state;
-			this.CommandManager.Commands[SelectArcToolCommand.id].Enabled = state;
-			this.CommandManager.Commands[SelectInhibitorArcToolCommand.id].Enabled = state;
-			this.CommandManager.Commands[SelectAnnotationToolCommand.id].Enabled = state;
+			this.CommandManager.Commands[SelectPointerToolCommand.Id].Enabled = state;
+			this.CommandManager.Commands[SelectPlaceToolCommand.Id].Enabled = state;
+			this.CommandManager.Commands[SelectTransitionToolCommand.Id].Enabled = state;
+			this.CommandManager.Commands[SelectArcToolCommand.Id].Enabled = state;
+			this.CommandManager.Commands[SelectInhibitorArcToolCommand.Id].Enabled = state;
+			this.CommandManager.Commands[SelectAnnotationToolCommand.Id].Enabled = state;
 			
-			this.CommandManager.Commands[AnalyzeCommand.id].Enabled = state;
+			this.CommandManager.Commands[AnalyzeCommand.Id].Enabled = state;
 		}
 		
 		private void AssociateCommandsWithUI()
 		{
-			this.CommandManager.Commands[QuitCommand.id].CommandInstances.Add(new Object[]{this.quiteToolStripMenuItem, this.quiteToolStripButton});
-			this.CommandManager.Commands[NewNetCommand.id].CommandInstances.Add(new Object[]{this.newNetToolStripMenuItem, this.newNetToolStripButton});
-			this.CommandManager.Commands[OpenNetCommand.id].CommandInstances.Add(new Object[]{this.openNetToolStripMenuItem, this.openNetToolStripButton});
-			this.CommandManager.Commands[CloseNetCommand.id].CommandInstances.Add(new Object[]{this.closeNetToolStripMenuItem, this.closeNetToolStripButton});
-			this.CommandManager.Commands[SaveNetCommand.id].CommandInstances.Add(new Object[]{this.saveNetToolStripMenuItem, this.saveNetToolStripButton});
-			this.CommandManager.Commands[SaveAsNetCommand.id].CommandInstances.Add(new Object[]{this.saveAsNetToolStripMenuItem, this.saveAsNetToolStripButton});
+			CommandsList commandList = this.CommandManager.Commands;
+			commandList[QuitCommand.Id].CommandInstances.Add(this.quitToolStripMenuItem);
+			commandList[NewNetCommand.Id].CommandInstances.Add(new object[] { this.newNetToolStripMenuItem, this.newNetToolStripButton });
+			commandList[OpenNetCommand.Id].CommandInstances.Add(new object[] { this.openNetToolStripMenuItem, this.openNetToolStripButton });
+			commandList[CloseNetCommand.Id].CommandInstances.Add(new object[] { this.closeNetToolStripMenuItem, this.closeNetToolStripButton });
+			commandList[SaveNetCommand.Id].CommandInstances.Add(new object[] { this.saveNetToolStripMenuItem, this.saveNetToolStripButton });
+			commandList[SaveAsNetCommand.Id].CommandInstances.Add(new object[] { this.saveAsNetToolStripMenuItem, this.saveAsNetToolStripButton });
 			
-			this.CommandManager.Commands[UndoCommand.id].CommandInstances.Add(new Object[]{this.undoToolStripMenuItem, this.undoToolStripButton});
-			this.CommandManager.Commands[RedoCommand.id].CommandInstances.Add(new Object[]{this.redoToolStripMenuItem, this.redoToolStripButton});
-			this.CommandManager.Commands[CutCommand.id].CommandInstances.Add(new Object[]{this.cutToolStripMenuItem, this.cutToolStripButton});
-			this.CommandManager.Commands[CopyCommand.id].CommandInstances.Add(new Object[]{this.copyToolStripMenuItem, this.copyToolStripButton});
-			this.CommandManager.Commands[PasteCommand.id].CommandInstances.Add(new Object[]{this.pasteToolStripMenuItem, this.pasteToolStripButton});
-			this.CommandManager.Commands[DeleteCommand.id].CommandInstances.Add(new Object[]{this.deleteToolStripMenuItem, this.deleteToolStripButton});
+			commandList[UndoCommand.Id].CommandInstances.Add(new object[] { this.undoToolStripMenuItem, this.undoToolStripButton });
+			commandList[RedoCommand.Id].CommandInstances.Add(new object[] { this.redoToolStripMenuItem, this.redoToolStripButton });
+			commandList[CutCommand.Id].CommandInstances.Add(new object[] { this.cutToolStripMenuItem, this.cutToolStripButton });
+			commandList[CopyCommand.Id].CommandInstances.Add(new object[] { this.copyToolStripMenuItem, this.copyToolStripButton });
+			commandList[PasteCommand.Id].CommandInstances.Add(new object[] { this.pasteToolStripMenuItem, this.pasteToolStripButton });
+			commandList[DeleteCommand.Id].CommandInstances.Add(new object[] { this.deleteToolStripMenuItem, this.deleteToolStripButton });
+			commandList[AdditionalCodeEditCommand.Id].CommandInstances.Add(new object[] { this.additionalCodeEditToolStripMenuItem, this.additionalCodeEditToolStripButton });
 			
-			this.CommandManager.Commands[ZoomInCommand.id].CommandInstances.Add(new Object[]{this.zoomInToolStripMenuItem, this.zoomInToolStripButton});
-			this.CommandManager.Commands[ZoomOutCommand.id].CommandInstances.Add(new Object[]{this.zoomOutToolStripMenuItem, this.zoomOutToolStripButton});
+			commandList[ZoomInCommand.Id].CommandInstances.Add(new object[] { this.zoomInToolStripMenuItem, this.zoomInToolStripButton });
+			commandList[ZoomOutCommand.Id].CommandInstances.Add(new object[] { this.zoomOutToolStripMenuItem, this.zoomOutToolStripButton });
 			
-			this.CommandManager.Commands[SelectPointerToolCommand.id].CommandInstances.Add(new Object[]{this.selectPointerToolToolStripMenuItem, this.selectPointerToolToolStripButton});
-			this.CommandManager.Commands[SelectPlaceToolCommand.id].CommandInstances.Add(new Object[]{this.selectPlaceToolToolStripMenuItem, this.selectPlaceToolToolStripButton});
-			this.CommandManager.Commands[SelectTransitionToolCommand.id].CommandInstances.Add(new Object[]{this.selectTransitionToolToolStripMenuItem, this.selectTransitionToolToolStripButton});
-			this.CommandManager.Commands[SelectArcToolCommand.id].CommandInstances.Add(new Object[]{this.selectArcToolToolStripMenuItem, this.selectArcToolToolStripButton});
-			this.CommandManager.Commands[SelectInhibitorArcToolCommand.id].CommandInstances.Add(new Object[]{this.selectInhibitorArcToolToolStripMenuItem, this.selectInhibitorArcToolToolStripButton});
-			this.CommandManager.Commands[SelectAnnotationToolCommand.id].CommandInstances.Add(new Object[]{this.selectAnnotationToolToolStripMenuItem, this.selectAnnotationToolToolStripButton});
+			commandList[SelectPointerToolCommand.Id].CommandInstances.Add(new object[] { this.selectPointerToolToolStripMenuItem, this.selectPointerToolToolStripButton });
+			commandList[SelectPlaceToolCommand.Id].CommandInstances.Add(new object[] { this.selectPlaceToolToolStripMenuItem, this.selectPlaceToolToolStripButton });
+			commandList[SelectTransitionToolCommand.Id].CommandInstances.Add(new object[] { this.selectTransitionToolToolStripMenuItem, this.selectTransitionToolToolStripButton });
+			commandList[SelectArcToolCommand.Id].CommandInstances.Add(new object[] { this.selectArcToolToolStripMenuItem, this.selectArcToolToolStripButton });
+			commandList[SelectInhibitorArcToolCommand.Id].CommandInstances.Add(new object[] { this.selectInhibitorArcToolToolStripMenuItem, this.selectInhibitorArcToolToolStripButton });
+			commandList[SelectAnnotationToolCommand.Id].CommandInstances.Add(new object[] { this.selectAnnotationToolToolStripMenuItem, this.selectAnnotationToolToolStripButton });
 			
+			commandList[AnalyzeCommand.Id].CommandInstances.Add(new object[] { this.analyzeToolStripMenuItem, this.analyzeToolStripButton });
 			
-			this.CommandManager.Commands[AnalyzeCommand.id].CommandInstances.Add(new Object[]{this.analyzeToolStripMenuItem, this.analyzeToolStripButton});
+			commandList[AboutCommand.Id].CommandInstances.Add(this.aboutToolStripMenuItem);
 		}
 		
 		private void LoadNet(TextReader netStream, string fileName)
@@ -201,7 +210,7 @@ namespace Pppv.Editor
 			this.OnActiveNetChange(new EventArgs());
 		}
 		
-		private void QuiteCommandHandler(object sender, System.EventArgs e)
+		private void QuitCommandHandler(object sender, System.EventArgs e)
 		{
 			this.Close();
 		}
@@ -232,15 +241,15 @@ namespace Pppv.Editor
 		
 		private void CloseNetCommandHandler(object sender, System.EventArgs e)
 		{
-			if (this.ActiveNet != null )
+			if (this.ActiveNet != null)
 			{
-				if(!this.ActiveNet.NetSaved)
+				if (!this.ActiveNet.NetSaved)
 				{
 					DialogResult dialogResult = RtlAwareMessageBox.Show(this, "Сохранить сеть перед закрытием?", "Попытка закрыть несохранённую сеть", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, 0);
 					switch (dialogResult)
 					{
 						case DialogResult.Yes:
-							this.CommandManager.Commands[SaveNetCommand.id].Execute();
+							this.CommandManager.Commands[SaveNetCommand.Id].Execute();
 							break;
 						case DialogResult.No:
 							break;
@@ -278,15 +287,7 @@ namespace Pppv.Editor
 		private void AnalyzeCommandHandler(object sender, System.EventArgs e)
 		{
 			Form verificatorForm;
-			if (this.ActiveNet != null)
-			{
-				verificatorForm = new VerificatorForm(this.ActiveNet.BaseNet);
-			}
-			else
-			{
-				verificatorForm = new VerificatorForm();
-			}
-
+			verificatorForm = new VerificatorForm2(this.ActiveNet.BaseNet);
 			verificatorForm.ShowDialog(this);	
 		}
 		
@@ -296,35 +297,43 @@ namespace Pppv.Editor
 			{
 				this.ActiveNet.DeleteElement(netElement);
 			}
+
+			this.ActiveNet.Canvas.Invalidate();
 		}
 		
 		private void ZoomInCommandHandler(object sender, System.EventArgs e)
 		{
-			MainForm mainForm = Application.OpenForms[0] as MainForm;
-			PetriNetGraphical p = mainForm.ActiveNet;
-			if (p != null)
+			PetriNetGraphical net = this.ActiveNet;
+			if (net != null)
 			{
-				if (p.Canvas.ScaleAmount < 10.0F)
+				if (net.Canvas.ScaleAmount < 10.0F)
 				{
-					p.Canvas.ScaleAmount += 0.1F;
+					net.Canvas.ScaleAmount += 0.1F;
 				}
 
-				p.Canvas.Refresh();
+				net.Canvas.Refresh();
 			}
 		}
 		
 		private void ZoomOutCommandHandler(object sender, System.EventArgs e)
 		{
-			PetriNetGraphical p = (Application.OpenForms[0] as MainForm).ActiveNet;
-			if (p != null)
+			PetriNetGraphical net = this.ActiveNet;
+			if (net != null)
 			{
-				if (p.Canvas.ScaleAmount > 0.11F)
+				if (net.Canvas.ScaleAmount > 0.11F)
 				{
-					p.Canvas.ScaleAmount -= 0.1F;
+					net.Canvas.ScaleAmount -= 0.1F;
 				}
 
-				p.Canvas.Refresh();
+				net.Canvas.Refresh();
 			}
+		}
+		
+		private void AboutCommandHandler(object sender, System.EventArgs e)
+		{
+			Form f = new AboutForm();
+			f.ShowDialog(this);
+			f.Dispose();
 		}
 
 		private void OnIdle(object sender, System.EventArgs args)
@@ -334,92 +343,99 @@ namespace Pppv.Editor
 		
 		private void SelectPointerToolCommandHandler(object sender, System.EventArgs e)
 		{
-			if (this.CommandManager.Commands[SelectPointerToolCommand.id].Checked)
+			if (this.CommandManager.Commands[SelectPointerToolCommand.Id].Checked)
 			{
 				this.ToolsManager.Unlink(ToolsEnum.Pointer, this.ActiveNet);
-				this.CommandManager.Commands[SelectPointerToolCommand.id].Checked = false;
+				this.CommandManager.Commands[SelectPointerToolCommand.Id].Checked = false;
 			}
 			else
 			{
 				this.UnlinkAllTools();
 				this.ToolsManager.Link(ToolsEnum.Pointer, this.ActiveNet);
-				this.CommandManager.Commands[SelectPointerToolCommand.id].Checked = true;
+				this.CommandManager.Commands[SelectPointerToolCommand.Id].Checked = true;
 			}
 		}
 		
 		private void SelectPlaceToolCommandHandler(object sender, System.EventArgs e)
 		{
-			if (this.CommandManager.Commands[SelectPlaceToolCommand.id].Checked)
+			if (this.CommandManager.Commands[SelectPlaceToolCommand.Id].Checked)
 			{
 				this.ToolsManager.Unlink(ToolsEnum.Place, this.ActiveNet);
-				this.CommandManager.Commands[SelectPlaceToolCommand.id].Checked = false;
+				this.CommandManager.Commands[SelectPlaceToolCommand.Id].Checked = false;
 			}
 			else
 			{
 				this.UnlinkAllTools();
 				this.ToolsManager.Link(ToolsEnum.Place, this.ActiveNet);
-				this.CommandManager.Commands[SelectPlaceToolCommand.id].Checked = true;
+				this.CommandManager.Commands[SelectPlaceToolCommand.Id].Checked = true;
 			}
 		}
 		
 		private void SelectTransitionToolCommandHandler(object sender, System.EventArgs e)
 		{
-			if (this.CommandManager.Commands[SelectTransitionToolCommand.id].Checked)
+			if (this.CommandManager.Commands[SelectTransitionToolCommand.Id].Checked)
 			{
 				this.ToolsManager.Unlink(ToolsEnum.Transition, this.ActiveNet);
-				this.CommandManager.Commands[SelectTransitionToolCommand.id].Checked = false;
+				this.CommandManager.Commands[SelectTransitionToolCommand.Id].Checked = false;
 			}
 			else
 			{
 				this.UnlinkAllTools();
 				this.ToolsManager.Link(ToolsEnum.Transition, this.ActiveNet);
-				this.CommandManager.Commands[SelectTransitionToolCommand.id].Checked = true;
+				this.CommandManager.Commands[SelectTransitionToolCommand.Id].Checked = true;
 			}
 		}
 
 		private void SelectArcToolCommandHandler(object sender, System.EventArgs e)
 		{
-			if (this.CommandManager.Commands[SelectArcToolCommand.id].Checked)
+			if (this.CommandManager.Commands[SelectArcToolCommand.Id].Checked)
 			{
 				this.ToolsManager.Unlink(ToolsEnum.Arc, this.ActiveNet);
-				this.CommandManager.Commands[SelectArcToolCommand.id].Checked = false;
+				this.CommandManager.Commands[SelectArcToolCommand.Id].Checked = false;
 			}
 			else
 			{
 				this.UnlinkAllTools();
 				this.ToolsManager.Link(ToolsEnum.Arc, this.ActiveNet);
-				this.CommandManager.Commands[SelectArcToolCommand.id].Checked = true;
+				this.CommandManager.Commands[SelectArcToolCommand.Id].Checked = true;
 			}
 		}
 
 		private void SelectInhibitorArcToolCommandHandler(object sender, System.EventArgs e)
 		{
-			if (this.CommandManager.Commands[SelectInhibitorArcToolCommand.id].Checked)
+			if (this.CommandManager.Commands[SelectInhibitorArcToolCommand.Id].Checked)
 			{
 				this.ToolsManager.Unlink(ToolsEnum.InhibitorArc, this.ActiveNet);
-				this.CommandManager.Commands[SelectInhibitorArcToolCommand.id].Checked = false;
+				this.CommandManager.Commands[SelectInhibitorArcToolCommand.Id].Checked = false;
 			}
 			else
 			{
 				this.UnlinkAllTools();
 				this.ToolsManager.Link(ToolsEnum.InhibitorArc, this.ActiveNet);
-				this.CommandManager.Commands[SelectInhibitorArcToolCommand.id].Checked = true;
+				this.CommandManager.Commands[SelectInhibitorArcToolCommand.Id].Checked = true;
 			}
 		}
 		
 		private void SelectAnnotationToolCommandHandler(object sender, System.EventArgs e)
 		{
-			if (this.CommandManager.Commands[SelectAnnotationToolCommand.id].Checked)
+			if (this.CommandManager.Commands[SelectAnnotationToolCommand.Id].Checked)
 			{
 				this.ToolsManager.Unlink(ToolsEnum.Annotation, this.ActiveNet);
-				this.CommandManager.Commands[SelectAnnotationToolCommand.id].Checked = false;
+				this.CommandManager.Commands[SelectAnnotationToolCommand.Id].Checked = false;
 			}
 			else
 			{
 				this.UnlinkAllTools();
 				this.ToolsManager.Link(ToolsEnum.Annotation, this.ActiveNet);
-				this.CommandManager.Commands[SelectAnnotationToolCommand.id].Checked = true;
+				this.CommandManager.Commands[SelectAnnotationToolCommand.Id].Checked = true;
 			}
+		}
+		
+		private void AdditionalCodeEditCommandHandler(object sender, System.EventArgs e)
+		{
+			Form f = new AdditionalCodeEditForm(this.ActiveNet);
+			f.ShowDialog(this);
+			f.Dispose();
 		}
 
 		private void UnlinkAllTools()
@@ -430,12 +446,12 @@ namespace Pppv.Editor
 		
 		private void UncheckAllTools()
 		{
-			this.CommandManager.Commands[SelectPointerToolCommand.id].Checked = false;
-			this.CommandManager.Commands[SelectPlaceToolCommand.id].Checked = false;
-			this.CommandManager.Commands[SelectTransitionToolCommand.id].Checked = false;
-			this.CommandManager.Commands[SelectArcToolCommand.id].Checked = false;
-			this.CommandManager.Commands[SelectInhibitorArcToolCommand.id].Checked = false;
-			this.CommandManager.Commands[SelectAnnotationToolCommand.id].Checked = false;
+			this.CommandManager.Commands[SelectPointerToolCommand.Id].Checked = false;
+			this.CommandManager.Commands[SelectPlaceToolCommand.Id].Checked = false;
+			this.CommandManager.Commands[SelectTransitionToolCommand.Id].Checked = false;
+			this.CommandManager.Commands[SelectArcToolCommand.Id].Checked = false;
+			this.CommandManager.Commands[SelectInhibitorArcToolCommand.Id].Checked = false;
+			this.CommandManager.Commands[SelectAnnotationToolCommand.Id].Checked = false;
 		}
 		
 		private void CheckTool(ToolsEnum tool)
@@ -443,29 +459,29 @@ namespace Pppv.Editor
 			switch (tool)
 			{
 				case ToolsEnum.Pointer:
-					this.CommandManager.Commands[SelectPointerToolCommand.id].Checked = true;
+					this.CommandManager.Commands[SelectPointerToolCommand.Id].Checked = true;
 					break;
 				case ToolsEnum.Place:
-					this.CommandManager.Commands[SelectPlaceToolCommand.id].Checked = true;
+					this.CommandManager.Commands[SelectPlaceToolCommand.Id].Checked = true;
 					break;
 				case ToolsEnum.Transition:
-					this.CommandManager.Commands[SelectTransitionToolCommand.id].Checked = true;
+					this.CommandManager.Commands[SelectTransitionToolCommand.Id].Checked = true;
 					break;
 				case ToolsEnum.Arc:
-					this.CommandManager.Commands[SelectArcToolCommand.id].Checked = true;
+					this.CommandManager.Commands[SelectArcToolCommand.Id].Checked = true;
 					break;
 				case ToolsEnum.InhibitorArc:
-					this.CommandManager.Commands[SelectInhibitorArcToolCommand.id].Checked = true;
+					this.CommandManager.Commands[SelectInhibitorArcToolCommand.Id].Checked = true;
 					break;
 				case ToolsEnum.Annotation:
-					this.CommandManager.Commands[SelectAnnotationToolCommand.id].Checked = true;
+					this.CommandManager.Commands[SelectAnnotationToolCommand.Id].Checked = true;
 					break;
 				default:
 					throw new PppvException("Invalid value for ToolsEnum");
 			}
 		}
 		
-		private void ToolsChekedSynchronizer(object sender, EventArgs args)
+		private void ToolsChekedSynchronize(object sender, EventArgs args)
 		{	
 			this.UncheckAllTools();
 			if (this.ActiveNet != null)
@@ -486,15 +502,17 @@ namespace Pppv.Editor
 		
 		private void ClosingHandler(object sender, CancelEventArgs args)
 		{
-			CloseNetCommand command = this.CommandManager.Commands[CloseNetCommand.id] as CloseNetCommand;
-			while(this.ActiveNet != null && !command.Canceled)
+			CloseNetCommand command = this.CommandManager.Commands[CloseNetCommand.Id] as CloseNetCommand;
+			while (this.ActiveNet != null && !command.Canceled)
 			{
 				command.Execute();
 			}
+
 			if (command.Canceled)
 			{
 				args.Cancel = true;
 			}
+
 			command.Canceled = false;
 		}
 	}

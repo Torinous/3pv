@@ -9,113 +9,113 @@
 
 namespace Pppv.Utils
 {
-   using System;
-   using System.Collections.Specialized;
-   using System.Text.RegularExpressions;
+	using System;
+	using System.Collections.Specialized;
+	using System.Text.RegularExpressions;
 
-   public class CommandLineArguments
-   {
-      private StringDictionary parameters;
+	public class CommandLineArguments
+	{
+		private StringDictionary parameters;
 
-      public CommandLineArguments(string[] args)
-      {
-         this.parameters = new StringDictionary();
-         Regex spliter = new Regex(@"^-{1,2}|^/|=|:", RegexOptions.IgnoreCase | RegexOptions.Compiled);
-         Regex remover = new Regex(@"^['""]?(.*?)['""]?$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+		public CommandLineArguments(string[] args)
+		{
+			this.parameters = new StringDictionary();
+			Regex spliter = new Regex(@"^-{1,2}|^/|=|:", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+			Regex remover = new Regex(@"^['""]?(.*?)['""]?$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
-         string parameter = null;
-         string[] parts;
+			string parameter = null;
+			string[] parts;
 
-         // Valid parameters forms:
-         // {-,/,--}param{ ,=,:}((",')value(",'))
-         // Examples:
-         // -param1 value1 --param2 /param3:"Test-:-work"
-         // /param4=happy -param5 '--=nice=--'
-         foreach (string txt in args)
-         {
-            // Look for new parameters (-,/ or --) and a
-            // possible enclosed value (=,:)
-            parts = spliter.Split(txt, 3);
+			// Valid parameters forms:
+			// {-,/,--}param{ ,=,:}((",')value(",'))
+			// Examples:
+			// -param1 value1 --param2 /param3:"Test-:-work"
+			// /param4=happy -param5 '--=nice=--'
+			foreach (string txt in args)
+			{
+				// Look for new parameters (-,/ or --) and a
+				// possible enclosed value (=,:)
+				parts = spliter.Split(txt, 3);
 
-            switch (parts.Length)
-            {
-               // Found a value (for the last parameter
-               // found (space separator))
-               case 1:
-                  if (parameter != null)
-                  {
-                     if (!this.Parameters.ContainsKey(parameter))
-                     {
-                        parts[0] = remover.Replace(parts[0], "$1");
-                        this.Parameters.Add(parameter, parts[0]);
-                     }
+				switch (parts.Length)
+				{
+						// Found a value (for the last parameter
+						// found (space separator))
+					case 1:
+						if (parameter != null)
+						{
+							if (!this.Parameters.ContainsKey(parameter))
+							{
+								parts[0] = remover.Replace(parts[0], "$1");
+								this.Parameters.Add(parameter, parts[0]);
+							}
 
-                     parameter = null;
-                  }
+							parameter = null;
+						}
 
-                  // else Error: no parameter waiting for a value (skipped)
-                  break;
+						// else Error: no parameter waiting for a value (skipped)
+						break;
 
-                  // Found just a parameter
-               case 2:
-                  // The last parameter is still waiting.
-                  // With no value, set it to true.
-                  if (parameter != null)
-                  {
-                     if (!this.Parameters.ContainsKey(parameter))
-                     {
-                        this.Parameters.Add(parameter, "true");
-                     }
-                  }
+						// Found just a parameter
+					case 2:
+						// The last parameter is still waiting.
+						// With no value, set it to true.
+						if (parameter != null)
+						{
+							if (!this.Parameters.ContainsKey(parameter))
+							{
+								this.Parameters.Add(parameter, "true");
+							}
+						}
 
-                  parameter = parts[1];
-                  break;
+						parameter = parts[1];
+						break;
 
-                  // Parameter with enclosed value
-               case 3:
-                  // The last parameter is still waiting.
-                  // With no value, set it to true.
-                  if (parameter != null)
-                  {
-                     if (!this.Parameters.ContainsKey(parameter))
-                     {
-                        this.Parameters.Add(parameter, "true");
-                     }
-                  }
+						// Parameter with enclosed value
+					case 3:
+						// The last parameter is still waiting.
+						// With no value, set it to true.
+						if (parameter != null)
+						{
+							if (!this.Parameters.ContainsKey(parameter))
+							{
+								this.Parameters.Add(parameter, "true");
+							}
+						}
 
-                  parameter = parts[1];
+						parameter = parts[1];
 
-                  // Remove possible enclosing characters (",')
-                  if (!this.Parameters.ContainsKey(parameter))
-                  {
-                     parts[2] = remover.Replace(parts[2], "$1");
-                     this.Parameters.Add(parameter, parts[2]);
-                  }
+						// Remove possible enclosing characters (",')
+						if (!this.Parameters.ContainsKey(parameter))
+						{
+							parts[2] = remover.Replace(parts[2], "$1");
+							this.Parameters.Add(parameter, parts[2]);
+						}
 
-                  parameter = null;
-                  break;
-            }
-         }
+						parameter = null;
+						break;
+				}
+			}
 
-         // In case a parameter is still waiting
-         if (parameter != null)
-         {
-            if (!this.Parameters.ContainsKey(parameter))
-            {
-               this.Parameters.Add(parameter, "true");
-            }
-         }
-      }
+			// In case a parameter is still waiting
+			if (parameter != null)
+			{
+				if (!this.Parameters.ContainsKey(parameter))
+				{
+					this.Parameters.Add(parameter, "true");
+				}
+			}
+		}
 
-      public StringDictionary Parameters
-      {
-         get { return this.parameters; }
-         set { this.parameters = value; }
-      }
+		public StringDictionary Parameters
+		{
+			get { return this.parameters; }
+			set { this.parameters = value; }
+		}
 
-      public string this[string param]
-      {
-         get { return this.Parameters[param]; }
-      }
-   }
+		public string this[string param]
+		{
+			get { return this.Parameters[param]; }
+		}
+	}
 }
