@@ -12,13 +12,18 @@
 
 	public class DeleteCommand : Command
 	{
-		public static string id = "Удалить";
+		private static string id = "Удалить";
 		
 		public DeleteCommand(EventHandler<EventArgs> handlerExecute, EventHandler<EventArgs> handlerUpdate) : base(id, handlerExecute, handlerUpdate)
 		{
 			this.Description = "Удалить выделенные элементы сети";
 			this.ShortcutKeys = Keys.Delete;
 			this.Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.Delete.png"), true);
+		}
+		
+		public static string Id
+		{
+			get { return id; }
 		}
 	}
 }

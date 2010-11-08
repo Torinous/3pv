@@ -36,7 +36,6 @@ namespace Pppv.Editor
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.toolStripContainer = new System.Windows.Forms.ToolStripContainer();
 			this.editStatusStrip = new System.Windows.Forms.StatusStrip();
 			this.editorTabControl = new Pppv.Editor.EditorTabControl();
 			this.toolsToolStrip = new System.Windows.Forms.ToolStrip();
@@ -56,6 +55,8 @@ namespace Pppv.Editor
 			this.copyToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.pasteToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.deleteToolStripButton = new System.Windows.Forms.ToolStripButton();
+			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+			this.additionalCodeEditToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.fileToolStrip = new System.Windows.Forms.ToolStrip();
 			this.newNetToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.openNetToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -63,7 +64,6 @@ namespace Pppv.Editor
 			this.saveAsNetToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.closeNetToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-			this.quiteToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.analyzeToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.mainMenuStrip = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,7 +73,7 @@ namespace Pppv.Editor
 			this.saveAsNetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.closeNetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.quiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.undoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.redoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -82,6 +82,8 @@ namespace Pppv.Editor
 			this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+			this.additionalCodeEditToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.zoomInToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.zoomOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -95,10 +97,7 @@ namespace Pppv.Editor
 			this.verificationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.analyzeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripContainer.BottomToolStripPanel.SuspendLayout();
-			this.toolStripContainer.ContentPanel.SuspendLayout();
-			this.toolStripContainer.TopToolStripPanel.SuspendLayout();
-			this.toolStripContainer.SuspendLayout();
+			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolsToolStrip.SuspendLayout();
 			this.viewToolStrip.SuspendLayout();
 			this.editToolStrip.SuspendLayout();
@@ -106,35 +105,9 @@ namespace Pppv.Editor
 			this.mainMenuStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// toolStripContainer
-			// 
-			// 
-			// toolStripContainer.BottomToolStripPanel
-			// 
-			this.toolStripContainer.BottomToolStripPanel.Controls.Add(this.editStatusStrip);
-			// 
-			// toolStripContainer.ContentPanel
-			// 
-			this.toolStripContainer.ContentPanel.Controls.Add(this.editorTabControl);
-			this.toolStripContainer.ContentPanel.Size = new System.Drawing.Size(777, 287);
-			this.toolStripContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.toolStripContainer.Location = new System.Drawing.Point(0, 24);
-			this.toolStripContainer.Name = "toolStripContainer";
-			this.toolStripContainer.Size = new System.Drawing.Size(777, 409);
-			this.toolStripContainer.TabIndex = 1;
-			this.toolStripContainer.Text = "toolStripContainer";
-			// 
-			// toolStripContainer.TopToolStripPanel
-			// 
-			this.toolStripContainer.TopToolStripPanel.Controls.Add(this.toolsToolStrip);
-			this.toolStripContainer.TopToolStripPanel.Controls.Add(this.viewToolStrip);
-			this.toolStripContainer.TopToolStripPanel.Controls.Add(this.editToolStrip);
-			this.toolStripContainer.TopToolStripPanel.Controls.Add(this.fileToolStrip);
-			// 
 			// editStatusStrip
 			// 
-			this.editStatusStrip.Dock = System.Windows.Forms.DockStyle.None;
-			this.editStatusStrip.Location = new System.Drawing.Point(0, 0);
+			this.editStatusStrip.Location = new System.Drawing.Point(0, 411);
 			this.editStatusStrip.Name = "editStatusStrip";
 			this.editStatusStrip.Size = new System.Drawing.Size(777, 22);
 			this.editStatusStrip.TabIndex = 0;
@@ -142,11 +115,13 @@ namespace Pppv.Editor
 			// 
 			// editorTabControl
 			// 
-			this.editorTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.editorTabControl.Location = new System.Drawing.Point(0, 0);
+			this.editorTabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+									| System.Windows.Forms.AnchorStyles.Left) 
+									| System.Windows.Forms.AnchorStyles.Right)));
+			this.editorTabControl.Location = new System.Drawing.Point(0, 52);
 			this.editorTabControl.Name = "editorTabControl";
 			this.editorTabControl.SelectedIndex = -1;
-			this.editorTabControl.Size = new System.Drawing.Size(777, 287);
+			this.editorTabControl.Size = new System.Drawing.Size(777, 359);
 			this.editorTabControl.TabIndex = 0;
 			// 
 			// toolsToolStrip
@@ -159,7 +134,7 @@ namespace Pppv.Editor
 									this.selectArcToolToolStripButton,
 									this.selectInhibitorArcToolToolStripButton,
 									this.selectAnnotationToolToolStripButton});
-			this.toolsToolStrip.Location = new System.Drawing.Point(3, 0);
+			this.toolsToolStrip.Location = new System.Drawing.Point(335, 24);
 			this.toolsToolStrip.Name = "toolsToolStrip";
 			this.toolsToolStrip.Size = new System.Drawing.Size(150, 25);
 			this.toolsToolStrip.TabIndex = 3;
@@ -218,7 +193,7 @@ namespace Pppv.Editor
 			this.viewToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
 									this.zoomInToolStripButton,
 									this.zoomOutToolStripButton});
-			this.viewToolStrip.Location = new System.Drawing.Point(92, 25);
+			this.viewToolStrip.Location = new System.Drawing.Point(485, 24);
 			this.viewToolStrip.Name = "viewToolStrip";
 			this.viewToolStrip.Size = new System.Drawing.Size(58, 25);
 			this.viewToolStrip.TabIndex = 2;
@@ -248,10 +223,12 @@ namespace Pppv.Editor
 									this.cutToolStripButton,
 									this.copyToolStripButton,
 									this.pasteToolStripButton,
-									this.deleteToolStripButton});
-			this.editToolStrip.Location = new System.Drawing.Point(3, 50);
+									this.deleteToolStripButton,
+									this.toolStripSeparator4,
+									this.additionalCodeEditToolStripButton});
+			this.editToolStrip.Location = new System.Drawing.Point(156, 24);
 			this.editToolStrip.Name = "editToolStrip";
-			this.editToolStrip.Size = new System.Drawing.Size(150, 25);
+			this.editToolStrip.Size = new System.Drawing.Size(179, 25);
 			this.editToolStrip.TabIndex = 1;
 			// 
 			// undoToolStripButton
@@ -307,6 +284,19 @@ namespace Pppv.Editor
 			this.deleteToolStripButton.Text = "deleteCommandToolStripButton";
 			this.deleteToolStripButton.ToolTipText = "deleteToolStripButton";
 			// 
+			// toolStripSeparator4
+			// 
+			this.toolStripSeparator4.Name = "toolStripSeparator4";
+			this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
+			// 
+			// additionalCodeEditToolStripButton
+			// 
+			this.additionalCodeEditToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.additionalCodeEditToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.additionalCodeEditToolStripButton.Name = "additionalCodeEditToolStripButton";
+			this.additionalCodeEditToolStripButton.Size = new System.Drawing.Size(23, 22);
+			this.additionalCodeEditToolStripButton.Text = "additionalCodeEditToolStripButton";
+			// 
 			// fileToolStrip
 			// 
 			this.fileToolStrip.Dock = System.Windows.Forms.DockStyle.None;
@@ -317,11 +307,10 @@ namespace Pppv.Editor
 									this.saveAsNetToolStripButton,
 									this.closeNetToolStripButton,
 									this.toolStripSeparator2,
-									this.quiteToolStripButton,
 									this.analyzeToolStripButton});
-			this.fileToolStrip.Location = new System.Drawing.Point(3, 75);
+			this.fileToolStrip.Location = new System.Drawing.Point(0, 24);
 			this.fileToolStrip.Name = "fileToolStrip";
-			this.fileToolStrip.Size = new System.Drawing.Size(179, 25);
+			this.fileToolStrip.Size = new System.Drawing.Size(156, 25);
 			this.fileToolStrip.TabIndex = 0;
 			// 
 			// newNetToolStripButton
@@ -369,14 +358,6 @@ namespace Pppv.Editor
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
 			this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
 			// 
-			// quiteToolStripButton
-			// 
-			this.quiteToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.quiteToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.quiteToolStripButton.Name = "quiteToolStripButton";
-			this.quiteToolStripButton.Size = new System.Drawing.Size(23, 22);
-			this.quiteToolStripButton.Text = "quiteToolStripButton";
-			// 
 			// analyzeToolStripButton
 			// 
 			this.analyzeToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -409,7 +390,7 @@ namespace Pppv.Editor
 									this.saveAsNetToolStripMenuItem,
 									this.closeNetToolStripMenuItem,
 									this.toolStripSeparator1,
-									this.quiteToolStripMenuItem});
+									this.quitToolStripMenuItem});
 			this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 			this.fileToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
 			this.fileToolStripMenuItem.Text = "&Файл";
@@ -449,11 +430,11 @@ namespace Pppv.Editor
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(229, 6);
 			// 
-			// quiteToolStripMenuItem
+			// quitToolStripMenuItem
 			// 
-			this.quiteToolStripMenuItem.Name = "quiteToolStripMenuItem";
-			this.quiteToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
-			this.quiteToolStripMenuItem.Text = "quiteToolStripMenuItem";
+			this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
+			this.quitToolStripMenuItem.Size = new System.Drawing.Size(232, 22);
+			this.quitToolStripMenuItem.Text = "quitToolStripMenuItem";
 			// 
 			// editToolStripMenuItem
 			// 
@@ -464,7 +445,9 @@ namespace Pppv.Editor
 									this.cutToolStripMenuItem,
 									this.copyToolStripMenuItem,
 									this.pasteToolStripMenuItem,
-									this.deleteToolStripMenuItem});
+									this.deleteToolStripMenuItem,
+									this.toolStripSeparator5,
+									this.additionalCodeEditToolStripMenuItem});
 			this.editToolStripMenuItem.Name = "editToolStripMenuItem";
 			this.editToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
 			this.editToolStripMenuItem.Text = "&Правка";
@@ -472,43 +455,54 @@ namespace Pppv.Editor
 			// undoToolStripMenuItem
 			// 
 			this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
-			this.undoToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+			this.undoToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
 			this.undoToolStripMenuItem.Text = "undoToolStripMenuItem";
 			// 
 			// redoToolStripMenuItem
 			// 
 			this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
-			this.redoToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+			this.redoToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
 			this.redoToolStripMenuItem.Text = "redoToolStripMenuItem";
 			// 
 			// toolStripSeparator3
 			// 
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(206, 6);
+			this.toolStripSeparator3.Size = new System.Drawing.Size(275, 6);
 			// 
 			// cutToolStripMenuItem
 			// 
 			this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
-			this.cutToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+			this.cutToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
 			this.cutToolStripMenuItem.Text = "cutStripMenuItem";
 			// 
 			// copyToolStripMenuItem
 			// 
 			this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-			this.copyToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+			this.copyToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
 			this.copyToolStripMenuItem.Text = "copyToolStripMenuItem";
 			// 
 			// pasteToolStripMenuItem
 			// 
 			this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-			this.pasteToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+			this.pasteToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
 			this.pasteToolStripMenuItem.Text = "pasteToolStripMenuItem";
 			// 
 			// deleteToolStripMenuItem
 			// 
 			this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-			this.deleteToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+			this.deleteToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
 			this.deleteToolStripMenuItem.Text = "deleteToolStripMenuItem";
+			// 
+			// toolStripSeparator5
+			// 
+			this.toolStripSeparator5.Name = "toolStripSeparator5";
+			this.toolStripSeparator5.Size = new System.Drawing.Size(275, 6);
+			// 
+			// additionalCodeEditToolStripMenuItem
+			// 
+			this.additionalCodeEditToolStripMenuItem.Name = "additionalCodeEditToolStripMenuItem";
+			this.additionalCodeEditToolStripMenuItem.Size = new System.Drawing.Size(278, 22);
+			this.additionalCodeEditToolStripMenuItem.Text = "additionalCodeEditToolStripMenuItem";
 			// 
 			// viewToolStripMenuItem
 			// 
@@ -596,28 +590,34 @@ namespace Pppv.Editor
 			// 
 			// helpToolStripMenuItem
 			// 
+			this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+									this.aboutToolStripMenuItem});
 			this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
 			this.helpToolStripMenuItem.Size = new System.Drawing.Size(68, 20);
 			this.helpToolStripMenuItem.Text = "&Помощь";
+			// 
+			// aboutToolStripMenuItem
+			// 
+			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+			this.aboutToolStripMenuItem.Text = "aboutToolStripMenuItem";
 			// 
 			// EditorForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(777, 433);
-			this.Controls.Add(this.toolStripContainer);
+			this.Controls.Add(this.editorTabControl);
+			this.Controls.Add(this.fileToolStrip);
+			this.Controls.Add(this.editToolStrip);
+			this.Controls.Add(this.viewToolStrip);
+			this.Controls.Add(this.toolsToolStrip);
+			this.Controls.Add(this.editStatusStrip);
 			this.Controls.Add(this.mainMenuStrip);
 			this.KeyPreview = true;
 			this.MainMenuStrip = this.mainMenuStrip;
 			this.Name = "EditorForm";
 			this.Text = "EditorForm";
-			this.toolStripContainer.BottomToolStripPanel.ResumeLayout(false);
-			this.toolStripContainer.BottomToolStripPanel.PerformLayout();
-			this.toolStripContainer.ContentPanel.ResumeLayout(false);
-			this.toolStripContainer.TopToolStripPanel.ResumeLayout(false);
-			this.toolStripContainer.TopToolStripPanel.PerformLayout();
-			this.toolStripContainer.ResumeLayout(false);
-			this.toolStripContainer.PerformLayout();
 			this.toolsToolStrip.ResumeLayout(false);
 			this.toolsToolStrip.PerformLayout();
 			this.viewToolStrip.ResumeLayout(false);
@@ -631,6 +631,12 @@ namespace Pppv.Editor
 			this.ResumeLayout(false);
 			this.PerformLayout();
 		}
+		private System.Windows.Forms.ToolStripMenuItem quitToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem additionalCodeEditToolStripMenuItem;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+		private System.Windows.Forms.ToolStripButton additionalCodeEditToolStripButton;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
 		private System.Windows.Forms.ToolStrip toolsToolStrip;
 		private System.Windows.Forms.ToolStripButton selectInhibitorArcToolToolStripButton;
 		private System.Windows.Forms.ToolStripButton selectArcToolToolStripButton;
@@ -648,7 +654,6 @@ namespace Pppv.Editor
 		private System.Windows.Forms.ToolStripButton zoomOutToolStripButton;
 		private System.Windows.Forms.ToolStripButton zoomInToolStripButton;
 		private System.Windows.Forms.ToolStrip viewToolStrip;
-		private System.Windows.Forms.ToolStripContainer toolStripContainer;
 		private System.Windows.Forms.ToolStrip editToolStrip;
 		private System.Windows.Forms.ToolStripMenuItem zoomOutToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem zoomInToolStripMenuItem;
@@ -684,8 +689,6 @@ namespace Pppv.Editor
 		private System.Windows.Forms.ToolStripButton closeNetToolStripButton;
 		private System.Windows.Forms.ToolStripMenuItem openNetToolStripMenuItem;
 		private System.Windows.Forms.ToolStripButton openNetToolStripButton;
-		private System.Windows.Forms.ToolStripMenuItem quiteToolStripMenuItem;
-		private System.Windows.Forms.ToolStripButton quiteToolStripButton;
 		private System.Windows.Forms.ToolStripMenuItem newNetToolStripMenuItem;
 		private System.Windows.Forms.ToolStripButton newNetToolStripButton;
 		private Pppv.Editor.EditorTabControl editorTabControl;

@@ -6,7 +6,7 @@
 
 	using Pppv.Net;
 
-	public class AddPlaceCommand : NetEditorInterfaceCommand
+	public class AddPlaceCommand : NetCommand
 	{
 		private Point position;
 
@@ -14,8 +14,6 @@
 		{
 			this.Net = net;
 			this.Position = place;
-			this.Name = "Добавить Позицию к сети";
-			this.Description = "Команда добавляющая к заданной сети Позицию по заданным координатам";
 		}
 
 		public Point Position

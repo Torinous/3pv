@@ -4,7 +4,6 @@
  * Date: 17.10.2010
  * Time: 5:43
  *
- *
  */
 
 namespace Pppv.Verificator.Commands
@@ -18,17 +17,15 @@ namespace Pppv.Verificator.Commands
 	using Pppv.Commands;
 	using Pppv.Graphviz;
 	using Pppv.Net;
-	
-	using SbsSW.SwiPlCs;
+	using Pppv.Utils;
 
-	public class BuildStateSpaceCommand : Command
+	public class PlotReachabilityGraphImageCommand : Command
 	{
-		private static string id = "Построить граф достижимости";
+		private static string id = "Регенерация";
 		
-		public BuildStateSpaceCommand(EventHandler<EventArgs> handlerExecute, EventHandler<EventArgs> handlerUpdate) : base(id, handlerExecute, handlerUpdate)
+		public PlotReachabilityGraphImageCommand(EventHandler<EventArgs> handlerExecute, EventHandler<EventArgs> handlerUpdate) : base(id, handlerExecute, handlerUpdate)
 		{
-			this.Description = "Построить граф достижимости сети";
-			this.ShortcutKeys = Keys.Control | Keys.Shift | Keys.S;
+			this.Description = "Перестроить изображение графа достижимости";
 			this.Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.StateSpace.png"), true);
 		}
 		
@@ -38,3 +35,4 @@ namespace Pppv.Verificator.Commands
 		}
 	}
 }
+

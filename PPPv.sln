@@ -6,25 +6,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Editor", "Editor", "{1026F6
 	ProjectSection(SolutionItems) = postProject
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Editor.Tests", "Editor\Editor.Tests\Editor.Tests.csproj", "{E40986A1-BA7E-41D1-87D1-F6C654E86EE9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Editor", "Editor\Editor\Editor.csproj", "{8C38059E-436D-468D-A131-040EF303CBF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Editor.Tests", "Editor\Editor.Tests\Editor.Tests.csproj", "{E40986A1-BA7E-41D1-87D1-F6C654E86EE9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PppNet", "PppNet", "{8BBDBFF9-E00C-44D7-A5D5-98081CBEB8D4}"
 	ProjectSection(SolutionItems) = postProject
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PppNet", "PppNet\PppNet\PppNet.csproj", "{AED06680-760B-4499-A078-905464A9DE37}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PppNet.Tests", "PppNet\PppNet.Tests\PppNet.Tests.csproj", "{C269346A-177C-465E-98BC-D21FCC205AA1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PppNet", "PppNet\PppNet\PppNet.csproj", "{AED06680-760B-4499-A078-905464A9DE37}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Verificator", "Verificator", "{8E5A0A93-5FE8-4ACE-90A5-C700450DC2D8}"
 	ProjectSection(SolutionItems) = postProject
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Verificator.Tests", "Verificator\Verificator.Tests\Verificator.Tests.csproj", "{AEB90E97-1AE5-450C-BCB8-8041127858AF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Verificator", "Verificator\Verificator\Verificator.csproj", "{E2CDB95D-6CB1-4316-8398-EBD5A4C5C5B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Verificator.Tests", "Verificator\Verificator.Tests\Verificator.Tests.csproj", "{AEB90E97-1AE5-450C-BCB8-8041127858AF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{E228FECB-EE22-45B9-8118-A9AC712EDC0D}"
 	ProjectSection(SolutionItems) = postProject
@@ -40,9 +40,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApplicationFramework", "App
 	ProjectSection(SolutionItems) = postProject
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationFramework", "ApplicationFramework\ApplicationFramework\ApplicationFramework.csproj", "{D29F492D-9E5A-4759-849C-8ADD0F13DA84}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationFramework.Tests", "ApplicationFramework\ApplicationFramework.Tests\ApplicationFramework.Tests.csproj", "{A1C42FD2-FB6A-4A6F-A2FA-3D0F076603CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationFramework", "ApplicationFramework\ApplicationFramework\ApplicationFramework.csproj", "{D29F492D-9E5A-4759-849C-8ADD0F13DA84}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Prolog", "Prolog", "{70596122-8755-44F0-8F5E-99B37CE92F02}"
 	ProjectSection(SolutionItems) = postProject
@@ -135,15 +135,15 @@ Global
 		{A1C42FD2-FB6A-4A6F-A2FA-3D0F076603CC}.Release|x86.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{8C38059E-436D-468D-A131-040EF303CBF1} = {1026F6CC-BCBC-4FAE-AEDF-AEE523087320}
 		{E40986A1-BA7E-41D1-87D1-F6C654E86EE9} = {1026F6CC-BCBC-4FAE-AEDF-AEE523087320}
-		{C269346A-177C-465E-98BC-D21FCC205AA1} = {8BBDBFF9-E00C-44D7-A5D5-98081CBEB8D4}
+		{8C38059E-436D-468D-A131-040EF303CBF1} = {1026F6CC-BCBC-4FAE-AEDF-AEE523087320}
 		{AED06680-760B-4499-A078-905464A9DE37} = {8BBDBFF9-E00C-44D7-A5D5-98081CBEB8D4}
-		{E2CDB95D-6CB1-4316-8398-EBD5A4C5C5B4} = {8E5A0A93-5FE8-4ACE-90A5-C700450DC2D8}
+		{C269346A-177C-465E-98BC-D21FCC205AA1} = {8BBDBFF9-E00C-44D7-A5D5-98081CBEB8D4}
 		{AEB90E97-1AE5-450C-BCB8-8041127858AF} = {8E5A0A93-5FE8-4ACE-90A5-C700450DC2D8}
+		{E2CDB95D-6CB1-4316-8398-EBD5A4C5C5B4} = {8E5A0A93-5FE8-4ACE-90A5-C700450DC2D8}
 		{C58B38EA-E0C3-4634-954F-85F9AA0A6D0C} = {E228FECB-EE22-45B9-8118-A9AC712EDC0D}
 		{8C8EFC28-3E9E-47BD-A6ED-4C36EA71B138} = {C58B38EA-E0C3-4634-954F-85F9AA0A6D0C}
-		{A1C42FD2-FB6A-4A6F-A2FA-3D0F076603CC} = {1BB1D681-550E-4C8C-8E3D-523FC3940768}
 		{D29F492D-9E5A-4759-849C-8ADD0F13DA84} = {1BB1D681-550E-4C8C-8E3D-523FC3940768}
+		{A1C42FD2-FB6A-4A6F-A2FA-3D0F076603CC} = {1BB1D681-550E-4C8C-8E3D-523FC3940768}
 	EndGlobalSection
 EndGlobal

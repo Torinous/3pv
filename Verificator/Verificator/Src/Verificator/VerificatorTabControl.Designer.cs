@@ -36,26 +36,26 @@ namespace Pppv.Verificator
       /// </summary>
       private void InitializeComponent()
       {
-      	this.tabControl1 = new System.Windows.Forms.TabControl();
+      	this.tabControl = new System.Windows.Forms.TabControl();
       	this.tabPageWithStateSpace = new System.Windows.Forms.TabPage();
       	this.stateSpaceViewer1 = new Pppv.Verificator.StateSpaceViewer();
       	this.tabPageWithProlog = new System.Windows.Forms.TabPage();
       	this.PrologTextBox = new System.Windows.Forms.TextBox();
-      	this.tabControl1.SuspendLayout();
+      	this.tabControl.SuspendLayout();
       	this.tabPageWithStateSpace.SuspendLayout();
       	this.tabPageWithProlog.SuspendLayout();
       	this.SuspendLayout();
       	// 
-      	// tabControl1
+      	// tabControl
       	// 
-      	this.tabControl1.Controls.Add(this.tabPageWithStateSpace);
-      	this.tabControl1.Controls.Add(this.tabPageWithProlog);
-      	this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-      	this.tabControl1.Location = new System.Drawing.Point(0, 0);
-      	this.tabControl1.Name = "tabControl1";
-      	this.tabControl1.SelectedIndex = 0;
-      	this.tabControl1.Size = new System.Drawing.Size(536, 411);
-      	this.tabControl1.TabIndex = 0;
+      	this.tabControl.Controls.Add(this.tabPageWithProlog);
+      	this.tabControl.Controls.Add(this.tabPageWithStateSpace);
+      	this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+      	this.tabControl.Location = new System.Drawing.Point(0, 0);
+      	this.tabControl.Name = "tabControl";
+      	this.tabControl.SelectedIndex = 0;
+      	this.tabControl.Size = new System.Drawing.Size(536, 411);
+      	this.tabControl.TabIndex = 0;
       	// 
       	// tabPageWithStateSpace
       	// 
@@ -103,20 +103,20 @@ namespace Pppv.Verificator
       	// 
       	this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       	this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      	this.Controls.Add(this.tabControl1);
+      	this.Controls.Add(this.tabControl);
       	this.DoubleBuffered = true;
       	this.Name = "VerificatorTabControl";
       	this.Size = new System.Drawing.Size(536, 411);
-      	this.tabControl1.ResumeLayout(false);
+      	this.tabControl.ResumeLayout(false);
       	this.tabPageWithStateSpace.ResumeLayout(false);
       	this.tabPageWithProlog.ResumeLayout(false);
       	this.tabPageWithProlog.PerformLayout();
       	this.ResumeLayout(false);
       }
+      private System.Windows.Forms.TabControl tabControl;
       public System.Windows.Forms.TabPage tabPageWithProlog;
       public System.Windows.Forms.TextBox PrologTextBox;
       public Pppv.Verificator.StateSpaceViewer stateSpaceViewer1;
       public System.Windows.Forms.TabPage tabPageWithStateSpace;
-      private System.Windows.Forms.TabControl tabControl1;
    }
 }

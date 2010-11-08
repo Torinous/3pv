@@ -10,13 +10,18 @@
 
 	public class NewNetCommand : Command
 	{
-		public static string id = "Создать";
+		private static string id = "Создать";
 
 		public NewNetCommand(EventHandler<EventArgs> handlerExecute, EventHandler<EventArgs> handlerUpdate) : base(id, handlerExecute, handlerUpdate)
 		{
 			this.Description = "Создать новую сеть";
 			this.ShortcutKeys = Keys.Control | Keys.N;
 			this.Pictogram = Image.FromStream(Assembly.GetExecutingAssembly().GetManifestResourceStream("Pppv.Resources.New.png"), true);
+		}
+		
+		public static string Id
+		{
+			get { return id; }
 		}
 	}
 }

@@ -28,6 +28,7 @@ namespace Pppv.Commands
 
 			this.RegisterCommandExecutor("System.Windows.Forms.ToolStripMenuItem", new ToolStripMenuItemCommandExecutor());
 			this.RegisterCommandExecutor("System.Windows.Forms.ToolStripButton", new ToolStripButtonCommandExecutor());
+			this.RegisterCommandExecutor("System.Windows.Forms.Button", new ButtonCommandExecutor());
 		}
 
 		public CommandsList Commands

@@ -11,8 +11,9 @@ namespace Pppv.Commands
 {
 	using System;
 	using System.Collections;
+	using System.Collections.ObjectModel;
 	
-	public class CommandInstanceList : CollectionBase
+	public class CommandInstanceList : Collection<object>
 	{
 		private Command command;
 
@@ -20,18 +21,11 @@ namespace Pppv.Commands
 		{
 			this.command = command;
 		}
-
-		public object this[int index]
-		{
-			get
-			{
-				return this.List[index];
-			}
-		}
 		
-		public void Add(object instance)
+		public new void Add(object instance)
 		{
-			this.List.Add(instance);
+			base.Add(instance);
+			this.command.Manager.GetCommandExecutor(instance).InstanceAdded(instance, this.command);
 		}
 
 		public void Add(object[] items)
@@ -42,14 +36,9 @@ namespace Pppv.Commands
 			}
 		}
 
-		public void Remove(object instance)
+		public new void Remove(object instance)
 		{
-			this.List.Remove(instance);
-		}
-
-		protected override void OnInsertComplete(int index, object value)
-		{
-			this.command.Manager.GetCommandExecutor(value).InstanceAdded(value, this.command);
+			base.Remove(instance);
 		}
 	}
 }
