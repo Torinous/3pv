@@ -5,7 +5,7 @@
 	using System.Reflection;
 	using System.Windows.Forms;
 
-	using Pppv.Commands;
+	using Pppv.ApplicationFramework.Commands;
 	using Pppv.Editor.Shapes;
 	using Pppv.Net;
 

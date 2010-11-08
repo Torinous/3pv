@@ -14,10 +14,9 @@ namespace Pppv.Verificator
 	using System.Drawing;
 	using System.Windows.Forms;
 	
-	using Pppv.ApplicationFramework;
-	using Pppv.Commands;
-	using Pppv.Graphviz;
-	using Pppv.Utils;
+	using Pppv.ApplicationFramework.Commands;
+	using Pppv.ApplicationFramework.Graphviz;
+	using Pppv.ApplicationFramework.Utils;
 	using Pppv.Verificator.Commands;
 
 	public partial class StateSpaceViewer : UserControl

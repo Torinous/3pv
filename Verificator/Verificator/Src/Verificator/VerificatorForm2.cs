@@ -19,9 +19,9 @@ namespace Pppv.Verificator
 	using System.Threading;
 	using System.Windows.Forms;
 
-	using Pppv.Commands;
+	using Pppv.ApplicationFramework.Commands;
 	using Pppv.Net;
-	using Pppv.Utils;
+	using Pppv.ApplicationFramework.Utils;
 	using Pppv.Verificator.Commands;
 
 	public partial class VerificatorForm2 : Form

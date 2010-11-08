@@ -39,9 +39,7 @@
 						if (this.Arc.Source.GetType() != clicked.GetType())
 						{
 							this.Arc.TargetId = clicked.BaseElement.Id;
-							AddShapeCommand c = new AddShapeCommand(canvas.Net);
-							c.Shape = this.Arc;
-							c.Execute();
+							canvas.Net.AddElement(this.Arc as IShape);
 							canvas.Net.Paint -= this.Arc.DrawHandler;
 							this.Arc = null;
 						}

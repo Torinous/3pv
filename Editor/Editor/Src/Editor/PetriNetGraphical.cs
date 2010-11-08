@@ -14,10 +14,10 @@
 	using System.Xml.Serialization;
 
 	using Pppv.ApplicationFramework;
+	using Pppv.ApplicationFramework.Utils;
 	using Pppv.Editor.Shapes;
 	using Pppv.Editor.Tools;
 	using Pppv.Net;
-	using Pppv.Utils;
 
 	public class PetriNetGraphical : PetriNet, IXmlSerializable
 	{

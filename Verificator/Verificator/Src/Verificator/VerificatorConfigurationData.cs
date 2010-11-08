@@ -14,7 +14,7 @@ namespace Pppv.Verificator
 	using System.Xml.Schema;
 	using System.Xml.Serialization;
 	
-	using Pppv.Graphviz;
+	using Pppv.ApplicationFramework.Graphviz;
 
 	public class VerificatorConfigurationData : IXmlSerializable
 	{

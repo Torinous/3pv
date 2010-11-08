@@ -6,14 +6,14 @@
  *
  *
  */
-namespace Pppv.Graphviz
+namespace Pppv.ApplicationFramework.Graphviz
 {
-   public enum Plotter
-   {
-      Neato,
-      Dot,
-      Twopi,
-      Fdp,
-      Circo
-   }
+	public enum Plotter
+	{
+		Neato,
+		Dot,
+		Twopi,
+		Fdp,
+		Circo
+	}
 }

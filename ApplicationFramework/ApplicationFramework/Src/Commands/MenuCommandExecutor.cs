@@ -6,7 +6,7 @@
  *
  *
  */
-namespace Pppv.Commands
+namespace Pppv.ApplicationFramework.Commands
 {
 	using System;
 	using System.Windows.Forms;

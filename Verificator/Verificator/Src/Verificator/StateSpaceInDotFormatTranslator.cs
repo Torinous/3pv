@@ -14,9 +14,9 @@ namespace Pppv.Verificator
 	using System.Text;
 
 	using Pppv.ApplicationFramework;
-	using Pppv.Graphviz;
+	using Pppv.ApplicationFramework.Graphviz;
+	using Pppv.ApplicationFramework.Utils;
 	using Pppv.Net;
-	using Pppv.Utils;
 
 	using SbsSW.SwiPlCs;
 	using SbsSW.SwiPlCs.Exceptions;

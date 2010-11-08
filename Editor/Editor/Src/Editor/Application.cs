@@ -15,7 +15,7 @@
 	using Pppv.Editor.Commands;
 	using Pppv.Editor.Tools;
 	using Pppv.Net;
-	using Pppv.Utils;
+	using Pppv.ApplicationFramework.Utils;
 
 	public class EditorApplication : ApplicationContext
 	{

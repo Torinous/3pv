@@ -5,9 +5,10 @@
 	using System.Reflection;
 	using System.Windows.Forms;
 
-	using Pppv.Commands;
+	using Pppv.ApplicationFramework.Commands;
+	using Pppv.ApplicationFramework.Utils;
 	using Pppv.Net;
-	using Pppv.Utils;
+	
 
 	public class CloseNetCommand : Command
 	{

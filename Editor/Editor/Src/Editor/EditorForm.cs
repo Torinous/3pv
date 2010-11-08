@@ -22,12 +22,13 @@ namespace Pppv.Editor
 	using System.Xml.Serialization;
 
 	using Pppv.ApplicationFramework;	
-	using Pppv.Commands;
+	using Pppv.ApplicationFramework.Commands;
+	using Pppv.ApplicationFramework.Utils;
 	using Pppv.Editor.Commands;
 	using Pppv.Editor.Shapes;
 	using Pppv.Editor.Tools;
 	using Pppv.Net;
-	using Pppv.Utils;
+
 	using Pppv.Verificator;
 
 	public partial class EditorForm : Form

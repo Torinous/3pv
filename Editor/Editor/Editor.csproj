@@ -95,9 +95,6 @@
     <Compile Include="Src\Editor\CanvasMouseEventArgs.cs" />
     <Compile Include="Src\Editor\Commands\AboutCommand.cs" />
     <Compile Include="Src\Editor\Commands\AdditionalCodeEditCommand.cs" />
-    <Compile Include="Src\Editor\Commands\AddShapeCommand.cs" />
-    <Compile Include="Src\Editor\Commands\AddPlaceCommand.cs" />
-    <Compile Include="Src\Editor\Commands\AddTransitionCommand.cs" />
     <Compile Include="Src\Editor\Commands\AnalyzeCommand.cs" />
     <Compile Include="Src\Editor\Commands\CloseNetCommand.cs" />
     <Compile Include="Src\Editor\Commands\CopyCommand.cs" />
@@ -105,9 +102,6 @@
     <Compile Include="Src\Editor\Commands\DeleteCommand.cs" />
     <Compile Include="Src\Editor\Commands\DeleteSelectedCommand.cs" />
     <Compile Include="Src\Editor\Commands\EditShapeCommand.cs" />
-    <Compile Include="Src\Editor\Commands\ElementCommand.cs" />
-    <Compile Include="Src\Editor\Commands\NetElementInterfaceCommand.cs" />
-    <Compile Include="Src\Editor\Commands\NetCommand.cs" />
     <Compile Include="Src\Editor\Commands\NewNetCommand.cs" />
     <Compile Include="Src\Editor\Commands\OpenNetCommand.cs" />
     <Compile Include="Src\Editor\Commands\PasteCommand.cs" />

@@ -14,7 +14,7 @@ namespace Pppv.Editor.Commands
 	using System.Reflection;
 	using System.Windows.Forms;
 	
-	using Pppv.Commands;
+	using Pppv.ApplicationFramework.Commands;
 
 	public class SelectTransitionToolCommand : Command
 	{
