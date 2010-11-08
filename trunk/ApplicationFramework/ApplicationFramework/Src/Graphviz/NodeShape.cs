@@ -7,18 +7,18 @@
  *
  */
 
-namespace Pppv.Graphviz
+namespace Pppv.ApplicationFramework.Graphviz
 {
-   public enum NodeShape
-   {
-      Rectangle,
-      Circle,
-      Box,
-      Poligon,
-      Point,
-      Triangle,
-      Dimond,
-      Octagon,
-      Hexagon
-   }
+	public enum NodeShape
+	{
+		Rectangle,
+		Circle,
+		Box,
+		Poligon,
+		Point,
+		Triangle,
+		Dimond,
+		Octagon,
+		Hexagon
+	}
 }

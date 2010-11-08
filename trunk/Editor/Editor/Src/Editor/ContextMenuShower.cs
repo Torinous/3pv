@@ -13,7 +13,7 @@ namespace Pppv.Editor
 	using System.Drawing;
 	using System.Windows.Forms;
 	
-	using Pppv.Commands;
+	using Pppv.ApplicationFramework.Commands;
 	using Pppv.Editor.Commands;
 	using Pppv.Editor.Shapes;
 	using Pppv.Net;

@@ -61,21 +61,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Src\ApplicationFramework\CommandButton.cs" />
-    <Compile Include="Src\ApplicationFramework\CommandButton.Designer.cs">
-      <DependentUpon>CommandButton.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Src\ApplicationFramework\Commands\Command.cs" />
-    <Compile Include="Src\ApplicationFramework\Commands\ICommand.cs" />
-    <Compile Include="Src\ApplicationFramework\Commands\IInterfaceCommand.cs" />
-    <Compile Include="Src\ApplicationFramework\Commands\InterfaceCommand.cs" />
-    <Compile Include="Src\ApplicationFramework\Commands\MacroCommand.cs" />
-    <Compile Include="Src\ApplicationFramework\Commands\NullCommand.cs" />
-    <Compile Include="Src\ApplicationFramework\CommandToolStrip.cs" />
-    <Compile Include="Src\ApplicationFramework\CommandEditorToolStripButton.cs" />
-    <Compile Include="Src\ApplicationFramework\CommandToolStripMenuItem.cs" />
-    <Compile Include="Src\ApplicationFramework\PppvException.cs" />
-    <Compile Include="Src\ApplicationFramework\RefreshingListBox.cs" />
     <Compile Include="Src\Commands\ButtonCommandExecutor.cs" />
     <Compile Include="Src\Commands\Command.cs" />
     <Compile Include="Src\Commands\CommandExecutor.cs" />
@@ -86,6 +71,8 @@
     <Compile Include="Src\Commands\ToolbarCommandExecutor.cs" />
     <Compile Include="Src\Graphviz\NodeShape.cs" />
     <Compile Include="Src\Graphviz\NodeShapeFabric.cs" />
+    <Compile Include="Src\PppvException.cs" />
+    <Compile Include="Src\RefreshingListBox.cs" />
     <Compile Include="Src\Utils\Configuration.cs" />
     <Compile Include="Src\Utils\CommandLineArguments.cs" />
     <Compile Include="Src\Utils\DebugAssistant.cs" />
@@ -103,16 +90,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Src" />
-    <Folder Include="Src\ApplicationFramework\Commands" />
-    <Folder Include="Src\ApplicationFramework" />
     <Folder Include="Src\Commands" />
     <Folder Include="Src\Utils" />
     <Folder Include="Src\Graphviz" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Src\ApplicationFramework\CommandButton.resx">
-      <DependentUpon>CommandButton.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.Targets" />
 </Project>

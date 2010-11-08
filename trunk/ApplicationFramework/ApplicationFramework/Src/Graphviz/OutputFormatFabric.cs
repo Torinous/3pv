@@ -7,47 +7,47 @@
  *
  */
 
-namespace Pppv.Graphviz
+namespace Pppv.ApplicationFramework.Graphviz
 {
-   using System;
+	using System;
 
-   using Pppv.ApplicationFramework;
+	using Pppv.ApplicationFramework;
 
-   public static class OutputFormatFabric
-   {
-      public static string Get(OutputFormat format)
-      {
-         switch (format)
-         {
-            case Pppv.Graphviz.OutputFormat.Cmap:
-               return "cmap";
-            case Pppv.Graphviz.OutputFormat.Mif:
-               return "mif";
-            case Pppv.Graphviz.OutputFormat.Mp:
-               return "mp";
-            case Pppv.Graphviz.OutputFormat.Pcl:
-               return "pcl";
-            case Pppv.Graphviz.OutputFormat.Pic:
-               return "pic";
-            case Pppv.Graphviz.OutputFormat.Plain:
-               return "plain";
-            case Pppv.Graphviz.OutputFormat.Png:
-               return "png";
-            case Pppv.Graphviz.OutputFormat.Ps:
-               return "ps";
-            case Pppv.Graphviz.OutputFormat.Ps2:
-               return "ps2";
-            case Pppv.Graphviz.OutputFormat.Svg:
-               return "svg";
-            case Pppv.Graphviz.OutputFormat.Vrml:
-               return "vrml";
-            case Pppv.Graphviz.OutputFormat.Vtx:
-               return "vtx";
-            case Pppv.Graphviz.OutputFormat.Wbmp:
-               return "wbmp";
-            default:
-               throw new PppvException("Invalid value for OutputFormat");
-         }
-      }
-   }
+	public static class OutputFormatFabric
+	{
+		public static string Get(OutputFormat format)
+		{
+			switch (format)
+			{
+				case OutputFormat.Cmap:
+					return "cmap";
+				case OutputFormat.Mif:
+					return "mif";
+				case OutputFormat.Mp:
+					return "mp";
+				case OutputFormat.Pcl:
+					return "pcl";
+				case OutputFormat.Pic:
+					return "pic";
+				case OutputFormat.Plain:
+					return "plain";
+				case OutputFormat.Png:
+					return "png";
+				case OutputFormat.Ps:
+					return "ps";
+				case OutputFormat.Ps2:
+					return "ps2";
+				case OutputFormat.Svg:
+					return "svg";
+				case OutputFormat.Vrml:
+					return "vrml";
+				case OutputFormat.Vtx:
+					return "vtx";
+				case OutputFormat.Wbmp:
+					return "wbmp";
+				default:
+					throw new PppvException("Invalid value for OutputFormat");
+			}
+		}
+	}
 }

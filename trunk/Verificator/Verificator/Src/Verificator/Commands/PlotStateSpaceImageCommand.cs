@@ -14,10 +14,10 @@ namespace Pppv.Verificator.Commands
 	using System.Reflection;
 	using System.Windows.Forms;
 
-	using Pppv.Commands;
-	using Pppv.Graphviz;
+	using Pppv.ApplicationFramework.Commands;
+	using Pppv.ApplicationFramework.Graphviz;
+	using Pppv.ApplicationFramework.Utils;
 	using Pppv.Net;
-	using Pppv.Utils;
 
 	public class PlotReachabilityGraphImageCommand : Command
 	{

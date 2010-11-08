@@ -71,10 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Src\Editor\Commands\AddNetElementCommandTests.cs" />
-    <Compile Include="Src\Editor\Commands\CommandTests.cs" />
     <Compile Include="Src\Editor\Commands\DeleteCommandTests.cs" />
-    <Compile Include="Src\Editor\Commands\MacroCommandTests.cs" />
     <Compile Include="Src\Editor\Shapes\ShapeTests.cs" />
   </ItemGroup>
   <ItemGroup>

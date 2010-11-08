@@ -6,7 +6,7 @@
  *
  *
  */
-namespace Pppv.Utils
+namespace Pppv.ApplicationFramework.Utils
 {
 	using System;
 	using System.Collections.Generic;
